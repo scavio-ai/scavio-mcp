@@ -1,0 +1,37 @@
+{
+  "name": "@scavio/mcp-server",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "scavio-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "dev:inspect": "npx @modelcontextprotocol/inspector tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "registry": "https://npm.scavio.dev",
+    "access": "restricted"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.12",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "hono": "^4.12.10",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}
