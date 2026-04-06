@@ -56,24 +56,4 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
     },
   );
 
-  server.tool(
-    "get_youtube_transcript",
-    `Get the full transcript of a YouTube video by its video ID. Returns timestamped text segments. Use when the user wants to read, summarize, or analyze the content of a YouTube video.`,
-    {
-      video_id: z.string()
-        .describe("YouTube video ID, e.g. 'dQw4w9WgXcQ'. Extract from URL if the user provides a youtube.com link."),
-      language: z.string().default("en")
-        .describe("Transcript language code, e.g. 'en', 'es', 'fr'."),
-      transcript_origin: z.enum(["auto", "manual"]).default("auto")
-        .describe("'auto' for auto-generated captions, 'manual' for uploader-provided. Use 'auto' if unsure."),
-    },
-    async (params) => {
-      try {
-        const data = await getClient().post("/api/v1/youtube/transcript", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
-      } catch (err) {
-        return handleApiError(err);
-      }
-    },
-  );
 }
