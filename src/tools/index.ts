@@ -5,11 +5,13 @@ import { registerYoutubeTools } from "./youtube.js";
 import { registerAmazonTools } from "./amazon.js";
 import { registerWalmartTools } from "./walmart.js";
 import { registerUsageTool } from "./usage.js";
+import { registerTiktokTools } from "./tiktok.js";
 
 export function registerAllTools(server: McpServer, getClient: () => ScavioClient): void {
   registerGoogleTools(server, getClient);
   registerYoutubeTools(server, getClient);
   registerAmazonTools(server, getClient);
   registerWalmartTools(server, getClient);
+  registerTiktokTools(server, getClient);
   registerUsageTool(server, getClient);
 }
