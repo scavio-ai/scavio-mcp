@@ -1,15 +1,19 @@
 # Scavio MCP Server
 
-An MCP server that connects AI assistants to Google, YouTube, Amazon, Walmart, and TikTok. 19 tools for web search, product lookup, video discovery, and social media analysis through a single HTTP endpoint.
+![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
+![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-- **Transport**: HTTP (Streamable HTTP)
-- **Endpoint**: `https://mcp.scavio.dev/mcp`
-- **Auth**: API key via `x-api-key` header
+An MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, and TikTok. 19 tools for web search, product lookup, video discovery, and social media analysis through a single HTTP endpoint.
 
-## Prerequisites
+## Remote MCP Server
 
-1. Get your API key at [scavio.dev](https://scavio.dev)
-2. Replace `YOUR_SCAVIO_API_KEY` in the examples below with your actual key
+Connect directly to Scavio's remote MCP server without any local installation:
+
+```
+https://mcp.scavio.dev/mcp
+```
+
+Pass your API key via the `x-api-key` header. Get your key at [scavio.dev](https://scavio.dev).
 
 ---
 
@@ -41,7 +45,9 @@ Add to `claude_desktop_config.json` (`~/Library/Application Support/Claude/claud
 
 ### Cursor
 
-Add to `.cursor/mcp.json` in your project root or `~/.cursor/mcp.json` for global:
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=scavio&config=eyJ1cmwiOiJodHRwczovL21jcC5zY2F2aW8uZGV2L21jcCIsImhlYWRlcnMiOnsieC1hcGkta2V5IjoiWU9VUl9TQ0FWSU9fQVBJX0tFWSJ9fQ%3D%3D)
+
+Or add to `.cursor/mcp.json` in your project root or `~/.cursor/mcp.json` for global:
 
 ```json
 {
