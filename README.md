@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-An MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, and TikTok. 19 tools for web search, product lookup, video discovery, and social media analysis through a single HTTP endpoint.
+An MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, and Reddit. 21 tools for web search, product lookup, video discovery, and social media analysis through a single HTTP endpoint.
 
 ## Remote MCP Server
 
@@ -202,6 +202,13 @@ Add to settings (`Cmd+,`):
 | `get_tiktok_hashtag_videos` | List videos for a hashtag |
 | `get_tiktok_user_followers` | Get a user's follower list |
 | `get_tiktok_user_followings` | Get a user's following list |
+
+### Reddit
+
+| Tool | Description |
+|------|-------------|
+| `search_reddit` | Search Reddit posts by query with sort and pagination |
+| `get_reddit_post` | Get a full post with threaded comments by URL |
 
 ### Account
 
