@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, and Reddit. 21 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, and Reddit. 21 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -190,34 +190,34 @@ Add to settings (`Cmd+,`):
 
 ## Available Tools
 
-### [Google Search API](https://scavio.dev)
+### [Google Search API](https://scavio.dev/docs/search-api)
 
 | Tool | Description |
 |------|-------------|
 | `search_google` | Web search with structured results, news, images, maps, and knowledge graph |
 
-### [YouTube Data API](https://scavio.dev)
+### [YouTube Data API](https://scavio.dev/docs/youtube-api)
 
 | Tool | Description |
 |------|-------------|
 | `search_youtube` | Search videos, channels, and playlists |
 | `get_youtube_metadata` | Get video metadata including title, views, likes, and duration |
 
-### [Amazon Product API](https://scavio.dev)
+### [Amazon Product API](https://scavio.dev/docs/amazon-api)
 
 | Tool | Description |
 |------|-------------|
 | `search_amazon` | Search product listings with price and sort filters |
 | `get_amazon_product` | Get full product details by ASIN |
 
-### [Walmart API](https://scavio.dev)
+### [Walmart API](https://scavio.dev/docs/walmart-api)
 
 | Tool | Description |
 |------|-------------|
 | `search_walmart` | Search product listings with price and delivery filters |
 | `get_walmart_product` | Get full product details by product ID |
 
-### [TikTok API](https://scavio.dev)
+### [TikTok API](https://scavio.dev/docs/tiktok-api)
 
 | Tool | Description |
 |------|-------------|
@@ -233,7 +233,7 @@ Add to settings (`Cmd+,`):
 | `get_tiktok_user_followers` | Get a user's follower list |
 | `get_tiktok_user_followings` | Get a user's following list |
 
-### [Reddit API](https://scavio.dev)
+### [Reddit API](https://scavio.dev/docs/reddit-api)
 
 | Tool | Description |
 |------|-------------|
@@ -250,13 +250,13 @@ Add to settings (`Cmd+,`):
 
 ## About Scavio
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev) and data API for AI agents and developers. One key, structured JSON, no scraping or proxies:
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and data API for AI agents and developers. One key, structured JSON, no scraping or proxies:
 
-- [Google Search API](https://scavio.dev) — SERP results, news, images, maps, and knowledge graph
-- [Amazon Product API](https://scavio.dev) and [Walmart API](https://scavio.dev) — product search and details
-- [TikTok API](https://scavio.dev), [Reddit API](https://scavio.dev), and [YouTube API](https://scavio.dev) — social and video data
+- [Google Search API](https://scavio.dev/docs/search-api) — SERP results, news, images, maps, and knowledge graph
+- [Amazon Product API](https://scavio.dev/docs/amazon-api) and [Walmart API](https://scavio.dev/docs/walmart-api) — product search and details
+- [TikTok API](https://scavio.dev/docs/tiktok-api), [Reddit API](https://scavio.dev/docs/reddit-api), and [YouTube API](https://scavio.dev/docs/youtube-api) — social and video data
 
-Get a free [Search API](https://scavio.dev) key at [scavio.dev](https://scavio.dev).
+Get a free [Search API](https://scavio.dev/docs/search-api) key at [scavio.dev](https://scavio.dev).
 
 ---
 
