@@ -17,6 +17,36 @@ Pass your API key via the `x-api-key` header. Get your key at [scavio.dev](https
 
 ---
 
+## Run Locally (npx)
+
+Prefer to run the server on your own machine? Use `npx` with no clone or build. The server runs over stdio and only needs your `SCAVIO_API_KEY`.
+
+### Claude Code
+
+```bash
+claude mcp add scavio -e SCAVIO_API_KEY=YOUR_SCAVIO_API_KEY -- npx -y @scavio/mcp-server
+```
+
+### Any MCP-Compatible Client (Claude Desktop, Cursor, Windsurf, VS Code, etc.)
+
+```json
+{
+  "mcpServers": {
+    "scavio": {
+      "command": "npx",
+      "args": ["-y", "@scavio/mcp-server"],
+      "env": {
+        "SCAVIO_API_KEY": "YOUR_SCAVIO_API_KEY"
+      }
+    }
+  }
+}
+```
+
+Requires Node.js 20+. Get your API key at [scavio.dev](https://scavio.dev).
+
+---
+
 ## Install
 
 ### Claude Code
