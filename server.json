@@ -1,0 +1,27 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.scavio-ai/scavio-mcp",
+  "title": "Scavio",
+  "description": "Connect AI agents to Google, YouTube, Amazon, Walmart, TikTok, Reddit. 21 search and data tools.",
+  "version": "0.1.1",
+  "repository": {
+    "url": "https://github.com/scavio-ai/scavio-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@scavio/mcp-server",
+      "version": "0.1.1",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "SCAVIO_API_KEY",
+          "description": "Your Scavio API key from scavio.dev",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
