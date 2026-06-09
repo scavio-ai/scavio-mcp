@@ -4,6 +4,7 @@ dist/
 .env
 .env.*
 !.env.example
+.npmrc
 .claude
 .mcp.json
 mcp.md
