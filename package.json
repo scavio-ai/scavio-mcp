@@ -1,6 +1,6 @@
 {
   "name": "@scavio/mcp-server",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "mcpName": "io.github.scavio-ai/scavio-mcp",
   "description": "MCP server connecting AI agents to Google, YouTube, Amazon, Walmart, TikTok, and Reddit. 21 tools for web search, product lookup, video discovery, and social media analysis.",
   "type": "module",
