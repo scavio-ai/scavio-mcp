@@ -1,4 +1,4 @@
-name: Publish to npm
+name: Publish
 
 on:
   push:
@@ -8,6 +8,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required for MCP Registry OIDC auth
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -21,15 +24,39 @@ jobs:
 
       - run: npm run build
 
-      - name: Publish if version is new
+      - name: Check if version is new
+        id: check
         run: |
           NAME=$(node -p "require('./package.json').name")
           VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
+            echo "new=false" >> "$GITHUB_OUTPUT"
             echo "$NAME@$VERSION already published, skipping"
           else
-            npm publish --access public
-            echo "Published $NAME@$VERSION"
+            echo "new=true" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Publish to npm
+        if: steps.check.outputs.new == 'true'
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install mcp-publisher
+        if: steps.check.outputs.new == 'true'
+        run: curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
+
+      - name: Sync server.json version to package.json
+        if: steps.check.outputs.new == 'true'
+        run: |
+          V="${{ steps.check.outputs.version }}"
+          jq --arg v "$V" '.version = $v | .packages = [.packages[] | .version = $v]' server.json > server.tmp && mv server.tmp server.json
+
+      - name: Authenticate to MCP Registry (OIDC)
+        if: steps.check.outputs.new == 'true'
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish to MCP Registry
+        if: steps.check.outputs.new == 'true'
+        run: ./mcp-publisher publish
