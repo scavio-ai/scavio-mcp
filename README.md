@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, and Reddit. 21 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 33 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -232,6 +232,23 @@ Add to settings (`Cmd+,`):
 | `get_tiktok_hashtag_videos` | List videos for a hashtag |
 | `get_tiktok_user_followers` | Get a user's follower list |
 | `get_tiktok_user_followings` | Get a user's following list |
+
+### [Instagram API](https://scavio.dev/docs/instagram-api)
+
+| Tool | Description |
+|------|-------------|
+| `get_instagram_profile` | Get user profile (bio, follower/following/post counts) |
+| `get_instagram_user_posts` | List a user's posts with pagination |
+| `get_instagram_user_reels` | List a user's Reels with pagination |
+| `get_instagram_user_tagged` | List posts a user is tagged in |
+| `get_instagram_user_stories` | Get a user's active stories |
+| `get_instagram_post` | Get a single post by url, media_id, or shortcode |
+| `get_instagram_post_comments` | Get comments on a post |
+| `get_instagram_comment_replies` | Get replies to a specific comment |
+| `search_instagram_users` | Search users by keyword |
+| `search_instagram_hashtags` | Search hashtags by keyword |
+| `get_instagram_user_followers` | Get a user's follower list |
+| `get_instagram_user_followings` | Get a user's following list |
 
 ### [Reddit API](https://scavio.dev/docs/reddit-api)
 
