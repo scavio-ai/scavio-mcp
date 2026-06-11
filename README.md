@@ -271,7 +271,7 @@ Add to settings (`Cmd+,`):
 
 - [Google Search API](https://scavio.dev/docs/search-api) — SERP results, news, images, maps, and knowledge graph
 - [Amazon Product API](https://scavio.dev/docs/amazon-api) and [Walmart API](https://scavio.dev/docs/walmart-api) — product search and details
-- [TikTok API](https://scavio.dev/docs/tiktok-api), [Reddit API](https://scavio.dev/docs/reddit-api), and [YouTube API](https://scavio.dev/docs/youtube-api) — social and video data
+- [TikTok API](https://scavio.dev/docs/tiktok-api), [Instagram API](https://scavio.dev/docs/instagram-api), [Reddit API](https://scavio.dev/docs/reddit-api), and [YouTube API](https://scavio.dev/docs/youtube-api) — social and video data
 
 Get a free [Search API](https://scavio.dev/docs/search-api) key at [scavio.dev](https://scavio.dev).
 
