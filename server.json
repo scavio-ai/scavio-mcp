@@ -3,7 +3,7 @@
   "name": "io.github.scavio-ai/scavio-mcp",
   "title": "Scavio",
   "description": "Connect AI agents to Google, YouTube, Amazon, Walmart, TikTok, Reddit. 21 search and data tools.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "repository": {
     "url": "https://github.com/scavio-ai/scavio-mcp",
     "source": "github"
@@ -12,7 +12,7 @@
     {
       "registryType": "npm",
       "identifier": "@scavio/mcp-server",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "transport": {
         "type": "stdio"
       },
