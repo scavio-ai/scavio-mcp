@@ -63,15 +63,17 @@ Add to `claude_desktop_config.json` (`~/Library/Application Support/Claude/claud
 {
   "mcpServers": {
     "scavio": {
-      "type": "http",
-      "url": "https://mcp.scavio.dev/mcp",
-      "headers": {
-        "x-api-key": "YOUR_SCAVIO_API_KEY"
+      "command": "npx",
+      "args": ["-y", "@scavio/mcp-server"],
+      "env": {
+        "SCAVIO_API_KEY": "YOUR_SCAVIO_API_KEY"
       }
     }
   }
 }
 ```
+
+Requires Node.js 20+. Restart Claude Desktop after saving.
 
 ### Cursor
 
