@@ -20,14 +20,26 @@ export function registerWalmartTools(server: McpServer, getClient: () => ScavioC
     {
       query: z.string().min(1).max(500)
         .describe("Product search query, e.g. 'air fryer 6 quart'."),
+      domain: z.string().optional()
+        .describe("Walmart domain."),
+      device: z.enum(["desktop", "mobile", "tablet"]).optional()
+        .describe("Device to emulate."),
       sort_by: z.enum(["best_match", "price_low", "price_high", "best_seller"]).default("best_match")
         .describe("Sort order for results."),
+      start_page: z.number().int().min(1).optional()
+        .describe("Starting page (1-indexed)."),
       min_price: z.number().optional()
         .describe("Minimum price filter in USD."),
       max_price: z.number().optional()
         .describe("Maximum price filter in USD."),
       fulfillment_speed: z.enum(["today", "tomorrow", "2_days", "anytime"]).default("anytime")
         .describe("Delivery speed filter."),
+      fulfillment_type: z.enum(["in_store"]).optional()
+        .describe("Fulfillment type filter."),
+      delivery_zip: z.string().optional()
+        .describe("ZIP code for localized results."),
+      store_id: z.string().optional()
+        .describe("Store id for in-store availability."),
     },
     async (params) => {
       try {
@@ -45,6 +57,14 @@ export function registerWalmartTools(server: McpServer, getClient: () => ScavioC
     {
       product_id: z.string()
         .describe("Walmart product ID — numeric string from the product URL (/ip/name/PRODUCT_ID)."),
+      domain: z.string().optional()
+        .describe("Walmart domain."),
+      device: z.enum(["desktop", "mobile", "tablet"]).optional()
+        .describe("Device to emulate."),
+      delivery_zip: z.string().optional()
+        .describe("ZIP code for localized pricing."),
+      store_id: z.string().optional()
+        .describe("Store id for in-store availability."),
     },
     async (params) => {
       try {

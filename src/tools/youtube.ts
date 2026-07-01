@@ -28,6 +28,26 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
         .describe("Filter by upload date. Omit for all time."),
       duration: z.enum(["short", "medium", "long"]).optional()
         .describe("Filter by duration. short=<4min, medium=4-20min, long=>20min."),
+      hd: z.boolean().optional()
+        .describe("HD videos only."),
+      "4k": z.boolean().optional()
+        .describe("4K videos only."),
+      subtitles: z.boolean().optional()
+        .describe("Videos with subtitles/CC only."),
+      creative_commons: z.boolean().optional()
+        .describe("Creative Commons licensed videos only."),
+      live: z.boolean().optional()
+        .describe("Live videos only."),
+      "360": z.boolean().optional()
+        .describe("360-degree videos only."),
+      "3d": z.boolean().optional()
+        .describe("3D videos only."),
+      hdr: z.boolean().optional()
+        .describe("HDR videos only."),
+      location: z.boolean().optional()
+        .describe("Videos with location metadata only."),
+      vr180: z.boolean().optional()
+        .describe("VR180 videos only."),
     },
     async (params) => {
       try {

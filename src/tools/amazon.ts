@@ -22,14 +22,28 @@ export function registerAmazonTools(server: McpServer, getClient: () => ScavioCl
         .describe("Product search query, e.g. 'wireless noise cancelling headphones'."),
       domain: z.string().default("com")
         .describe("Amazon domain suffix, e.g. 'com' (US), 'co.uk' (UK), 'de' (Germany), 'co.jp' (Japan)."),
+      country: z.string().optional()
+        .describe("Country code for localization."),
+      language: z.string().optional()
+        .describe("Language code."),
+      currency: z.string().optional()
+        .describe("Currency code (ISO 4217, e.g. 'USD')."),
+      device: z.enum(["desktop", "mobile", "tablet"]).optional()
+        .describe("Device to emulate."),
       sort_by: z.enum(["most_recent", "price_low_to_high", "price_high_to_low", "featured", "average_review", "bestsellers"]).default("featured")
         .describe("Sort order for results."),
       start_page: z.number().int().min(1).default(1)
         .describe("Starting page number."),
-      min_price: z.number().optional()
-        .describe("Minimum price filter in the domain's local currency."),
-      max_price: z.number().optional()
-        .describe("Maximum price filter in the domain's local currency."),
+      pages: z.number().int().optional()
+        .describe("Number of pages to fetch."),
+      category_id: z.string().optional()
+        .describe("Amazon category id."),
+      merchant_id: z.string().optional()
+        .describe("Filter to a specific merchant."),
+      zip_code: z.string().optional()
+        .describe("ZIP/postal code for localized pricing."),
+      autoselect_variant: z.boolean().optional()
+        .describe("Auto-select the default variant."),
     },
     async (params) => {
       try {
@@ -49,6 +63,18 @@ export function registerAmazonTools(server: McpServer, getClient: () => ScavioCl
         .describe("Amazon ASIN — the 10-character product ID, e.g. 'B09V3KXJPB'. Extract from the Amazon URL (/dp/ASIN)."),
       domain: z.string().default("com")
         .describe("Amazon domain suffix, e.g. 'com', 'co.uk', 'de'."),
+      country: z.string().optional()
+        .describe("Country code for localization."),
+      language: z.string().optional()
+        .describe("Language code."),
+      currency: z.string().optional()
+        .describe("Currency code (ISO 4217, e.g. 'USD')."),
+      device: z.enum(["desktop", "mobile", "tablet"]).optional()
+        .describe("Device to emulate."),
+      zip_code: z.string().optional()
+        .describe("ZIP/postal code for localized pricing."),
+      autoselect_variant: z.boolean().optional()
+        .describe("Auto-select the default variant."),
     },
     async (params) => {
       try {

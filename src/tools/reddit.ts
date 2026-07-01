@@ -20,6 +20,8 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
     {
       query: z.string().min(1).max(500)
         .describe("Search query (1-500 chars)."),
+      type: z.enum(["posts", "comments"]).optional()
+        .describe("Result type (server default 'posts')."),
       sort: z.enum(["relevance", "hot", "top", "new", "comments"]).default("relevance")
         .describe("Sort order. 'relevance' (default), 'hot', 'top', 'new', or 'comments'."),
       cursor: z.string().optional()
