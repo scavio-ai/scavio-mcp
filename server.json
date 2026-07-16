@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.scavio-ai/scavio-mcp",
   "title": "Scavio",
-  "description": "Connect AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 46 search and data tools.",
+  "description": "AI-agent search across Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit. 46 tools.",
   "version": "0.2.2",
   "repository": {
     "url": "https://github.com/scavio-ai/scavio-mcp",
