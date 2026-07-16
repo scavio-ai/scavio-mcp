@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 33 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 46 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -196,7 +196,20 @@ Add to settings (`Cmd+,`):
 
 | Tool | Description |
 |------|-------------|
-| `search_google` | Web search with structured results, news, images, maps, and knowledge graph |
+| `search_google` | Web search (v2) with organic results, ads, and AI Overview |
+| `google_ai_mode` | AI Mode conversational answer with cited sources |
+| `google_maps_search` | Search Google Maps for local businesses |
+| `google_maps_place` | Place details: address, phone, hours, rating |
+| `google_maps_reviews` | Reviews for a place with pagination |
+| `google_shopping` | Product listings with price, store, and rating |
+| `google_shopping_product` | Product detail and sellers |
+| `google_shopping_stores` | More sellers for a product (pagination) |
+| `google_flights` | Flight itineraries with prices and stops |
+| `google_hotels` | Hotel search with prices and ratings |
+| `google_hotels_detail` | Hotel property details |
+| `google_news` | News results by query, topic, story, or publication |
+| `google_trends` | Interest-over-time and related queries |
+| `google_trending` | Trending searches |
 
 ### [YouTube Data API](https://scavio.dev/docs/youtube-api)
 
