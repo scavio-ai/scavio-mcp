@@ -282,11 +282,13 @@ Add to settings (`Cmd+,`):
 
 ## About Scavio
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and data API for AI agents and developers. One key, structured JSON, no scraping or proxies:
+[Scavio](https://scavio.dev) is a unified [search API for AI agents](https://scavio.dev/search-api-for-ai-agents) and a data API for developers. One key, structured JSON, no scraping or proxies:
 
-- [Google Search API](https://scavio.dev/docs/search-api) — SERP results, news, images, maps, and knowledge graph
-- [Amazon Product API](https://scavio.dev/docs/amazon-api) and [Walmart API](https://scavio.dev/docs/walmart-api) — product search and details
-- [TikTok API](https://scavio.dev/docs/tiktok-api), [Instagram API](https://scavio.dev/docs/instagram-api), [Reddit API](https://scavio.dev/docs/reddit-api), and [YouTube API](https://scavio.dev/docs/youtube-api) — social and video data
+- [Google Search API](https://scavio.dev/google-search-api) — SERP results, news, images, maps, and knowledge graph
+- [Amazon Product API](https://scavio.dev/amazon-product-api) and [Walmart Product API](https://scavio.dev/walmart-product-api) — product search and details
+- [TikTok API](https://scavio.dev/tiktok-api), [Instagram API](https://scavio.dev/instagram-api), [Reddit API](https://scavio.dev/reddit-api), and [YouTube API](https://scavio.dev/youtube-transcript-api) — social and video data
+
+Teams use it as a [SerpAPI alternative](https://scavio.dev/alternatives/serpapi) with structured multi-platform data — see [Tavily vs Scavio](https://scavio.dev/compare/tavily/vs-scavio) for a head-to-head comparison.
 
 Get a free [Search API](https://scavio.dev/docs/search-api) key at [scavio.dev](https://scavio.dev).
 
