@@ -1,6 +1,6 @@
 # Scavio MCP Server - LLM Installation Guide
 
-Scavio is a unified search API for AI agents: Google (SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 46 tools, one API key.
+Scavio is a unified search API for AI agents: Google (SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 60 tools, one API key.
 
 ## Prerequisites
 

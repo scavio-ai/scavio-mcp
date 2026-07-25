@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.scavio-ai/scavio-mcp",
   "title": "Scavio",
-  "description": "AI-agent search across Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit. 46 tools.",
-  "version": "0.2.2",
+  "description": "AI-agent search across Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit. 60 tools.",
+  "version": "0.4.0",
   "repository": {
     "url": "https://github.com/scavio-ai/scavio-mcp",
     "source": "github"
@@ -12,7 +12,7 @@
     {
       "registryType": "npm",
       "identifier": "@scavio/mcp-server",
-      "version": "0.2.2",
+      "version": "0.4.0",
       "transport": {
         "type": "stdio"
       },

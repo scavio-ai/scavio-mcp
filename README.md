@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 46 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 60 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -216,7 +216,21 @@ Add to settings (`Cmd+,`):
 | Tool | Description |
 |------|-------------|
 | `search_youtube` | Search videos, channels, and playlists |
-| `get_youtube_metadata` | Get video metadata including title, views, likes, and duration |
+| `search_youtube_shorts` | Search short-form videos |
+| `youtube_search_suggestions` | Get search autocomplete suggestions |
+| `get_youtube_video` | Get full video details, chapters, and captions |
+| `get_youtube_metadata` | Deprecated alias of `get_youtube_video` |
+| `get_youtube_comments` | Get comments on a video with pagination |
+| `get_youtube_comment_replies` | Get replies to a specific comment |
+| `get_youtube_transcript` | Get a video transcript as plain text or SRT |
+| `get_youtube_related` | Get videos related to a video |
+| `search_youtube_channels` | Search channels by keyword |
+| `get_youtube_channel` | Get channel profile by ID, handle, or URL |
+| `get_youtube_channel_videos` | List a channel's videos |
+| `get_youtube_channel_shorts` | List a channel's Shorts |
+| `get_youtube_channel_community` | List a channel's community posts |
+| `resolve_youtube_channel` | Resolve a handle or URL to a channel ID |
+| `get_youtube_streams` | Get direct media stream URLs for a video |
 
 ### [Amazon Product API](https://scavio.dev/docs/amazon-api)
 
