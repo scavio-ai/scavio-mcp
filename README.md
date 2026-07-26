@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 60 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, Twitter, and LinkedIn. 95 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -285,6 +285,51 @@ Add to settings (`Cmd+,`):
 |------|-------------|
 | `search_reddit` | Search Reddit posts by query with sort and pagination |
 | `get_reddit_post` | Get a full post with threaded comments by URL |
+| `get_reddit_search_suggestions` | Get search autocomplete suggestions |
+| `get_reddit_post_comments` | Get a post's top-level comments with pagination |
+| `get_reddit_comment_replies` | Get replies to a specific comment |
+| `get_reddit_subreddit` | Get subreddit metadata and subscriber count |
+| `get_reddit_subreddit_posts` | List a subreddit's post feed |
+| `get_reddit_user` | Get a redditor's profile |
+| `get_reddit_user_posts` | List a redditor's submitted posts |
+| `get_reddit_user_comments` | List a redditor's comments |
+| `get_reddit_popular` | Get the site-wide popular feed |
+| `get_reddit_trending` | Get current trending search queries |
+
+### [Twitter API](https://scavio.dev/docs/twitter-api)
+
+| Tool | Description |
+|------|-------------|
+| `search_twitter` | Search tweets and people by keyword |
+| `get_tweet` | Get full details for a single tweet |
+| `get_tweet_comments` | Get replies to a tweet (ranked or chronological) |
+| `get_tweet_retweeters` | List users who retweeted a tweet |
+| `get_twitter_user` | Get a user's profile by handle |
+| `get_twitter_user_tweets` | List a user's tweets |
+| `get_twitter_user_replies` | List a user's tweets and replies |
+| `get_twitter_user_media` | List a user's media tweets |
+| `get_twitter_user_followers` | List a user's followers |
+| `get_twitter_user_followings` | List accounts a user follows |
+| `get_twitter_trending` | Get trending topics for a country |
+
+### [LinkedIn API](https://scavio.dev/docs/linkedin-api)
+
+| Tool | Description |
+|------|-------------|
+| `get_linkedin_person` | Get a member's full profile |
+| `get_linkedin_person_about` | Get a member's about/overview metadata |
+| `get_linkedin_person_posts` | List a member's recent posts |
+| `get_linkedin_person_contact` | Get a member's public contact info |
+| `get_linkedin_company` | Get a company's profile |
+| `get_linkedin_company_posts` | List a company's recent posts |
+| `get_linkedin_company_people` | List people who work at a company |
+| `get_linkedin_company_jobs` | List a company's open job listings |
+| `search_linkedin_people` | Search for people by name, title, company, or school |
+| `search_linkedin_jobs` | Search for jobs by keyword |
+| `search_linkedin_posts` | Search for posts by keyword |
+| `get_linkedin_job` | Get full details for a job listing |
+| `get_linkedin_post` | Get full details for a single post |
+| `get_linkedin_post_comments` | Get comments on a post |
 
 ### Account
 
@@ -300,7 +345,7 @@ Add to settings (`Cmd+,`):
 
 - [Google Search API](https://scavio.dev/google-search-api) — SERP results, news, images, maps, and knowledge graph
 - [Amazon Product API](https://scavio.dev/amazon-product-api) and [Walmart Product API](https://scavio.dev/walmart-product-api) — product search and details
-- [TikTok API](https://scavio.dev/tiktok-api), [Instagram API](https://scavio.dev/instagram-api), [Reddit API](https://scavio.dev/reddit-api), and [YouTube API](https://scavio.dev/youtube-transcript-api) — social and video data
+- [TikTok API](https://scavio.dev/tiktok-api), [Instagram API](https://scavio.dev/instagram-api), [Reddit API](https://scavio.dev/reddit-api), [Twitter API](https://scavio.dev/twitter-api), [LinkedIn API](https://scavio.dev/linkedin-api), and [YouTube API](https://scavio.dev/youtube-transcript-api) — social and video data
 
 Teams use it as a [SerpAPI alternative](https://scavio.dev/alternatives/serpapi) with structured multi-platform data — see [Tavily vs Scavio](https://scavio.dev/compare/tavily/vs-scavio) for a head-to-head comparison.
 
