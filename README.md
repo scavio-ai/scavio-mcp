@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, Twitter, and LinkedIn. 95 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, and LinkedIn. 95 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -296,21 +296,21 @@ Add to settings (`Cmd+,`):
 | `get_reddit_popular` | Get the site-wide popular feed |
 | `get_reddit_trending` | Get current trending search queries |
 
-### [Twitter API](https://scavio.dev/docs/twitter-api)
+### [X API](https://scavio.dev/docs/x-api)
 
 | Tool | Description |
 |------|-------------|
-| `search_twitter` | Search tweets and people by keyword |
+| `search_x` | Search tweets and people by keyword |
 | `get_tweet` | Get full details for a single tweet |
 | `get_tweet_comments` | Get replies to a tweet (ranked or chronological) |
 | `get_tweet_retweeters` | List users who retweeted a tweet |
-| `get_twitter_user` | Get a user's profile by handle |
-| `get_twitter_user_tweets` | List a user's tweets |
-| `get_twitter_user_replies` | List a user's tweets and replies |
-| `get_twitter_user_media` | List a user's media tweets |
-| `get_twitter_user_followers` | List a user's followers |
-| `get_twitter_user_followings` | List accounts a user follows |
-| `get_twitter_trending` | Get trending topics for a country |
+| `get_x_user` | Get a user's profile by handle |
+| `get_x_user_tweets` | List a user's tweets |
+| `get_x_user_replies` | List a user's tweets and replies |
+| `get_x_user_media` | List a user's media tweets |
+| `get_x_user_followers` | List a user's followers |
+| `get_x_user_followings` | List accounts a user follows |
+| `get_x_trending` | Get trending topics for a country |
 
 ### [LinkedIn API](https://scavio.dev/docs/linkedin-api)
 
@@ -345,7 +345,7 @@ Add to settings (`Cmd+,`):
 
 - [Google Search API](https://scavio.dev/google-search-api) — SERP results, news, images, maps, and knowledge graph
 - [Amazon Product API](https://scavio.dev/amazon-product-api) and [Walmart Product API](https://scavio.dev/walmart-product-api) — product search and details
-- [TikTok API](https://scavio.dev/tiktok-api), [Instagram API](https://scavio.dev/instagram-api), [Reddit API](https://scavio.dev/reddit-api), [Twitter API](https://scavio.dev/twitter-api), [LinkedIn API](https://scavio.dev/linkedin-api), and [YouTube API](https://scavio.dev/youtube-transcript-api) — social and video data
+- [TikTok API](https://scavio.dev/tiktok-api), [Instagram API](https://scavio.dev/instagram-api), [Reddit API](https://scavio.dev/reddit-api), [X API](https://scavio.dev/x-api), [LinkedIn API](https://scavio.dev/linkedin-api), and [YouTube API](https://scavio.dev/youtube-transcript-api) — social and video data
 
 Teams use it as a [SerpAPI alternative](https://scavio.dev/alternatives/serpapi) with structured multi-platform data — see [Tavily vs Scavio](https://scavio.dev/compare/tavily/vs-scavio) for a head-to-head comparison.
 
