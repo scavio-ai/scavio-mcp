@@ -8,7 +8,7 @@ import { registerUsageTool } from "./usage.js";
 import { registerTiktokTools } from "./tiktok.js";
 import { registerInstagramTools } from "./instagram.js";
 import { registerRedditTools } from "./reddit.js";
-import { registerTwitterTools } from "./twitter.js";
+import { registerXTools } from "./x.js";
 import { registerLinkedinTools } from "./linkedin.js";
 
 export function registerAllTools(server: McpServer, getClient: () => ScavioClient): void {
@@ -19,7 +19,7 @@ export function registerAllTools(server: McpServer, getClient: () => ScavioClien
   registerTiktokTools(server, getClient);
   registerInstagramTools(server, getClient);
   registerRedditTools(server, getClient);
-  registerTwitterTools(server, getClient);
+  registerXTools(server, getClient);
   registerLinkedinTools(server, getClient);
   registerUsageTool(server, getClient);
 }
