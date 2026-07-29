@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, and LinkedIn. 95 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, LinkedIn, and TikTok Shop. 103 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -296,7 +296,7 @@ Add to settings (`Cmd+,`):
 | `get_reddit_popular` | Get the site-wide popular feed |
 | `get_reddit_trending` | Get current trending search queries |
 
-### [X API](https://scavio.dev/docs/x-api)
+### [X API](https://scavio.dev/docs/x-search)
 
 | Tool | Description |
 |------|-------------|
@@ -312,7 +312,7 @@ Add to settings (`Cmd+,`):
 | `get_x_user_followings` | List accounts a user follows |
 | `get_x_trending` | Get trending topics for a country |
 
-### [LinkedIn API](https://scavio.dev/docs/linkedin-api)
+### [LinkedIn API](https://scavio.dev/docs/linkedin-person)
 
 | Tool | Description |
 |------|-------------|
@@ -330,6 +330,30 @@ Add to settings (`Cmd+,`):
 | `get_linkedin_job` | Get full details for a job listing |
 | `get_linkedin_post` | Get full details for a single post |
 | `get_linkedin_post_comments` | Get comments on a post |
+
+### [TikTok Shop API](https://scavio.dev/docs/tiktok-shop-search)
+
+| Tool | Description |
+|------|-------------|
+| `search_tiktok_shop` | Search TikTok Shop products by keyword (US catalog, exact prices) |
+| `get_tiktok_shop_search_suggestions` | Keyword autocomplete for a partial query, 8 regions |
+| `get_tiktok_shop_product` | Full product detail (no price; ~44% of search IDs resolve) |
+| `get_tiktok_shop_product_reviews` | Paginated product reviews, up to 200 per call |
+| `get_tiktok_shop_categories` | The global category tree (28 top-level, 240 nodes) |
+| `get_tiktok_shop_category_products` | List products under a category ID, with exact prices |
+| `get_tiktok_shop_shop_products` | List a seller's catalog, 30 per page, with exact prices |
+| `resolve_tiktok_shop_url` | Resolve a TikTok Shop URL or share link to a product/shop ID |
+
+Two things to know: `get_tiktok_shop_product` does not return a price (TikTok masks it on the
+product page upstream) - exact prices come from `search_tiktok_shop`,
+`get_tiktok_shop_shop_products` and `get_tiktok_shop_category_products`. And only about 44% of the
+product IDs returned by search resolve on `get_tiktok_shop_product` (11 of 25 measured), because
+upstream has no detail data for the rest. That miss is signalled by the HTTP 404 status, not by any
+field in the response body, and it is a normal outcome rather than an error to retry - the tool
+returns it as a plain result with `status: "no_detail_data"` so agents skip the product instead of
+looping. For an id that will not resolve, `get_tiktok_shop_product_reviews` is often still usable:
+across 8 measured ids that failed on detail, 8 of 8 returned HTTP 200 on reviews and 7 of 8 returned
+at least one review.
 
 ### Account
 

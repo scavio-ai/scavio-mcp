@@ -6,6 +6,7 @@ import { registerAmazonTools } from "./amazon.js";
 import { registerWalmartTools } from "./walmart.js";
 import { registerUsageTool } from "./usage.js";
 import { registerTiktokTools } from "./tiktok.js";
+import { registerTiktokShopTools } from "./tiktok-shop.js";
 import { registerInstagramTools } from "./instagram.js";
 import { registerRedditTools } from "./reddit.js";
 import { registerXTools } from "./x.js";
@@ -17,6 +18,7 @@ export function registerAllTools(server: McpServer, getClient: () => ScavioClien
   registerAmazonTools(server, getClient);
   registerWalmartTools(server, getClient);
   registerTiktokTools(server, getClient);
+  registerTiktokShopTools(server, getClient);
   registerInstagramTools(server, getClient);
   registerRedditTools(server, getClient);
   registerXTools(server, getClient);
