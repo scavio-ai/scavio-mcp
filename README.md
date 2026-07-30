@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, LinkedIn, and TikTok Shop. 103 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, LinkedIn, and TikTok Shop. 98 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -316,20 +316,24 @@ Add to settings (`Cmd+,`):
 
 | Tool | Description |
 |------|-------------|
-| `get_linkedin_person` | Get a member's full profile |
-| `get_linkedin_person_about` | Get a member's about/overview metadata |
-| `get_linkedin_person_posts` | List a member's recent posts |
-| `get_linkedin_person_contact` | Get a member's public contact info |
-| `get_linkedin_company` | Get a company's profile |
-| `get_linkedin_company_posts` | List a company's recent posts |
-| `get_linkedin_company_people` | List people who work at a company |
-| `get_linkedin_company_jobs` | List a company's open job listings |
-| `search_linkedin_people` | Search for people by name, title, company, or school |
-| `search_linkedin_jobs` | Search for jobs by keyword |
-| `search_linkedin_posts` | Search for posts by keyword |
+| `get_linkedin_person` | Get a member's full profile, experience and education |
+| `get_linkedin_person_about` | Get a member's about/overview sections |
+| `get_linkedin_person_posts` | List a member's recent posts (up to 50) |
+| `get_linkedin_company` | Get a company's profile, locations and related companies |
+| `get_linkedin_company_posts` | List a company's recent posts (up to 50) |
+| `search_linkedin_jobs` | Search for jobs by keyword and location |
 | `get_linkedin_job` | Get full details for a job listing |
 | `get_linkedin_post` | Get full details for a single post |
-| `get_linkedin_post_comments` | Get comments on a post |
+| `get_linkedin_post_comments` | Get comments on a post, 10 per page |
+
+Every LinkedIn tool costs 1 credit. Take a vanity handle, slug or id, or a full
+LinkedIn URL.
+
+The upstream provider retired the datasets behind member contact info, the
+company employee directory, per-company job listings, people search and post
+search, so those five tools were removed. `get_linkedin_company` still returns a
+small sample of featured employees, and `search_linkedin_jobs` with a company
+name substitutes for per-company listings.
 
 ### [TikTok Shop API](https://scavio.dev/docs/tiktok-shop-search)
 
