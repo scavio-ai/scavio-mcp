@@ -70,8 +70,13 @@ export function registerLinkedinTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "get_linkedin_person_posts",
-    `Get a LinkedIn member's recent posts as JSON, each with text, url, timestamps, a full reaction breakdown (likes, appreciations, empathy, interest, praise), comment and repost counts, attached images, article metadata and the author. Returns up to 50 posts; the provider exposes no further pages, so there is no cursor. Provide a vanity handle or a full profile URL. Costs 1 credit.`,
-    personRef,
+    `Get a LinkedIn member's posts as JSON, each with text, url, timestamps, a full reaction breakdown (likes, appreciations, empathy, interest, praise), comment and repost counts, attached images, article metadata and the author. Set type to also fetch the posts the member commented on or reacted to. Returns 50 per page with next_cursor and has_more; pass next_cursor back to get the following page. Provide a vanity handle or a full profile URL. Costs 1 credit per page.`,
+    {
+      ...personRef,
+      type: z.enum(["posts", "comments", "reactions"]).optional()
+        .describe("Which feed: the member's own posts (default), posts they commented on, or posts they reacted to."),
+      cursor: z.string().optional().describe("next_cursor from a previous response, to fetch the next page."),
+    },
     call("/api/v1/linkedin/person/posts"),
   );
 
@@ -84,18 +89,22 @@ export function registerLinkedinTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "get_linkedin_company_posts",
-    `Get a LinkedIn company's recent posts as JSON, in the same shape as member posts (text, url, reaction breakdown, comment and repost counts, images, author). Returns up to 50 posts; the provider exposes no further pages, so there is no cursor. Provide a company slug or a full company URL. Costs 1 credit.`,
-    companyRef,
+    `Get a LinkedIn company's recent posts as JSON, in the same shape as member posts (text, url, reaction breakdown, comment and repost counts, images, author). Returns 50 per page with next_cursor and has_more; pass next_cursor back for the following page. Provide a company slug or a full company URL. Costs 1 credit per page.`,
+    {
+      ...companyRef,
+      cursor: z.string().optional().describe("next_cursor from a previous response, to fetch the next page."),
+    },
     call("/api/v1/linkedin/company/posts"),
   );
 
   server.tool(
     "search_linkedin_jobs",
-    `Search LinkedIn job listings by keyword as JSON, returning title, company, company URL and logo, location, posted time, workplace type and salary for each hit. Note the provider rotates its result set, so repeating the same search returns different listings and there is no stable pagination. Pass a company name as the search term to approximate a per-company job listing. Costs 1 credit.`,
+    `Search LinkedIn job listings by keyword as JSON, returning title, company, company URL and logo, location, posted time, workplace type and salary for each hit. Returns 25 per page with next_cursor. Note the provider rotates its result set, so pages overlap slightly and repeating the same search returns different listings - dedupe by job id and do not treat it as an exhaustive list. Pass a company name as the search term to approximate a per-company job listing. Costs 1 credit per page.`,
     {
       search: z.string().min(1).describe("Search keyword, e.g. 'software engineer'."),
       location: z.string().optional()
         .describe("Geographic filter, e.g. 'United States'. Omit to search everywhere."),
+      cursor: z.string().optional().describe("next_cursor from a previous response, to fetch the next page."),
     },
     call("/api/v1/linkedin/search/jobs"),
   );
@@ -119,11 +128,11 @@ export function registerLinkedinTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "get_linkedin_post_comments",
-    `Get the comments on a LinkedIn post as JSON, each with text, permalink, timestamp, pinned flag, the commenter (name, headline, avatar, profile URL) and any nested replies. Paginated 10 per page via a 1-based page number; the response carries the total and a has_more flag. Provide a post id, activity urn, or a full post URL. Costs 1 credit.`,
+    `Get the comments on a LinkedIn post as JSON, each with text, permalink, timestamp, pinned flag, the commenter (name, headline, avatar, profile URL) and any nested replies. Paginated via a 1-based page number; page size varies, so keep incrementing page until a page returns no comments. The total is reported on page 1 only. Provide a post id, activity urn, or a full post URL. Costs 1 credit.`,
     {
       ...postRef,
       page: z.number().int().positive().optional()
-        .describe("1-based page number, 10 comments per page. Defaults to 1."),
+        .describe("1-based page number. Defaults to 1. Page size varies; stop when a page is empty."),
     },
     call("/api/v1/linkedin/post/comments"),
   );
