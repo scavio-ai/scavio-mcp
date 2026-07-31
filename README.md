@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, LinkedIn, and TikTok Shop. 98 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, LinkedIn, and TikTok Shop. 99 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -236,8 +236,9 @@ Add to settings (`Cmd+,`):
 
 | Tool | Description |
 |------|-------------|
-| `search_amazon` | Search product listings with price and sort filters |
+| `search_amazon` | Search product listings across 22 marketplaces (no sort option) |
 | `get_amazon_product` | Get full product details by ASIN |
+| `get_amazon_offers` | List every seller offering an ASIN, with buy-box winner |
 
 ### [Walmart API](https://scavio.dev/docs/walmart-api)
 
