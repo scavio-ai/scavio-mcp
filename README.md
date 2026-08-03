@@ -327,8 +327,11 @@ Add to settings (`Cmd+,`):
 | `get_linkedin_post` | Get full details for a single post |
 | `get_linkedin_post_comments` | Get comments on a post, 10 per page |
 
-Every LinkedIn tool costs 1 credit. Take a vanity handle, slug or id, or a full
-LinkedIn URL.
+All take a vanity handle, slug or id, or a full LinkedIn URL. Credit cost varies:
+`get_linkedin_person`, `get_linkedin_person_about`, `get_linkedin_company` and
+`get_linkedin_post` cost 1; `get_linkedin_person_posts`,
+`get_linkedin_company_posts`, `search_linkedin_jobs` and
+`get_linkedin_post_comments` cost 10 per page; `get_linkedin_job` costs 30.
 
 The upstream provider retired the datasets behind member contact info, the
 company employee directory, per-company job listings, people search and post
