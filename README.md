@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, and Reddit. 46 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, LinkedIn, and TikTok Shop. 100 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -192,6 +192,10 @@ Add to settings (`Cmd+,`):
 
 ## Available Tools
 
+Every tool costs 1 credit per call unless its section says otherwise - YouTube,
+Instagram and LinkedIn price per endpoint, and `get_amazon_options` and `get_usage`
+are free.
+
 ### [Google Search API](https://scavio.dev/docs/search-api)
 
 | Tool | Description |
@@ -216,14 +220,35 @@ Add to settings (`Cmd+,`):
 | Tool | Description |
 |------|-------------|
 | `search_youtube` | Search videos, channels, and playlists |
-| `get_youtube_metadata` | Get video metadata including title, views, likes, and duration |
+| `search_youtube_shorts` | Search short-form videos |
+| `youtube_search_suggestions` | Get search autocomplete suggestions |
+| `get_youtube_video` | Get full video details, chapters, and captions |
+| `get_youtube_metadata` | Deprecated alias of `get_youtube_video` |
+| `get_youtube_comments` | Get comments on a video with pagination |
+| `get_youtube_comment_replies` | Get replies to a specific comment |
+| `get_youtube_transcript` | Get a video transcript as plain text or SRT |
+| `get_youtube_related` | Get videos related to a video |
+| `search_youtube_channels` | Search channels by keyword |
+| `get_youtube_channel` | Get channel profile by ID, handle, or URL |
+| `get_youtube_channel_videos` | List a channel's videos |
+| `get_youtube_channel_shorts` | List a channel's Shorts |
+| `get_youtube_channel_community` | List a channel's community posts |
+| `resolve_youtube_channel` | Resolve a handle or URL to a channel ID |
+| `get_youtube_streams` | Get direct media stream URLs for a video |
+
+Credit cost varies: `get_youtube_transcript` costs 8, `get_youtube_streams` 3,
+`search_youtube` and `search_youtube_shorts` 2, and every other YouTube tool 1.
+`get_youtube_related` accepts a cursor but never returns one, so treat it as a
+single page.
 
 ### [Amazon Product API](https://scavio.dev/docs/amazon-api)
 
 | Tool | Description |
 |------|-------------|
-| `search_amazon` | Search product listings with price and sort filters |
+| `search_amazon` | Search product listings across 22 marketplaces (no sort option) |
 | `get_amazon_product` | Get full product details by ASIN |
+| `get_amazon_offers` | List every seller offering an ASIN, with buy-box winner |
+| `get_amazon_options` | List the supported marketplaces and their country codes (free) |
 
 ### [Walmart API](https://scavio.dev/docs/walmart-api)
 
@@ -265,12 +290,103 @@ Add to settings (`Cmd+,`):
 | `get_instagram_user_followers` | Get a user's follower list |
 | `get_instagram_user_followings` | Get a user's following list |
 
+Instagram is priced per endpoint, not at a flat rate: `get_instagram_user_posts`
+costs 2, `get_instagram_post` and `get_instagram_comment_replies` cost 8, and the
+other nine tools cost 10. The 10-credit endpoints hedge two upstream providers and
+bill both legs, which is what the price reflects.
+
 ### [Reddit API](https://scavio.dev/docs/reddit-api)
 
 | Tool | Description |
 |------|-------------|
-| `search_reddit` | Search Reddit posts by query with sort and pagination |
-| `get_reddit_post` | Get a full post with threaded comments by URL |
+| `search_reddit` | Search Reddit posts by query, relevance order, cursor pagination |
+| `get_reddit_post` | Get a single post by URL or id (no comments; see below) |
+| `get_reddit_search_suggestions` | Get search autocomplete suggestions |
+| `get_reddit_post_comments` | Get a post's top-level comments with pagination |
+| `get_reddit_comment_replies` | Get replies to a specific comment |
+| `get_reddit_subreddit` | Get subreddit metadata and subscriber count |
+| `get_reddit_subreddit_posts` | List a subreddit's post feed |
+| `get_reddit_user` | Get a redditor's profile |
+| `get_reddit_user_posts` | List a redditor's submitted posts |
+| `get_reddit_user_comments` | List a redditor's comments |
+| `get_reddit_popular` | Get the site-wide popular feed |
+| `get_reddit_trending` | Get current trending search queries |
+
+Every Reddit tool costs 1 credit. Two things to know: `search_reddit` takes a query
+and a cursor only - there is no sort or post-type filter, results come back in
+relevance order - and `get_reddit_post` returns a flat post object with no comments,
+so call `get_reddit_post_comments` with the post id for those. Reddit is the slowest
+platform here, typically 5-15 seconds per call.
+
+### [X API](https://scavio.dev/docs/x-search)
+
+| Tool | Description |
+|------|-------------|
+| `search_x` | Search tweets and people by keyword |
+| `get_tweet` | Get full details for a single tweet |
+| `get_tweet_comments` | Get replies to a tweet (ranked or chronological) |
+| `get_tweet_retweeters` | List users who retweeted a tweet |
+| `get_x_user` | Get a user's profile by handle |
+| `get_x_user_tweets` | List a user's tweets |
+| `get_x_user_replies` | List a user's tweets and replies |
+| `get_x_user_media` | List a user's media tweets |
+| `get_x_user_followers` | List a user's followers |
+| `get_x_user_followings` | List accounts a user follows |
+| `get_x_trending` | Get trending topics for a country |
+
+`get_x_user_tweets`, `get_x_user_replies` and `get_x_user_media` return a
+`next_cursor` but no `has_more`, so page until the cursor is absent or the timeline
+comes back empty.
+
+### [LinkedIn API](https://scavio.dev/docs/linkedin-person)
+
+| Tool | Description |
+|------|-------------|
+| `get_linkedin_person` | Get a member's full profile, experience and education |
+| `get_linkedin_person_about` | Get a member's about/overview sections |
+| `get_linkedin_person_posts` | List a member's recent posts (up to 50) |
+| `get_linkedin_company` | Get a company's profile, locations and related companies |
+| `get_linkedin_company_posts` | List a company's recent posts (up to 50) |
+| `search_linkedin_jobs` | Search for jobs by keyword and location |
+| `get_linkedin_job` | Get full details for a job listing |
+| `get_linkedin_post` | Get full details for a single post |
+| `get_linkedin_post_comments` | Get comments on a post, 10 per page |
+
+All take a vanity handle, slug or id, or a full LinkedIn URL. Credit cost varies:
+`get_linkedin_person`, `get_linkedin_person_about`, `get_linkedin_company` and
+`get_linkedin_post` cost 1; `get_linkedin_person_posts`,
+`get_linkedin_company_posts`, `search_linkedin_jobs` and
+`get_linkedin_post_comments` cost 10 per page; `get_linkedin_job` costs 30.
+
+The upstream provider retired the datasets behind member contact info, the
+company employee directory, per-company job listings, people search and post
+search, so those five tools were removed. `get_linkedin_company` still returns a
+small sample of featured employees, and `search_linkedin_jobs` with a company
+name substitutes for per-company listings.
+
+### [TikTok Shop API](https://scavio.dev/docs/tiktok-shop-search)
+
+| Tool | Description |
+|------|-------------|
+| `search_tiktok_shop` | Search TikTok Shop products by keyword (US catalog, exact prices) |
+| `get_tiktok_shop_search_suggestions` | Keyword autocomplete for a partial query, 8 regions |
+| `get_tiktok_shop_product` | Full product detail (no price; ~44% of search IDs resolve) |
+| `get_tiktok_shop_product_reviews` | Paginated product reviews, up to 200 per call |
+| `get_tiktok_shop_categories` | The global category tree (28 top-level, 240 nodes) |
+| `get_tiktok_shop_category_products` | List products under a category ID, with exact prices |
+| `get_tiktok_shop_shop_products` | List a seller's catalog, 30 per page, with exact prices |
+| `resolve_tiktok_shop_url` | Resolve a TikTok Shop URL or share link to a product/shop ID |
+
+Two things to know: `get_tiktok_shop_product` does not return a price (TikTok masks it on the
+product page upstream) - exact prices come from `search_tiktok_shop`,
+`get_tiktok_shop_shop_products` and `get_tiktok_shop_category_products`. And only about 44% of the
+product IDs returned by search resolve on `get_tiktok_shop_product` (11 of 25 measured), because
+upstream has no detail data for the rest. That miss is signalled by the HTTP 404 status, not by any
+field in the response body, and it is a normal outcome rather than an error to retry - the tool
+returns it as a plain result with `status: "no_detail_data"` so agents skip the product instead of
+looping. For an id that will not resolve, `get_tiktok_shop_product_reviews` is often still usable:
+across 8 measured ids that failed on detail, 8 of 8 returned HTTP 200 on reviews and 7 of 8 returned
+at least one review.
 
 ### Account
 
@@ -282,11 +398,13 @@ Add to settings (`Cmd+,`):
 
 ## About Scavio
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and data API for AI agents and developers. One key, structured JSON, no scraping or proxies:
+[Scavio](https://scavio.dev) is a unified [search API for AI agents](https://scavio.dev/search-api-for-ai-agents) and a data API for developers. One key, structured JSON, no scraping or proxies:
 
-- [Google Search API](https://scavio.dev/docs/search-api) — SERP results, news, images, maps, and knowledge graph
-- [Amazon Product API](https://scavio.dev/docs/amazon-api) and [Walmart API](https://scavio.dev/docs/walmart-api) — product search and details
-- [TikTok API](https://scavio.dev/docs/tiktok-api), [Instagram API](https://scavio.dev/docs/instagram-api), [Reddit API](https://scavio.dev/docs/reddit-api), and [YouTube API](https://scavio.dev/docs/youtube-api) — social and video data
+- [Google Search API](https://scavio.dev/google-search-api) — SERP results, news, images, maps, and knowledge graph
+- [Amazon Product API](https://scavio.dev/amazon-product-api) and [Walmart Product API](https://scavio.dev/walmart-product-api) — product search and details
+- [TikTok API](https://scavio.dev/tiktok-api), [Instagram API](https://scavio.dev/instagram-api), [Reddit API](https://scavio.dev/reddit-api), [X API](https://scavio.dev/x-api), [LinkedIn API](https://scavio.dev/linkedin-api), and [YouTube API](https://scavio.dev/youtube-transcript-api) — social and video data
+
+Teams use it as a [SerpAPI alternative](https://scavio.dev/alternatives/serpapi) with structured multi-platform data — see [Tavily vs Scavio](https://scavio.dev/compare/tavily/vs-scavio) for a head-to-head comparison.
 
 Get a free [Search API](https://scavio.dev/docs/search-api) key at [scavio.dev](https://scavio.dev).
 

@@ -16,7 +16,7 @@ function handleApiError(err: unknown): never | { isError: true; content: { type:
 export function registerWalmartTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "search_walmart",
-    `Search Walmart and return product listings as JSON. Each result includes title, product ID, price, rating, and image URL. Use when the user wants to find products on Walmart or compare prices with Amazon.`,
+    `Search Walmart and return product listings as JSON. Each result includes title, product ID, price, rating, and image URL. Use when the user wants to find products on Walmart or compare prices with Amazon. Costs 1 credit.`,
     {
       query: z.string().min(1).max(500)
         .describe("Product search query, e.g. 'air fryer 6 quart'."),
@@ -53,7 +53,7 @@ export function registerWalmartTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_walmart_product",
-    `Get detailed information for a Walmart product by its product ID. Returns title, full description, price, rating, images, and seller info. Use when the user has a specific Walmart product URL or product ID and wants full details.`,
+    `Get detailed information for a Walmart product by its product ID. Returns title, full description, price, rating, images, and seller info. Use when the user has a specific Walmart product URL or product ID and wants full details. Costs 1 credit.`,
     {
       product_id: z.string()
         .describe("Walmart product ID — numeric string from the product URL (/ip/name/PRODUCT_ID)."),
