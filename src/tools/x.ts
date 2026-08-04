@@ -111,7 +111,7 @@ export function registerXTools(server: McpServer, getClient: () => ScavioClient)
 
   server.tool(
     "get_x_user_tweets",
-    `List an X user's tweets as JSON, including a pinned tweet when present. Each tweet includes the tweet ID, text, timestamp, engagement counts, and conversation ID. Accepts a handle (without @). Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `List an X user's tweets as JSON in data.timeline, plus data.pinned (a pinned tweet or null) and data.user (the author's profile). Each tweet includes the tweet ID, text, timestamp, engagement counts, and conversation ID. Accepts a handle (without @). Use data.next_cursor as the next cursor; this endpoint returns no has_more, so stop when next_cursor is absent or the timeline comes back empty. Costs 1 credit.`,
     {
       screen_name: z.string().min(1)
         .describe("An X handle without the @, e.g. 'elonmusk'."),
@@ -130,7 +130,7 @@ export function registerXTools(server: McpServer, getClient: () => ScavioClient)
 
   server.tool(
     "get_x_user_replies",
-    `List an X user's tweets and replies as JSON. Each entry includes the tweet ID, text, timestamp, and engagement counts. Accepts a handle (without @). Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `List an X user's tweets and replies as JSON in data.timeline, plus data.user (the author's profile). Each entry includes the tweet ID, text, timestamp, and engagement counts. Accepts a handle (without @). Use data.next_cursor as the next cursor; this endpoint returns no has_more, so stop when next_cursor is absent or the timeline comes back empty. Costs 1 credit.`,
     {
       screen_name: z.string().min(1)
         .describe("An X handle without the @, e.g. 'elonmusk'."),
@@ -149,7 +149,7 @@ export function registerXTools(server: McpServer, getClient: () => ScavioClient)
 
   server.tool(
     "get_x_user_media",
-    `List an X user's media tweets (posts with photos or videos) as JSON. Each entry includes the tweet ID, text, timestamp, and engagement counts. Accepts a handle (without @). Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `List an X user's media tweets (posts with photos or videos) as JSON in data.timeline, plus data.user (the author's profile). Each entry includes the tweet ID, text, timestamp, and engagement counts. Accepts a handle (without @). Use data.next_cursor as the next cursor; this endpoint returns no has_more, so stop when next_cursor is absent or the timeline comes back empty. Costs 1 credit.`,
     {
       screen_name: z.string().min(1)
         .describe("An X handle without the @, e.g. 'elonmusk'."),
@@ -187,7 +187,7 @@ export function registerXTools(server: McpServer, getClient: () => ScavioClient)
 
   server.tool(
     "get_x_user_followings",
-    `List the accounts an X user follows as JSON. Each account includes the user ID, handle, name, description, follower count, verified flag, and location. Accepts a handle (without @). Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `List the accounts an X user follows as JSON, under data.following (singular, unlike the tool name). Each account includes the user ID, handle, name, description, follower count, verified flag, and location. Accepts a handle (without @). Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
     {
       screen_name: z.string().min(1)
         .describe("An X handle without the @, e.g. 'elonmusk'."),

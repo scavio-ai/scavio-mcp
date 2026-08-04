@@ -16,16 +16,12 @@ function handleApiError(err: unknown): never | { isError: true; content: { type:
 export function registerRedditTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "search_reddit",
-    `Search Reddit posts across all of Reddit as JSON. Each post includes title, URL, subreddit, author, timestamp, and NSFW flag. Use data.nextCursor as the cursor parameter for the next page; stop when nextCursor is null. Slower than other platforms (5-15 seconds).`,
+    `Search Reddit posts across all of Reddit as JSON. Returns data.results, each with post_id, title, text, url, subreddit, author, score, upvote_ratio, num_comments, created_at, is_nsfw, is_video, thumbnail, and media. Use data.next_cursor as the cursor parameter for the next page while data.has_more is true. Results cannot be sorted or filtered by type - the API returns relevance order only. Slower than other platforms (5-15 seconds). Costs 1 credit.`,
     {
       query: z.string().min(1).max(500)
         .describe("Search query (1-500 chars)."),
-      type: z.enum(["posts", "comments"]).optional()
-        .describe("Result type (server default 'posts')."),
-      sort: z.enum(["relevance", "hot", "top", "new", "comments"]).default("relevance")
-        .describe("Sort order. 'relevance' (default), 'hot', 'top', 'new', or 'comments'."),
       cursor: z.string().optional()
-        .describe("Pagination token. Use data.nextCursor from previous response for next page."),
+        .describe("Pagination cursor. Use data.next_cursor from previous response for next page."),
     },
     async (params) => {
       try {
@@ -39,10 +35,12 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_post",
-    `Get a full Reddit post by URL as JSON, including body, score, upvote ratio, flair, awards, and the full comment tree. Comments are a flat array in traversal order; use depth (0-indexed) or parentId to reconstruct the thread hierarchy. contentUrl is the external article for link posts. Slower than other platforms (5-15 seconds).`,
+    `Get a single Reddit post by URL or post id as JSON. Returns a flat post object: post_id, title, text, url, subreddit, author, score, upvote_ratio, num_comments, created_at, is_nsfw, is_video, thumbnail, and media. Does NOT return comments - call get_reddit_post_comments with the post_id for those. Pass post_id or url (at least one is required). Slower than other platforms (5-15 seconds). Costs 1 credit.`,
     {
-      url: z.string()
-        .describe("Full Reddit post URL, e.g. 'https://www.reddit.com/r/Python/comments/1smb9du/fastapi_vs_django/'."),
+      post_id: z.string().min(1).optional()
+        .describe("Post fullname (t3_...) or bare id, e.g. 't3_1v6ngaf'. Either this or url is required."),
+      url: z.string().url().optional()
+        .describe("Full Reddit post URL, e.g. 'https://www.reddit.com/r/Python/comments/1smb9du/fastapi_vs_django/'. Either this or post_id is required."),
     },
     async (params) => {
       try {
@@ -58,7 +56,7 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
     "get_reddit_search_suggestions",
     `Get Reddit search autocomplete suggestions for a query as JSON. Returns a list of suggested search strings. Use to expand a seed keyword or surface what people search for. Costs 1 credit.`,
     {
-      search: z.string().min(1).max(500)
+      query: z.string().min(1).max(500)
         .describe("Partial or seed search query to autocomplete."),
     },
     async (params) => {

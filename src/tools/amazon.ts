@@ -21,7 +21,9 @@ import { ApiError } from "../lib/errors.js";
 // 2. Locale is now a single `country` param carrying a TWO-LETTER country code
 //    (us, gb, de), not an Amazon domain suffix (com, co.uk) and not a ZIP.
 //
-// All three tools cost 1 credit.
+// The three data tools cost 1 credit each. get_amazon_options is a free lookup:
+// it is the only Amazon path that is a GET, takes no params, needs no auth and
+// is not billed.
 
 // Kept in one place so search, product and offers cannot drift. `gb` is spelled
 // out because `uk` is the mistake a model makes here, and an unknown code
@@ -98,5 +100,19 @@ This returns the first page of the offer list only - has_more_pages may be true,
       country: countryField,
     },
     call("/api/v1/amazon/offers"),
+  );
+
+  server.tool(
+    "get_amazon_options",
+    `List the Amazon marketplaces the API supports, as JSON: countries (the two-letter codes to pass as the country param on search_amazon, get_amazon_product and get_amazon_offers) and domains (the matching amazon.* suffixes, for display only - the API does not take a domain). Two rows break the pattern a model usually assumes: amazon.com is 'us' and amazon.co.uk is 'gb'. The response also carries languages and currencies, which are always empty arrays because language and currency are not request params anywhere. Takes no arguments, costs no credits.`,
+    {},
+    async () => {
+      try {
+        const data = await getClient().get("/api/v1/amazon/options");
+        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
   );
 }

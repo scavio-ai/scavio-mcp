@@ -22,8 +22,8 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
         .describe("YouTube search query."),
       sort_by: z.enum(["relevance", "date", "view_count", "rating"]).default("relevance")
         .describe("Sort order. Use 'date' for most recent, 'view_count' for most watched."),
-      type: z.enum(["video", "channel", "playlist", "movie"]).default("video")
-        .describe("Result type filter."),
+      type: z.enum(["video", "channel", "playlist", "movie"]).optional()
+        .describe("Restrict results to one type. Omit for the mixed response (videos plus the shorts, channels and playlists groups); setting it to 'video' suppresses those groups."),
       upload_date: z.enum(["last_hour", "today", "this_week", "this_month", "this_year"]).optional()
         .describe("Filter by upload date. Omit for all time."),
       duration: z.enum(["short", "medium", "long"]).optional()
@@ -84,7 +84,7 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "youtube_search_suggestions",
-    `Get YouTube search autocomplete suggestions for a partial query as JSON. Returns a list of suggested search strings. Use to expand a seed keyword or surface what people search for.`,
+    `Get YouTube search autocomplete suggestions for a partial query as JSON. Returns a list of suggested search strings in data.suggestions. Use to expand a seed keyword or surface what people search for. Costs 1 credit.`,
     {
       search: z.string().min(1).max(500)
         .describe("Partial or seed search query to autocomplete."),
@@ -105,7 +105,7 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_video",
-    `Get full details for a YouTube video as JSON. Returns title, author, channel, publish date, description, length in seconds, view count, keywords, thumbnail, playability status, chapters, and available captions. Accepts a video ID or a watch URL. Use when the user has a specific video and wants details about it.`,
+    `Get full details for a YouTube video as JSON. Returns title, author, channel, publish date, description, length in seconds, view count, keywords, thumbnail, playability status, chapters, and available captions. Accepts a video ID or a watch URL. Use when the user has a specific video and wants details about it. Costs 1 credit.`,
     {
       video_id: z.string()
         .describe("YouTube video ID, e.g. 'dQw4w9WgXcQ', or a full watch URL."),
@@ -122,7 +122,7 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_metadata",
-    `Deprecated alias of get_youtube_video, kept for backward compatibility. Get details for a YouTube video by its video ID or watch URL. Prefer get_youtube_video for new integrations.`,
+    `Deprecated alias of get_youtube_video, kept for backward compatibility. Get details for a YouTube video by its video ID or watch URL. Prefer get_youtube_video for new integrations. Costs 1 credit.`,
     {
       video_id: z.string()
         .describe("YouTube video ID, e.g. 'dQw4w9WgXcQ', or a full watch URL."),
@@ -139,7 +139,7 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_comments",
-    `Get comments on a YouTube video as JSON. Each comment includes its ID, text, like count, reply count, publish time, a reply_cursor for fetching its replies, and author details. Accepts a video ID. Use data.next_cursor as the next cursor while has_more is true.`,
+    `Get comments on a YouTube video as JSON. Each comment includes its ID, text, like count, reply count, publish time, a reply_cursor for fetching its replies, and author details. Accepts a video ID. Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
     {
       video_id: z.string()
         .describe("YouTube video ID, e.g. 'dQw4w9WgXcQ'."),
@@ -158,7 +158,7 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_comment_replies",
-    `Get replies to a specific YouTube comment as JSON. Requires the video ID and the reply_cursor from a comment in the get_youtube_comments response. Use data.next_cursor as the next cursor while has_more is true.`,
+    `Get replies to a specific YouTube comment as JSON. Requires the video ID and the reply_cursor from a comment in the get_youtube_comments response. Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
     {
       video_id: z.string()
         .describe("YouTube video ID, e.g. 'dQw4w9WgXcQ'."),
@@ -200,12 +200,12 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_related",
-    `Get videos related to a YouTube video as JSON. Each result includes video ID, title, URL, channel, thumbnail, view count, publish time, and length. Accepts a video ID. Use to discover similar or recommended videos.`,
+    `Get videos related to a YouTube video as JSON. Each result includes video ID, title, URL, channel, thumbnail, view count, publish time, and length, under data.results with data.total_count. Accepts a video ID. Use to discover similar or recommended videos. This endpoint returns no next_cursor and no has_more, so treat the response as a single page. Costs 1 credit.`,
     {
       video_id: z.string()
         .describe("YouTube video ID, e.g. 'dQw4w9WgXcQ'."),
       cursor: z.string().optional()
-        .describe("Pagination cursor (next_cursor) from a previous response."),
+        .describe("Opaque pagination cursor. Accepted by the endpoint, but the response never returns one, so there is normally nothing to pass here."),
     },
     async (params) => {
       try {
@@ -219,7 +219,7 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "search_youtube_channels",
-    `Search YouTube channels by keyword as JSON. Each result includes channel ID, name, handle, URL, thumbnail, subscriber count, and description. Use data.next_cursor as the next cursor while has_more is true.`,
+    `Search YouTube channels by keyword as JSON. Each result includes channel ID, name, handle, URL, thumbnail, subscriber count, and description. Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
     {
       search: z.string().min(1).max(500)
         .describe("Channel search query."),
@@ -238,7 +238,7 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_channel",
-    `Get a YouTube channel's profile as JSON. Returns channel ID, title, description, handle, URL, subscriber/video/view counts, country, creation date, verified flag, avatar, banner, and external links. Accepts a channel ID, an @handle, or a channel URL.`,
+    `Get a YouTube channel's profile as JSON. Returns channel ID, title, description, handle, URL, subscriber/video/view counts, country, creation date, verified flag, avatar, banner, and external links. Accepts a channel ID, an @handle, or a channel URL. Costs 1 credit.`,
     {
       channel_id: z.string()
         .describe("YouTube channel ID (e.g. 'UC...'), an @handle, or a channel URL."),
@@ -255,10 +255,10 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_channel_videos",
-    `List a YouTube channel's videos as JSON. Each result includes video ID, title, URL, thumbnail, duration, view count, publish time, and live flag. Accepts a channel ID. Use data.next_cursor as the next cursor while has_more is true.`,
+    `List a YouTube channel's videos as JSON. Each result includes video ID, title, URL, thumbnail, duration, view count, publish time, and live flag. Accepts a channel ID, an @handle, or a channel URL. Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
     {
       channel_id: z.string()
-        .describe("YouTube channel ID, e.g. 'UC...'."),
+        .describe("YouTube channel ID (e.g. 'UC...'), an @handle, or a channel URL."),
       cursor: z.string().optional()
         .describe("Pagination cursor (next_cursor) from a previous response."),
     },
@@ -274,10 +274,10 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_channel_shorts",
-    `List a YouTube channel's Shorts as JSON. Each result includes video ID, title, URL, thumbnail, and view count. Accepts a channel ID. Use data.next_cursor as the next cursor while has_more is true.`,
+    `List a YouTube channel's Shorts as JSON. Each result includes video ID, title, URL and thumbnail only - there is no view count, because the upstream field for Shorts carries promo text rather than a count. Accepts a channel ID, an @handle, or a channel URL. Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
     {
       channel_id: z.string()
-        .describe("YouTube channel ID, e.g. 'UC...'."),
+        .describe("YouTube channel ID (e.g. 'UC...'), an @handle, or a channel URL."),
       cursor: z.string().optional()
         .describe("Pagination cursor (next_cursor) from a previous response."),
     },
@@ -293,10 +293,10 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_channel_community",
-    `List a YouTube channel's community posts as JSON. Each post includes its ID, URL, text, author, publish time, vote count, comment count, attached images, and attachment type. Accepts a channel ID. Use data.next_cursor as the next cursor while has_more is true.`,
+    `List a YouTube channel's community posts as JSON, under data.posts (the only YouTube endpoint whose list key is not results). Each post includes its ID, URL, text, author, publish time, vote count, comment count, attached images, and attachment type. Accepts a channel ID, an @handle, or a channel URL. Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
     {
       channel_id: z.string()
-        .describe("YouTube channel ID, e.g. 'UC...'."),
+        .describe("YouTube channel ID (e.g. 'UC...'), an @handle, or a channel URL."),
       cursor: z.string().optional()
         .describe("Pagination cursor (next_cursor) from a previous response."),
     },
@@ -312,7 +312,7 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "resolve_youtube_channel",
-    `Resolve a YouTube @handle or channel URL to its canonical channel ID and URL, returned as JSON. Use before other channel tools when you only have a handle or a vanity URL.`,
+    `Resolve a YouTube @handle or channel URL to its canonical channel ID and URL, returned as JSON. The other channel tools accept a handle or URL directly, so this is only needed when you want the id itself. Costs 1 credit.`,
     {
       channel: z.string()
         .describe("A YouTube @handle (e.g. '@MrBeast') or a channel URL."),

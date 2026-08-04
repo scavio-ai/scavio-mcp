@@ -16,7 +16,7 @@ function handleApiError(err: unknown): never | { isError: true; content: { type:
 export function registerTiktokTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "get_tiktok_profile",
-    `Get a TikTok user's profile data as JSON. Returns username, display name, bio, follower/following counts, video count, total likes, and avatar URL. Use when the user wants info about a TikTok account. Provide either username or sec_user_id.`,
+    `Get a TikTok user's profile data as JSON under data.user: username, display name, bio, follower/following counts, video count, total likes, and avatar URL. Use when the user wants info about a TikTok account. Provide either username or sec_user_id. This is also how you obtain the sec_user_id that get_tiktok_user_posts, get_tiktok_user_followers and get_tiktok_user_followings require. Costs 1 credit.`,
     {
       username: z.string().optional()
         .describe("TikTok handle without the @ symbol, e.g. 'charlidamelio'."),
@@ -35,7 +35,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_tiktok_user_posts",
-    `List a TikTok user's videos with pagination as JSON. Each video includes ID, caption, timestamp, and stats (likes, comments, views, shares, bookmarks). Requires sec_user_id from the profile endpoint. Use data.max_cursor for next page; stop when data.has_more is 0.`,
+    `List a TikTok user's videos with pagination as JSON. Each video includes ID, caption, timestamp, and stats (likes, comments, views, shares, bookmarks). Requires sec_user_id from the profile endpoint. Use data.max_cursor for next page; stop when data.has_more is 0. Costs 1 credit.`,
     {
       sec_user_id: z.string()
         .describe("Secure user ID from the get_tiktok_profile response."),
@@ -58,7 +58,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_tiktok_video",
-    `Get detailed info for a single TikTok video by ID as JSON. Returns caption, author, music, stats (likes, comments, views, shares, bookmarks), play/download URLs, cover image, duration, hashtags, and mentions. Use when the user has a specific TikTok video URL or ID.`,
+    `Get detailed info for a single TikTok video by ID as JSON. Returns caption, author, music, stats (likes, comments, views, shares, bookmarks), play/download URLs, cover image, duration, hashtags, and mentions. Use when the user has a specific TikTok video URL or ID. Costs 1 credit.`,
     {
       video_id: z.string()
         .describe("TikTok video ID. Extract from a TikTok URL if the user provides one."),
@@ -75,7 +75,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_tiktok_video_comments",
-    `Get comments on a TikTok video as JSON. Each comment includes ID, text, timestamp, like count, reply count, commenter info, and whether the video creator liked it. Use data.cursor for next page; stop when data.has_more is 0.`,
+    `Get comments on a TikTok video as JSON. Each comment includes ID, text, timestamp, like count, reply count, commenter info, and whether the video creator liked it. Use data.cursor for next page; stop when data.has_more is 0. Costs 1 credit.`,
     {
       video_id: z.string()
         .describe("TikTok video ID."),
@@ -96,7 +96,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_tiktok_comment_replies",
-    `Get replies to a specific comment on a TikTok video as JSON. Each reply has the same structure as a comment. Requires both video_id and comment_id. Use data.cursor for next page; stop when data.has_more is 0.`,
+    `Get replies to a specific comment on a TikTok video as JSON. Each reply has the same structure as a comment. Requires both video_id and comment_id. Use data.cursor for next page; stop when data.has_more is 0. Costs 1 credit.`,
     {
       video_id: z.string()
         .describe("TikTok video ID."),
@@ -119,7 +119,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "search_tiktok_videos",
-    `Search TikTok videos by keyword as JSON. Each result includes video ID, caption, author, music, stats, and video URLs. Supports sorting by relevance or likes, and filtering by publish time. Use data.cursor for next page; stop when data.has_more is 0.`,
+    `Search TikTok videos by keyword as JSON. Each result includes video ID, caption, author, music, stats, and video URLs. Supports sorting by relevance or likes, and filtering by publish time. Use data.cursor for next page; stop when data.has_more is 0. Costs 1 credit.`,
     {
       keyword: z.string().min(1).max(500)
         .describe("Search query."),
@@ -144,7 +144,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "search_tiktok_users",
-    `Search TikTok users by keyword as JSON. Each result includes user ID, username, display name, sec_uid, follower count, and bio. Use data.cursor for next page; stop when data.has_more is 0.`,
+    `Search TikTok users by keyword as JSON. Each result includes user ID, username, display name, sec_uid, follower count, and bio. Use data.cursor for next page; stop when data.has_more is 0. Costs 1 credit.`,
     {
       keyword: z.string().min(1).max(500)
         .describe("Search query."),
@@ -165,7 +165,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_tiktok_hashtag",
-    `Get TikTok hashtag details and stats as JSON. Returns hashtag ID, title, description, video count, and view count. Provide either hashtag_name or hashtag_id. Use the returned ID with get_tiktok_hashtag_videos.`,
+    `Get TikTok hashtag details and stats as JSON. Returns hashtag ID, title, description, video count, and view count. Provide either hashtag_name or hashtag_id. Use the returned ID with get_tiktok_hashtag_videos. Costs 1 credit.`,
     {
       hashtag_name: z.string().optional()
         .describe("Hashtag text without the # symbol, e.g. 'fyp'."),
@@ -184,7 +184,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_tiktok_hashtag_videos",
-    `List TikTok videos for a given hashtag as JSON. Each video includes ID, caption, author, stats, and video URLs. Requires hashtag_id from the get_tiktok_hashtag response. Use data.cursor for next page; stop when data.has_more is 0.`,
+    `List TikTok videos for a given hashtag as JSON. Each video includes ID, caption, author, stats, and video URLs. Requires hashtag_id from the get_tiktok_hashtag response. Use data.cursor for next page; stop when data.has_more is 0. Costs 1 credit.`,
     {
       hashtag_id: z.string()
         .describe("Hashtag ID from the get_tiktok_hashtag response."),
@@ -205,7 +205,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_tiktok_user_followers",
-    `Get a TikTok user's follower list as JSON. Each follower includes username, display name, sec_uid, follower count, video count, bio, and avatar. Pass both page_token and min_time from previous response for pagination; stop when data.has_more is false.`,
+    `Get a TikTok user's follower list as JSON. Each follower includes username, display name, sec_uid, follower count, video count, bio, and avatar. For the next page pass data.next_page_token as page_token and data.min_time as min_time, both together; stop when data.has_more is false. Costs 1 credit.`,
     {
       sec_user_id: z.string()
         .describe("Secure user ID from the get_tiktok_profile response."),
@@ -228,7 +228,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_tiktok_user_followings",
-    `Get the list of accounts a TikTok user follows as JSON. Each entry includes username, display name, sec_uid, follower count, video count, bio, and avatar. Pass both page_token and min_time from previous response for pagination; stop when data.has_more is false.`,
+    `Get the list of accounts a TikTok user follows as JSON. Each entry includes username, display name, sec_uid, follower count, video count, bio, and avatar. For the next page pass data.next_page_token as page_token and data.min_time as min_time, both together; stop when data.has_more is false. Costs 1 credit.`,
     {
       sec_user_id: z.string()
         .describe("Secure user ID from the get_tiktok_profile response."),

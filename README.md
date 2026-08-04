@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, LinkedIn, and TikTok Shop. 99 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that connects AI agents to Google, YouTube, Amazon, Walmart, TikTok, Instagram, Reddit, X, LinkedIn, and TikTok Shop. 100 tools for web search, product lookup, video discovery, and social media data through a single [Search API](https://scavio.dev/docs/search-api) endpoint.
 
 ## Remote MCP Server
 
@@ -192,6 +192,10 @@ Add to settings (`Cmd+,`):
 
 ## Available Tools
 
+Every tool costs 1 credit per call unless its section says otherwise - YouTube,
+Instagram and LinkedIn price per endpoint, and `get_amazon_options` and `get_usage`
+are free.
+
 ### [Google Search API](https://scavio.dev/docs/search-api)
 
 | Tool | Description |
@@ -232,6 +236,11 @@ Add to settings (`Cmd+,`):
 | `resolve_youtube_channel` | Resolve a handle or URL to a channel ID |
 | `get_youtube_streams` | Get direct media stream URLs for a video |
 
+Credit cost varies: `get_youtube_transcript` costs 8, `get_youtube_streams` 3,
+`search_youtube` and `search_youtube_shorts` 2, and every other YouTube tool 1.
+`get_youtube_related` accepts a cursor but never returns one, so treat it as a
+single page.
+
 ### [Amazon Product API](https://scavio.dev/docs/amazon-api)
 
 | Tool | Description |
@@ -239,6 +248,7 @@ Add to settings (`Cmd+,`):
 | `search_amazon` | Search product listings across 22 marketplaces (no sort option) |
 | `get_amazon_product` | Get full product details by ASIN |
 | `get_amazon_offers` | List every seller offering an ASIN, with buy-box winner |
+| `get_amazon_options` | List the supported marketplaces and their country codes (free) |
 
 ### [Walmart API](https://scavio.dev/docs/walmart-api)
 
@@ -280,12 +290,17 @@ Add to settings (`Cmd+,`):
 | `get_instagram_user_followers` | Get a user's follower list |
 | `get_instagram_user_followings` | Get a user's following list |
 
+Instagram is priced per endpoint, not at a flat rate: `get_instagram_user_posts`
+costs 2, `get_instagram_post` and `get_instagram_comment_replies` cost 8, and the
+other nine tools cost 10. The 10-credit endpoints hedge two upstream providers and
+bill both legs, which is what the price reflects.
+
 ### [Reddit API](https://scavio.dev/docs/reddit-api)
 
 | Tool | Description |
 |------|-------------|
-| `search_reddit` | Search Reddit posts by query with sort and pagination |
-| `get_reddit_post` | Get a full post with threaded comments by URL |
+| `search_reddit` | Search Reddit posts by query, relevance order, cursor pagination |
+| `get_reddit_post` | Get a single post by URL or id (no comments; see below) |
 | `get_reddit_search_suggestions` | Get search autocomplete suggestions |
 | `get_reddit_post_comments` | Get a post's top-level comments with pagination |
 | `get_reddit_comment_replies` | Get replies to a specific comment |
@@ -296,6 +311,12 @@ Add to settings (`Cmd+,`):
 | `get_reddit_user_comments` | List a redditor's comments |
 | `get_reddit_popular` | Get the site-wide popular feed |
 | `get_reddit_trending` | Get current trending search queries |
+
+Every Reddit tool costs 1 credit. Two things to know: `search_reddit` takes a query
+and a cursor only - there is no sort or post-type filter, results come back in
+relevance order - and `get_reddit_post` returns a flat post object with no comments,
+so call `get_reddit_post_comments` with the post id for those. Reddit is the slowest
+platform here, typically 5-15 seconds per call.
 
 ### [X API](https://scavio.dev/docs/x-search)
 
@@ -312,6 +333,10 @@ Add to settings (`Cmd+,`):
 | `get_x_user_followers` | List a user's followers |
 | `get_x_user_followings` | List accounts a user follows |
 | `get_x_trending` | Get trending topics for a country |
+
+`get_x_user_tweets`, `get_x_user_replies` and `get_x_user_media` return a
+`next_cursor` but no `has_more`, so page until the cursor is absent or the timeline
+comes back empty.
 
 ### [LinkedIn API](https://scavio.dev/docs/linkedin-person)
 

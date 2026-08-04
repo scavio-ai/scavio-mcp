@@ -3,7 +3,7 @@
   "name": "io.github.scavio-ai/scavio-mcp",
   "title": "Scavio",
   "description": "AI-agent search API: Google, YouTube, Amazon, Reddit, TikTok, TikTok Shop, Instagram, X, LinkedIn",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "repository": {
     "url": "https://github.com/scavio-ai/scavio-mcp",
     "source": "github"
@@ -12,7 +12,7 @@
     {
       "registryType": "npm",
       "identifier": "@scavio/mcp-server",
-      "version": "0.11.0",
+      "version": "0.12.0",
       "transport": {
         "type": "stdio"
       },
