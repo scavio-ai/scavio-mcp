@@ -1,8 +1,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 import type { ScavioClient } from "../lib/client.js";
-import { ApiError } from "../lib/errors.js";
+import { handleApiError } from "../lib/tool-error.js";
 
 // Amazon moved to a new upstream provider and now returns a normalized shape
 // instead of the old raw passthrough. Two consequences for these tool schemas:
@@ -41,15 +40,6 @@ const asinField = z
   .string()
   .length(10)
   .describe("Amazon ASIN - the 10-character product id, e.g. 'B09V3KXJPB'. Extract it from the product URL (/dp/ASIN).");
-
-function handleApiError(err: unknown): never | { isError: true; content: { type: "text"; text: string }[] } {
-  if (err instanceof ApiError) {
-    if (err.status === 429) return { isError: true, content: [{ type: "text", text: "Rate limited. Wait and retry." }] };
-    if (err.status === 401) throw new McpError(ErrorCode.InternalError, "Invalid SCAVIO_API_KEY. Check your configuration.");
-    return { isError: true, content: [{ type: "text", text: `Scavio API error (${err.status}): ${err.message}` }] };
-  }
-  throw new McpError(ErrorCode.InternalError, String(err));
-}
 
 export function registerAmazonTools(server: McpServer, getClient: () => ScavioClient) {
   const call = (path: string) => async (params: Record<string, unknown>) => {

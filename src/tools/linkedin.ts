@@ -1,8 +1,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 import type { ScavioClient } from "../lib/client.js";
-import { ApiError } from "../lib/errors.js";
+import { handleApiError } from "../lib/tool-error.js";
 
 // The provider retired the `linkedin/web/*` namespace these tools were built on.
 // The nine below run on `web_v2`: every reference is a vanity handle, slug or id
@@ -18,15 +17,6 @@ import { ApiError } from "../lib/errors.js";
 // and can only return 410. Unlike an SDK method, an MCP tool is a menu item for
 // a model: one that always fails burns turns and invites retries, so it is
 // better absent. The REST API still answers those paths with an explicit 410.
-
-function handleApiError(err: unknown): never | { isError: true; content: { type: "text"; text: string }[] } {
-  if (err instanceof ApiError) {
-    if (err.status === 429) return { isError: true, content: [{ type: "text", text: "Rate limited. Wait and retry." }] };
-    if (err.status === 401) throw new McpError(ErrorCode.InternalError, "Invalid SCAVIO_API_KEY. Check your configuration.");
-    return { isError: true, content: [{ type: "text", text: `Scavio API error (${err.status}): ${err.message}` }] };
-  }
-  throw new McpError(ErrorCode.InternalError, String(err));
-}
 
 const personRef = {
   username: z.string().min(1).optional()

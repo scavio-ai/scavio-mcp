@@ -1,17 +1,10 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 import type { ScavioClient } from "../lib/client.js";
+import { handleApiError } from "../lib/tool-error.js";
+// ApiError is imported here (and nowhere else in tools/) because get_tiktok_shop_product
+// has to special-case a 404 before falling through to the shared handler.
 import { ApiError } from "../lib/errors.js";
-
-function handleApiError(err: unknown): never | { isError: true; content: { type: "text"; text: string }[] } {
-  if (err instanceof ApiError) {
-    if (err.status === 429) return { isError: true, content: [{ type: "text", text: "Rate limited. Wait and retry." }] };
-    if (err.status === 401) throw new McpError(ErrorCode.InternalError, "Invalid SCAVIO_API_KEY. Check your configuration.");
-    return { isError: true, content: [{ type: "text", text: `Scavio API error (${err.status}): ${err.message}` }] };
-  }
-  throw new McpError(ErrorCode.InternalError, String(err));
-}
 
 const REGIONS_FULL = ["US", "GB", "SG", "MY", "PH", "TH", "VN", "ID"] as const;
 const REGIONS_LISTING = ["US", "GB"] as const;
