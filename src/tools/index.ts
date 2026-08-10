@@ -103,29 +103,34 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 191
- * tools, which serialises to roughly 180KB of tools/list — about 50k tokens
- * pushed into the context of EVERY session before the user has typed anything,
- * and past the hard tool-count ceiling some clients enforce. The 100-tool
- * surface this replaces already cost ~26k tokens.
+ * tools, which serialises to 262KB of tools/list (measured, not estimated) —
+ * roughly 70k tokens pushed into the context of EVERY session before the user
+ * has typed anything, and past the hard tool-count ceiling some clients
+ * enforce. The 100-tool surface this replaces already cost ~26k tokens.
  *
- * So the default is the smallest set that still makes the server useful out of
- * the box, chosen on demand rather than breadth:
+ * The default is therefore exactly what 0.12.x registered, plus extract:
+ * upgrading must never silently remove a tool someone already depends on. A
+ * user who had TikTok or LinkedIn working yesterday still has it today, and
+ * the context cost is unchanged from the version they were already running.
+ * extract joins them because it is a single tool and the read-any-page
+ * primitive an agent reaches for in almost every session.
  *
- *  - extract  — the read-any-page primitive. One tool, useful in essentially
- *               every session, and the thing an agent reaches for most.
- *  - google   — web/news/images/maps/shopping SERP. The single most requested
- *               capability of any search MCP server.
- *  - youtube  — highest-revenue vertical (transcripts, channels, comments).
- *  - amazon   — highest-demand commerce surface, and only 4 tools.
- *  - reddit   — the research/opinion corpus agents ask for by name.
- *
- * That is 48 tools including get_usage: roughly half the payload of the
- * previous default, with the long tail one env var away.
- *
- * Everything else — TikTok, Instagram, X, LinkedIn, Walmart, TikTok Shop and
- * the 22 platforms added in 0.13.0 — is opt-in via SCAVIO_PLATFORMS.
+ * The 22 platforms added in 0.13.0 are opt-in via SCAVIO_PLATFORMS — growth
+ * goes behind the flag, the existing contract does not move.
  */
-export const DEFAULT_PLATFORMS = ["extract", "google", "youtube", "amazon", "reddit"];
+export const DEFAULT_PLATFORMS = [
+  "extract",
+  "google",
+  "youtube",
+  "amazon",
+  "walmart",
+  "reddit",
+  "tiktok",
+  "tiktok-shop",
+  "instagram",
+  "x",
+  "linkedin",
+];
 
 /** Names users reasonably type that are not the canonical key. */
 const ALIASES: Record<string, string> = {

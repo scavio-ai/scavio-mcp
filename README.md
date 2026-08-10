@@ -5,7 +5,7 @@
 
 [Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 191 tools across 32 platforms, one API key.
 
-**A curated subset loads by default.** Registering all 191 tools puts 262KB of tool definitions — roughly 70k tokens — into every session before you type anything. Out of the box you get Extract, Google, YouTube, Amazon and Reddit: 48 tools, 48KB. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 191 tools puts 262KB of tool definitions — roughly 70k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 106 tools, 102KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -204,7 +204,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 
 | Value | Registers |
 |-------|-----------|
-| *(unset)* | `extract`, `google`, `youtube`, `amazon`, `reddit` — **48 tools, 48KB** |
+| *(unset)* | Everything 0.12.x had, plus `extract` — **106 tools, 102KB** |
 | `all` | every platform — **191 tools, 262KB** |
 | `extract,sec,g2` | just those platforms — 11 tools, 20KB |
 | `default,walmart,metaads` | the default set plus two more — 58 tools |
@@ -264,13 +264,19 @@ https://mcp.scavio.dev/mcp?platforms=all
 
 ### Upgrading from 0.12.x
 
-0.12.x registered all 10 platforms it had unconditionally. If you were using
-TikTok, Instagram, X, LinkedIn, Walmart or TikTok Shop, name them — this restores
-exactly the old surface:
+Nothing to do. The default set is exactly the 10 platforms 0.12.x registered,
+plus Extract — every tool you were using still loads, and the context cost is
+unchanged. Walmart grew from 2 tools to 7, so the count moves 100 → 106.
+
+The 22 platforms added in 0.13.0 are opt-in. Add them additively:
 
 ```
-SCAVIO_PLATFORMS=google,youtube,amazon,walmart,tiktok,tiktok-shop,instagram,reddit,x,linkedin
+SCAVIO_PLATFORMS=default,zillow,redfin,sec
 ```
+
+One breaking fix worth knowing: `search_walmart` previously sent
+`fulfillment_speed: "anytime"` on every call, which the API rejects. The
+parameter is now `today` or `tomorrow` with no default.
 
 ---
 
