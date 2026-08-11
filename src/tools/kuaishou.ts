@@ -9,8 +9,8 @@ import { handleApiError } from "../lib/tool-error.js";
 // than stated once.
 const PRICING = "Kuaishou is priced PER ENDPOINT (1, 2, 10 or 40 credits), never per platform.";
 
-// This is CHINA Kuaishou (kuaishou.com). TikHub does not serve Kwai
-// international (kwai.com): a real kwai.com id returns an empty envelope and
+// This is CHINA Kuaishou (kuaishou.com). Our upstream source does not serve
+// Kwai international (kwai.com): a real kwai.com id returns an empty envelope and
 // still bills, so the distinction goes in the description, not a comment.
 const NOT_KWAI = "Kuaishou China (kuaishou.com) only; Kwai international (kwai.com) is not served upstream.";
 
