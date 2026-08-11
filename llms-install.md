@@ -1,6 +1,6 @@
 # Scavio MCP Server - LLM Installation Guide
 
-Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software reviews, ad libraries and company filings. 191 tools across 32 platforms, one API key.
+Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software reviews, ad libraries and company filings. 191 tools across 31 platforms plus Extract, one API key.
 
 ## Prerequisites
 

@@ -3,7 +3,7 @@
   "name": "io.github.scavio-ai/scavio-mcp",
   "title": "Scavio",
   "description": "Web search, page extraction and structured commerce, social and business data for AI agents",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "repository": {
     "url": "https://github.com/scavio-ai/scavio-mcp",
     "source": "github"
@@ -12,7 +12,7 @@
     {
       "registryType": "npm",
       "identifier": "@scavio/mcp-server",
-      "version": "0.13.0",
+      "version": "0.13.1",
       "transport": {
         "type": "stdio"
       },
