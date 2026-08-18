@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.scavio-ai/scavio-mcp",
   "title": "Scavio",
-  "description": "Web search, page extraction and structured commerce, social and business data for AI agents",
+  "description": "Structured web data from 31 platforms: Google, YouTube, Amazon, Walmart, Reddit, TikTok, LinkedIn",
   "version": "0.13.1",
   "repository": {
     "url": "https://github.com/scavio-ai/scavio-mcp",
