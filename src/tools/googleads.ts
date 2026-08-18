@@ -11,7 +11,7 @@ export function registerGoogleAdsTools(server: McpServer, getClient: () => Scavi
       query: z.string().min(1).max(200)
         .describe("Brand name or domain to resolve, e.g. 'Nike' or 'nike.com'. A name returns advertiser and domain rows; a domain-shaped query returns domain rows only."),
       region: z.string().min(2).max(12).optional()
-        .describe("ISO alpha-2 country code (US, GB, DE) or a Google geo criteria id as a string. Default: no region filter."),
+        .describe("ISO alpha-2 country code (US, GB, DE) or a Google geo criteria id as a string. DEFAULTS TO THE UNITED STATES, not worldwide - the lookup runs against one country's index at a time, so an advertiser who runs no US ads comes back as an empty list. Set it to a country the advertiser actually advertises in."),
       limit: z.number().int().min(1).max(20).optional()
         .describe("Rows PER ARM, 1-20 (default 10). Advertisers and domains are capped separately, so a name query can return up to twice this many rows in total."),
     },
