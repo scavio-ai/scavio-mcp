@@ -2,21 +2,22 @@ import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { ScavioClient } from "../lib/client.js";
 import { handleApiError } from "../lib/tool-error.js";
+import { trimResponse } from "../lib/trim-response.js";
 
 export function registerRedditTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "search_reddit",
-    `Search Reddit posts across all of Reddit as JSON. Returns data.results, each with post_id, title, text, url, subreddit, author, score, upvote_ratio, num_comments, created_at, is_nsfw, is_video, thumbnail, and media. Use data.next_cursor as the cursor parameter for the next page while data.has_more is true. Results cannot be sorted or filtered by type - the API returns relevance order only. Slower than other platforms (5-15 seconds). Costs 1 credit.`,
+    `Search Reddit posts. Relevance order only, no sort/filter. Paginate with next_cursor. Slow (5-15s). 1 credit.`,
     {
       query: z.string().min(1).max(500)
-        .describe("Search query (1-500 chars)."),
+        .describe("Search query."),
       cursor: z.string().optional()
-        .describe("Pagination cursor. Use data.next_cursor from previous response for next page."),
+        .describe("Pagination cursor from data.next_cursor."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/search", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -25,17 +26,17 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_post",
-    `Get a single Reddit post by URL or post id as JSON. Returns a flat post object: post_id, title, text, url, subreddit, author, score, upvote_ratio, num_comments, created_at, is_nsfw, is_video, thumbnail, and media. Does NOT return comments - call get_reddit_post_comments with the post_id for those. Pass post_id or url (at least one is required). Slower than other platforms (5-15 seconds). Costs 1 credit.`,
+    `Get a Reddit post by URL or post id. Does NOT return comments (use get_reddit_post_comments). Slow (5-15s). 1 credit.`,
     {
       post_id: z.string().min(1).optional()
-        .describe("Post fullname (t3_...) or bare id, e.g. 't3_1v6ngaf'. Either this or url is required."),
+        .describe("Post fullname (t3_...) or bare id. Either this or url required."),
       url: z.string().url().optional()
-        .describe("Full Reddit post URL, e.g. 'https://www.reddit.com/r/Python/comments/1smb9du/fastapi_vs_django/'. Either this or post_id is required."),
+        .describe("Full Reddit post URL. Either this or post_id required."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/post", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -44,15 +45,15 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_search_suggestions",
-    `Get Reddit search autocomplete suggestions for a query as JSON. Returns a list of suggested search strings. Use to expand a seed keyword or surface what people search for. Costs 1 credit.`,
+    `Get Reddit search autocomplete suggestions. 1 credit.`,
     {
       query: z.string().min(1).max(500)
-        .describe("Partial or seed search query to autocomplete."),
+        .describe("Seed query to autocomplete."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/search/suggestions", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -61,19 +62,19 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_post_comments",
-    `Get the top-level comments for a Reddit post as JSON. Each comment includes its ID, text, author, score, timestamp, and a reply_cursor for fetching its replies. Accepts a post fullname (t3_...). Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `Get top-level comments for a Reddit post. Paginate with next_cursor. 1 credit.`,
     {
       post_id: z.string().min(1)
-        .describe("Post fullname (t3_...), e.g. 't3_1v6ngaf'."),
+        .describe("Post fullname, e.g. 't3_1v6ngaf'."),
       sort: z.enum(["HOT", "NEW", "TOP", "BEST", "CONTROVERSIAL"]).default("TOP")
-        .describe("Comment sort order (default 'TOP')."),
+        .describe("Sort order."),
       cursor: z.string().optional()
-        .describe("Pagination cursor (next_cursor) from a previous response."),
+        .describe("Cursor from data.next_cursor."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/post/comments", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -82,19 +83,19 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_comment_replies",
-    `Get the replies to a specific Reddit comment as JSON. Requires the post fullname and the reply_cursor from a comment in the get_reddit_post_comments response. Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `Get replies to a Reddit comment. Requires post_id and reply_cursor from get_reddit_post_comments. 1 credit.`,
     {
       post_id: z.string().min(1)
-        .describe("Post fullname (t3_...), e.g. 't3_1v6ngaf'."),
+        .describe("Post fullname, e.g. 't3_1v6ngaf'."),
       cursor: z.string().min(1)
-        .describe("The reply_cursor from a comment in the get_reddit_post_comments response."),
+        .describe("reply_cursor from a comment in get_reddit_post_comments."),
       sort: z.enum(["HOT", "NEW", "TOP", "BEST", "CONTROVERSIAL"]).default("TOP")
-        .describe("Reply sort order (default 'TOP')."),
+        .describe("Sort order."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/post/comments/replies", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -103,15 +104,15 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_subreddit",
-    `Get metadata for a subreddit as JSON, including its name, title, description, subscriber count, type, NSFW flag, icon, banner, primary color, and creation date. Accepts a subreddit name (without r/). Costs 1 credit.`,
+    `Get subreddit metadata (description, subscribers, type, etc). 1 credit.`,
     {
       subreddit: z.string().min(1).max(100)
-        .describe("Subreddit name without r/, e.g. 'AskReddit'."),
+        .describe("Subreddit name without r/."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/subreddit", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -120,19 +121,19 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_subreddit_posts",
-    `List a subreddit's post feed as JSON. Each post includes its ID, title, URL, text, author, score, comment count, timestamp, and NSFW flag. Accepts a subreddit name (without r/). Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `List posts in a subreddit. Paginate with next_cursor. 1 credit.`,
     {
       subreddit: z.string().min(1).max(100)
-        .describe("Subreddit name without r/, e.g. 'AskReddit'."),
+        .describe("Subreddit name without r/."),
       sort: z.enum(["BEST", "HOT", "NEW", "TOP", "CONTROVERSIAL", "RISING"]).default("HOT")
-        .describe("Feed sort order (default 'HOT')."),
+        .describe("Sort order."),
       cursor: z.string().optional()
-        .describe("Pagination cursor (next_cursor) from a previous response."),
+        .describe("Cursor from data.next_cursor."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/subreddit/posts", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -141,15 +142,15 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_user",
-    `Get a redditor's profile as JSON, including their ID, name, employee/verified flags, account type, and whether they accept private messages. Accepts a username (without u/). Costs 1 credit.`,
+    `Get a Reddit user's profile. 1 credit.`,
     {
       username: z.string().min(1).max(100)
-        .describe("Reddit username without u/, e.g. 'spez'."),
+        .describe("Username without u/."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/user", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -158,19 +159,19 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_user_posts",
-    `List a redditor's submitted posts as JSON. Each post includes its ID, title, URL, subreddit, score, comment count, and timestamp. Accepts a username (without u/). Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `List a Reddit user's submitted posts. Paginate with next_cursor. 1 credit.`,
     {
       username: z.string().min(1).max(100)
-        .describe("Reddit username without u/, e.g. 'spez'."),
+        .describe("Username without u/."),
       sort: z.enum(["HOT", "NEW", "TOP", "BEST", "CONTROVERSIAL"]).default("NEW")
-        .describe("Sort order (default 'NEW')."),
+        .describe("Sort order."),
       cursor: z.string().optional()
-        .describe("Pagination cursor (next_cursor) from a previous response."),
+        .describe("Cursor from data.next_cursor."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/user/posts", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -179,19 +180,19 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_user_comments",
-    `List a redditor's comments as JSON. Each comment includes its ID, text, author, the post it belongs to (ID and title), score, and timestamp. Accepts a username (without u/). Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `List a Reddit user's comments. Paginate with next_cursor. 1 credit.`,
     {
       username: z.string().min(1).max(100)
-        .describe("Reddit username without u/, e.g. 'spez'."),
+        .describe("Username without u/."),
       sort: z.enum(["HOT", "NEW", "TOP", "BEST", "CONTROVERSIAL"]).default("NEW")
-        .describe("Sort order (default 'NEW')."),
+        .describe("Sort order."),
       cursor: z.string().optional()
-        .describe("Pagination cursor (next_cursor) from a previous response."),
+        .describe("Cursor from data.next_cursor."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/user/comments", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -200,15 +201,15 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_popular",
-    `Get the site-wide popular feed as JSON. Each post includes its ID, title, subreddit, author, score, comment count, URL, and timestamp. Use data.next_cursor as the next cursor while has_more is true. Costs 1 credit.`,
+    `Get Reddit's site-wide popular feed. Paginate with next_cursor. 1 credit.`,
     {
       cursor: z.string().optional()
-        .describe("Pagination cursor (next_cursor) from a previous response."),
+        .describe("Cursor from data.next_cursor."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/reddit/popular", params);
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
@@ -217,12 +218,12 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_reddit_trending",
-    `Get Reddit's current trending search queries as JSON. Each entry includes the display query and the raw query. Takes no parameters. Costs 1 credit.`,
+    `Get Reddit's current trending search queries. 1 credit.`,
     {},
     async () => {
       try {
         const data = await getClient().post("/api/v1/reddit/trending", {});
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }

@@ -1,16 +1,17 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { ScavioClient } from "../lib/client.js";
 import { handleApiError } from "../lib/tool-error.js";
+import { trimResponse } from "../lib/trim-response.js";
 
 export function registerUsageTool(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "get_usage",
-    `Get the current user's credit balance, plan, searches used this month, and auto-recharge settings. Use when the user asks how many credits they have left, what plan they're on, or about their usage.`,
+    `Get credit balance, plan, and usage stats. Free.`,
     {},
     async () => {
       try {
         const data = await getClient().get("/api/v1/usage");
-        return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+        return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
       }
