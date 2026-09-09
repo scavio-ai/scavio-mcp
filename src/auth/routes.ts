@@ -47,7 +47,13 @@ authApp.get(
 // --- Dynamic Client Registration (RFC 7591) ---
 
 authApp.post("/register", cors({ origin: "*" }), async (c) => {
-  const body = await c.req.json();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let body: any;
+  try {
+    body = await c.req.json();
+  } catch {
+    return c.json({ error: "invalid_client_metadata", error_description: "Invalid JSON" }, 400);
+  }
   if (!body.redirect_uris || !Array.isArray(body.redirect_uris)) {
     return c.json({ error: "invalid_client_metadata", error_description: "redirect_uris required" }, 400);
   }
@@ -89,6 +95,11 @@ authApp.all("/authorize", async (c) => {
     } else {
       return c.json({ error: "invalid_request", error_description: "redirect_uri required" }, 400);
     }
+  }
+
+  // Validate redirect_uri against registered URIs
+  if (!client.redirect_uris.some(u => u.toString() === resolvedRedirect)) {
+    return c.json({ error: "invalid_request", error_description: "Unregistered redirect_uri" }, 400);
   }
 
   // Validate remaining params (errors redirect to client)

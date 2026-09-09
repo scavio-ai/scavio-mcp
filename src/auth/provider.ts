@@ -1,4 +1,4 @@
-import { createHmac } from "node:crypto";
+import { createHmac, timingSafeEqual } from "node:crypto";
 import { env } from "../lib/env.js";
 import { ScavioClient } from "../lib/client.js";
 import { AuthCodeStore, PendingSessionStore, ClientStore } from "./stores.js";
@@ -21,9 +21,10 @@ export function verifySignedToken(token: string): SignedPayload | null {
 
   const expectedSig = createHmac("sha256", secret)
     .update(payloadB64)
-    .digest("base64url");
+    .digest();
+  const actualSig = Buffer.from(sigB64, "base64url");
 
-  if (sigB64 !== expectedSig) return null;
+  if (expectedSig.length !== actualSig.length || !timingSafeEqual(expectedSig, actualSig)) return null;
 
   try {
     const payload = JSON.parse(
