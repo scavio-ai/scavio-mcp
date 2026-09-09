@@ -34,6 +34,9 @@ jobs:
             TRANSPORT=http
             PORT=3000
             SCAVIO_API_BASE_URL=${{ secrets.SCAVIO_API_BASE_URL }}
+            MCP_AUTH_SECRET=${{ secrets.MCP_AUTH_SECRET }}
+            ISSUER_URL=https://mcp.scavio.dev
+            DASHBOARD_URL=https://dashboard.scavio.dev
             ENVFILE
 
             sed -i 's/^[[:space:]]*//' "$APP_DIR/.env"
