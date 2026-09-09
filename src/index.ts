@@ -56,9 +56,11 @@ async function startHttp() {
   const { WebStandardStreamableHTTPServerTransport } = await import(
     "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js"
   );
+  const { authApp } = await import("./auth/routes.js");
 
   const app = new Hono();
 
+  // Health / info endpoints
   app.get("/", (c) =>
     c.json({
       status: "ok",
@@ -70,6 +72,10 @@ async function startHttp() {
   );
   app.get("/health", (c) => c.json({ status: "ok" }));
 
+  // Mount OAuth routes (well-known, authorize, token, register, callback)
+  app.route("/", authApp);
+
+  // MCP endpoint with dual auth: OAuth bearer or legacy API key
   app.post("/mcp", async (c) => {
     const apiKey =
       c.req.header("x-api-key") ??
@@ -77,7 +83,13 @@ async function startHttp() {
       c.req.query("api_key");
 
     if (!apiKey) {
-      return c.json({ error: "Missing SCAVIO_API_KEY. Provide x-api-key or Authorization: Bearer header." }, 401);
+      // Return 401 with OAuth discovery for OAuth-capable clients
+      const resourceMetadataUrl = `${env.ISSUER_URL}/.well-known/oauth-protected-resource/mcp`;
+      c.header(
+        "WWW-Authenticate",
+        `Bearer resource_metadata="${resourceMetadataUrl}"`
+      );
+      return c.json({ error: "Unauthorized" }, 401);
     }
 
     // A hosted remote has no per-user env var, so the allowlist is selectable
@@ -96,5 +108,10 @@ async function startHttp() {
 
   serve({ fetch: app.fetch, port: env.PORT }, (info) => {
     console.error(`${SERVER_NAME} v${SERVER_VERSION} started (http) on port ${info.port}`);
+    if (env.MCP_AUTH_SECRET) {
+      console.error(`OAuth enabled (issuer: ${env.ISSUER_URL})`);
+    } else {
+      console.error("OAuth disabled (MCP_AUTH_SECRET not set)");
+    }
   });
 }

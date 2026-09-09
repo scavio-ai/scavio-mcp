@@ -12,6 +12,10 @@ const envSchema = z.object({
     .default(3000),
   TRANSPORT: z.enum(["http", "stdio"])
     .default("stdio"),
+  // OAuth
+  MCP_AUTH_SECRET: z.string().min(32).optional(),
+  ISSUER_URL: z.string().url().default("https://mcp.scavio.dev"),
+  DASHBOARD_URL: z.string().url().default("https://dashboard.scavio.dev"),
 });
 
 export const env = envSchema.parse(process.env);
