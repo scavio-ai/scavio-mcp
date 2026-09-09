@@ -11,6 +11,7 @@ export async function fetchClientMetadata(
     if (!res.ok) return null;
     const meta = await res.json();
     if (!meta.client_id || !Array.isArray(meta.redirect_uris)) return null;
+    if (meta.client_id !== clientIdUrl) return null;
     return meta as OAuthClientInformationFull;
   } catch {
     return null;

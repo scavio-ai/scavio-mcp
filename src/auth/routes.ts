@@ -57,6 +57,17 @@ authApp.post("/register", cors({ origin: "*" }), async (c) => {
   if (!body.redirect_uris || !Array.isArray(body.redirect_uris)) {
     return c.json({ error: "invalid_client_metadata", error_description: "redirect_uris required" }, 400);
   }
+  const invalidScheme = body.redirect_uris.some((uri: string) => {
+    try {
+      const u = new URL(uri);
+      if (u.protocol === "https:") return false;
+      if (u.protocol === "http:" && (u.hostname === "localhost" || u.hostname === "127.0.0.1")) return false;
+      return true;
+    } catch { return true; }
+  });
+  if (invalidScheme) {
+    return c.json({ error: "invalid_client_metadata", error_description: "redirect_uris must use https (or http for localhost)" }, 400);
+  }
   const client = await clientStore.registerClient(body);
   return c.json(client, 201);
 });
