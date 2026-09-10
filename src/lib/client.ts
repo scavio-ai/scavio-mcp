@@ -23,13 +23,15 @@ export class ScavioClient {
     if (!response.ok) {
       const text = await response.text();
       let message: string;
+      let billingUrl: string | undefined;
       try {
         const json = JSON.parse(text);
         message = json.error ?? json.message ?? text;
+        if (typeof json.billing_url === "string") billingUrl = json.billing_url;
       } catch {
         message = text;
       }
-      throw new ApiError(response.status, message);
+      throw new ApiError(response.status, message, undefined, billingUrl);
     }
 
     return response.json() as Promise<T>;

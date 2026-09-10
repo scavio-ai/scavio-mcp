@@ -5,7 +5,7 @@
 
 [Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 191 tools across 31 platforms plus Extract, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 191 tools puts 262KB of tool definitions — roughly 70k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 106 tools, 102KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 191 tools puts 136KB of tool definitions — roughly 35k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 106 tools, 63KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -15,7 +15,10 @@ Connect directly to Scavio's remote MCP server without any local installation:
 https://mcp.scavio.dev/mcp
 ```
 
-Pass your API key via the `x-api-key` header. Get your key at [scavio.dev](https://scavio.dev).
+Two ways to authenticate:
+
+- **Sign in with OAuth, no key to copy.** Claude Desktop, claude.ai and Claude Code sign in to your Scavio account through the server. In Claude Desktop or claude.ai: Settings > Connectors > Add custom connector, name it Scavio, paste the URL, then Connect and Authorize. In Claude Code: `claude mcp add --transport http scavio https://mcp.scavio.dev/mcp`, then run `/mcp` and choose Authenticate.
+- **API key.** Pass it in the `x-api-key` header. Get your key at [scavio.dev](https://scavio.dev).
 
 ---
 
@@ -53,13 +56,23 @@ Requires Node.js 20+. Get your API key at [scavio.dev](https://scavio.dev).
 
 ### Claude Code
 
+Sign in with OAuth, then run `/mcp` inside Claude Code and choose Authenticate:
+
 ```bash
-claude mcp add scavio --transport http --url https://mcp.scavio.dev/mcp --header "x-api-key: YOUR_SCAVIO_API_KEY"
+claude mcp add --transport http scavio https://mcp.scavio.dev/mcp
+```
+
+Or pass an API key:
+
+```bash
+claude mcp add --transport http scavio https://mcp.scavio.dev/mcp --header "x-api-key: YOUR_SCAVIO_API_KEY"
 ```
 
 ### Claude Desktop
 
-Add to `claude_desktop_config.json` (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS, `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
+No API key needed: Settings > Connectors > Add custom connector, name it Scavio, paste `https://mcp.scavio.dev/mcp`, then Connect and sign in to your Scavio account. The same steps work on claude.ai.
+
+Or run the server locally. Add to `claude_desktop_config.json` (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS, `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
 
 ```json
 {
@@ -194,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 191 tools. Loading all of them costs 262KB of `tools/list` —
-roughly 70k tokens of context in every session before the user has said anything,
+Scavio exposes 191 tools. Loading all of them costs 136KB of `tools/list` —
+roughly 35k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -204,10 +217,10 @@ measured, not estimated: `npm run toolslist` reproduces them.
 
 | Value | Registers |
 |-------|-----------|
-| *(unset)* | Everything 0.12.x had, plus `extract` — **106 tools, 102KB** |
-| `all` | every platform — **191 tools, 262KB** |
-| `extract,sec,g2` | just those platforms — 11 tools, 20KB |
-| `default,walmart,metaads` | the default set plus two more — 58 tools |
+| *(unset)* or `default` | Everything 0.12.x had, plus `extract` — **106 tools, 63KB** |
+| `all` | every platform — **191 tools, 136KB** |
+| `extract,sec,g2` | just those platforms — 11 tools, 10KB |
+| `default,zillow,metaads` | the default set plus two more — 112 tools, 70KB |
 | `none` | no platform tools, only `get_usage` |
 
 Keys are matched case- and punctuation-insensitively, so `meta-ads`, `metaads`

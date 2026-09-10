@@ -103,10 +103,11 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 191
- * tools, which serialises to 262KB of tools/list (measured, not estimated) —
- * roughly 70k tokens pushed into the context of EVERY session before the user
- * has typed anything, and past the hard tool-count ceiling some clients
- * enforce. The 100-tool surface this replaces already cost ~26k tokens.
+ * tools, which serialises to 136KB of tools/list (measured with
+ * `npm run toolslist`, not estimated) — roughly 35k tokens pushed into the
+ * context of EVERY session before the user has typed anything, and past the
+ * hard tool-count ceiling some clients enforce. The default set below is 106
+ * tools, 63KB.
  *
  * The default is therefore exactly what 0.12.x registered, plus extract:
  * upgrading must never silently remove a tool someone already depends on. A

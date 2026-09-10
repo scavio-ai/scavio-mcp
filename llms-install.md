@@ -11,7 +11,7 @@ Ask the user for their API key before configuring. Never invent or reuse a place
 
 ## Important: only a subset of tools loads by default
 
-The server exposes 191 tools. Registering all of them writes 262KB into `tools/list`, which is roughly 70k tokens of context in every session and more tools than some clients accept. So the server registers a default set (106 tools, 102KB) and gates the rest behind `SCAVIO_PLATFORMS`.
+The server exposes 191 tools. Registering all of them writes 136KB into `tools/list`, which is roughly 35k tokens of context in every session and more tools than some clients accept. So the server registers a default set (106 tools, 63KB) and gates the rest behind `SCAVIO_PLATFORMS`.
 
 **Default (env var unset):** `extract`, `google`, `youtube`, `amazon`, `walmart`, `reddit`, `tiktok`, `tiktok-shop`, `instagram`, `x`, `linkedin` - 106 tools including `get_usage`. This is the surface 0.12.x shipped plus Extract, so upgrading never removes a tool.
 
