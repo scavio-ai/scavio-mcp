@@ -72,6 +72,14 @@ async function startHttp() {
   );
   app.get("/health", (c) => c.json({ status: "ok" }));
 
+  // Glama directory ownership claim; must stay in place to keep the listing verified.
+  app.get("/.well-known/glama.json", (c) =>
+    c.json({
+      $schema: "https://glama.ai/mcp/schemas/connector.json",
+      claim: "glama_claim_fNJqMMssWxtODfRrgf2jT_07_SnFry23",
+    }),
+  );
+
   // Mount OAuth routes (well-known, authorize, token, register, callback)
   app.route("/", authApp);
 
