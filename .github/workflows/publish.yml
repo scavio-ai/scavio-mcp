@@ -24,17 +24,30 @@ jobs:
 
       - run: npm run build
 
+      # npm and the MCP Registry are gated SEPARATELY. A single npm-based gate
+      # meant a registry failure could never be retried: on re-run npm already
+      # had the version, so the registry steps were skipped too (0.15.0,
+      # 2026-10-02).
       - name: Check if version is new
         id: check
         run: |
           NAME=$(node -p "require('./package.json').name")
           VERSION=$(node -p "require('./package.json').version")
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
             echo "new=false" >> "$GITHUB_OUTPUT"
-            echo "$NAME@$VERSION already published, skipping"
+            echo "$NAME@$VERSION already on npm, skipping npm publish"
           else
             echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+          SERVER=$(jq -r '.name | @uri' server.json)
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' "https://registry.modelcontextprotocol.io/v0/servers/$SERVER/versions/$VERSION")
+          if [ "$CODE" = "200" ]; then
+            echo "registry_new=false" >> "$GITHUB_OUTPUT"
+            echo "$VERSION already in the MCP Registry, skipping registry publish"
+          else
+            echo "registry_new=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Publish to npm
@@ -43,20 +56,34 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      # The registry validates the package against npm, and a fresh publish
+      # takes a moment to become visible there - registering immediately failed
+      # with "version '0.15.0' was not found (status: 404)".
+      - name: Wait for the version to be visible on npm
+        if: steps.check.outputs.registry_new == 'true'
+        run: |
+          for i in $(seq 1 30); do
+            if npm view "${{ steps.check.outputs.name }}@${{ steps.check.outputs.version }}" version > /dev/null 2>&1; then
+              echo "visible on npm after $i check(s)"; exit 0
+            fi
+            sleep 10
+          done
+          echo "version never became visible on npm"; exit 1
+
       - name: Install mcp-publisher
-        if: steps.check.outputs.new == 'true'
+        if: steps.check.outputs.registry_new == 'true'
         run: curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
 
       - name: Sync server.json version to package.json
-        if: steps.check.outputs.new == 'true'
+        if: steps.check.outputs.registry_new == 'true'
         run: |
           V="${{ steps.check.outputs.version }}"
           jq --arg v "$V" '.version = $v | .packages = [.packages[] | .version = $v]' server.json > server.tmp && mv server.tmp server.json
 
       - name: Authenticate to MCP Registry (OIDC)
-        if: steps.check.outputs.new == 'true'
+        if: steps.check.outputs.registry_new == 'true'
         run: ./mcp-publisher login github-oidc
 
       - name: Publish to MCP Registry
-        if: steps.check.outputs.new == 'true'
+        if: steps.check.outputs.registry_new == 'true'
         run: ./mcp-publisher publish
