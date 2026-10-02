@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 191 tools across 31 platforms plus Extract, one API key.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 192 tools across 31 platforms plus Extract, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 191 tools puts 136KB of tool definitions — roughly 35k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 106 tools, 63KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 192 tools puts 138KB of tool definitions — roughly 35k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 65KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 191 tools. Loading all of them costs 136KB of `tools/list` —
+Scavio exposes 192 tools. Loading all of them costs 138KB of `tools/list` —
 roughly 35k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -217,10 +217,10 @@ measured, not estimated: `npm run toolslist` reproduces them.
 
 | Value | Registers |
 |-------|-----------|
-| *(unset)* or `default` | Everything 0.12.x had, plus `extract` — **106 tools, 63KB** |
-| `all` | every platform — **191 tools, 136KB** |
+| *(unset)* or `default` | Everything 0.12.x had, plus `extract` — **107 tools, 65KB** |
+| `all` | every platform — **192 tools, 138KB** |
 | `extract,sec,g2` | just those platforms — 11 tools, 10KB |
-| `default,zillow,metaads` | the default set plus two more — 112 tools, 70KB |
+| `default,zillow,metaads` | the default set plus two more — 113 tools, 72KB |
 | `none` | no platform tools, only `get_usage` |
 
 Keys are matched case- and punctuation-insensitively, so `meta-ads`, `metaads`
@@ -378,12 +378,18 @@ single page.
 | `get_walmart_offers` | The buy-box offer for a product: price, seller, condition, buy-box flag |
 | `get_walmart_seller` | Marketplace seller storefront: name, rating, Pro Seller badge, business details |
 | `get_walmart_seller_products` | A seller's catalogue; `total_count` is the real size |
+| `get_walmart_stores` | Stores near a US ZIP or Canadian postal code, nearest first, with `store_id`, address, distance and hours |
 
-Walmart is priced by the `domain` parameter, not at a flat rate: `com` (US,
-default) and `ca` cost 1 credit, `com.mx` costs 2. Only `search_walmart` and
-`get_walmart_category` accept `domain`, so only those two can cost 2 — the other
-five are always 1. The id-keyed tools are US-only, because walmart.ca product
-pages cannot be fetched.
+Walmart is priced by the request body, not at a flat rate: `com` (US, default)
+and `ca` cost 1 credit, `com.mx` costs 2. Only `search_walmart` and
+`get_walmart_category` accept every `domain`.
+
+Store targeting: pass `delivery_zip` and `store_id` together on `search_walmart`
+or `get_walmart_product` to get one store's assortment and availability. Take the
+`store_id` from `get_walmart_stores` on the same domain (walmart.com or
+walmart.ca). A store-targeted call costs 2 credits, takes 10-60 seconds, and
+echoes the store it used in `data.location`. `get_walmart_product` accepts
+`domain: "ca"` only together with a store pair.
 
 Two shapes to plan for. `get_walmart_offers` returns the buy-box winner only —
 Walmart server-renders just that one offer, so expect a single row even when

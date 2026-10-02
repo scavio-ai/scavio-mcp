@@ -5,9 +5,9 @@ import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
 /**
- * Walmart marketplace. This is the price-bearing parameter: com and ca bill 1
- * credit, com.mx bills 2. Only search and category accept it — walmart.ca
- * product pages cannot be fetched, so the id-keyed endpoints are US-only.
+ * Walmart marketplace. A price-bearing parameter: com and ca bill 1 credit,
+ * com.mx bills 2. Search and category accept all three; product accepts ca
+ * only together with a store target (see storeFields).
  *
  * Never given a zod default: the MCP SDK applies defaults BEFORE the handler
  * runs, so a default is posted on every call whether the caller meant it or not.
@@ -24,13 +24,24 @@ const domainField = z.enum(["com", "ca", "com.mx"]).optional()
 const fulfillmentSpeedField = z.enum(["today", "tomorrow"]).optional()
   .describe("'today' or 'tomorrow'. Omit for all items.");
 
+/**
+ * Store targeting (search + product). Both or neither: the API 400s one alone.
+ * store_id comes from get_walmart_stores on the same domain. walmart.com and
+ * walmart.ca only. A store-targeted call bills 2 credits regardless of domain.
+ * No defaults, for the same reason as domainField.
+ */
+const deliveryZipField = z.string().min(5).max(7).optional()
+  .describe("Shopper postal code: 5-digit US ZIP, or Canadian postal code (e.g. 'M5V 2T6') with domain 'ca'. Must be passed with store_id.");
+const storeIdField = z.string().min(1).optional()
+  .describe("Walmart store id from get_walmart_stores (same domain). Must be passed with delivery_zip. The store used is echoed in data.location.");
+
 const sortByField = z.enum(["best_match", "price_low", "price_high", "best_seller", "rating_high", "new"]).optional()
   .describe("Sort order. Default 'best_match'.");
 
 export function registerWalmartTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "search_walmart",
-    `Search Walmart products. Paginate with page while has_more_pages. 1 credit (US/CA), 2 credits (Mexico).`,
+    `Search Walmart products. Paginate with page while has_more_pages. 1 credit (US/CA), 2 credits (Mexico). Optional store targeting: pass delivery_zip + store_id together (store_id from get_walmart_stores, same domain) for one store's assortment and availability - walmart.com and walmart.ca only, 2 credits, takes 10-60s, store echoed in data.location.`,
     {
       query: z.string().min(1).max(500)
         .describe("Product search query."),
@@ -45,6 +56,8 @@ export function registerWalmartTools(server: McpServer, getClient: () => ScavioC
       fulfillment_type: z.enum(["in_store"]).optional()
         .describe("'in_store' for pickup only. Omit for all."),
       domain: domainField,
+      delivery_zip: deliveryZipField,
+      store_id: storeIdField,
     },
     async (params) => {
       try {
@@ -58,14 +71,37 @@ export function registerWalmartTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_walmart_product",
-    `Get full Walmart product detail. No reviews (use get_walmart_reviews) or offers (use get_walmart_offers). US only (no domain param). seller_catalog_id is the NUMERIC id for seller endpoints. 1 credit.`,
+    `Get full Walmart product detail. No reviews (use get_walmart_reviews) or offers (use get_walmart_offers). seller_catalog_id is the NUMERIC id for seller endpoints. 1 credit. Optional store targeting: delivery_zip + store_id together (store_id from get_walmart_stores) - 2 credits, takes 10-60s, store echoed in data.location; 404 if that store does not carry the item. domain 'ca' only with a store pair.`,
     {
       product_id: z.string().min(1)
         .describe("Walmart usItemId, e.g. '13544111159'."),
+      domain: z.enum(["com", "ca"]).optional()
+        .describe("'com' (default) or 'ca'. 'ca' requires delivery_zip + store_id."),
+      delivery_zip: deliveryZipField,
+      store_id: storeIdField,
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/walmart/product", params);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
+
+  server.tool(
+    "get_walmart_stores",
+    `Find Walmart stores near a US ZIP (walmart.com) or Canadian postal code (domain 'ca'), nearest first: store_id, name, distance_miles, address, coordinates, hours. Use a store_id with delivery_zip on search_walmart or get_walmart_product (same domain) to target that store. 1 credit.`,
+    {
+      zipcode: z.string().min(5).max(7)
+        .describe("5-digit US ZIP, e.g. '50036', or Canadian postal code with domain 'ca', e.g. 'M5V 2T6'."),
+      domain: z.enum(["com", "ca"]).optional()
+        .describe("'com' (walmart.com, default) or 'ca' (walmart.ca)."),
+    },
+    async (params) => {
+      try {
+        const data = await getClient().post("/api/v1/walmart/stores", params);
         return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
