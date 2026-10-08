@@ -431,10 +431,10 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "google_trends",
-    `Google Trends interest data. Comma-separate query terms to compare. 1 credit.`,
+    `Google Trends interest data. Comma-separate up to 5 terms to compare on one 0-100 scale. 1 credit for one term, 3 credits for a comparison.`,
     {
       query: z.string()
-        .describe("Term(s), comma-separated to compare."),
+        .describe("Term(s), comma-separated to compare (max 5)."),
       geo: z.string().optional()
         .describe("e.g. 'US', 'US-CA'."),
       hl: z.string().optional()
@@ -444,7 +444,7 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
       tz: z.string().optional()
         .describe("Timezone offset in minutes."),
       data_type: z.enum(["TIMESERIES", "GEO_MAP", "GEO_MAP_0", "RELATED_QUERIES", "RELATED_TOPICS"]).optional()
-        .describe("Dataset to return."),
+        .describe("Dataset to return. GEO_MAP_0, RELATED_QUERIES, RELATED_TOPICS accept a single term only."),
       cat: z.string().optional()
         .describe("Category id."),
       gprop: z.enum(["images", "news", "youtube", "froogle"]).optional()
