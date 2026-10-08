@@ -7,7 +7,7 @@ import { trimResponse } from "../lib/trim-response.js";
 export function registerInstagramTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "get_instagram_profile",
-    `Get an Instagram user's profile. 10 credits.`,
+    `Get an Instagram user's profile. 8-10 credits.`,
     {
       username: z.string().optional()
         .describe("Handle without @, e.g. 'instagram'."),
@@ -26,7 +26,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_instagram_user_posts",
-    `List an Instagram user's posts. Pass pagination_token or next_max_id as cursor. 2 credits.`,
+    `List an Instagram user's posts. Pass pagination_token or next_max_id as cursor. 2-10 credits (usually 2).`,
     {
       username: z.string().optional()
         .describe("Handle without @."),
@@ -49,7 +49,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_instagram_user_reels",
-    `List an Instagram user's Reels. Paginate with next_max_id. 10 credits.`,
+    `List an Instagram user's Reels. Paginate with next_max_id. 8-10 credits.`,
     {
       username: z.string().optional()
         .describe("Handle without @."),
@@ -72,7 +72,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_instagram_user_tagged",
-    `List posts an Instagram user is tagged in. Paginate with next_max_id/more_available. 10 credits.`,
+    `List posts an Instagram user is tagged in. Paginate with next_max_id/more_available. 8-10 credits.`,
     {
       username: z.string().optional()
         .describe("Handle without @."),
@@ -95,7 +95,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_instagram_user_stories",
-    `Get an Instagram user's active stories. Not paginated. 10 credits.`,
+    `Get an Instagram user's active stories. Not paginated. 8-10 credits.`,
     {
       username: z.string().optional()
         .describe("Handle without @."),
@@ -135,7 +135,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_instagram_post_comments",
-    `Get comments on an Instagram post. Provide shortcode or url (not media_id). Paginate with next_min_id. 10 credits.`,
+    `Get comments on an Instagram post. Provide shortcode or url (not media_id). Paginate with next_min_id. 8-10 credits.`,
     {
       shortcode: z.string().optional()
         .describe("Post shortcode."),
@@ -179,7 +179,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "search_instagram_users",
-    `Search Instagram users by keyword. Pagination via rank_token is best effort. 10 credits.`,
+    `Search Instagram users by keyword. Pagination via rank_token is best effort. 8-10 credits.`,
     {
       keyword: z.string().min(1).max(500)
         .describe("Search query."),
@@ -198,7 +198,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "search_instagram_hashtags",
-    `Search Instagram hashtags by keyword. Pagination via rank_token is best effort. 10 credits.`,
+    `Search Instagram hashtags by keyword. Pagination via rank_token is best effort. 8-10 credits.`,
     {
       keyword: z.string().min(1).max(500)
         .describe("Search query."),
@@ -217,7 +217,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_instagram_user_followers",
-    `Get an Instagram user's followers. Paginate with next_max_id/has_more. 10 credits.`,
+    `Get an Instagram user's followers. Paginate with next_max_id/has_more. 8-10 credits.`,
     {
       username: z.string().optional()
         .describe("Handle without @."),
@@ -240,7 +240,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_instagram_user_followings",
-    `Get accounts an Instagram user follows. Paginate with next_max_id/has_more. 10 credits.`,
+    `Get accounts an Instagram user follows. Paginate with next_max_id/has_more. 8-10 credits.`,
     {
       username: z.string().optional()
         .describe("Handle without @."),

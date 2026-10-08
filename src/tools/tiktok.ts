@@ -33,7 +33,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
       cursor: z.string().default("0")
         .describe("Use data.max_cursor from previous response."),
       count: z.number().int().min(1).max(30).default(20)
-        .describe("Results per page."),
+        .describe("Requested videos per page (1-30). Pages currently return up to 10 videos whatever you request, so page with max_cursor for more."),
       sort_type: z.enum(["0", "1"]).default("0")
         .describe("'0' = latest, '1' = popular."),
     },
