@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { ScavioClient } from "../lib/client.js";
 import { handleApiError } from "../lib/tool-error.js";
-import { trimResponse } from "../lib/trim-response.js";
+import { trimResponse, type TrimOptions } from "../lib/trim-response.js";
 
 // Amazon moved to a new upstream provider and now returns a normalized shape
 // instead of the old raw passthrough. Two consequences for these tool schemas:
@@ -43,10 +43,10 @@ const asinField = z
   .describe("ASIN, e.g. 'B09V3KXJPB'.");
 
 export function registerAmazonTools(server: McpServer, getClient: () => ScavioClient) {
-  const call = (path: string) => async (params: Record<string, unknown>) => {
+  const call = (path: string, opts?: TrimOptions) => async (params: Record<string, unknown>) => {
     try {
       const data = await getClient().post(path, params);
-      return trimResponse(data);
+      return trimResponse(data, opts);
     } catch (err) {
       return handleApiError(err);
     }
@@ -62,7 +62,9 @@ export function registerAmazonTools(server: McpServer, getClient: () => ScavioCl
       page: z.number().int().min(1).optional()
         .describe("Page, 1-based."),
     },
-    call("/api/v1/amazon/search"),
+    // data.filters is ~60% of a search page: refinement links for filters
+    // this tool cannot apply (no category/price params). Dropped from MCP output.
+    call("/api/v1/amazon/search", { dropKeys: ["filters"] }),
   );
 
   server.tool(

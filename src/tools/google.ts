@@ -4,6 +4,36 @@ import type { ScavioClient } from "../lib/client.js";
 import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
+/**
+ * Shopping records carry both a durable catalog_id and an
+ * immersive_product_page_token (~1.4KB of base64 each, 60+ per page). The
+ * token is only an alternative way into google_shopping_product, and
+ * catalog_id+query is the documented full-data path, so the token is dropped
+ * from records that have a catalog_id. Records without one keep their token,
+ * so every result stays openable. MCP output only; the REST API is unchanged.
+ */
+function shoppingTokens(data: unknown): unknown {
+  const strip = (list: unknown) => {
+    if (!Array.isArray(list)) return list;
+    return list.map((r) => {
+      if (r && typeof r === "object" && "catalog_id" in r && (r as Record<string, unknown>).catalog_id) {
+        const { immersive_product_page_token: _drop, ...rest } = r as Record<string, unknown>;
+        return rest;
+      }
+      return r;
+    });
+  };
+  if (!data || typeof data !== "object") return data;
+  const d = data as Record<string, unknown>;
+  const out: Record<string, unknown> = { ...d, shopping_results: strip(d.shopping_results) };
+  if (Array.isArray(d.categorized_shopping_results)) {
+    out.categorized_shopping_results = d.categorized_shopping_results.map((c) =>
+      c && typeof c === "object" ? { ...c, shopping_results: strip((c as Record<string, unknown>).shopping_results) } : c,
+    );
+  }
+  return out;
+}
+
 export function registerGoogleTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "search_google",
@@ -164,7 +194,7 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "google_shopping",
-    `Search Google Shopping for products with prices across retailers. 1 credit.`,
+    `Search Google Shopping for products with prices across retailers. Returns the top 10 shopping_results by default (limit to change). Pass catalog_id+query to google_shopping_product for detail. 1 credit.`,
     {
       query: z.string().min(1).max(500)
         .describe("Product query."),
@@ -194,11 +224,13 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
         .describe("Location name, auto-encoded to UULE."),
       uule: z.string().optional()
         .describe("UULE string, overrides location."),
+      limit: z.number().int().min(1).max(100).optional()
+        .describe("Max shopping_results returned (default 10). Local trim, same cost."),
     },
-    async (params) => {
+    async ({ limit, ...params }) => {
       try {
         const data = await getClient().post("/api/v2/google/shopping", params);
-        return trimResponse(data);
+        return trimResponse(shoppingTokens(data), { limit: limit ?? 10, listKeys: ["shopping_results"] });
       } catch (err) {
         return handleApiError(err);
       }
@@ -396,7 +428,7 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "google_news",
-    `Google News results. Query or browse via topic/story/publication token. 1 credit.`,
+    `Google News results. Query or browse via topic/story/publication token. Returns the first 20 news_results by default (limit to change). 1 credit.`,
     {
       query: z.string().optional()
         .describe("Keyword search."),
@@ -418,11 +450,13 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
         .describe("e.g. 'google.co.uk'."),
       so: z.number().int().optional()
         .describe("0=relevance, 1=date."),
+      limit: z.number().int().min(1).max(100).optional()
+        .describe("Max news_results returned (default 20). Local trim, same cost."),
     },
-    async (params) => {
+    async ({ limit, ...params }) => {
       try {
         const data = await getClient().post("/api/v2/google/news", params);
-        return trimResponse(data);
+        return trimResponse(data, { limit: limit ?? 20, listKeys: ["news_results"], dropKeys: ["thumbnail_small", "icon"] });
       } catch (err) {
         return handleApiError(err);
       }
@@ -464,7 +498,7 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "google_trending",
-    `Google Trending Now searches for a country. 1 credit.`,
+    `Google Trending Now searches for a country. Returns the first 50 trends by default (limit to change; a day can have 400+). 1 credit.`,
     {
       geo: z.string()
         .describe("e.g. 'US'."),
@@ -478,11 +512,13 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
         .describe("Sort."),
       status: z.enum(["all", "active"]).optional()
         .describe("Trend status filter."),
+      limit: z.number().int().min(1).max(500).optional()
+        .describe("Max trends returned (default 50). Local trim, same cost."),
     },
-    async (params) => {
+    async ({ limit, ...params }) => {
       try {
         const data = await getClient().post("/api/v2/google/trending", params);
-        return trimResponse(data);
+        return trimResponse(data, { limit: limit ?? 50, listKeys: ["trends"] });
       } catch (err) {
         return handleApiError(err);
       }

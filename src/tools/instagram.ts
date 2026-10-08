@@ -4,6 +4,16 @@ import type { ScavioClient } from "../lib/client.js";
 import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
+/**
+ * Result lists that `count` caps in the MCP output. Upstream treats count as
+ * best effort (count=3 returned 12 posts), so it is enforced here. Responses
+ * are also deduplicated (items vs raw edges vs the raw GraphQL envelope) and
+ * records projected to agent-useful fields, see src/lib/trim-platforms.ts.
+ * get_instagram_profile is deliberately left unprojected. The REST API
+ * response is unchanged.
+ */
+const IG_LISTS = ["items", "edges", "users"];
+
 export function registerInstagramTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "get_instagram_profile",
@@ -33,14 +43,14 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
       user_id: z.string().optional()
         .describe("Numeric user ID."),
       count: z.number().int().min(1).max(50).default(12)
-        .describe("Posts per page (best effort)."),
+        .describe("Max posts returned; upstream may fetch more, extras are trimmed."),
       cursor: z.string().optional()
         .describe("pagination_token or next_max_id from previous response."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/user/posts", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram", limit: params.count, listKeys: IG_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -56,14 +66,14 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
       user_id: z.string().optional()
         .describe("Numeric user ID."),
       count: z.number().int().min(1).max(50).default(12)
-        .describe("Reels per page."),
+        .describe("Max reels returned."),
       cursor: z.string().optional()
         .describe("next_max_id from previous response."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/user/reels", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram", limit: params.count, listKeys: IG_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -79,14 +89,14 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
       user_id: z.string().optional()
         .describe("Numeric user ID."),
       count: z.number().int().min(1).max(50).default(12)
-        .describe("Posts per page."),
+        .describe("Max posts returned."),
       cursor: z.string().optional()
         .describe("next_max_id from previous response."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/user/tagged", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram", limit: params.count, listKeys: IG_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -105,7 +115,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/user/stories", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram" });
       } catch (err) {
         return handleApiError(err);
       }
@@ -126,7 +136,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/post", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram" });
       } catch (err) {
         return handleApiError(err);
       }
@@ -149,7 +159,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/post/comments", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram" });
       } catch (err) {
         return handleApiError(err);
       }
@@ -170,7 +180,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/post/comments/replies", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram" });
       } catch (err) {
         return handleApiError(err);
       }
@@ -189,7 +199,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/search/users", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram" });
       } catch (err) {
         return handleApiError(err);
       }
@@ -208,7 +218,7 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/search/hashtags", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram" });
       } catch (err) {
         return handleApiError(err);
       }
@@ -224,14 +234,14 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
       user_id: z.string().optional()
         .describe("Numeric user ID."),
       count: z.number().int().min(1).max(100).default(12)
-        .describe("Users per page."),
+        .describe("Max users returned."),
       cursor: z.string().optional()
         .describe("next_max_id from previous response."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/user/followers", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram", limit: params.count, listKeys: IG_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -247,14 +257,14 @@ export function registerInstagramTools(server: McpServer, getClient: () => Scavi
       user_id: z.string().optional()
         .describe("Numeric user ID."),
       count: z.number().int().min(1).max(100).default(12)
-        .describe("Users per page."),
+        .describe("Max users returned."),
       cursor: z.string().optional()
         .describe("next_max_id from previous response."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/instagram/user/followings", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "instagram", limit: params.count, listKeys: IG_LISTS });
       } catch (err) {
         return handleApiError(err);
       }

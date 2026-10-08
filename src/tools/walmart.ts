@@ -41,7 +41,7 @@ const sortByField = z.enum(["best_match", "price_low", "price_high", "best_selle
 export function registerWalmartTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "search_walmart",
-    `Search Walmart products. Paginate with page while has_more_pages. 1 credit (US/CA), 2 credits (Mexico). Optional store targeting: pass delivery_zip + store_id together (store_id from get_walmart_stores, same domain) for one store's assortment and availability - walmart.com and walmart.ca only, 2 credits, takes 10-60s, store echoed in data.location.`,
+    `Search Walmart products. Returns the first 20 products by default (limit to change; a page holds up to ~70). Paginate with page while has_more_pages. 1 credit (US/CA), 2 credits (Mexico). Optional store targeting: pass delivery_zip + store_id together (store_id from get_walmart_stores, same domain) for one store's assortment and availability - walmart.com and walmart.ca only, 2 credits, takes 10-60s, store echoed in data.location.`,
     {
       query: z.string().min(1).max(500)
         .describe("Product search query."),
@@ -58,11 +58,13 @@ export function registerWalmartTools(server: McpServer, getClient: () => ScavioC
       domain: domainField,
       delivery_zip: deliveryZipField,
       store_id: storeIdField,
+      limit: z.number().int().min(1).max(100).optional()
+        .describe("Max products returned (default 20). Local trim, same cost."),
     },
-    async (params) => {
+    async ({ limit, ...params }) => {
       try {
         const data = await getClient().post("/api/v1/walmart/search", params);
-        return trimResponse(data);
+        return trimResponse(data, { limit: limit ?? 20, listKeys: ["products"] });
       } catch (err) {
         return handleApiError(err);
       }

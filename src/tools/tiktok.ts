@@ -4,6 +4,15 @@ import type { ScavioClient } from "../lib/client.js";
 import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
+/**
+ * Result lists that `count` caps in the MCP output. Upstream often returns
+ * more than was asked for (a count=3 search returned full pages), and each
+ * TikTok record is large, so the requested count is enforced here. Records are
+ * also projected to agent-useful fields (see src/lib/trim-platforms.ts); the
+ * REST API response is unchanged.
+ */
+const TT_LISTS = ["aweme_list", "search_item_list", "comments", "user_list", "followers", "followings"];
+
 export function registerTiktokTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "get_tiktok_profile",
@@ -33,14 +42,14 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
       cursor: z.string().default("0")
         .describe("Use data.max_cursor from previous response."),
       count: z.number().int().min(1).max(30).default(20)
-        .describe("Requested videos per page (1-30). Pages currently return up to 10 videos whatever you request, so page with max_cursor for more."),
+        .describe("Max videos returned (1-30). Pages return up to ~10 videos whatever you request, so page with max_cursor for more."),
       sort_type: z.enum(["0", "1"]).default("0")
         .describe("'0' = latest, '1' = popular."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/user/posts", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok", limit: params.count, listKeys: TT_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -57,7 +66,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/video", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok" });
       } catch (err) {
         return handleApiError(err);
       }
@@ -73,12 +82,12 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
       cursor: z.string().default("0")
         .describe("From data.cursor of previous response."),
       count: z.number().int().min(1).max(50).default(20)
-        .describe("Comments per page."),
+        .describe("Max comments returned."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/video/comments", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok", limit: params.count, listKeys: TT_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -96,12 +105,12 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
       cursor: z.string().default("0")
         .describe("From data.cursor of previous response."),
       count: z.number().int().min(1).max(50).default(20)
-        .describe("Replies per page."),
+        .describe("Max replies returned."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/video/comments/replies", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok", limit: params.count, listKeys: TT_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -117,7 +126,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
       cursor: z.string().default("0")
         .describe("From data.cursor of previous response."),
       count: z.number().int().min(1).max(30).default(20)
-        .describe("Results per page."),
+        .describe("Max results returned."),
       sort_type: z.enum(["0", "1"]).default("0")
         .describe("'0' = relevance, '1' = most likes."),
       publish_time: z.enum(["0", "1", "7", "30", "90", "180"]).default("0")
@@ -126,7 +135,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/search/videos", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok", limit: params.count, listKeys: TT_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -142,12 +151,12 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
       cursor: z.string().default("0")
         .describe("From data.cursor of previous response."),
       count: z.number().int().min(1).max(30).default(20)
-        .describe("Results per page."),
+        .describe("Max results returned."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/search/users", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok", limit: params.count, listKeys: TT_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -166,7 +175,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/hashtag", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok" });
       } catch (err) {
         return handleApiError(err);
       }
@@ -182,12 +191,12 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
       cursor: z.string().default("0")
         .describe("From data.cursor of previous response."),
       count: z.number().int().min(1).max(30).default(20)
-        .describe("Results per page."),
+        .describe("Max results returned."),
     },
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/hashtag/videos", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok", limit: params.count, listKeys: TT_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -201,7 +210,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
       sec_user_id: z.string()
         .describe("From get_tiktok_profile."),
       count: z.number().int().min(1).max(20).default(20)
-        .describe("Results per page."),
+        .describe("Max results returned."),
       page_token: z.string().optional()
         .describe("From previous response."),
       min_time: z.number().optional()
@@ -210,7 +219,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/user/followers", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok", limit: params.count, listKeys: TT_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
@@ -224,7 +233,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
       sec_user_id: z.string()
         .describe("From get_tiktok_profile."),
       count: z.number().int().min(1).max(20).default(20)
-        .describe("Results per page."),
+        .describe("Max results returned."),
       page_token: z.string().optional()
         .describe("From previous response."),
       min_time: z.number().optional()
@@ -233,7 +242,7 @@ export function registerTiktokTools(server: McpServer, getClient: () => ScavioCl
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/tiktok/user/followings", params);
-        return trimResponse(data);
+        return trimResponse(data, { platform: "tiktok", limit: params.count, listKeys: TT_LISTS });
       } catch (err) {
         return handleApiError(err);
       }
