@@ -253,7 +253,7 @@ function annotating(server: McpServer): McpServer {
       return (name: string, ...rest: unknown[]) => {
         const registered: ReturnType<McpServer["tool"]> = Reflect.apply(target.tool, target, [name, ...rest]);
         const title = toolTitle(name);
-        registered.update({ title, annotations: READ_ONLY_ANNOTATIONS });
+        registered.update({ title, annotations: { title, ...READ_ONLY_ANNOTATIONS } });
         return registered;
       };
     },
