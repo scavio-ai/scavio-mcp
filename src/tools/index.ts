@@ -210,6 +210,56 @@ export function resolvePlatforms(raw: string | undefined | null): string[] {
   return PLATFORM_KEYS.filter((key) => selected.has(key));
 }
 
+/** Words in tool names whose display form is not plain title case. */
+const TITLE_WORDS: Record<string, string> = {
+  tiktok: "TikTok",
+  youtube: "YouTube",
+  linkedin: "LinkedIn",
+  ebay: "eBay",
+  sec: "SEC",
+  g2: "G2",
+  ai: "AI",
+  url: "URL",
+};
+
+/** `get_tiktok_user_posts` -> `Get TikTok User Posts`. */
+export function toolTitle(name: string): string {
+  return name
+    .split("_")
+    .map((w) => TITLE_WORDS[w] ?? w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+/**
+ * Every Scavio tool reads public data and changes nothing, so one annotation
+ * set covers all of them. The Claude, ChatGPT and Microsoft connector
+ * directories reject a server whose tools lack a title and these hints.
+ * openWorldHint is true because the data comes from external sites.
+ */
+const READ_ONLY_ANNOTATIONS = {
+  readOnlyHint: true,
+  destructiveHint: false,
+  openWorldHint: true,
+} as const;
+
+/**
+ * Wrap the server so every tool() call is annotated at registration, instead
+ * of editing 192 call sites. A tool added later picks this up automatically.
+ */
+function annotating(server: McpServer): McpServer {
+  return new Proxy(server, {
+    get(target, prop, receiver) {
+      if (prop !== "tool") return Reflect.get(target, prop, receiver);
+      return (name: string, ...rest: unknown[]) => {
+        const registered: ReturnType<McpServer["tool"]> = Reflect.apply(target.tool, target, [name, ...rest]);
+        const title = toolTitle(name);
+        registered.update({ title, annotations: READ_ONLY_ANNOTATIONS });
+        return registered;
+      };
+    },
+  });
+}
+
 /**
  * Register the allowlisted platform tools plus get_usage.
  *
@@ -222,7 +272,8 @@ export function registerAllTools(
   platformsRaw: string | undefined = env.SCAVIO_PLATFORMS,
 ): string[] {
   const platforms = resolvePlatforms(platformsRaw);
-  for (const key of platforms) PLATFORMS[key](server, getClient);
-  registerUsageTool(server, getClient);
+  const annotated = annotating(server);
+  for (const key of platforms) PLATFORMS[key](annotated, getClient);
+  registerUsageTool(annotated, getClient);
   return platforms;
 }
