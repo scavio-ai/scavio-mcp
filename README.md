@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 211 tools across 33 platforms plus Extract, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 224 tools across 35 platforms plus Extract, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 211 tools puts 191KB of tool definitions — roughly 47k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 82KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 224 tools puts 211KB of tool definitions — roughly 52k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 82KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 211 tools. Loading all of them costs 191KB of `tools/list` —
-roughly 47k tokens of context in every session before the user has said anything,
+Scavio exposes 224 tools. Loading all of them costs 211KB of `tools/list` —
+roughly 52k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Everything 0.12.x had, plus `extract` — **107 tools, 82KB** |
-| `all` | every platform — **211 tools, 191KB** |
+| `all` | every platform — **224 tools, 211KB** |
 | `extract,sec,g2` | just those platforms — 11 tools, 12KB |
 | `default,zillow,metaads` | the default set plus two more — 113 tools, 89KB |
 | `none` | no platform tools, only `get_usage` |
@@ -233,8 +233,8 @@ tells you to call to check the server works.
 **Platform keys:** `extract`, `google`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
 `target`, `homedepot`, `costco`, `tiktok-shop`, `booking`, `airbnb`,
-`tripadvisor`, `yelp`, `zillow`, `redfin`, `indeed`, `glassdoor`, `appstore`, `googleplay`,
-`g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
+`tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
+`appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
 ### Local (stdio)
 
@@ -691,6 +691,42 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call. `search_redfin` pages with `page` + `limit`, up to 350 listings per page; the other two are single-shot.
 
+### Realtor.com
+
+| Tool | Description |
+|------|-------------|
+| `search_realtor` | US listings for sale, pending, for rent or sold by location, radius or agent: price, beds, baths, sqft, lot, year built, garage, HOA, type, listed/sold/price-cut within N days, keywords in the listing text, new construction, foreclosure, open house; up to 200 per call |
+| `get_realtor_property` | One property by id or URL: price and tax history, three value estimates with history and forecast, schools, flood/wildfire/noise risk, listing agent and office |
+| `get_realtor_locations` | Autocomplete cities, counties, ZIPs, neighborhoods, schools and addresses, with the slug_id for market and the property_id for an address |
+| `get_realtor_market` | Market stats for a city, county or ZIP: median list, sold and rent price, price per sqft, days on market, year-over-year and month-over-month change, by property type |
+| `search_realtor_agents` | Agents by city, ZIP or name: rating, reviews, active listings and price range, homes sold last year, broker and office |
+| `get_realtor_agent` | One agent's full profile with every review and four sub-ratings |
+
+1 credit per call. `search_realtor` returns up to 200 listings per page (default 50) and
+serves the first 10,000 results of a search (`page` x `page_size` <= 10,000); slice a big
+area by price band, property type or radius to reach more. Sold prices are null in US
+non-disclosure states (Texas, Utah, Wyoming and about nine others), while sold dates still
+come back. An unknown property or agent id is a billed 404.
+
+### Rightmove
+
+| Tool | Description |
+|------|-------------|
+| `get_rightmove_locations` | UK place, outcode, postcode or station to the `location_id` search and agents take |
+| `search_rightmove` | UK property for sale or to rent: price (GBP), beds, baths, type, must-haves, exclusions, tenure, added within days, under offer, radius, furnishing, let type; 24-25 per page |
+| `get_rightmove_property` | One listing in full: tenure and lease years, council tax band, service charge, ground rent, EPC, rooms, floorplans, flood risk, broadband, stations, agent |
+| `get_rightmove_sold` | Sold prices for a town, outcode or postcode: 25 addresses per page, each with its sale history since 1995, plus the area's average price over the last year |
+| `get_rightmove_sold_property` | One sold address: every sale with price, date, tenure, new-build flag and percent change, plus the archived last listing |
+| `search_rightmove_agents` | Estate and letting agent branches for a location: phones, address, brand and company ids, profile URL |
+| `get_rightmove_agent` | One branch by id or URL: address, phones, affiliations, listing counts and a teaser |
+
+1 credit per call. Rightmove search has no keyword filter: match on the returned `summary`
+and `key_features` instead. Paging caps per search: 42 pages for `search_rightmove`
+(about 1,000 listings), 40 for `get_rightmove_sold`, 50 for `search_rightmove_agents`;
+narrow by price band, type or a smaller area to reach more. Sold prices cover England and
+Wales. Live listings carry no price history, so use `get_rightmove_sold_property` for an
+address's past sales. A removed listing or an unknown id is a billed 404.
+
 ### [Indeed](https://scavio.dev/docs/indeed-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
@@ -833,7 +869,7 @@ id is a billed 404 that names what was not found.
 - [Amazon Product API](https://scavio.dev/amazon-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Walmart Product API](https://scavio.dev/walmart-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/docs/target-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Home Depot](https://scavio.dev/docs/home-depot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Costco](https://scavio.dev/costco-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (per-warehouse prices, stock, gas prices, coupon book)
 - [TikTok API](https://scavio.dev/tiktok-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Instagram API](https://scavio.dev/instagram-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Reddit API](https://scavio.dev/reddit-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [X API](https://scavio.dev/x-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [LinkedIn API](https://scavio.dev/linkedin-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), and [YouTube API](https://scavio.dev/youtube-transcript-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — social and video data
 - Travel and local — [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Airbnb](https://scavio.dev/docs/airbnb-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Yelp](https://scavio.dev/docs/yelp-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
-- Real estate — [Zillow](https://scavio.dev/docs/zillow-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Redfin](https://scavio.dev/docs/redfin-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+- Real estate — [Zillow](https://scavio.dev/docs/zillow-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Redfin](https://scavio.dev/docs/redfin-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), Realtor.com (listings, sold comps, market stats, agents), Rightmove (UK listings, sold prices since 1995, agents)
 - Jobs and employer data — [Indeed](https://scavio.dev/docs/indeed-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Glassdoor](https://scavio.dev/docs/glassdoor-companies?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Apps, software reviews and ad libraries — [App Store](https://scavio.dev/docs/app-store-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Google Play](https://scavio.dev/docs/google-play-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [G2](https://scavio.dev/docs/g2-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Capterra](https://scavio.dev/docs/capterra-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Trustpilot](https://scavio.dev/trustpilot-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (business profiles, filtered reviews, category rankings), [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Meta Ad Library](https://scavio.dev/docs/meta-ads-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Company filings — [SEC EDGAR](https://scavio.dev/docs/sec-edgar-lookup?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Companies House](https://scavio.dev/docs/companies-house-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
