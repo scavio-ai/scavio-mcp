@@ -1,25 +1,11 @@
 #!/usr/bin/env node
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { env } from "./lib/env.js";
 import { ScavioClient } from "./lib/client.js";
+import { SERVER_VERSION } from "./lib/version.js";
 import { registerAllTools, PLATFORM_KEYS, DEFAULT_PLATFORMS } from "./tools/index.js";
 
 const SERVER_NAME = "scavio-mcp";
-
-/**
- * Read from package.json rather than a literal. The literal drifted to five
- * minor versions behind npm, and it is the version every client is handed
- * during `initialize`. src/ and dist/ are both one level under the package
- * root, so this resolves identically under tsx and under node dist/index.js.
- */
-const SERVER_VERSION: string = (
-  JSON.parse(
-    readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "package.json"), "utf8"),
-  ) as { version: string }
-).version;
 
 if (env.TRANSPORT === "stdio") {
   await startStdio();

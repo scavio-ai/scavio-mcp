@@ -4,7 +4,7 @@ Scavio is a unified search and data API for AI agents: web search (Google SERP, 
 
 ## Prerequisites
 
-1. A Scavio API key. The user must sign up at https://dashboard.scavio.dev (free, 50 signup credits, no credit card) and create a key on the API Keys page. Keys start with `sk_live_` or `sk_test_`.
+1. A Scavio API key. The user must sign up at https://dashboard.scavio.dev/sign-up?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme (free, 50 signup credits, no credit card) and create a key on the API Keys page. Keys start with `sk_live_` or `sk_test_`.
 2. For local (stdio) installation: Node.js 20 or later.
 
 Ask the user for their API key before configuring. Never invent or reuse a placeholder key.
@@ -75,7 +75,7 @@ Call the `get_usage` tool. It is free, always registered regardless of the allow
 ## Troubleshooting
 
 - 401 Unauthorized: key missing/typo. Remote uses the `x-api-key` header; local uses the `SCAVIO_API_KEY` env var.
-- 402 Insufficient credits: the account is out of credits; top up at https://dashboard.scavio.dev/billing.
+- 402 Insufficient credits: the account is out of credits; top up at https://dashboard.scavio.dev/billing?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme.
 - 429 Rate limited: the plan's concurrency limit was hit; retry after a moment.
 - A tool the user expects is missing: its platform is not in the allowlist. Add the platform key to `SCAVIO_PLATFORMS` (or the `x-scavio-platforms` header) and restart the client. Check the server's stderr line on startup - it prints the platforms it registered.
 - Client reports too many tools: narrow `SCAVIO_PLATFORMS` instead of using `all`.

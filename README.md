@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 205 tools across 32 platforms plus Extract, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 205 tools across 32 platforms plus Extract, one API key.
 
 **The 22 platforms added in 0.13.0 are opt-in.** Registering all 205 tools puts 183KB of tool definitions — roughly 45k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 82KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
@@ -18,7 +18,7 @@ https://mcp.scavio.dev/mcp
 Two ways to authenticate:
 
 - **Sign in with OAuth, no key to copy.** Claude Desktop, claude.ai and Claude Code sign in to your Scavio account through the server. In Claude Desktop or claude.ai: Settings > Connectors > Add custom connector, name it Scavio, paste the URL, then Connect and Authorize. In Claude Code: `claude mcp add --transport http scavio https://mcp.scavio.dev/mcp`, then run `/mcp` and choose Authenticate.
-- **API key.** Pass it in the `x-api-key` header. Get your key at [scavio.dev](https://scavio.dev).
+- **API key.** Pass it in the `x-api-key` header. Get your key at [scavio.dev](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 ---
 
@@ -48,7 +48,7 @@ claude mcp add scavio -e SCAVIO_API_KEY=YOUR_SCAVIO_API_KEY -- npx -y @scavio/mc
 }
 ```
 
-Requires Node.js 20+. Get your API key at [scavio.dev](https://scavio.dev).
+Requires Node.js 20+. Get your API key at [scavio.dev](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 ---
 
@@ -300,7 +300,7 @@ platforms price per endpoint (YouTube, Instagram, LinkedIn, Kuaishou) or per
 request body (Extract, Threads, Walmart); `get_amazon_options` and `get_usage`
 are free.
 
-### [Extract](https://scavio.dev/docs/extract)
+### [Extract](https://scavio.dev/docs/extract?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -313,7 +313,7 @@ content comes back empty or blocked. You are billed only on a successful
 extraction — a dead link, a bot wall or a timeout costs nothing. There is no
 pagination: the whole page comes back in one call.
 
-### [Google Search API](https://scavio.dev/docs/search-api)
+### [Google Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -332,7 +332,7 @@ pagination: the whole page comes back in one call.
 | `google_trends` | Interest-over-time and related queries |
 | `google_trending` | Trending searches |
 
-### [YouTube Data API](https://scavio.dev/docs/youtube-api)
+### [YouTube Data API](https://scavio.dev/docs/youtube-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -358,7 +358,7 @@ Credit cost varies: `get_youtube_transcript` costs 8, `get_youtube_streams` 3,
 `get_youtube_related` accepts a cursor but never returns one, so treat it as a
 single page.
 
-### [Amazon Product API](https://scavio.dev/docs/amazon-api)
+### [Amazon Product API](https://scavio.dev/docs/amazon-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -367,7 +367,7 @@ single page.
 | `get_amazon_offers` | List every seller offering an ASIN, with buy-box winner |
 | `get_amazon_options` | List the supported marketplaces and their country codes (free) |
 
-### [Walmart API](https://scavio.dev/docs/walmart-api)
+### [Walmart API](https://scavio.dev/docs/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -399,7 +399,7 @@ to know you are looking at a slice. Both seller tools need the NUMERIC
 `seller_catalog_id` from a product, search or offers response — the GUID-form
 `seller_id` in those same responses 404s.
 
-### [TikTok API](https://scavio.dev/docs/tiktok-api)
+### [TikTok API](https://scavio.dev/docs/tiktok-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -415,7 +415,7 @@ to know you are looking at a slice. Both seller tools need the NUMERIC
 | `get_tiktok_user_followers` | Get a user's follower list |
 | `get_tiktok_user_followings` | Get a user's following list |
 
-### [Instagram API](https://scavio.dev/docs/instagram-api)
+### [Instagram API](https://scavio.dev/docs/instagram-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -437,7 +437,7 @@ costs 2, `get_instagram_post` and `get_instagram_comment_replies` cost 8, and th
 other nine tools cost 10. The 10-credit endpoints hedge two upstream providers and
 bill both legs, which is what the price reflects.
 
-### [Reddit API](https://scavio.dev/docs/reddit-api)
+### [Reddit API](https://scavio.dev/docs/reddit-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -460,7 +460,7 @@ relevance order - and `get_reddit_post` returns a flat post object with no comme
 so call `get_reddit_post_comments` with the post id for those. Reddit is the slowest
 platform here, typically 5-15 seconds per call.
 
-### [X API](https://scavio.dev/docs/x-search)
+### [X API](https://scavio.dev/docs/x-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -480,7 +480,7 @@ platform here, typically 5-15 seconds per call.
 `next_cursor` but no `has_more`, so page until the cursor is absent or the timeline
 comes back empty.
 
-### [LinkedIn API](https://scavio.dev/docs/linkedin-person)
+### [LinkedIn API](https://scavio.dev/docs/linkedin-person?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -506,7 +506,7 @@ search, so those five tools were removed. `get_linkedin_company` still returns a
 small sample of featured employees, and `search_linkedin_jobs` with a company
 name substitutes for per-company listings.
 
-### [TikTok Shop API](https://scavio.dev/docs/tiktok-shop-search)
+### [TikTok Shop API](https://scavio.dev/docs/tiktok-shop-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -530,7 +530,7 @@ looping. For an id that will not resolve, `get_tiktok_shop_product_reviews` is o
 across 8 measured ids that failed on detail, 8 of 8 returned HTTP 200 on reviews and 7 of 8 returned
 at least one review.
 
-### [Threads](https://scavio.dev/docs/threads-profile)
+### [Threads](https://scavio.dev/docs/threads-profile?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -543,7 +543,7 @@ at least one review.
 
 Threads is priced by how you address a user, not per endpoint: 2 credits when you pass `user_id`, 4 credits when you pass `username`. Only `get_threads_profile`, `get_threads_user_posts` and `get_threads_user_replies` accept a username; the other three are always 2. Prefer `user_id` - a handle buys a second upstream lookup.
 
-### [Kuaishou (China)](https://scavio.dev/docs/kuaishou-profile)
+### [Kuaishou (China)](https://scavio.dev/docs/kuaishou-profile?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -564,7 +564,7 @@ Threads is priced by how you address a user, not per endpoint: 2 credits when yo
 
 Kuaishou is priced per endpoint, not at a flat rate: `get_kuaishou_profile` and all four search tools cost 10, `get_kuaishou_video` 2, `get_kuaishou_videos_batch` 40, and every other tool 1.
 
-### [eBay](https://scavio.dev/docs/ebay-search)
+### [eBay](https://scavio.dev/docs/ebay-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -574,7 +574,7 @@ Kuaishou is priced per endpoint, not at a flat rate: `get_kuaishou_profile` and 
 
 1 credit per call. `get_ebay_seller` is a profile card and cannot enumerate a catalogue - list a seller's inventory with `search_ebay` and `seller` set and no keyword. `sold: true` searches completed listings that actually sold; on that view eBay publishes no headline count, so `total_results` is null. `per_page` accepts only 60, 120 or 240.
 
-### [Target](https://scavio.dev/docs/target-search)
+### [Target](https://scavio.dev/docs/target-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -585,7 +585,7 @@ Kuaishou is priced per endpoint, not at a flat rate: `get_kuaishou_profile` and 
 
 1 credit per call. `get_target_product` and `get_target_reviews` are single-shot; search and category page with `page` + `count`.
 
-### [Home Depot](https://scavio.dev/docs/home-depot-search)
+### [Home Depot](https://scavio.dev/docs/home-depot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -595,7 +595,7 @@ Kuaishou is priced per endpoint, not at a flat rate: `get_kuaishou_profile` and 
 
 2 credits per call. Search page size is fixed at 12 and cannot be changed. Reviews return 30 per page; `total_pages` is the last page that exists and asking past it is a 404.
 
-### [Costco](https://scavio.dev/docs/costco-search)
+### [Costco](https://scavio.dev/docs/costco-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -630,7 +630,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 `get_costco_coupons` returns the first 50 offers of a ~200-offer book by default; pass
 `limit` for more.
 
-### [Booking.com](https://scavio.dev/docs/booking-search)
+### [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -640,7 +640,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call. Search returns 25 properties per page; `get_booking_hotel` and `get_booking_reviews` are single-shot.
 
-### [Airbnb](https://scavio.dev/docs/airbnb-search)
+### [Airbnb](https://scavio.dev/docs/airbnb-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -650,7 +650,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call. `search_airbnb` takes `page` XOR `cursor` - sending both is rejected, and `cursor` wins. 18 listings per page. `get_airbnb_reviews` pages with `limit` + `offset`.
 
-### [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations)
+### [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -661,7 +661,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 2 credits per call. Start with `resolve_tripadvisor_location` for the `geo_id` / `location_id` pair everything else needs. Search returns 30 per page and a page past the last is a 404, not an empty result. Reviews return 15 per page for restaurants and 10 for hotels and attractions, so `category` must match the location's own type on any page past the first.
 
-### [Yelp](https://scavio.dev/docs/yelp-search)
+### [Yelp](https://scavio.dev/docs/yelp-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -671,7 +671,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 2 credits per call. Yelp fixes the page size at 10. `get_yelp_business` already includes the first page of reviews at no extra cost. A review page past the last is a 404, not an empty result.
 
-### [Zillow](https://scavio.dev/docs/zillow-search)
+### [Zillow](https://scavio.dev/docs/zillow-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -681,7 +681,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call. Only `search_zillow` paginates. `get_zillow_agent_reviews` is an AGENT profile, not a property.
 
-### [Redfin](https://scavio.dev/docs/redfin-search)
+### [Redfin](https://scavio.dev/docs/redfin-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -691,7 +691,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call. `search_redfin` pages with `page` + `limit`, up to 350 listings per page; the other two are single-shot.
 
-### [Indeed](https://scavio.dev/docs/indeed-search)
+### [Indeed](https://scavio.dev/docs/indeed-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -702,7 +702,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 2 credits per call. Job search returns 10 postings per page, company reviews 20 per page. `get_indeed_job` and `get_indeed_company` are single-shot.
 
-### [Glassdoor](https://scavio.dev/docs/glassdoor-companies)
+### [Glassdoor](https://scavio.dev/docs/glassdoor-companies?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -713,7 +713,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call. Start with `resolve_glassdoor_company` for the `employer_id`. Only `get_glassdoor_salaries` paginates (10 job titles per page; `page_count` is how many exist). `get_glassdoor_reviews` returns up to three full reviews plus complete rating statistics - it is not a paginated review feed.
 
-### [Apple App Store](https://scavio.dev/docs/app-store-search)
+### [Apple App Store](https://scavio.dev/docs/app-store-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -723,7 +723,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call. Reviews page 1-10 at 50 per page and stop hard at page 10: 500 reviews per storefront is Apple's anonymous ceiling, and you reach further by asking a different `country`. Search and app detail do not paginate.
 
-### [Google Play](https://scavio.dev/docs/google-play-search)
+### [Google Play](https://scavio.dev/docs/google-play-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -733,7 +733,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 2 credits per call - a separate namespace from `google` and not on the Google-exempt price. Reviews are cursor-paginated, and the cursor is opaque, single-use and encodes the sort as well as the position, so send it back with the same `sort` it came from. A cursor past the last review is a 404. Search and app detail do not paginate.
 
-### [G2 Software Reviews](https://scavio.dev/docs/g2-search)
+### [G2 Software Reviews](https://scavio.dev/docs/g2-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -743,7 +743,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 5 credits per call - the most expensive platform on Scavio. `search_g2_software` pages with `page` + `limit` (capped at 100 on our side); `get_g2_reviews` is fixed at 10 per page and paginates well past the 10 pages G2's own widget links to. `get_g2_product` is single-shot.
 
-### [Capterra Software Reviews](https://scavio.dev/docs/capterra-search)
+### [Capterra Software Reviews](https://scavio.dev/docs/capterra-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -753,7 +753,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 2 credits per call. Only `get_capterra_reviews` paginates: 25 per page, capped at page 100 - past it Capterra answers 200 with page one, so check what came back. `get_capterra_product` already includes the 25 most recent reviews.
 
-### [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers)
+### [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -763,7 +763,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call. Start with `resolve_google_ads_advertiser` to turn a brand name or domain into an `advertiser_id`. `search_google_ads` is cursor-paginated at 100 ads per page - re-send the same filters alongside the cursor. `get_google_ads_creative` is the only tool carrying a creative's history, region breakdown and impression bucket.
 
-### [Meta Ad Library](https://scavio.dev/docs/meta-ads-search)
+### [Meta Ad Library](https://scavio.dev/docs/meta-ads-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -773,7 +773,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call, and every cursor page is another credit: page 1 returns 30 ads, then 10 per page thereafter, so the cost of walking a whole query scales with depth. `search_meta_ads` and `get_meta_ads_advertiser` both cursor-paginate - walk `has_next_page`. `get_meta_ad` is single-shot.
 
-### [SEC EDGAR](https://scavio.dev/docs/sec-edgar-lookup)
+### [SEC EDGAR](https://scavio.dev/docs/sec-edgar-lookup?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -786,7 +786,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 1 credit per call on the official free EDGAR JSON API. Start with `resolve_sec_company` to turn a name or ticker into a CIK. `get_sec_filings` pages with `page` + `limit`; `search_sec_filings` pages up to 100, because the index refuses a result window past 10,000.
 
-### [Companies House](https://scavio.dev/docs/companies-house-search)
+### [Companies House](https://scavio.dev/docs/companies-house-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -807,21 +807,21 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 ## About Scavio
 
-[Scavio](https://scavio.dev) is a unified [search API for AI agents](https://scavio.dev/search-api-for-ai-agents) and a data API for developers. One key, structured JSON, no scraping or proxies:
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [search API for AI agents](https://scavio.dev/search-api-for-ai-agents?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and a data API for developers. One key, structured JSON, no scraping or proxies:
 
-- [Google Search API](https://scavio.dev/google-search-api) — SERP results, news, images, maps, and knowledge graph
-- [Extract](https://scavio.dev/docs/extract) — read any URL as Markdown, plain text or raw HTML
-- [Amazon Product API](https://scavio.dev/amazon-product-api) and [Walmart Product API](https://scavio.dev/walmart-product-api) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search), [Target](https://scavio.dev/docs/target-search), [Home Depot](https://scavio.dev/docs/home-depot-search) and [Costco](https://scavio.dev/costco-api) (per-warehouse prices, stock, gas prices, coupon book)
-- [TikTok API](https://scavio.dev/tiktok-api), [Instagram API](https://scavio.dev/instagram-api), [Reddit API](https://scavio.dev/reddit-api), [X API](https://scavio.dev/x-api), [LinkedIn API](https://scavio.dev/linkedin-api), and [YouTube API](https://scavio.dev/youtube-transcript-api) — social and video data
-- Travel and local — [Booking.com](https://scavio.dev/docs/booking-search), [Airbnb](https://scavio.dev/docs/airbnb-search), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations), [Yelp](https://scavio.dev/docs/yelp-search)
-- Real estate — [Zillow](https://scavio.dev/docs/zillow-search), [Redfin](https://scavio.dev/docs/redfin-search)
-- Jobs and employer data — [Indeed](https://scavio.dev/docs/indeed-search), [Glassdoor](https://scavio.dev/docs/glassdoor-companies)
-- Apps, software reviews and ad libraries — [App Store](https://scavio.dev/docs/app-store-search), [Google Play](https://scavio.dev/docs/google-play-search), [G2](https://scavio.dev/docs/g2-search), [Capterra](https://scavio.dev/docs/capterra-search), [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers), [Meta Ad Library](https://scavio.dev/docs/meta-ads-search)
-- Company filings — [SEC EDGAR](https://scavio.dev/docs/sec-edgar-lookup), [Companies House](https://scavio.dev/docs/companies-house-search)
+- [Google Search API](https://scavio.dev/google-search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — SERP results, news, images, maps, and knowledge graph
+- [Extract](https://scavio.dev/docs/extract?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — read any URL as Markdown, plain text or raw HTML
+- [Amazon Product API](https://scavio.dev/amazon-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Walmart Product API](https://scavio.dev/walmart-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/docs/target-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Home Depot](https://scavio.dev/docs/home-depot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Costco](https://scavio.dev/costco-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (per-warehouse prices, stock, gas prices, coupon book)
+- [TikTok API](https://scavio.dev/tiktok-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Instagram API](https://scavio.dev/instagram-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Reddit API](https://scavio.dev/reddit-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [X API](https://scavio.dev/x-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [LinkedIn API](https://scavio.dev/linkedin-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), and [YouTube API](https://scavio.dev/youtube-transcript-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — social and video data
+- Travel and local — [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Airbnb](https://scavio.dev/docs/airbnb-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Yelp](https://scavio.dev/docs/yelp-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+- Real estate — [Zillow](https://scavio.dev/docs/zillow-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Redfin](https://scavio.dev/docs/redfin-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+- Jobs and employer data — [Indeed](https://scavio.dev/docs/indeed-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Glassdoor](https://scavio.dev/docs/glassdoor-companies?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+- Apps, software reviews and ad libraries — [App Store](https://scavio.dev/docs/app-store-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Google Play](https://scavio.dev/docs/google-play-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [G2](https://scavio.dev/docs/g2-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Capterra](https://scavio.dev/docs/capterra-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Meta Ad Library](https://scavio.dev/docs/meta-ads-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+- Company filings — [SEC EDGAR](https://scavio.dev/docs/sec-edgar-lookup?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Companies House](https://scavio.dev/docs/companies-house-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-Teams use it as a [SerpAPI alternative](https://scavio.dev/alternatives/serpapi) with structured multi-platform data — see [Tavily vs Scavio](https://scavio.dev/compare/tavily/vs-scavio) for a head-to-head comparison.
+Teams use it as a [SerpAPI alternative](https://scavio.dev/alternatives/serpapi?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) with structured multi-platform data — see [Tavily vs Scavio](https://scavio.dev/compare/tavily/vs-scavio?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a head-to-head comparison.
 
-Get a free [Search API](https://scavio.dev/docs/search-api) key at [scavio.dev](https://scavio.dev).
+Get a free [Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) key at [scavio.dev](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 ---
 
