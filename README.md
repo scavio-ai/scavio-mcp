@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 192 tools across 31 platforms plus Extract, one API key.
+[Scavio](https://scavio.dev) is a unified [Web Search API](https://scavio.dev/docs/search-api) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 205 tools across 32 platforms plus Extract, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 192 tools puts 138KB of tool definitions — roughly 35k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 65KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 205 tools puts 183KB of tool definitions — roughly 45k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 82KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 192 tools. Loading all of them costs 138KB of `tools/list` —
-roughly 35k tokens of context in every session before the user has said anything,
+Scavio exposes 205 tools. Loading all of them costs 183KB of `tools/list` —
+roughly 45k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -217,10 +217,10 @@ measured, not estimated: `npm run toolslist` reproduces them.
 
 | Value | Registers |
 |-------|-----------|
-| *(unset)* or `default` | Everything 0.12.x had, plus `extract` — **107 tools, 65KB** |
-| `all` | every platform — **192 tools, 138KB** |
-| `extract,sec,g2` | just those platforms — 11 tools, 10KB |
-| `default,zillow,metaads` | the default set plus two more — 113 tools, 72KB |
+| *(unset)* or `default` | Everything 0.12.x had, plus `extract` — **107 tools, 82KB** |
+| `all` | every platform — **205 tools, 183KB** |
+| `extract,sec,g2` | just those platforms — 11 tools, 12KB |
+| `default,zillow,metaads` | the default set plus two more — 113 tools, 89KB |
 | `none` | no platform tools, only `get_usage` |
 
 Keys are matched case- and punctuation-insensitively, so `meta-ads`, `metaads`
@@ -232,8 +232,8 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `tiktok-shop`, `booking`, `airbnb`, `tripadvisor`,
-`yelp`, `zillow`, `redfin`, `indeed`, `glassdoor`, `appstore`, `googleplay`,
+`target`, `homedepot`, `costco`, `tiktok-shop`, `booking`, `airbnb`,
+`tripadvisor`, `yelp`, `zillow`, `redfin`, `indeed`, `glassdoor`, `appstore`, `googleplay`,
 `g2`, `capterra`, `googleads`, `metaads`, `sec`, `companieshouse`
 
 ### Local (stdio)
@@ -595,6 +595,41 @@ Kuaishou is priced per endpoint, not at a flat rate: `get_kuaishou_profile` and 
 
 2 credits per call. Search page size is fixed at 12 and cannot be changed. Reviews return 30 per page; `total_pages` is the last page that exists and asking past it is a 404.
 
+### Costco
+
+| Tool | Description |
+|------|-------------|
+| `search_costco` | Search by keyword or item number: online and original price, rating, member-only and stock flags, promotions, facets |
+| `get_costco_category` | Products in a category, same filters and shape as search |
+| `get_costco_categories` | Department list, or the full subcategory tree under one department |
+| `get_costco_product` | Full detail for up to 20 items: description, features, specs, variants, purchase limits, delivery fee, promotion dates |
+| `get_costco_prices` | Online vs in-warehouse price at up to 10 warehouses: discount, final price, promotion dates, per-member limits, price code |
+| `get_costco_availability` | In-warehouse stock status for one item at up to 10 warehouses, plus pickup and same-day delivery |
+| `get_costco_reviews` | Reviews with rating distribution and recommend count; sort, star filter, up to 100 per page |
+| `get_costco_warehouses` | Warehouses near a US zip or coordinates: `warehouse_id`, address, hours, departments, services, gas prices |
+| `get_costco_gas_prices` | Regular, premium and diesel prices at Costco gas stations near a location or at given warehouses |
+| `get_costco_coupons` | The current member coupon book: item number, amount off, final price, scope, limits, valid dates |
+| `get_costco_deals` | Deal feeds: new, while supplies last, treasure hunt, member favorites, online only, on sale |
+| `get_costco_clearance` | Clearance and manager-markdown items at one warehouse, decoded from the shelf price ending |
+| `get_costco_search_suggestions` | Search suggestions for a partial query, plus matching warehouses |
+
+1 credit per call, except the multi-warehouse tools: `get_costco_prices` makes one
+lookup per two locations (online counts as one) and `get_costco_availability` one per
+warehouse, billed 1 credit per 5 lookups, so 10 warehouses cost 2 credits.
+`get_costco_warehouses` and `get_costco_gas_prices` cost 2 for `country: "ca"`; gas by
+`warehouse_ids` is 1 credit per 5 warehouses (2 per warehouse on ca).
+
+`search_costco`, `get_costco_category` and `get_costco_deals` take `warehouse_id` to add
+that warehouse's in-store price, stock and price code to every result. Get the id from
+`get_costco_warehouses`. `country` is `us` (default) or `ca` everywhere except
+`get_costco_coupons` (US only); `search_costco`, `get_costco_product` and
+`get_costco_warehouses` also accept `uk`, `au`, `mx`, `jp`, `kr` and `tw` for keyword,
+sort and paging only. Price codes in `get_costco_clearance` are the member-community
+decode (.97 clearance, .00/.88 manager markdown; .49/.79/.89 special buy on request),
+not something Costco publishes, and only items Costco lists online are covered.
+`get_costco_coupons` returns the first 50 offers of a ~200-offer book by default; pass
+`limit` for more.
+
 ### [Booking.com](https://scavio.dev/docs/booking-search)
 
 | Tool | Description |
@@ -776,7 +811,7 @@ Kuaishou is priced per endpoint, not at a flat rate: `get_kuaishou_profile` and 
 
 - [Google Search API](https://scavio.dev/google-search-api) — SERP results, news, images, maps, and knowledge graph
 - [Extract](https://scavio.dev/docs/extract) — read any URL as Markdown, plain text or raw HTML
-- [Amazon Product API](https://scavio.dev/amazon-product-api) and [Walmart Product API](https://scavio.dev/walmart-product-api) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search), [Target](https://scavio.dev/docs/target-search) and [Home Depot](https://scavio.dev/docs/home-depot-search)
+- [Amazon Product API](https://scavio.dev/amazon-product-api) and [Walmart Product API](https://scavio.dev/walmart-product-api) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search), [Target](https://scavio.dev/docs/target-search), [Home Depot](https://scavio.dev/docs/home-depot-search) and Costco (per-warehouse prices, stock, gas prices, coupon book)
 - [TikTok API](https://scavio.dev/tiktok-api), [Instagram API](https://scavio.dev/instagram-api), [Reddit API](https://scavio.dev/reddit-api), [X API](https://scavio.dev/x-api), [LinkedIn API](https://scavio.dev/linkedin-api), and [YouTube API](https://scavio.dev/youtube-transcript-api) — social and video data
 - Travel and local — [Booking.com](https://scavio.dev/docs/booking-search), [Airbnb](https://scavio.dev/docs/airbnb-search), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations), [Yelp](https://scavio.dev/docs/yelp-search)
 - Real estate — [Zillow](https://scavio.dev/docs/zillow-search), [Redfin](https://scavio.dev/docs/redfin-search)

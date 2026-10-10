@@ -1,6 +1,6 @@
 # Scavio MCP Server - LLM Installation Guide
 
-Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software reviews, ad libraries and company filings. 192 tools across 31 platforms plus Extract, one API key.
+Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software reviews, ad libraries and company filings. 205 tools across 32 platforms plus Extract, one API key.
 
 ## Prerequisites
 
@@ -11,15 +11,15 @@ Ask the user for their API key before configuring. Never invent or reuse a place
 
 ## Important: only a subset of tools loads by default
 
-The server exposes 192 tools. Registering all of them writes 138KB into `tools/list`, which is roughly 35k tokens of context in every session and more tools than some clients accept. So the server registers a default set (107 tools, 65KB) and gates the rest behind `SCAVIO_PLATFORMS`.
+The server exposes 205 tools. Registering all of them writes 183KB into `tools/list`, which is roughly 45k tokens of context in every session and more tools than some clients accept. So the server registers a default set (107 tools, 82KB) and gates the rest behind `SCAVIO_PLATFORMS`.
 
 **Default (env var unset):** `extract`, `google`, `youtube`, `amazon`, `walmart`, `reddit`, `tiktok`, `tiktok-shop`, `instagram`, `x`, `linkedin` - 107 tools including `get_usage`. This is the surface 0.12.x shipped plus Extract, so upgrading never removes a tool.
 
-**To add platforms**, set `SCAVIO_PLATFORMS` to a comma-separated list of platform keys. `default` expands to the set above, so `SCAVIO_PLATFORMS=default,zillow,redfin` is additive. `SCAVIO_PLATFORMS=all` registers all 192 tools. `SCAVIO_PLATFORMS=none` registers only `get_usage`.
+**To add platforms**, set `SCAVIO_PLATFORMS` to a comma-separated list of platform keys. `default` expands to the set above, so `SCAVIO_PLATFORMS=default,zillow,redfin` is additive. `SCAVIO_PLATFORMS=all` registers all 205 tools. `SCAVIO_PLATFORMS=none` registers only `get_usage`.
 
 Ask the user which platforms they actually need, and set only those. Do not set `all` unless the user asks for it - it is the configuration that causes context bloat and client tool-limit errors.
 
-**Platform keys:** `extract`, `google`, `youtube`, `tiktok`, `instagram`, `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`, `target`, `homedepot`, `tiktok-shop`, `booking`, `airbnb`, `tripadvisor`, `yelp`, `zillow`, `redfin`, `indeed`, `glassdoor`, `appstore`, `googleplay`, `g2`, `capterra`, `googleads`, `metaads`, `sec`, `companieshouse`
+**Platform keys:** `extract`, `google`, `youtube`, `tiktok`, `instagram`, `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`, `target`, `homedepot`, `costco`, `tiktok-shop`, `booking`, `airbnb`, `tripadvisor`, `yelp`, `zillow`, `redfin`, `indeed`, `glassdoor`, `appstore`, `googleplay`, `g2`, `capterra`, `googleads`, `metaads`, `sec`, `companieshouse`
 
 Keys are matched case- and punctuation-insensitively (`meta-ads` = `metaads` = `META_ADS`), and `twitter` resolves to `x`. Unknown keys are logged to stderr and skipped, never fatal.
 

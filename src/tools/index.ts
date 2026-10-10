@@ -17,6 +17,7 @@ import { registerWalmartTools } from "./walmart.js";
 import { registerEbayTools } from "./ebay.js";
 import { registerTargetTools } from "./target.js";
 import { registerHomeDepotTools } from "./homedepot.js";
+import { registerCostcoTools } from "./costco.js";
 import { registerTiktokShopTools } from "./tiktok-shop.js";
 import { registerBookingTools } from "./booking.js";
 import { registerAirbnbTools } from "./airbnb.js";
@@ -71,6 +72,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   ebay: registerEbayTools,
   target: registerTargetTools,
   homedepot: registerHomeDepotTools,
+  costco: registerCostcoTools,
   "tiktok-shop": registerTiktokShopTools,
   // Travel and local
   booking: registerBookingTools,
@@ -102,12 +104,12 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
 /**
  * What registers when SCAVIO_PLATFORMS is unset.
  *
- * Registering everything is not an option any more. The full surface is 192
- * tools, which serialises to 138KB of tools/list (measured with
- * `npm run toolslist`, not estimated) — roughly 35k tokens pushed into the
+ * Registering everything is not an option any more. The full surface is 205
+ * tools, which serialises to 183KB of tools/list (measured with
+ * `npm run toolslist`, not estimated) — roughly 45k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 107
- * tools, 65KB.
+ * tools, 82KB.
  *
  * The default is therefore exactly what 0.12.x registered, plus extract:
  * upgrading must never silently remove a tool someone already depends on. A
@@ -161,7 +163,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (192 tools)
+ *   all      — every platform (205 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -244,7 +246,7 @@ const READ_ONLY_ANNOTATIONS = {
 
 /**
  * Wrap the server so every tool() call is annotated at registration, instead
- * of editing 192 call sites. A tool added later picks this up automatically.
+ * of editing 205 call sites. A tool added later picks this up automatically.
  */
 function annotating(server: McpServer): McpServer {
   return new Proxy(server, {

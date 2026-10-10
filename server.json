@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.scavio-ai/scavio-mcp",
   "title": "Scavio",
-  "description": "Structured web data from 31 platforms: Google, YouTube, Amazon, Walmart, Reddit, TikTok, LinkedIn",
-  "version": "0.15.6",
+  "description": "Structured web data from 32 platforms: Google, YouTube, Amazon, Walmart, Reddit, TikTok, LinkedIn",
+  "version": "0.16.0",
   "repository": {
     "url": "https://github.com/scavio-ai/scavio-mcp",
     "source": "github"
@@ -12,7 +12,7 @@
     {
       "registryType": "npm",
       "identifier": "@scavio/mcp-server",
-      "version": "0.15.6",
+      "version": "0.16.0",
       "transport": {
         "type": "stdio"
       },
