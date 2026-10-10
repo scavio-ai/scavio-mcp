@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 205 tools across 32 platforms plus Extract, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 211 tools across 33 platforms plus Extract, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 205 tools puts 183KB of tool definitions — roughly 45k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 82KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 211 tools puts 191KB of tool definitions — roughly 47k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 82KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 205 tools. Loading all of them costs 183KB of `tools/list` —
-roughly 45k tokens of context in every session before the user has said anything,
+Scavio exposes 211 tools. Loading all of them costs 191KB of `tools/list` —
+roughly 47k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Everything 0.12.x had, plus `extract` — **107 tools, 82KB** |
-| `all` | every platform — **205 tools, 183KB** |
+| `all` | every platform — **211 tools, 191KB** |
 | `extract,sec,g2` | just those platforms — 11 tools, 12KB |
 | `default,zillow,metaads` | the default set plus two more — 113 tools, 89KB |
 | `none` | no platform tools, only `get_usage` |
@@ -234,7 +234,7 @@ tells you to call to check the server works.
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
 `target`, `homedepot`, `costco`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `indeed`, `glassdoor`, `appstore`, `googleplay`,
-`g2`, `capterra`, `googleads`, `metaads`, `sec`, `companieshouse`
+`g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
 ### Local (stdio)
 
@@ -753,6 +753,25 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 2 credits per call. Only `get_capterra_reviews` paginates: 25 per page, capped at page 100 - past it Capterra answers 200 with page one, so check what came back. `get_capterra_product` already includes the 25 most recent reviews.
 
+### Trustpilot
+
+| Tool | Description |
+|------|-------------|
+| `search_trustpilot` | Search businesses by keyword in one country: domain, TrustScore, stars, review count, categories, website, published email/phone/address; up to 100 per page |
+| `get_trustpilot_business` | Full profile by domain or URL: rating distribution, review count per language, claimed and verification status, reply rate and days to reply, consumer alerts, AI summary and topics, similar businesses, 20 newest reviews |
+| `get_trustpilot_reviews` | A page of 20 reviews filtered by stars, language, date range, topics, text, verified-only and with-replies; sorted by recency or relevance |
+| `get_trustpilot_categories` | The category tree (22 top-level, 189 subcategories), or categories matching a name |
+| `get_trustpilot_category` | Businesses ranked in a category by country: sort, minimum TrustScore, claimed profiles only; 20 per page |
+| `get_trustpilot_review` | One review by its 24-character id, with the business it is about |
+
+2 credits per call. `get_trustpilot_reviews` serves 10 pages of 20, so 200 reviews per
+filter combination; to read more, slice into separate sets (each `stars` value, each
+`language`, each `date_range`) rather than paging further. `total_filtered` with a
+`date_range` doubles as review velocity. Email and phone appear only when the business
+published them; the AI summary and topics only when Trustpilot has them for the chosen
+`language` (default `en`). No TrustScore history. An unknown domain, category or review
+id is a billed 404 that names what was not found.
+
 ### [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
@@ -816,7 +835,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 - Travel and local — [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Airbnb](https://scavio.dev/docs/airbnb-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Yelp](https://scavio.dev/docs/yelp-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Real estate — [Zillow](https://scavio.dev/docs/zillow-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Redfin](https://scavio.dev/docs/redfin-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Jobs and employer data — [Indeed](https://scavio.dev/docs/indeed-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Glassdoor](https://scavio.dev/docs/glassdoor-companies?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
-- Apps, software reviews and ad libraries — [App Store](https://scavio.dev/docs/app-store-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Google Play](https://scavio.dev/docs/google-play-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [G2](https://scavio.dev/docs/g2-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Capterra](https://scavio.dev/docs/capterra-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Meta Ad Library](https://scavio.dev/docs/meta-ads-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+- Apps, software reviews and ad libraries — [App Store](https://scavio.dev/docs/app-store-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Google Play](https://scavio.dev/docs/google-play-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [G2](https://scavio.dev/docs/g2-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Capterra](https://scavio.dev/docs/capterra-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), Trustpilot (business profiles, filtered reviews, category rankings), [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Meta Ad Library](https://scavio.dev/docs/meta-ads-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Company filings — [SEC EDGAR](https://scavio.dev/docs/sec-edgar-lookup?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Companies House](https://scavio.dev/docs/companies-house-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 Teams use it as a [SerpAPI alternative](https://scavio.dev/alternatives/serpapi?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) with structured multi-platform data — see [Tavily vs Scavio](https://scavio.dev/compare/tavily/vs-scavio?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a head-to-head comparison.

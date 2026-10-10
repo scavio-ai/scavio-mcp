@@ -31,6 +31,7 @@ import { registerAppStoreTools } from "./appstore.js";
 import { registerGooglePlayTools } from "./googleplay.js";
 import { registerG2Tools } from "./g2.js";
 import { registerCapterraTools } from "./capterra.js";
+import { registerTrustpilotTools } from "./trustpilot.js";
 import { registerGoogleAdsTools } from "./googleads.js";
 import { registerMetaAdsTools } from "./metaads.js";
 import { registerSecTools } from "./sec.js";
@@ -91,6 +92,8 @@ const PLATFORMS: Record<string, RegisterFn> = {
   // Software reviews
   g2: registerG2Tools,
   capterra: registerCapterraTools,
+  // Business reviews
+  trustpilot: registerTrustpilotTools,
   // Ad libraries
   googleads: registerGoogleAdsTools,
   metaads: registerMetaAdsTools,
@@ -104,9 +107,9 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
 /**
  * What registers when SCAVIO_PLATFORMS is unset.
  *
- * Registering everything is not an option any more. The full surface is 205
- * tools, which serialises to 183KB of tools/list (measured with
- * `npm run toolslist`, not estimated) — roughly 45k tokens pushed into the
+ * Registering everything is not an option any more. The full surface is 211
+ * tools, which serialises to 191KB of tools/list (measured with
+ * `npm run toolslist`, not estimated) — roughly 47k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 107
  * tools, 82KB.
@@ -163,7 +166,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (205 tools)
+ *   all      — every platform (211 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -246,7 +249,7 @@ const READ_ONLY_ANNOTATIONS = {
 
 /**
  * Wrap the server so every tool() call is annotated at registration, instead
- * of editing 205 call sites. A tool added later picks this up automatically.
+ * of editing 211 call sites. A tool added later picks this up automatically.
  */
 function annotating(server: McpServer): McpServer {
   return new Proxy(server, {
