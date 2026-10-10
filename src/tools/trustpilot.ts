@@ -101,7 +101,7 @@ export function registerTrustpilotTools(server: McpServer, getClient: () => Scav
 
   server.tool(
     "get_trustpilot_category",
-    `List businesses ranked in a Trustpilot category for one country: TrustScore, review count, location, website, email and phone (when published). Sort by relevance, review count or latest review; filter by minimum TrustScore or claimed profiles only. 20/page. Unknown category is a billed 404. 2 credits/page.`,
+    `List businesses ranked in a Trustpilot category for one country: TrustScore, review count, location, website, email and phone (when published). Sort by relevance, review count or latest review; filter by minimum star rating or claimed profiles only. 20/page. Unknown category is a billed 404. 2 credits/page.`,
     {
       category_id: z.string().regex(/^[a-z0-9_]+$/, "category_id must be a Trustpilot category id such as vpn_service").max(100)
         .describe("Category id from get_trustpilot_categories, e.g. 'vpn_service'."),
@@ -109,7 +109,7 @@ export function registerTrustpilotTools(server: McpServer, getClient: () => Scav
       sort: z.enum(["most_relevant", "reviews_count", "latest_review"]).optional()
         .describe("Default 'most_relevant'."),
       min_trust_score: z.union([z.literal(3), z.literal(4), z.literal(4.5)]).optional()
-        .describe("Only businesses with at least this TrustScore: 3, 4 or 4.5."),
+        .describe("Minimum star rating: 3, 4 or 4.5. Trustpilot rounds TrustScore to stars, so 4 includes TrustScore 3.8 and up."),
       claimed_only: z.boolean().optional()
         .describe("Only businesses that claimed their Trustpilot profile."),
       page: z.number().int().min(1).max(1000).optional()

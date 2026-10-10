@@ -753,7 +753,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 2 credits per call. Only `get_capterra_reviews` paginates: 25 per page, capped at page 100 - past it Capterra answers 200 with page one, so check what came back. `get_capterra_product` already includes the 25 most recent reviews.
 
-### Trustpilot
+### [Trustpilot](https://scavio.dev/docs/trustpilot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
 |------|-------------|
@@ -761,7 +761,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 | `get_trustpilot_business` | Full profile by domain or URL: rating distribution, review count per language, claimed and verification status, reply rate and days to reply, consumer alerts, AI summary and topics, similar businesses, 20 newest reviews |
 | `get_trustpilot_reviews` | A page of 20 reviews filtered by stars, language, date range, topics, text, verified-only and with-replies; sorted by recency or relevance |
 | `get_trustpilot_categories` | The category tree (22 top-level, 189 subcategories), or categories matching a name |
-| `get_trustpilot_category` | Businesses ranked in a category by country: sort, minimum TrustScore, claimed profiles only; 20 per page |
+| `get_trustpilot_category` | Businesses ranked in a category by country: sort, minimum star rating (TrustScore rounded to stars, so 4 includes 3.8+), claimed profiles only; 20 per page |
 | `get_trustpilot_review` | One review by its 24-character id, with the business it is about |
 
 2 credits per call. `get_trustpilot_reviews` serves 10 pages of 20, so 200 reviews per
@@ -835,7 +835,7 @@ id is a billed 404 that names what was not found.
 - Travel and local — [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Airbnb](https://scavio.dev/docs/airbnb-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Yelp](https://scavio.dev/docs/yelp-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Real estate — [Zillow](https://scavio.dev/docs/zillow-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Redfin](https://scavio.dev/docs/redfin-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Jobs and employer data — [Indeed](https://scavio.dev/docs/indeed-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Glassdoor](https://scavio.dev/docs/glassdoor-companies?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
-- Apps, software reviews and ad libraries — [App Store](https://scavio.dev/docs/app-store-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Google Play](https://scavio.dev/docs/google-play-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [G2](https://scavio.dev/docs/g2-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Capterra](https://scavio.dev/docs/capterra-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), Trustpilot (business profiles, filtered reviews, category rankings), [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Meta Ad Library](https://scavio.dev/docs/meta-ads-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+- Apps, software reviews and ad libraries — [App Store](https://scavio.dev/docs/app-store-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Google Play](https://scavio.dev/docs/google-play-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [G2](https://scavio.dev/docs/g2-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Capterra](https://scavio.dev/docs/capterra-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Trustpilot](https://scavio.dev/trustpilot-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (business profiles, filtered reviews, category rankings), [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Meta Ad Library](https://scavio.dev/docs/meta-ads-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Company filings — [SEC EDGAR](https://scavio.dev/docs/sec-edgar-lookup?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Companies House](https://scavio.dev/docs/companies-house-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 Teams use it as a [SerpAPI alternative](https://scavio.dev/alternatives/serpapi?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) with structured multi-platform data — see [Tavily vs Scavio](https://scavio.dev/compare/tavily/vs-scavio?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a head-to-head comparison.
