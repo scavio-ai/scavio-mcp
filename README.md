@@ -595,7 +595,7 @@ Kuaishou is priced per endpoint, not at a flat rate: `get_kuaishou_profile` and 
 
 2 credits per call. Search page size is fixed at 12 and cannot be changed. Reviews return 30 per page; `total_pages` is the last page that exists and asking past it is a 404.
 
-### Costco
+### [Costco](https://scavio.dev/docs/costco-search)
 
 | Tool | Description |
 |------|-------------|
@@ -811,7 +811,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 - [Google Search API](https://scavio.dev/google-search-api) — SERP results, news, images, maps, and knowledge graph
 - [Extract](https://scavio.dev/docs/extract) — read any URL as Markdown, plain text or raw HTML
-- [Amazon Product API](https://scavio.dev/amazon-product-api) and [Walmart Product API](https://scavio.dev/walmart-product-api) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search), [Target](https://scavio.dev/docs/target-search), [Home Depot](https://scavio.dev/docs/home-depot-search) and Costco (per-warehouse prices, stock, gas prices, coupon book)
+- [Amazon Product API](https://scavio.dev/amazon-product-api) and [Walmart Product API](https://scavio.dev/walmart-product-api) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search), [Target](https://scavio.dev/docs/target-search), [Home Depot](https://scavio.dev/docs/home-depot-search) and [Costco](https://scavio.dev/costco-api) (per-warehouse prices, stock, gas prices, coupon book)
 - [TikTok API](https://scavio.dev/tiktok-api), [Instagram API](https://scavio.dev/instagram-api), [Reddit API](https://scavio.dev/reddit-api), [X API](https://scavio.dev/x-api), [LinkedIn API](https://scavio.dev/linkedin-api), and [YouTube API](https://scavio.dev/youtube-transcript-api) — social and video data
 - Travel and local — [Booking.com](https://scavio.dev/docs/booking-search), [Airbnb](https://scavio.dev/docs/airbnb-search), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations), [Yelp](https://scavio.dev/docs/yelp-search)
 - Real estate — [Zillow](https://scavio.dev/docs/zillow-search), [Redfin](https://scavio.dev/docs/redfin-search)
