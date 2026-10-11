@@ -88,7 +88,7 @@ export function registerRealtorTools(server: McpServer, getClient: () => ScavioC
       sold_within_days: days("sold only: only sales in the last N days (1-3650)."),
       price_reduced_within_days: days("Only listings with a price cut in the last N days (1-3650)."),
       keywords: z.array(z.string().min(1).max(60)).min(1).max(10).optional()
-        .describe("Only listings whose listing text matches these, e.g. ['workshop']."),
+        .describe("Only listings whose listing text matches ALL of these (AND, not OR), e.g. ['workshop', 'garage']. Run separate searches for either-or."),
       new_construction: z.boolean().optional()
         .describe("Only new construction."),
       foreclosure: z.boolean().optional()

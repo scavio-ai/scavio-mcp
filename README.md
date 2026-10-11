@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 224 tools across 35 platforms plus Extract, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 229 tools across 36 platforms plus Extract, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 224 tools puts 211KB of tool definitions — roughly 52k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 82KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 229 tools puts 220KB of tool definitions — roughly 54k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 82KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 224 tools. Loading all of them costs 211KB of `tools/list` —
-roughly 52k tokens of context in every session before the user has said anything,
+Scavio exposes 229 tools. Loading all of them costs 220KB of `tools/list` —
+roughly 54k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Everything 0.12.x had, plus `extract` — **107 tools, 82KB** |
-| `all` | every platform — **224 tools, 211KB** |
+| `all` | every platform — **229 tools, 220KB** |
 | `extract,sec,g2` | just those platforms — 11 tools, 12KB |
 | `default,zillow,metaads` | the default set plus two more — 113 tools, 89KB |
 | `none` | no platform tools, only `get_usage` |
@@ -232,7 +232,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -630,6 +630,32 @@ not something Costco publishes, and only items Costco lists online are covered.
 `get_costco_coupons` returns the first 50 offers of a ~200-offer book by default; pass
 `limit` for more.
 
+### Mercado Libre
+
+Mercado Libre (and Mercado Livre in Brazil) product data for Mexico, Brazil, Argentina
+and Colombia: listings, prices, sellers, reviews, buyer questions and category best
+sellers, with no OAuth app to register.
+
+| Tool | Description |
+|------|-------------|
+| `search_mercadolibre` | Listings by keyword or seller in mx, br, ar or co: price, list price, discount, installments, seller where shown, rating, units sold, free shipping and Full flags, sponsored flag; filters for condition, price range, minimum discount, free shipping, Full, official stores and interest-free installments; sort by relevance or price; about 48 per page |
+| `get_mercadolibre_product` | One product or listing by URL, product_id or item_id: price, promotions, the buy-box seller with reputation, stock, shipping, star distribution, variations, specs, description, pictures, category |
+| `get_mercadolibre_reviews` | 15 reviews per page with rating, text, original text when translated, date, likes, reviewer country and photos; filter by star rating |
+| `get_mercadolibre_questions` | Buyer questions on a listing with the seller's answers and answer dates; page with `next_offset` |
+| `get_mercadolibre_best_sellers` | The ranked top 20 in a category (mx, ar, co; not Brazil) |
+
+2 credits per call; `get_mercadolibre_reviews` is 1. Search serves up to 42 pages
+(about 2,000 results) per query, so slice by price range, condition or seller to reach
+more, and sorts by relevance or price only. Units sold are lower bounds ("at least 500"),
+not exact counts. Seller name appears on a search row only where Mercado Libre shows it;
+`get_mercadolibre_product` returns the buy-box seller, and the list of every seller on a
+product is not available. Mercado Libre may narrow a query on its own (Brazil and
+Argentina can apply "new"); `auto_applied_filters` lists what it applied. Product,
+reviews and questions take no `country`: the id prefix (MLM, MLB, MLA, MCO) or URL sets
+it. Chile is not supported. A zero-result search is an empty, billed page; an unknown
+product, item or seller nickname, or a listing with no questions, is a billed 404 that
+says so.
+
 ### [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
@@ -695,7 +721,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 
 | Tool | Description |
 |------|-------------|
-| `search_realtor` | US listings for sale, pending, for rent or sold by location, radius or agent: price, beds, baths, sqft, lot, year built, garage, HOA, type, listed/sold/price-cut within N days, keywords in the listing text, new construction, foreclosure, open house; up to 200 per call |
+| `search_realtor` | US listings for sale, pending, for rent or sold by location, radius or agent: price, beds, baths, sqft, lot, year built, garage, HOA, type, listed/sold/price-cut within N days, keywords in the listing text (all must match), new construction, foreclosure, open house; up to 200 per call |
 | `get_realtor_property` | One property by id or URL: price and tax history, three value estimates with history and forecast, schools, flood/wildfire/noise risk, listing agent and office |
 | `get_realtor_locations` | Autocomplete cities, counties, ZIPs, neighborhoods, schools and addresses, with the slug_id for market and the property_id for an address |
 | `get_realtor_market` | Market stats for a city, county or ZIP: median list, sold and rent price, price per sqft, days on market, year-over-year and month-over-month change, by property type |
@@ -866,7 +892,7 @@ id is a billed 404 that names what was not found.
 
 - [Google Search API](https://scavio.dev/google-search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — SERP results, news, images, maps, and knowledge graph
 - [Extract](https://scavio.dev/docs/extract?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — read any URL as Markdown, plain text or raw HTML
-- [Amazon Product API](https://scavio.dev/amazon-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Walmart Product API](https://scavio.dev/walmart-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/docs/target-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Home Depot](https://scavio.dev/docs/home-depot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Costco](https://scavio.dev/costco-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (per-warehouse prices, stock, gas prices, coupon book)
+- [Amazon Product API](https://scavio.dev/amazon-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Walmart Product API](https://scavio.dev/walmart-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/docs/target-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Home Depot](https://scavio.dev/docs/home-depot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Costco](https://scavio.dev/costco-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (per-warehouse prices, stock, gas prices, coupon book), and Mercado Libre (Mexico, Brazil, Argentina and Colombia listings, sellers, reviews, questions and best sellers)
 - [TikTok API](https://scavio.dev/tiktok-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Instagram API](https://scavio.dev/instagram-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Reddit API](https://scavio.dev/reddit-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [X API](https://scavio.dev/x-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [LinkedIn API](https://scavio.dev/linkedin-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), and [YouTube API](https://scavio.dev/youtube-transcript-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — social and video data
 - Travel and local — [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Airbnb](https://scavio.dev/docs/airbnb-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Yelp](https://scavio.dev/docs/yelp-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Real estate — [Zillow](https://scavio.dev/docs/zillow-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Redfin](https://scavio.dev/docs/redfin-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Realtor.com](https://scavio.dev/realtor-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (listings, sold comps, market stats, agents), [Rightmove](https://scavio.dev/rightmove-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (UK listings, England and Wales sold prices since 1995, agents)
