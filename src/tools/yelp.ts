@@ -10,7 +10,7 @@ const businessIdField = z.string().min(1).max(500).optional()
 export function registerYelpTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "search_yelp",
-    `Search Yelp local businesses. 10 per page. Always pass location or results vary by proxy. 2 credits/page.`,
+    `Search Yelp local businesses. 10 per page. Always pass location or results vary run to run. 2 credits/page.`,
     {
       term: z.string().min(1).max(200).optional()
         .describe("Category, dish, or business name."),

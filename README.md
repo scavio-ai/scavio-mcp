@@ -306,9 +306,9 @@ are free.
 |------|-------------|
 | `extract_url` | Read any web page and return it as clean Markdown, plain text, or raw HTML |
 
-Extract is tier-priced by the `mode` parameter, not flat: `normal` (plain fetch)
-and `advanced` (full JavaScript rendering) cost 1 credit, `ultra` (residential
-proxy, for hard bot walls) costs 2. Start at `normal` and escalate only when the
+Extract is tier-priced by the `mode` parameter, not flat: `normal` (the default)
+and `advanced` (full JavaScript rendering) cost 1 credit, `ultra` (for pages that
+block the other two) costs 2. Start at `normal` and escalate only when the
 content comes back empty or blocked. You are billed only on a successful
 extraction — a dead link, a bot wall or a timeout costs nothing. There is no
 pagination: the whole page comes back in one call.
@@ -434,8 +434,7 @@ to know you are looking at a slice. Both seller tools need the NUMERIC
 
 Instagram is priced per endpoint, not at a flat rate: `get_instagram_user_posts`
 costs 2, `get_instagram_post` and `get_instagram_comment_replies` cost 8, and the
-other nine tools cost 10. The 10-credit endpoints hedge two upstream providers and
-bill both legs, which is what the price reflects.
+other nine tools cost 10.
 
 ### [Reddit API](https://scavio.dev/docs/reddit-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
@@ -500,9 +499,9 @@ All take a vanity handle, slug or id, or a full LinkedIn URL. Credit cost varies
 `get_linkedin_company_posts`, `search_linkedin_jobs` and
 `get_linkedin_post_comments` cost 10 per page; `get_linkedin_job` costs 30.
 
-The upstream provider retired the datasets behind member contact info, the
-company employee directory, per-company job listings, people search and post
-search, so those five tools were removed. `get_linkedin_company` still returns a
+Member contact info, the company employee directory, per-company job listings,
+people search and post search are no longer available, so those five tools were
+removed. `get_linkedin_company` still returns a
 small sample of featured employees, and `search_linkedin_jobs` with a company
 name substitutes for per-company listings.
 
@@ -520,10 +519,10 @@ name substitutes for per-company listings.
 | `resolve_tiktok_shop_url` | Resolve a TikTok Shop URL or share link to a product/shop ID |
 
 Two things to know: `get_tiktok_shop_product` does not return a price (TikTok masks it on the
-product page upstream) - exact prices come from `search_tiktok_shop`,
+product page) - exact prices come from `search_tiktok_shop`,
 `get_tiktok_shop_shop_products` and `get_tiktok_shop_category_products`. And only about 44% of the
 product IDs returned by search resolve on `get_tiktok_shop_product` (11 of 25 measured), because
-upstream has no detail data for the rest. That miss is signalled by the HTTP 404 status, not by any
+TikTok Shop has no detail data for the rest. That miss is signalled by the HTTP 404 status, not by any
 field in the response body, and it is a normal outcome rather than an error to retry - the tool
 returns it as a plain result with `status: "no_detail_data"` so agents skip the product instead of
 looping. For an id that will not resolve, `get_tiktok_shop_product_reviews` is often still usable:
@@ -541,7 +540,7 @@ at least one review.
 | `get_threads_post_comments` | Replies to a post, cursor-paginated |
 | `search_threads_users` | Profiles matching a name or handle - the only search Threads exposes |
 
-Threads is priced by how you address a user, not per endpoint: 2 credits when you pass `user_id`, 4 credits when you pass `username`. Only `get_threads_profile`, `get_threads_user_posts` and `get_threads_user_replies` accept a username; the other three are always 2. Prefer `user_id` - a handle buys a second upstream lookup.
+Threads is priced by how you address a user, not per endpoint: 2 credits when you pass `user_id`, 4 credits when you pass `username`. Only `get_threads_profile`, `get_threads_user_posts` and `get_threads_user_replies` accept a username; the other three are always 2. Prefer `user_id` - a handle costs a second lookup.
 
 ### [Kuaishou (China)](https://scavio.dev/docs/kuaishou-profile?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
@@ -630,7 +629,7 @@ not something Costco publishes, and only items Costco lists online are covered.
 `get_costco_coupons` returns the first 50 offers of a ~200-offer book by default; pass
 `limit` for more.
 
-### Mercado Libre
+### [Mercado Libre](https://scavio.dev/docs/mercadolibre-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 Mercado Libre (and Mercado Livre in Brazil) product data for Mexico, Brazil, Argentina
 and Colombia: listings, prices, sellers, reviews, buyer questions and category best
@@ -888,11 +887,11 @@ id is a billed 404 that names what was not found.
 
 ## About Scavio
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [search API for AI agents](https://scavio.dev/search-api-for-ai-agents?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and a data API for developers. One key, structured JSON, no scraping or proxies:
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [search API for AI agents](https://scavio.dev/search-api-for-ai-agents?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and a data API for developers. One key, structured JSON:
 
 - [Google Search API](https://scavio.dev/google-search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — SERP results, news, images, maps, and knowledge graph
 - [Extract](https://scavio.dev/docs/extract?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — read any URL as Markdown, plain text or raw HTML
-- [Amazon Product API](https://scavio.dev/amazon-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Walmart Product API](https://scavio.dev/walmart-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/docs/target-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Home Depot](https://scavio.dev/docs/home-depot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Costco](https://scavio.dev/costco-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (per-warehouse prices, stock, gas prices, coupon book), and Mercado Libre (Mexico, Brazil, Argentina and Colombia listings, sellers, reviews, questions and best sellers)
+- [Amazon Product API](https://scavio.dev/amazon-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Walmart Product API](https://scavio.dev/walmart-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/docs/target-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Home Depot](https://scavio.dev/docs/home-depot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Costco](https://scavio.dev/costco-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (per-warehouse prices, stock, gas prices, coupon book), and [Mercado Libre](https://scavio.dev/mercadolibre-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (Mexico, Brazil, Argentina and Colombia listings, sellers, reviews, questions and best sellers)
 - [TikTok API](https://scavio.dev/tiktok-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Instagram API](https://scavio.dev/instagram-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Reddit API](https://scavio.dev/reddit-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [X API](https://scavio.dev/x-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [LinkedIn API](https://scavio.dev/linkedin-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), and [YouTube API](https://scavio.dev/youtube-transcript-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — social and video data
 - Travel and local — [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Airbnb](https://scavio.dev/docs/airbnb-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Yelp](https://scavio.dev/docs/yelp-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 - Real estate — [Zillow](https://scavio.dev/docs/zillow-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Redfin](https://scavio.dev/docs/redfin-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Realtor.com](https://scavio.dev/realtor-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (listings, sold comps, market stats, agents), [Rightmove](https://scavio.dev/rightmove-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (UK listings, England and Wales sold prices since 1995, agents)

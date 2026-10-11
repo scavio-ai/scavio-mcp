@@ -23,7 +23,7 @@ const storeIdField = z.string().optional()
 export function registerTargetTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "search_target_products",
-    `Search Target.com products. Slow (~9s/call, headless browser). Max 28/page. 1 credit/page.`,
+    `Search Target.com products. Slow (~9s/call). Max 28/page. 1 credit/page.`,
     {
       keyword: z.string().min(1).max(500)
         .describe("Search keyword, e.g. 'office chair'."),
