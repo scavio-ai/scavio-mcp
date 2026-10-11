@@ -5,7 +5,7 @@
 
 [Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 229 tools across 36 platforms plus Extract, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 229 tools puts 220KB of tool definitions — roughly 54k tokens — into every session before you type anything. So the default is the surface 0.12.x already had, plus Extract: 107 tools, 82KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 248 tools puts 234KB of tool definitions — roughly 58k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 126 tools, 96KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 229 tools. Loading all of them costs 220KB of `tools/list` —
-roughly 54k tokens of context in every session before the user has said anything,
+Scavio exposes 248 tools. Loading all of them costs 234KB of `tools/list` —
+roughly 58k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -217,10 +217,10 @@ measured, not estimated: `npm run toolslist` reproduces them.
 
 | Value | Registers |
 |-------|-----------|
-| *(unset)* or `default` | Everything 0.12.x had, plus `extract` — **107 tools, 82KB** |
-| `all` | every platform — **229 tools, 220KB** |
+| *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **126 tools, 96KB** |
+| `all` | every platform — **248 tools, 234KB** |
 | `extract,sec,g2` | just those platforms — 11 tools, 12KB |
-| `default,zillow,metaads` | the default set plus two more — 113 tools, 89KB |
+| `default,zillow,metaads` | the default set plus two more — 132 tools, 103KB |
 | `none` | no platform tools, only `get_usage` |
 
 Keys are matched case- and punctuation-insensitively, so `meta-ads`, `metaads`
@@ -278,8 +278,9 @@ https://mcp.scavio.dev/mcp?platforms=all
 ### Upgrading from 0.12.x
 
 Nothing to do. The default set is exactly the 10 platforms 0.12.x registered,
-plus Extract — every tool you were using still loads, and the context cost is
-unchanged. Walmart grew from 2 tools to 7, so the count moves 100 → 106.
+plus Extract — every tool you were using still loads. Those platforms keep gaining
+tools (Walmart grew from 2 to 7; TikTok, YouTube, Reddit and X gained 19 in 0.20.0),
+which is why the default count is now 126.
 
 The 22 platforms added in 0.13.0 are opt-in. Add them additively:
 
@@ -352,8 +353,10 @@ pagination: the whole page comes back in one call.
 | `get_youtube_channel_community` | List a channel's community posts |
 | `resolve_youtube_channel` | Resolve a handle or URL to a channel ID |
 | `get_youtube_streams` | Get direct media stream URLs for a video |
+| `get_youtube_community_post` | Get one community post: text, author, likes, images, comments cursor |
+| `get_youtube_community_post_comments` | Get comments on a community post with pagination |
 
-Credit cost varies: `get_youtube_transcript` costs 8, `get_youtube_streams` 3,
+Credit cost varies: `get_youtube_transcript` costs 5, `get_youtube_streams` 3,
 `search_youtube` and `search_youtube_shorts` 2, and every other YouTube tool 1.
 `get_youtube_related` accepts a cursor but never returns one, so treat it as a
 single page.
@@ -414,6 +417,26 @@ to know you are looking at a slice. Both seller tools need the NUMERIC
 | `get_tiktok_hashtag_videos` | List videos for a hashtag |
 | `get_tiktok_user_followers` | Get a user's follower list |
 | `get_tiktok_user_followings` | Get a user's following list |
+| `get_tiktok_trending_searches` | Search terms trending now (about 90, no region filter) |
+| `get_tiktok_trending_videos` | A sample of trending videos (about 6 per call) |
+| `get_tiktok_search_suggestions` | Search autocomplete suggestions for a keyword |
+| `get_tiktok_music` | Get a sound: artist, album, duration, videos using it, chart rank |
+| `get_tiktok_music_videos` | List videos that use a sound (about 14 per page) |
+| `search_tiktok_music` | Search sounds by keyword |
+| `get_tiktok_music_chart` | Top 50 or Viral 50 sound chart (global) |
+| `get_tiktok_user_similar` | Creators similar to a user (about 30 per page) |
+| `get_tiktok_user_playlists` | List a user's playlists (series) |
+| `get_tiktok_playlist_videos` | List the videos in a playlist |
+| `get_tiktok_user_live` | Is a user live now: room status, title, viewers |
+| `get_tiktok_user_region` | The region an account is registered in, plus sec_user_id |
+
+Every TikTok tool costs 1 credit. The trending, sound, playlist, similar-creator, live
+and region tools return TikTok's own payload shape, trimmed for context: large numeric
+ids can lose precision as JSON numbers, so use the string forms (`id_str`, `sec_uid`,
+`sec_user_id`). `get_tiktok_trending_videos` returns about 6 videos per call whatever
+`count` says, and `get_tiktok_music_videos` ignores `count` (about 14 per page). Search
+suggestions can be empty for long-tail keywords and still bill. An unknown username is
+a billed 404 on `get_tiktok_user_live` and an unbilled 404 on `get_tiktok_user_region`.
 
 ### [Instagram API](https://scavio.dev/docs/instagram-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
@@ -452,10 +475,12 @@ other nine tools cost 10.
 | `get_reddit_user_comments` | List a redditor's comments |
 | `get_reddit_popular` | Get the site-wide popular feed |
 | `get_reddit_trending` | Get current trending search queries |
+| `search_reddit_comments` | Search comments by keyword, with the post and subreddit each was left on |
+| `search_reddit_subreddits` | Find subreddits by keyword, with subscriber counts |
 
 Every Reddit tool costs 1 credit. Two things to know: `search_reddit` takes a query
 and a cursor only - there is no sort or post-type filter, results come back in
-relevance order - and `get_reddit_post` returns a flat post object with no comments,
+relevance order (`search_reddit_comments` does sort: relevance, hot, top or new) - and `get_reddit_post` returns a flat post object with no comments,
 so call `get_reddit_post_comments` with the post id for those. Reddit is the slowest
 platform here, typically 5-15 seconds per call.
 
@@ -474,6 +499,9 @@ platform here, typically 5-15 seconds per call.
 | `get_x_user_followers` | List a user's followers |
 | `get_x_user_followings` | List accounts a user follows |
 | `get_x_trending` | Get trending topics for a country |
+| `search_x_communities` | Find X Communities by keyword, with member counts |
+| `get_x_community` | Get a Community's description, member count, topic and rules |
+| `get_x_community_tweets` | List a Community's posts by relevance or recency |
 
 `get_x_user_tweets`, `get_x_user_replies` and `get_x_user_media` return a
 `next_cursor` but no `has_more`, so page until the cursor is absent or the timeline

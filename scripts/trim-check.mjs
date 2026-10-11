@@ -100,6 +100,52 @@ check("tiktok comments: cid, text, counts and commenter ids kept", () => {
   assert.equal(c.user.sec_uid, "MS4w2");
 });
 
+check("tiktok sound: id_str, usage, licensing, one play + cover URL kept; ladders and blobs dropped", () => {
+  const sound = {
+    id: 7364498342501435000, id_str: "7364498342501435408", title: "Espresso", author: "Sabrina Carpenter", album: "Espresso",
+    duration: 60, user_count: 526809, is_commerce_music: true, commercial_right_type: 3, is_original: false,
+    play_url: media("snd"), cover_large: media("cvl"), cover_medium: media("cvm"), avatar_thumb: media("av"),
+    artists: [{ uid: "1", sec_uid: "MS4wA", handle: "sabrina", nick_name: "Sabrina", is_verified: true, avatar: media("aa"), follow_status: 0 }],
+    multi_bit_rate_play_info: [{ play_addr: media("m1") }], tt_to_dsp_song_infos: [{ token: { t: 1 } }], extra: "x".repeat(900), share_info: { a: 1 },
+  };
+  const out = shapeResponse({ data: { music_info: sound, music_chart_rank: { rank: 3 } } }, { platform: "tiktok" }).data;
+  const m = out.music_info;
+  assert.equal(m.id_str, "7364498342501435408");
+  assert.equal(m.user_count, 526809);
+  assert.equal(m.commercial_right_type, 3);
+  assert.deepEqual(m.play_url, { url_list: ["https://a/snd"] });
+  assert.deepEqual(m.cover_large, { url_list: ["https://a/cvl"] });
+  assert.deepEqual(m.artists, [{ uid: "1", sec_uid: "MS4wA", handle: "sabrina", nick_name: "Sabrina", is_verified: true }]);
+  for (const k of ["cover_medium", "avatar_thumb", "multi_bit_rate_play_info", "tt_to_dsp_song_infos", "extra", "share_info"]) assert.equal(k in m, false, k);
+  assert.equal(out.music_chart_rank.rank, 3);
+});
+
+check("tiktok web item (trending / playlist videos): ids, stats, author, sound, one cover + play URL kept", () => {
+  const item = {
+    id: "7690286989635046669", desc: "outdoor cooking #cooking", createTime: 1790534491, textLanguage: "en", isAd: false,
+    stats: { playCount: 47000000, diggCount: 2300000 }, statsV2: { playCount: "47000000" },
+    author: { id: "752", uniqueId: "outruncook", nickname: "Out Run Cook", secUid: "MS4wB", avatarLarger: "https://a/av", commentSetting: 0 },
+    music: { id: "7690", title: "original sound", authorName: "Out Run Cook", playUrl: "https://a/m", coverLarge: "https://a/c", tt2dsp: {} },
+    video: { duration: 302, width: 720, height: 1280, cover: "https://a/cov", playAddr: "https://a/play", bitrateInfo: [{ Bitrate: 1 }], zoomCover: { 240: "u" }, PlayAddrStruct: { a: 1 } },
+    challenges: [{ id: "1", title: "cooking", coverLarger: "", desc: "" }],
+    textExtra: [{ hashtagName: "cooking", awemeId: "", start: 1, end: 8, type: 1 }],
+    penaltyContext: { a: 1 }, item_control: { can_share: true },
+  };
+  const out = shapeResponse({ data: { hasMore: true, cursor: "12", itemList: [item, item] } }, { platform: "tiktok", limit: 1, listKeys: ["itemList"] }).data;
+  assert.equal(out.itemList.length, 1);
+  assert.equal(out.hasMore, true);
+  assert.equal(out.cursor, "12");
+  const v = out.itemList[0];
+  assert.equal(v.id, "7690286989635046669");
+  assert.equal(v.stats.playCount, 47000000);
+  assert.deepEqual(v.author, { id: "752", uniqueId: "outruncook", nickname: "Out Run Cook", secUid: "MS4wB" });
+  assert.deepEqual(v.music, { id: "7690", title: "original sound", authorName: "Out Run Cook", playUrl: "https://a/m" });
+  assert.deepEqual(v.video, { duration: 302, width: 720, height: 1280, cover: "https://a/cov", playAddr: "https://a/play" });
+  assert.deepEqual(v.challenges, [{ id: "1", title: "cooking" }]);
+  assert.deepEqual(v.textExtra, [{ hashtagName: "cooking", type: 1 }]);
+  for (const k of ["statsV2", "penaltyContext", "item_control"]) assert.equal(k in v, false, k);
+});
+
 check("no platform: records are not projected, only generic rules apply", () => {
   const out = shapeResponse({ data: { user: { ...ttUser(1), bio_extra: "kept" } } });
   assert.equal(out.data.user.bio_extra, "kept");

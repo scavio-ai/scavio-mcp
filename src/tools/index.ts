@@ -113,12 +113,12 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
 /**
  * What registers when SCAVIO_PLATFORMS is unset.
  *
- * Registering everything is not an option any more. The full surface is 229
- * tools, which serialises to 220KB of tools/list (measured with
- * `npm run toolslist`, not estimated) — roughly 54k tokens pushed into the
+ * Registering everything is not an option any more. The full surface is 248
+ * tools, which serialises to 234KB of tools/list (measured with
+ * `npm run toolslist`, not estimated) — roughly 58k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
- * hard tool-count ceiling some clients enforce. The default set below is 107
- * tools, 82KB.
+ * hard tool-count ceiling some clients enforce. The default set below is 126
+ * tools, 96KB (0.20.0: TikTok, YouTube, Reddit and X gained 19 tools).
  *
  * The default is therefore exactly what 0.12.x registered, plus extract:
  * upgrading must never silently remove a tool someone already depends on. A
@@ -172,7 +172,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (229 tools)
+ *   all      — every platform (248 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -255,7 +255,7 @@ const READ_ONLY_ANNOTATIONS = {
 
 /**
  * Wrap the server so every tool() call is annotated at registration, instead
- * of editing 229 call sites. A tool added later picks this up automatically.
+ * of editing 248 call sites. A tool added later picks this up automatically.
  */
 function annotating(server: McpServer): McpServer {
   return new Proxy(server, {

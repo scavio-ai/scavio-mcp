@@ -95,6 +95,58 @@ function tiktokAweme(o: JsonObject): JsonObject {
   return out;
 }
 
+/**
+ * Sound records (get_tiktok_music, search_tiktok_music, get_tiktok_music_chart):
+ * ~70 keys, most of them bitrate ladders, share blobs and DSP tokens. Keeps
+ * the identity, usage and licensing fields plus one play and one cover URL.
+ * A superset of what tiktokAweme keeps for a video's music, so re-projecting
+ * that nested record changes nothing.
+ */
+const TT_MUSIC_KEEP = [
+  "id", "id_str", "mid", "title", "author", "album", "duration", "user_count", "create_time",
+  "original", "is_original", "is_original_sound", "is_commerce_music", "commercial_right_type",
+  "is_pgc", "owner_handle", "owner_nickname", "owner_id", "sec_uid", "theme_tags", "music_release_info",
+] as const;
+
+function tiktokMusic(o: JsonObject): JsonObject {
+  const out = pick(o, TT_MUSIC_KEEP);
+  for (const k of ["play_url", "cover_large"]) {
+    const u = firstUrl(o[k]);
+    if (u) out[k] = u;
+  }
+  if (Array.isArray(o.artists)) {
+    out.artists = o.artists.map((a) => (isObj(a) ? pick(a, ["uid", "sec_uid", "handle", "nick_name", "is_verified"]) : a));
+  }
+  return out;
+}
+
+/**
+ * Web-format video records (`data.itemList` on trending and playlist videos):
+ * camelCase, ~45 keys, with a 12KB bitrateInfo ladder and a zoomCover map per
+ * video. Same intent as tiktokAweme: ids, text, stats, author, sound, hashtags
+ * and one cover plus one play URL.
+ */
+function tiktokWebItem(o: JsonObject): JsonObject {
+  const out = pick(o, ["id", "desc", "createTime", "textLanguage", "isAd", "isPinnedItem", "stats", "authorStats", "locationCreated"]);
+  if (isObj(o.author)) out.author = pick(o.author, ["id", "uniqueId", "nickname", "secUid", "signature", "verified", "privateAccount"]);
+  if (isObj(o.music)) out.music = pick(o.music, ["id", "title", "authorName", "duration", "original", "isCopyrighted", "playUrl"]);
+  if (isObj(o.video)) out.video = pick(o.video, ["duration", "width", "height", "ratio", "cover", "playAddr"]);
+  if (Array.isArray(o.challenges)) out.challenges = o.challenges.map((c) => (isObj(c) ? pick(c, ["id", "title"]) : c));
+  if (Array.isArray(o.textExtra)) {
+    out.textExtra = o.textExtra.map((t) => (isObj(t) ? pick(t, ["hashtagName", "userId", "userUniqueId", "secUid", "type"]) : t));
+  }
+  if (isObj(o.imagePost) && Array.isArray(o.imagePost.images)) {
+    out.imagePost = {
+      images: o.imagePost.images.map((i) => {
+        const urls = isObj(i) && isObj(i.imageURL) && Array.isArray(i.imageURL.urlList) ? i.imageURL.urlList : [];
+        return urls.length ? { url: urls[0] } : null;
+      }),
+    };
+  }
+  if (isObj(o.poi)) out.poi = pick(o.poi, ["id", "name"]);
+  return out;
+}
+
 function tiktokUser(o: JsonObject): JsonObject {
   const out = pick(o, TT_USER_KEEP);
   if ("avatar_thumb" in out) out.avatar_thumb = firstUrl(out.avatar_thumb) ?? null;
@@ -105,6 +157,8 @@ function projectTiktok(o: JsonObject): JsonObject {
   if ("cid" in o && "text" in o) return pick(o, TT_COMMENT_KEEP);
   if ("aweme_id" in o && ("video" in o || "author" in o || "desc" in o)) return tiktokAweme(o);
   if ("sec_uid" in o && ("unique_id" in o || "nickname" in o)) return tiktokUser(o);
+  if ("id_str" in o && "title" in o && ("user_count" in o || "play_url" in o)) return tiktokMusic(o);
+  if ("id" in o && "createTime" in o && isObj(o.author) && ("stats" in o || "video" in o)) return tiktokWebItem(o);
   return o;
 }
 

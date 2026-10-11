@@ -211,4 +211,64 @@ export function registerXTools(server: McpServer, getClient: () => ScavioClient)
       }
     },
   );
+
+  // Shapes mirror backend/src/routes/x.ts. No zod `.default()`: the MCP SDK
+  // would post a defaulted field on every call.
+  const communityId = () => z.string().regex(/^\d{1,25}$/, "must be a numeric community id")
+    .describe("Numeric X Community id (community_id from search_x_communities), e.g. '1508567430188126209'.");
+
+  server.tool(
+    "search_x_communities",
+    `Find X Communities by keyword (data.communities): community_id, name, member count, primary topic, NSFW flag. Paginate with next_cursor/has_more. 1 credit.`,
+    {
+      keyword: z.string().min(1).max(500)
+        .describe("Search query, e.g. 'crypto'."),
+      cursor: z.string().optional()
+        .describe("next_cursor from previous response."),
+    },
+    async (params) => {
+      try {
+        const data = await getClient().post("/api/v1/x/search/communities", params);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
+
+  server.tool(
+    "get_x_community",
+    `Get an X Community's details: name, description, creation date, member count, primary topic, NSFW flag and rules. 1 credit.`,
+    {
+      community_id: communityId(),
+    },
+    async (params) => {
+      try {
+        const data = await getClient().post("/api/v1/x/community", params);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
+
+  server.tool(
+    "get_x_community_tweets",
+    `List posts in an X Community (data.timeline) by relevance or recency, with text, author and engagement counts. Paginate with next_cursor/has_more. 1 credit.`,
+    {
+      community_id: communityId(),
+      ranking: z.enum(["Relevance", "Recency"]).optional()
+        .describe("Relevance or Recency (default: the community's own ordering)."),
+      cursor: z.string().optional()
+        .describe("next_cursor from previous response."),
+    },
+    async (params) => {
+      try {
+        const data = await getClient().post("/api/v1/x/community/tweets", params);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
 }

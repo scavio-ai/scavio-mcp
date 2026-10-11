@@ -170,7 +170,7 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_youtube_transcript",
-    `Get a YouTube video's transcript/captions. 8 credits.`,
+    `Get a YouTube video's transcript/captions. 5 credits.`,
     {
       video_id: z.string()
         .describe("Video ID or watch URL."),
@@ -328,6 +328,44 @@ export function registerYoutubeTools(server: McpServer, getClient: () => ScavioC
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/youtube/streams", params);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
+
+  // Shapes mirror backend/src/routes/youtube.ts. No zod `.default()`: the MCP
+  // SDK would post a defaulted field on every call.
+  server.tool(
+    "get_youtube_community_post",
+    `Get a single YouTube community post: text, author and channel id, likes (vote_count), comment count, attachment type and images, and comments_cursor for get_youtube_community_post_comments. 1 credit.`,
+    {
+      post_id: z.string().min(1).max(300)
+        .describe("Community post id or post URL, e.g. 'Ugkx_PqHZYEoCCP7e8WIOrh-1HCvtKoFMzVp'."),
+    },
+    async (params) => {
+      try {
+        const data = await getClient().post("/api/v1/youtube/community/post", params);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
+
+  server.tool(
+    "get_youtube_community_post_comments",
+    `Get comments on a YouTube community post (data.comments) with likes, reply counts and author. Paginate with next_cursor/has_more. 1 credit.`,
+    {
+      post_id: z.string().min(1).max(300)
+        .describe("Community post id or post URL."),
+      cursor: z.string().optional()
+        .describe("next_cursor from a previous page, or comments_cursor from get_youtube_community_post."),
+    },
+    async (params) => {
+      try {
+        const data = await getClient().post("/api/v1/youtube/community/post/comments", params);
         return trimResponse(data);
       } catch (err) {
         return handleApiError(err);

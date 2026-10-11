@@ -229,4 +229,46 @@ export function registerRedditTools(server: McpServer, getClient: () => ScavioCl
       }
     },
   );
+
+  // Shapes mirror backend/src/routes/reddit.ts. No zod `.default()`: the MCP
+  // SDK would post a defaulted field on every call.
+  server.tool(
+    "search_reddit_comments",
+    `Search Reddit comments by keyword (data.results): comment text, author, score, date, permalink, plus the post and subreddit it was left on. Sort by relevance, hot, top or new. Paginate with next_cursor/has_more. 1 credit.`,
+    {
+      query: z.string().min(1).max(500)
+        .describe("Search query."),
+      sort: z.enum(["RELEVANCE", "HOT", "TOP", "NEW"]).optional()
+        .describe("RELEVANCE (default), HOT, TOP or NEW."),
+      cursor: z.string().optional()
+        .describe("Pagination cursor from data.next_cursor."),
+    },
+    async (params) => {
+      try {
+        const data = await getClient().post("/api/v1/reddit/search/comments", params);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
+
+  server.tool(
+    "search_reddit_subreddits",
+    `Find subreddits by keyword (data.results): name, description, subscriber count, NSFW and quarantine flags, URL. Paginate with next_cursor/has_more. 1 credit.`,
+    {
+      query: z.string().min(1).max(500)
+        .describe("Search query."),
+      cursor: z.string().optional()
+        .describe("Pagination cursor from data.next_cursor."),
+    },
+    async (params) => {
+      try {
+        const data = await getClient().post("/api/v1/reddit/search/subreddits", params);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
 }
