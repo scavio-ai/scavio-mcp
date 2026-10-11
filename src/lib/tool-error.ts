@@ -18,7 +18,15 @@ import { ApiError } from "./errors.js";
  */
 export function handleApiError(err: unknown): never | { isError: true; content: { type: "text"; text: string }[] } {
   if (err instanceof ApiError) {
-    if (err.status === 429) return { isError: true, content: [{ type: "text", text: "Rate limited. Wait and retry." }] };
+    // The API's 429 message says which limit was hit (per-plan concurrency, or
+    // the active crawl/batch job cap, which names the running jobs to wait on).
+    if (err.status === 429) {
+      const b = err.body ?? {};
+      const parts = [err.message, typeof b.message === "string" ? b.message : ""].filter((p) => p && p !== "Too Many Requests");
+      if (Array.isArray(b.running_jobs) && b.running_jobs.length) parts.push(`Running jobs: ${b.running_jobs.join(", ")}`);
+      const detail = parts.map((p) => ` ${/[.!?]$/.test(p) ? p : `${p}.`}`).join("");
+      return { isError: true, content: [{ type: "text", text: `Rate limited (429).${detail} Wait and retry.` }] };
+    }
     // The API's 402 body carries billing_url; the bare "Insufficient credits"
     // string used to be all the model saw, so it could not tell the user where
     // to go. Surface the link, and say that nothing needs reconfiguring.

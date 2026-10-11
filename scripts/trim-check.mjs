@@ -254,4 +254,63 @@ check("trimResponse: input object is not mutated", () => {
   assert.equal(JSON.stringify(raw), before);
 });
 
+// ---------------------------------------------------------------- Website map / crawl / batch
+
+const webJobs = await import(pathToFileURL(join(root, "dist", "lib", "web-jobs.js")).href);
+const jobResult = (n, content, extra = {}) => ({
+  url: `https://ex.com/p${n}`, depth: 1, status: "succeeded", status_code: 200, content,
+  content_length: content.length, truncated: false, error: null, skip_reason: null, credits: 1, ...extra,
+});
+const jobStatus = (status, results, next_cursor) => ({
+  data: {
+    id: "crawl_1", type: "crawl", status, stopped_reason: null, error: null, url: "https://ex.com", format: "markdown", mode: "normal",
+    pages: { discovered: 3, queued: 0, succeeded: 3, failed: 0, skipped: 0 }, credits_used: 3, webhook: null,
+    status_url: "https://api.scavio.dev/api/v1/extract/crawl/crawl_1", results, next_cursor,
+  },
+});
+
+check("crawl status: long content clipped and flagged, full content_length kept, short content untouched", () => {
+  const out = webJobs.shapeJobStatus(jobStatus("completed", [jobResult(1, "x".repeat(5000)), jobResult(2, "short")], null), { type: "crawl", maxContentChars: 1000 });
+  const [a, b] = out.data.results;
+  assert.equal(a.content.length, 1000);
+  assert.equal(a.content_clipped, true);
+  assert.equal(a.content_length, 5000);
+  assert.equal(b.content, "short");
+  assert.equal("content_clipped" in b, false);
+  assert.match(out._hint, /1 page\(s\) clipped to 1000/);
+  assert.equal(out.data.credits_used, 3);
+  assert.equal(out.data.pages.skipped, 0);
+});
+
+check("crawl status: next_cursor survives and produces a paging hint naming the status tool", () => {
+  const out = webJobs.shapeJobStatus(jobStatus("completed", [jobResult(1, "a")], "25"), { type: "crawl" });
+  assert.equal(out.data.next_cursor, "25");
+  assert.match(out._hint, /get_crawl_status with id="crawl_1" and cursor="25"/);
+});
+
+check("batch status: running job gets a wait hint; finished job with no cursor and no clip gets no hint", () => {
+  const running = webJobs.shapeJobStatus(jobStatus("running", [], null), { type: "batch" });
+  assert.match(running._hint, /batch is running: call get_batch_status/);
+  const done = webJobs.shapeJobStatus(jobStatus("completed", [jobResult(1, "a")], null), { type: "batch" });
+  assert.equal("_hint" in done, false);
+});
+
+check("crawl status: failed/skipped results keep error and skip_reason, input not mutated", () => {
+  const raw = jobStatus("completed", [jobResult(1, "x".repeat(9000)), { ...jobResult(2, ""), status: "skipped", content: null, skip_reason: "robots", credits: 0 }], null);
+  const before = JSON.stringify(raw);
+  const out = webJobs.shapeJobStatus(raw, { type: "crawl" });
+  assert.equal(JSON.stringify(raw), before);
+  assert.equal(out.data.results[1].skip_reason, "robots");
+  assert.equal(out.data.results[1].credits, 0);
+  assert.equal(out.data.results[0].content.length, webJobs.MCP_DEFAULT_CONTENT_CHARS);
+});
+
+check("map: truncated list gets a raise-limit hint; untruncated does not", () => {
+  const map = (truncated) => ({ data: { url: "https://ex.com/", links: [{ url: "https://ex.com/a", source: "sitemap", lastmod: "2026-01-01" }], total_found: 900, returned: 1, truncated, sitemaps_read: 1 }, credits_used: 1 });
+  const cut = webJobs.shapeMap(map(true));
+  assert.match(cut._hint, /1 of 900 URLs returned/);
+  assert.equal(cut.data.links[0].lastmod, "2026-01-01");
+  assert.equal("_hint" in webJobs.shapeMap(map(false)), false);
+});
+
 console.log(`\n${passed} passed${process.exitCode ? ", FAILURES above" : ""}`);

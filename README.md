@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 229 tools across 36 platforms plus Extract, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 255 tools across 36 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 248 tools puts 234KB of tool definitions — roughly 58k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 126 tools, 96KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 255 tools puts 243KB of tool definitions — roughly 61k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 133 tools, 105KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 248 tools. Loading all of them costs 234KB of `tools/list` —
-roughly 58k tokens of context in every session before the user has said anything,
+Scavio exposes 255 tools. Loading all of them costs 243KB of `tools/list` —
+roughly 61k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -217,10 +217,10 @@ measured, not estimated: `npm run toolslist` reproduces them.
 
 | Value | Registers |
 |-------|-----------|
-| *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **126 tools, 96KB** |
-| `all` | every platform — **248 tools, 234KB** |
-| `extract,sec,g2` | just those platforms — 11 tools, 12KB |
-| `default,zillow,metaads` | the default set plus two more — 132 tools, 103KB |
+| *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **133 tools, 105KB** |
+| `all` | every platform — **255 tools, 243KB** |
+| `extract,sec,g2` | just those platforms — 18 tools, 21KB |
+| `default,zillow,metaads` | the default set plus two more — 139 tools, 113KB |
 | `none` | no platform tools, only `get_usage` |
 
 Keys are matched case- and punctuation-insensitively, so `meta-ads`, `metaads`
@@ -279,8 +279,8 @@ https://mcp.scavio.dev/mcp?platforms=all
 
 Nothing to do. The default set is exactly the 10 platforms 0.12.x registered,
 plus Extract — every tool you were using still loads. Those platforms keep gaining
-tools (Walmart grew from 2 to 7; TikTok, YouTube, Reddit and X gained 19 in 0.20.0),
-which is why the default count is now 126.
+tools (Walmart grew from 2 to 7; TikTok, YouTube, Reddit and X gained 19 in 0.20.0;
+Extract gained map, crawl and batch in 0.21.0), which is why the default count is now 133.
 
 The 22 platforms added in 0.13.0 are opt-in. Add them additively:
 
@@ -306,13 +306,49 @@ are free.
 | Tool | Description |
 |------|-------------|
 | `extract_url` | Read any web page and return it as clean Markdown, plain text, or raw HTML |
+| `map_website` | List a site's page URLs from its sitemaps and start page, path-filtered, with `lastmod` when known |
+| `crawl_website` | Crawl a site from one URL and extract every same-site page; waits up to `wait_seconds` and returns results, or the job id |
+| `get_crawl_status` | A crawl's status, page counts, credits used and page results, paged by cursor; can wait for completion |
+| `cancel_crawl` | Stop a running crawl; nothing more is billed, results so far stay readable |
+| `batch_extract` | Extract a list of URLs in one job, results in input order; waits up to `wait_seconds` |
+| `get_batch_status` | A batch's status and results, paged by cursor; can wait for completion |
+| `cancel_batch` | Stop a running batch |
 
 Extract is tier-priced by the `mode` parameter, not flat: `normal` (the default)
-and `advanced` (full JavaScript rendering) cost 1 credit, `ultra` (for pages that
-block the other two) costs 2. Start at `normal` and escalate only when the
+and `advanced` (renders JavaScript) cost 1 credit, `ultra` (for the hardest pages)
+costs 2. Start at `normal` and escalate only when the
 content comes back empty or blocked. You are billed only on a successful
 extraction — a dead link, a bot wall or a timeout costs nothing. There is no
 pagination: the whole page comes back in one call.
+
+**Map, crawl and batch** (new in 0.21.0) are the multi-page operations:
+
+- **Pricing.** `map_website` costs 1 credit. Crawl and batch bill per
+  *successful* page at Extract's price for the tier (normal 1, advanced 1,
+  ultra 2); failed and skipped pages are free, and status and cancel calls are
+  free. Credits are taken page by page, and a job stops cleanly with
+  `stopped_reason: "insufficient_credits"` if the balance runs out.
+- **Plan limits** (max pages per crawl / active jobs / URLs per batch): Free
+  10 / 1 / 10, PAYG 100 / 1 / 50, Project 500 / 2 / 100, Bootstrap 2,000 / 3 / 500,
+  Startup 5,000 / 5 / 1,000, Growth 10,000 / 10 / 1,000. Starting a job past the
+  active-job limit returns a 429 that names the running jobs.
+- **Behaviour.** Robots.txt is always obeyed for map and crawl. A crawl stays on
+  the start URL's site (subdomains optional) and visits pages under the start
+  path first. Results are kept for 3 days; a job runs for at most 6 hours.
+- **Built for tool-call time limits.** MCP clients usually cancel a tool call
+  after about 60 seconds, so a crawl is a job, not one long call.
+  `crawl_website` / `batch_extract` start the job and wait up to `wait_seconds`
+  (default 30, max 50): a small job comes back finished with its first page of
+  results; a large one returns the job id (and `webhook_secret`, shown only
+  once, if you set `webhook_url`). `get_crawl_status` / `get_batch_status` take
+  the same `wait_seconds` to long-poll, and `cursor` to page.
+- **Output stays small.** Status calls return 10 results per call by default
+  (`limit` up to 100) and clip each page's content to `max_content_chars`
+  (default 4,000); clipped pages carry `content_clipped: true` next to the full
+  `content_length`. `map_website` asks for 200 links when you set no `limit`
+  (the API default is 1,000). Every response that has more to read carries a
+  `_hint` naming the exact next call. Repeat a start call with the same
+  `idempotency_key` and you get the original job back instead of a second one.
 
 ### [Google Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 

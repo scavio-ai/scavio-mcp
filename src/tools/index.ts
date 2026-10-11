@@ -113,12 +113,13 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
 /**
  * What registers when SCAVIO_PLATFORMS is unset.
  *
- * Registering everything is not an option any more. The full surface is 248
- * tools, which serialises to 234KB of tools/list (measured with
+ * Registering everything is not an option any more. The full surface is 255
+ * tools, which serialises to 243KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 58k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
- * hard tool-count ceiling some clients enforce. The default set below is 126
- * tools, 96KB (0.20.0: TikTok, YouTube, Reddit and X gained 19 tools).
+ * hard tool-count ceiling some clients enforce. The default set below is 133
+ * tools, 105KB (0.20.0: TikTok, YouTube, Reddit and X gained 19 tools; 0.21.0:
+ * Extract gained map, crawl and batch, 7 tools).
  *
  * The default is therefore exactly what 0.12.x registered, plus extract:
  * upgrading must never silently remove a tool someone already depends on. A
@@ -172,7 +173,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (248 tools)
+ *   all      — every platform (255 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -254,8 +255,20 @@ const READ_ONLY_ANNOTATIONS = {
 } as const;
 
 /**
+ * The exceptions to "reads and changes nothing": starting a crawl or batch
+ * creates a server-side job (not idempotent unless idempotency_key is set), and
+ * cancelling one stops it for good. Still no change to any external site.
+ */
+const ANNOTATION_OVERRIDES: Record<string, { readOnlyHint?: boolean; destructiveHint?: boolean; idempotentHint?: boolean }> = {
+  crawl_website: { readOnlyHint: false, destructiveHint: false, idempotentHint: false },
+  batch_extract: { readOnlyHint: false, destructiveHint: false, idempotentHint: false },
+  cancel_crawl: { readOnlyHint: false, destructiveHint: true, idempotentHint: true },
+  cancel_batch: { readOnlyHint: false, destructiveHint: true, idempotentHint: true },
+};
+
+/**
  * Wrap the server so every tool() call is annotated at registration, instead
- * of editing 248 call sites. A tool added later picks this up automatically.
+ * of editing 255 call sites. A tool added later picks this up automatically.
  */
 function annotating(server: McpServer): McpServer {
   return new Proxy(server, {
@@ -264,7 +277,7 @@ function annotating(server: McpServer): McpServer {
       return (name: string, ...rest: unknown[]) => {
         const registered: ReturnType<McpServer["tool"]> = Reflect.apply(target.tool, target, [name, ...rest]);
         const title = toolTitle(name);
-        registered.update({ title, annotations: { title, ...READ_ONLY_ANNOTATIONS } });
+        registered.update({ title, annotations: { title, ...READ_ONLY_ANNOTATIONS, ...ANNOTATION_OVERRIDES[name] } });
         return registered;
       };
     },

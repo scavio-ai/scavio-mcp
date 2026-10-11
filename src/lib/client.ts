@@ -19,7 +19,7 @@ export class ScavioClient {
     this.apiKey = apiKey;
   }
 
-  private async request<T>(method: string, path: string, body?: unknown): Promise<T> {
+  private async request<T>(method: string, path: string, body?: unknown, extraHeaders?: Record<string, string>): Promise<T> {
     const response = await fetch(`${this.baseUrl}${path}`, {
       method,
       headers: {
@@ -27,6 +27,7 @@ export class ScavioClient {
         "Authorization": `Bearer ${this.apiKey}`,
         "User-Agent": USER_AGENT,
         "X-Client-Source": CLIENT_SOURCE,
+        ...extraHeaders,
       },
       ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
     });
@@ -35,14 +36,16 @@ export class ScavioClient {
       const text = await response.text();
       let message: string;
       let billingUrl: string | undefined;
+      let body: Record<string, unknown> | undefined;
       try {
         const json = JSON.parse(text);
         message = json.error ?? json.message ?? text;
         if (typeof json.billing_url === "string") billingUrl = json.billing_url;
+        if (json && typeof json === "object" && !Array.isArray(json)) body = json;
       } catch {
         message = text;
       }
-      throw new ApiError(response.status, message, undefined, billingUrl);
+      throw new ApiError(response.status, message, undefined, billingUrl, body);
     }
 
     return response.json() as Promise<T>;
@@ -52,7 +55,11 @@ export class ScavioClient {
     return this.request<T>("GET", path);
   }
 
-  async post<T>(path: string, body?: unknown): Promise<T> {
-    return this.request<T>("POST", path, body);
+  async post<T>(path: string, body?: unknown, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>("POST", path, body, headers);
+  }
+
+  async delete<T>(path: string): Promise<T> {
+    return this.request<T>("DELETE", path);
   }
 }
