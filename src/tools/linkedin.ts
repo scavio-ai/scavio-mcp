@@ -14,7 +14,7 @@ import { trimResponse } from "../lib/trim-response.js";
 // keep it in the description rather than only in the docs.
 //
 // Five tools were removed rather than left registered - person_contact,
-// company_people, company_jobs, search_people and search_posts have no upstream
+// company_people, company_jobs, search_people and search_posts are retired
 // and can only return 410. Unlike an SDK method, an MCP tool is a menu item for
 // a model: one that always fails burns turns and invites retries, so it is
 // better absent. The REST API still answers those paths with an explicit 410.

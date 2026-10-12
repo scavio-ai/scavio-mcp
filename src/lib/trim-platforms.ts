@@ -228,7 +228,7 @@ function findKey(node: JsonValue, key: string, depth = 0): JsonValue | undefined
 
 /**
  * Instagram list responses carry the same records two or three times: the
- * normalized `data.items`, the raw `data.edges`, and the raw GraphQL envelope
+ * normalized `data.items`, the raw `data.edges`, and the raw envelope
  * under `data.data` (e.g. data.data.xdt_api__v1__clips__user__connection_v2.edges).
  * Keep `items`, hoist any cursor that only lived in the raw copy, drop the rest.
  */

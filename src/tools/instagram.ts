@@ -7,7 +7,7 @@ import { trimResponse } from "../lib/trim-response.js";
 /**
  * Result lists that `count` caps in the MCP output. Upstream treats count as
  * best effort (count=3 returned 12 posts), so it is enforced here. Responses
- * are also deduplicated (items vs raw edges vs the raw GraphQL envelope) and
+ * are also deduplicated (items vs raw edges vs the raw envelope) and
  * records projected to agent-useful fields, see src/lib/trim-platforms.ts.
  * get_instagram_profile is deliberately left unprojected. The REST API
  * response is unchanged.

@@ -5,8 +5,7 @@ import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
 /**
- * The handle surcharge. Threads' upstream handle lookup is dead, so a username
- * has to be resolved through people search first — a second upstream call, and
+ * The handle surcharge. A username has to be resolved through people search first — a second lookup, and
  * 2 extra credits. user_id is always the cheap path.
  */
 const usernameField = z.string().min(1).max(60).optional()

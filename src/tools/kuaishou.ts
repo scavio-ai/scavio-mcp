@@ -4,14 +4,14 @@ import type { ScavioClient } from "../lib/client.js";
 import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
-// Kuaishou is priced PER ENDPOINT off four upstream price points, so every tool
+// Kuaishou is priced PER ENDPOINT at four price points, so every tool
 // carries its own cost line. A single platform-wide "costs N credits" claim is
 // wrong by up to 40x, which is why this sentence is appended everywhere rather
 // than stated once.
 const PRICING = "";
 
-// This is CHINA Kuaishou (kuaishou.com). Our upstream source does not serve
-// Kwai international (kwai.com): a real kwai.com id returns an empty envelope and
+// This is CHINA Kuaishou (kuaishou.com). Kwai international (kwai.com) is not
+// served: a real kwai.com id returns an empty envelope and
 // still bills, so the distinction goes in the description, not a comment.
 const NOT_KWAI = "China kuaishou.com only, not Kwai international.";
 

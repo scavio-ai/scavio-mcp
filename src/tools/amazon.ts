@@ -4,7 +4,7 @@ import type { ScavioClient } from "../lib/client.js";
 import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse, type TrimOptions } from "../lib/trim-response.js";
 
-// Amazon moved to a new upstream provider and now returns a normalized shape
+// Amazon changed and now returns a normalized shape
 // instead of the old raw passthrough. Two consequences for these tool schemas:
 //
 // 1. Eleven params were removed because the current upstream has no equivalent:

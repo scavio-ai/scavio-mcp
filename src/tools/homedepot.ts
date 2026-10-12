@@ -8,7 +8,7 @@ import { trimResponse } from "../lib/trim-response.js";
 // BEFORE the handler runs, so a defaulted field is posted on every call whether
 // the model set it or not. That matters more here than elsewhere: Home Depot
 // does NOT fall back on an unknown sort — it answers 200 with an empty page
-// that scrape.do still bills — so a bad value costs credits and returns
+// that is still billed — so a bad value costs credits and returns
 // nothing. Upstream defaults are documented in the describe text instead.
 
 export function registerHomeDepotTools(server: McpServer, getClient: () => ScavioClient) {

@@ -5,16 +5,13 @@ import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
 // Redfin - US residential real estate. Three tools, 1 credit each, flat:
-// property and market read the listing/region PAGE, whose inlined request cache
-// replaces the ~40 internal calls the page made, which is why a full fact sheet
-// costs the same as a search page.
+// property and market return the whole listing/region page in one call, which
+// is why a full fact sheet costs the same as a search page.
 //
 // Two things a model must be told or it will burn a billed call:
-//   1. CITY NAMES ARE NOT ACCEPTED on `location`. Redfin's own name lookup is
-//      the single path its edge blocks our proxy pool from. A redfin.com region
+//   1. CITY NAMES ARE NOT ACCEPTED on `location`. Pass a redfin.com region
 //      URL, a bare 5-digit ZIP, or region_id + region_type together.
-//   2. days_on_market IS ALWAYS NULL on search - Redfin's mainHouseInfo has no
-//      `dom` key. It is described as null here rather than omitted, because a
+//   2. days_on_market IS ALWAYS NULL on search. It is described as null here rather than omitted, because a
 //      model that sees "days on market" in a field list will otherwise plan
 //      around a value that never arrives.
 //

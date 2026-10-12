@@ -6,7 +6,7 @@ import { trimResponse } from "../lib/trim-response.js";
 
 // SEC EDGAR - US Securities and Exchange Commission regulatory filings. Six
 // tools, 1 credit each, flat: the SEC publishes this data itself and even
-// include_history, the one call that can buy up to 10 upstream fetches, is
+// include_history, the one call that can buy up to 10 lookups, is
 // deliberately still one credit.
 //
 // LOOKUP FIRST. Callers hold a ticker (AAPL); the API is keyed by CIK
