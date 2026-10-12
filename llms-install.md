@@ -1,6 +1,6 @@
 # Scavio MCP Server - LLM Installation Guide
 
-Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software and business reviews, ad libraries and company filings. 255 tools across 36 platforms plus Extract (single pages, site maps, crawls and batches), one API key.
+Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software and business reviews, ad libraries and company filings. 263 tools across 36 platforms plus Extract (single pages, site maps, crawls and batches), one API key.
 
 ## Prerequisites
 
@@ -11,11 +11,11 @@ Ask the user for their API key before configuring. Never invent or reuse a place
 
 ## Important: only a subset of tools loads by default
 
-The server exposes 255 tools. Registering all of them writes 243KB into `tools/list`, which is roughly 61k tokens of context in every session and more tools than some clients accept. So the server registers a default set (133 tools, 105KB) and gates the rest behind `SCAVIO_PLATFORMS`.
+The server exposes 263 tools. Registering all of them writes 249KB into `tools/list`, which is roughly 62k tokens of context in every session and more tools than some clients accept. So the server registers a default set (141 tools, 110KB) and gates the rest behind `SCAVIO_PLATFORMS`.
 
-**Default (env var unset):** `extract`, `google`, `youtube`, `amazon`, `walmart`, `reddit`, `tiktok`, `tiktok-shop`, `instagram`, `x`, `linkedin` - 133 tools including `get_usage`. This is the platform set 0.12.x shipped plus Extract, so upgrading never removes a tool.
+**Default (env var unset):** `extract`, `google`, `youtube`, `amazon`, `walmart`, `reddit`, `tiktok`, `tiktok-shop`, `instagram`, `x`, `linkedin` - 141 tools including `get_usage`. This is the platform set 0.12.x shipped plus Extract, so upgrading never removes a tool.
 
-**To add platforms**, set `SCAVIO_PLATFORMS` to a comma-separated list of platform keys. `default` expands to the set above, so `SCAVIO_PLATFORMS=default,zillow,redfin` is additive. `SCAVIO_PLATFORMS=all` registers all 255 tools. `SCAVIO_PLATFORMS=none` registers only `get_usage`.
+**To add platforms**, set `SCAVIO_PLATFORMS` to a comma-separated list of platform keys. `default` expands to the set above, so `SCAVIO_PLATFORMS=default,zillow,redfin` is additive. `SCAVIO_PLATFORMS=all` registers all 263 tools. `SCAVIO_PLATFORMS=none` registers only `get_usage`.
 
 Ask the user which platforms they actually need, and set only those. Do not set `all` unless the user asks for it - it is the configuration that causes context bloat and client tool-limit errors.
 

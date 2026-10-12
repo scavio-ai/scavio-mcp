@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 255 tools across 36 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 263 tools across 36 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 255 tools puts 243KB of tool definitions — roughly 61k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 133 tools, 105KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 263 tools puts 249KB of tool definitions — roughly 62k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 141 tools, 110KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 255 tools. Loading all of them costs 243KB of `tools/list` —
-roughly 61k tokens of context in every session before the user has said anything,
+Scavio exposes 263 tools. Loading all of them costs 249KB of `tools/list` —
+roughly 62k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -217,10 +217,10 @@ measured, not estimated: `npm run toolslist` reproduces them.
 
 | Value | Registers |
 |-------|-----------|
-| *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **133 tools, 105KB** |
-| `all` | every platform — **255 tools, 243KB** |
+| *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **141 tools, 110KB** |
+| `all` | every platform — **263 tools, 249KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
-| `default,zillow,metaads` | the default set plus two more — 139 tools, 113KB |
+| `default,zillow,metaads` | the default set plus two more — 147 tools, 118KB |
 | `none` | no platform tools, only `get_usage` |
 
 Keys are matched case- and punctuation-insensitively, so `meta-ads`, `metaads`
@@ -280,7 +280,7 @@ https://mcp.scavio.dev/mcp?platforms=all
 Nothing to do. The default set is exactly the 10 platforms 0.12.x registered,
 plus Extract — every tool you were using still loads. Those platforms keep gaining
 tools (Walmart grew from 2 to 7; TikTok, YouTube, Reddit and X gained 19 in 0.20.0;
-Extract gained map, crawl and batch in 0.21.0), which is why the default count is now 133.
+Extract gained map, crawl and batch in 0.21.0; Instagram gained 8 in 0.22.0), which is why the default count is now 141.
 
 The 22 platforms added in 0.13.0 are opt-in. Add them additively:
 
@@ -490,10 +490,21 @@ a billed 404 on `get_tiktok_user_live` and an unbilled 404 on `get_tiktok_user_r
 | `search_instagram_hashtags` | Search hashtags by keyword |
 | `get_instagram_user_followers` | Get a user's follower list |
 | `get_instagram_user_followings` | Get a user's following list |
+| `get_instagram_user_highlights` | List a user's story highlights (id, title, cover, item count) |
+| `get_instagram_highlight_stories` | Get every story in one highlight, with media URLs |
+| `search_instagram_reels` | Search Reels by keyword with pagination |
+| `search_instagram_music` | Search audio tracks by song or artist |
+| `get_instagram_music_posts` | List the Reels that use an audio track, plus its total reel count |
+| `search_instagram_locations` | Search places by name (id, address, coordinates) |
+| `get_instagram_user_similar` | Get accounts similar to a creator |
+| `get_instagram_post_likers` | Get accounts that liked a post, plus its total like count |
 
-Instagram is priced per endpoint, not at a flat rate: `get_instagram_user_posts`
-costs 2, `get_instagram_post` and `get_instagram_comment_replies` cost 8, and the
-other nine tools cost 10.
+Instagram is priced per endpoint: `get_instagram_profile`, `get_instagram_user_reels`,
+`get_instagram_user_tagged` and `get_instagram_music_posts` cost 1 credit (reels and
+tagged cost 2 the first time a username is looked up), and the other tools cost 2.
+`search_instagram_users` and `search_instagram_hashtags` cost 8 when you pass a
+`cursor` for the next page. Any request can cost up to 10 when it needs extra work;
+`credits_used` in the response is always the exact charge.
 
 ### [Reddit API](https://scavio.dev/docs/reddit-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
