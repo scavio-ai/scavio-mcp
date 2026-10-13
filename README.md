@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 263 tools across 36 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 264 tools across 36 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 263 tools puts 249KB of tool definitions — roughly 62k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 141 tools, 110KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 264 tools puts 250KB of tool definitions — roughly 63k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 263 tools. Loading all of them costs 249KB of `tools/list` —
-roughly 62k tokens of context in every session before the user has said anything,
+Scavio exposes 264 tools. Loading all of them costs 250KB of `tools/list` —
+roughly 63k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -217,10 +217,10 @@ measured, not estimated: `npm run toolslist` reproduces them.
 
 | Value | Registers |
 |-------|-----------|
-| *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **141 tools, 110KB** |
-| `all` | every platform — **263 tools, 249KB** |
+| *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
+| `all` | every platform — **264 tools, 250KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
-| `default,zillow,metaads` | the default set plus two more — 147 tools, 118KB |
+| `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `none` | no platform tools, only `get_usage` |
 
 Keys are matched case- and punctuation-insensitively, so `meta-ads`, `metaads`
@@ -280,7 +280,7 @@ https://mcp.scavio.dev/mcp?platforms=all
 Nothing to do. The default set is exactly the 10 platforms 0.12.x registered,
 plus Extract — every tool you were using still loads. Those platforms keep gaining
 tools (Walmart grew from 2 to 7; TikTok, YouTube, Reddit and X gained 19 in 0.20.0;
-Extract gained map, crawl and batch in 0.21.0; Instagram gained 8 in 0.22.0), which is why the default count is now 141.
+Extract gained map, crawl and batch in 0.21.0; Instagram gained 8 in 0.22.0; Google gained google_custom_search in 0.23.0), which is why the default count is now 142.
 
 The 22 platforms added in 0.13.0 are opt-in. Add them additively:
 
@@ -355,6 +355,7 @@ pagination: the whole page comes back in one call.
 | Tool | Description |
 |------|-------------|
 | `search_google` | Web search (v2) with organic results, ads, and AI Overview |
+| `google_custom_search` | Google results in the Custom Search JSON API format (`items[]`, `searchInformation`, `queries.nextPage`) for code ported from CSE |
 | `google_ai_mode` | AI Mode conversational answer with cited sources |
 | `google_maps_search` | Search Google Maps for local businesses |
 | `google_maps_place` | Place details: address, phone, hours, rating |

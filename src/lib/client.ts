@@ -39,9 +39,13 @@ export class ScavioClient {
       let body: Record<string, unknown> | undefined;
       try {
         const json = JSON.parse(text);
-        message = json.error ?? json.message ?? text;
+        // The Custom Search compatible endpoint answers errors in Google's
+        // envelope: { error: { code, message, details } }.
+        const env = json?.error && typeof json.error === "object" ? json.error : null;
+        message = env ? (env.message ?? text) : (json.error ?? json.message ?? text);
         if (typeof json.billing_url === "string") billingUrl = json.billing_url;
-        if (json && typeof json === "object" && !Array.isArray(json)) body = json;
+        else if (typeof env?.details?.billing_url === "string") billingUrl = env.details.billing_url;
+        if (json && typeof json === "object" && !Array.isArray(json)) body = env?.details ? { ...env.details, message: env.message } : json;
       } catch {
         message = text;
       }

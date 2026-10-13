@@ -83,6 +83,69 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
   );
 
   server.tool(
+    "google_custom_search",
+    `Google search in the Custom Search JSON API (CSE) format: items[] with title/link/snippet/displayLink, searchInformation, queries.nextPage. Use when porting CSE code or when items[] is wanted; search_google returns the richer full SERP. 1 credit.`,
+    {
+      q: z.string().min(1).max(500)
+        .describe("Search query."),
+      num: z.number().int().min(1).max(10).optional()
+        .describe("Results, 1-10 (default 10)."),
+      start: z.number().int().min(1).max(100).optional()
+        .describe("1-based first result. start+num <= 100."),
+      gl: z.string().optional()
+        .describe("Country, e.g. 'us'."),
+      hl: z.string().optional()
+        .describe("Language, e.g. 'en'."),
+      lr: z.string().optional()
+        .describe("e.g. 'lang_en'."),
+      cr: z.string().optional()
+        .describe("e.g. 'countryUS'."),
+      safe: z.enum(["active", "off"]).optional()
+        .describe("SafeSearch."),
+      date_restrict: z.string().optional()
+        .describe("d[N]/w[N]/m[N]/y[N], e.g. 'm6'."),
+      site_search: z.string().optional()
+        .describe("Site to include/exclude, e.g. 'example.com'. Enforced on results."),
+      site_search_filter: z.enum(["i", "e"]).optional()
+        .describe("'i' include (default), 'e' exclude."),
+      exact_terms: z.string().optional()
+        .describe("Phrase every result must contain."),
+      exclude_terms: z.string().optional()
+        .describe("Word or phrase to exclude."),
+      or_terms: z.string().optional()
+        .describe("Space-separated; each result has at least one."),
+      file_type: z.string().optional()
+        .describe("Extension, e.g. 'pdf'."),
+    },
+    async (params) => {
+      const wire: Record<string, unknown> = {
+        q: params.q,
+        num: params.num,
+        start: params.start,
+        gl: params.gl,
+        hl: params.hl,
+        lr: params.lr,
+        cr: params.cr,
+        safe: params.safe,
+        dateRestrict: params.date_restrict,
+        siteSearch: params.site_search,
+        siteSearchFilter: params.site_search_filter,
+        exactTerms: params.exact_terms,
+        excludeTerms: params.exclude_terms,
+        orTerms: params.or_terms,
+        fileType: params.file_type,
+      };
+      for (const k of Object.keys(wire)) if (wire[k] === undefined) delete wire[k];
+      try {
+        const data = await getClient().post("/api/v1/google/customsearch", wire);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
+
+  server.tool(
     "google_ai_mode",
     `Google AI Mode: synthesized answer with cited sources. 1 credit.`,
     {
