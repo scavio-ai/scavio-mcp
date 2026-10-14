@@ -23,7 +23,7 @@ const SHAPE =
 export function registerChatgptTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "chatgpt_prompt",
-    `Ask ChatGPT a prompt and get the answer it gives a user: the full Markdown answer, every page it cites (url, title, publisher, date), the web searches it ran, and the products it recommended. Use for AI visibility and brand monitoring: what does ChatGPT recommend for "best CRM for agencies", is a brand mentioned, which competitors and which pages it cites. ${SHAPE} Each call is a fresh answer; takes 10-40s. 1 credit; failed prompts are free.`,
+    `Ask ChatGPT a prompt and get the answer it gives a user: the full Markdown answer, every page it cites (url, title, publisher, date), the web searches it ran, and the products it recommended. Use for AI visibility and brand monitoring: what does ChatGPT recommend for "best CRM for agencies", is a brand mentioned, which competitors and which pages it cites. ${SHAPE} Each call is a fresh answer; takes 10-40s. 2 credits; failed prompts are free.`,
     {
       prompt: z.string().min(1).max(1024)
         .describe("The prompt, up to 1024 characters. Phrase it the way a buyer would ask."),

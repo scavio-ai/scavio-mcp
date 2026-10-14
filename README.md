@@ -382,7 +382,7 @@ For AI visibility and brand monitoring: ask what a buyer would ask ("best CRM fo
 agencies") and see whether a brand is recommended, which competitors are, and which pages
 the answer cites. Both tools return the same shape (`answer.markdown`, `sources[]`,
 `search_queries[]`, `shopping[]`), so comparing assistants needs one parser. Every call is a
-fresh answer and takes 10-40 seconds. ChatGPT costs 1 credit and Gemini 5 credits per answered
+fresh answer and takes 10-40 seconds. ChatGPT costs 2 credits and Gemini 5 credits per answered
 prompt; failed prompts are free.
 Opt-in: add `chatgpt` and `gemini` to `SCAVIO_PLATFORMS` (e.g. `default,chatgpt,gemini`).
 Docs: [ChatGPT](https://scavio.dev/docs/chatgpt-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme),
