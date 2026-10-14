@@ -4,6 +4,7 @@ import { env } from "../lib/env.js";
 
 import { registerExtractTool } from "./extract.js";
 import { registerGoogleTools } from "./google.js";
+import { registerChatgptTools, registerGeminiTools } from "./ai-chat.js";
 import { registerYoutubeTools } from "./youtube.js";
 import { registerTiktokTools } from "./tiktok.js";
 import { registerInstagramTools } from "./instagram.js";
@@ -61,6 +62,9 @@ const PLATFORMS: Record<string, RegisterFn> = {
   extract: registerExtractTool,
   // Search
   google: registerGoogleTools,
+  // AI assistants
+  chatgpt: registerChatgptTools,
+  gemini: registerGeminiTools,
   // Social and video
   youtube: registerYoutubeTools,
   tiktok: registerTiktokTools,
@@ -113,13 +117,13 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
 /**
  * What registers when SCAVIO_PLATFORMS is unset.
  *
- * Registering everything is not an option any more. The full surface is 264
- * tools, which serialises to 250KB of tools/list (measured with
- * `npm run toolslist`, not estimated) — roughly 63k tokens pushed into the
+ * Registering everything is not an option any more. The full surface is 266
+ * tools, which serialises to 253KB of tools/list (measured with
+ * `npm run toolslist`, not estimated) — roughly 64k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 142
  * tools, 112KB (0.20.0: TikTok, YouTube, Reddit and X gained 19 tools; 0.21.0:
- * Extract gained map, crawl and batch, 7 tools; 0.22.0: Instagram gained 8; 0.23.0: google_custom_search).
+ * Extract gained map, crawl and batch, 7 tools; 0.22.0: Instagram gained 8; 0.23.0: google_custom_search; 0.24.0 added the opt-in chatgpt and gemini platforms).
  *
  * The default is therefore exactly what 0.12.x registered, plus extract:
  * upgrading must never silently remove a tool someone already depends on. A
@@ -173,7 +177,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (264 tools)
+ *   all      — every platform (266 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -232,6 +236,7 @@ const TITLE_WORDS: Record<string, string> = {
   g2: "G2",
   ai: "AI",
   url: "URL",
+  chatgpt: "ChatGPT",
 };
 
 /** `get_tiktok_user_posts` -> `Get TikTok User Posts`. */
@@ -268,7 +273,7 @@ const ANNOTATION_OVERRIDES: Record<string, { readOnlyHint?: boolean; destructive
 
 /**
  * Wrap the server so every tool() call is annotated at registration, instead
- * of editing 264 call sites. A tool added later picks this up automatically.
+ * of editing 266 call sites. A tool added later picks this up automatically.
  */
 function annotating(server: McpServer): McpServer {
   return new Proxy(server, {

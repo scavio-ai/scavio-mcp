@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 264 tools across 36 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 266 tools across 38 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 264 tools puts 250KB of tool definitions — roughly 63k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 266 tools puts 253KB of tool definitions — roughly 64k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 264 tools. Loading all of them costs 250KB of `tools/list` —
-roughly 63k tokens of context in every session before the user has said anything,
+Scavio exposes 266 tools. Loading all of them costs 253KB of `tools/list` —
+roughly 64k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -218,9 +218,10 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **264 tools, 250KB** |
+| `all` | every platform — **266 tools, 253KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
+| `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
 | `none` | no platform tools, only `get_usage` |
 
 Keys are matched case- and punctuation-insensitively, so `meta-ads`, `metaads`
@@ -230,7 +231,7 @@ is logged to stderr and skipped rather than failing the server.
 `get_usage` always registers — it is free, and it is what every install guide
 tells you to call to check the server works.
 
-**Platform keys:** `extract`, `google`, `youtube`, `tiktok`, `instagram`,
+**Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
 `target`, `homedepot`, `costco`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
@@ -369,6 +370,22 @@ pagination: the whole page comes back in one call.
 | `google_news` | News results by query, topic, story, or publication |
 | `google_trends` | Interest-over-time and related queries |
 | `google_trending` | Trending searches |
+
+### [ChatGPT and Gemini](https://scavio.dev/docs/chatgpt-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+| Tool | Description |
+|------|-------------|
+| `chatgpt_prompt` | Ask ChatGPT a prompt: the full Markdown answer, every cited page (title, publisher, date), the web searches it ran and the products it recommended |
+| `gemini_prompt` | Ask Google Gemini a prompt: the full Markdown answer, the URLs it cites and the products it recommended |
+
+For AI visibility and brand monitoring: ask what a buyer would ask ("best CRM for small
+agencies") and see whether a brand is recommended, which competitors are, and which pages
+the answer cites. Both tools return the same shape (`answer.markdown`, `sources[]`,
+`search_queries[]`, `shopping[]`), so comparing assistants needs one parser. Every call is a
+fresh answer and takes 10-40 seconds. 5 credits per answered prompt; failed prompts are free.
+Opt-in: add `chatgpt` and `gemini` to `SCAVIO_PLATFORMS` (e.g. `default,chatgpt,gemini`).
+Docs: [ChatGPT](https://scavio.dev/docs/chatgpt-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme),
+[Gemini](https://scavio.dev/docs/gemini-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 ### [YouTube Data API](https://scavio.dev/docs/youtube-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
