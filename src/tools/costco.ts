@@ -81,7 +81,7 @@ export function registerCostcoTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "search_costco",
-    `Search Costco products by keyword or item number: online price, original price, rating, member-only and stock flags, promotions, facets. Pass warehouse_id to add one warehouse's in-store price and stock per result. 1 credit/page.`,
+    `Search Costco products by keyword or item number: online price, original price, rating, member-only and stock flags, promotions, facets. Pass warehouse_id to add one warehouse's in-store price and stock per result. 2 credits/page for us, 1 elsewhere.`,
     {
       query: z.string().min(1).max(200)
         .describe("Keywords or a Costco item number, e.g. 'olive oil'."),
@@ -93,7 +93,7 @@ export function registerCostcoTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_costco_category",
-    `List products in a Costco category, same shape, filters and per-warehouse pricing as search_costco. Get slugs from get_costco_categories. 1 credit/page.`,
+    `List products in a Costco category, same shape, filters and per-warehouse pricing as search_costco. Get slugs from get_costco_categories. 2 credits/page for us, 1 for ca.`,
     {
       category: z.string().min(1).max(200)
         .describe("Category slug, e.g. 'televisions', or a costco.com category URL."),
@@ -215,7 +215,7 @@ export function registerCostcoTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_costco_deals",
-    `List Costco deal feeds: new, while_supplies_last, treasure_hunt, member_favorites, online_only, on_sale. Same filters and per-warehouse pricing as search_costco. 1 credit/page.`,
+    `List Costco deal feeds: new, while_supplies_last, treasure_hunt, member_favorites, online_only, on_sale. Same filters and per-warehouse pricing as search_costco. 2 credits/page for us, 1 for ca.`,
     {
       type: z.enum(["new", "while_supplies_last", "treasure_hunt", "member_favorites", "online_only", "on_sale"])
         .describe("Deal feed, e.g. 'while_supplies_last'."),
@@ -227,7 +227,7 @@ export function registerCostcoTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_costco_clearance",
-    `Find Costco clearance and markdown items at one warehouse by scanning a query or category: .97 clearance and .00/.88 manager markdown by default, .49/.79/.89 special buy on request. Price codes are the member-community decode; covers items Costco lists online only. 1 credit (up to 5 pages).`,
+    `Find Costco clearance and markdown items at one warehouse by scanning a query or category: .97 clearance and .00/.88 manager markdown by default, .49/.79/.89 special buy on request. Price codes are the member-community decode; covers items Costco lists online only. 2 credits for us (up to 5 pages), 1 for ca.`,
     {
       warehouse_id: warehouseId(),
       query: z.string().min(1).max(200).optional()

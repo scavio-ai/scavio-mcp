@@ -3,7 +3,7 @@
   "name": "io.github.scavio-ai/scavio-mcp",
   "title": "Scavio",
   "description": "Structured web data from 38 platforms: Google, ChatGPT, Gemini, YouTube, Amazon, Reddit, TikTok",
-  "version": "0.24.2",
+  "version": "0.24.3",
   "repository": {
     "url": "https://github.com/scavio-ai/scavio-mcp",
     "source": "github"
@@ -12,7 +12,7 @@
     {
       "registryType": "npm",
       "identifier": "@scavio/mcp-server",
-      "version": "0.24.2",
+      "version": "0.24.3",
       "transport": {
         "type": "stdio"
       },
