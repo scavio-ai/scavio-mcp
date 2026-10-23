@@ -1,6 +1,6 @@
 # Scavio MCP Server - LLM Installation Guide
 
-Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software and business reviews, ad libraries and company filings. 266 tools across 38 platforms plus Extract (single pages, site maps, crawls and batches), one API key.
+Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software and business reviews, ad libraries and company filings. 267 tools across 38 platforms plus Extract (single pages, site maps, crawls and batches), one API key.
 
 ## Prerequisites
 
@@ -11,11 +11,11 @@ Ask the user for their API key before configuring. Never invent or reuse a place
 
 ## Important: only a subset of tools loads by default
 
-The server exposes 266 tools. Registering all of them writes 253KB into `tools/list`, which is roughly 64k tokens of context in every session and more tools than some clients accept. So the server registers a default set (142 tools, 112KB) and gates the rest behind `SCAVIO_PLATFORMS`.
+The server exposes 267 tools. Registering all of them writes 254KB into `tools/list`, which is roughly 64k tokens of context in every session and more tools than some clients accept. So the server registers a default set (142 tools, 112KB) and gates the rest behind `SCAVIO_PLATFORMS`.
 
 **Default (env var unset):** `extract`, `google`, `youtube`, `amazon`, `walmart`, `reddit`, `tiktok`, `tiktok-shop`, `instagram`, `x`, `linkedin` - 142 tools including `get_usage`. This is the platform set 0.12.x shipped plus Extract, so upgrading never removes a tool.
 
-**To add platforms**, set `SCAVIO_PLATFORMS` to a comma-separated list of platform keys. `default` expands to the set above, so `SCAVIO_PLATFORMS=default,zillow,redfin` is additive. `SCAVIO_PLATFORMS=all` registers all 266 tools. `SCAVIO_PLATFORMS=none` registers only `get_usage`.
+**To add platforms**, set `SCAVIO_PLATFORMS` to a comma-separated list of platform keys. `default` expands to the set above, so `SCAVIO_PLATFORMS=default,zillow,redfin` is additive. `SCAVIO_PLATFORMS=all` registers all 267 tools. `SCAVIO_PLATFORMS=none` registers only `get_usage`.
 
 Ask the user which platforms they actually need, and set only those. Do not set `all` unless the user asks for it - it is the configuration that causes context bloat and client tool-limit errors.
 

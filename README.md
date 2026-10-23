@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 266 tools across 38 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 267 tools across 38 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 266 tools puts 253KB of tool definitions — roughly 64k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 267 tools puts 254KB of tool definitions — roughly 64k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 266 tools. Loading all of them costs 253KB of `tools/list` —
+Scavio exposes 267 tools. Loading all of them costs 254KB of `tools/list` —
 roughly 64k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **266 tools, 253KB** |
+| `all` | every platform — **267 tools, 254KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -675,8 +675,9 @@ Kuaishou is priced per endpoint, not at a flat rate: `get_kuaishou_profile` and 
 | `get_target_category` | Products in a category, same shape as search plus the breadcrumb |
 | `get_target_product` | Product details by TCIN: price, images, specifications, variants, fulfillment |
 | `get_target_reviews` | Reviews with the rating breakdown, per-attribute averages and guest photos |
+| `get_target_availability` | In-store stock at every Target near a ZIP: units, in-store, pickup, curbside and ship-to-store status, distance, address, hours |
 
-1 credit per call. `get_target_product` and `get_target_reviews` are single-shot; search and category page with `page` + `count`.
+1 credit per call. `get_target_product`, `get_target_reviews` and `get_target_availability` are single-shot; search and category page with `page` + `count`. `store_id` on search, category, product and reviews sets the store for prices only; `get_target_availability` is the store-stock tool.
 
 ### [Home Depot](https://scavio.dev/docs/home-depot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 

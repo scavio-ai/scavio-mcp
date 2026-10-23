@@ -18,7 +18,7 @@ const SORT_DESCRIPTION =
   "Sort order. Upstream default is 'relevance'.";
 
 const storeIdField = z.string().optional()
-  .describe("Target store id for prices/availability. Default '3991'.");
+  .describe("Target store id for prices. Default '3991'. For in-store stock use get_target_availability.");
 
 export function registerTargetTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
@@ -100,6 +100,29 @@ export function registerTargetTools(server: McpServer, getClient: () => ScavioCl
     async (params) => {
       try {
         const data = await getClient().post("/api/v1/target/reviews", params);
+        return trimResponse(data);
+      } catch (err) {
+        return handleApiError(err);
+      }
+    },
+  );
+
+  server.tool(
+    "get_target_availability",
+    `Target.com, the US retailer: in-store stock for one product at every Target store near a ZIP - units, in-store/pickup/curbside/ship-to-store status, distance, address, hours. Max 20 stores. 1 credit.`,
+    {
+      tcin: z.string().min(1)
+        .describe("TCIN, e.g. '85978609'."),
+      zip: z.string().regex(/^\d{5}$/, "zip must be a 5-digit US ZIP code")
+        .describe("5-digit US ZIP to search around, e.g. '79407'."),
+      radius: z.number().int().min(1).max(100).optional()
+        .describe("Radius in miles, 1-100. Upstream default 25."),
+      store_id: z.string().regex(/^\d+$/).optional()
+        .describe("Return only this store id; must be within radius."),
+    },
+    async (params) => {
+      try {
+        const data = await getClient().post("/api/v1/target/availability", params);
         return trimResponse(data);
       } catch (err) {
         return handleApiError(err);
