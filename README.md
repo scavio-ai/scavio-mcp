@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 267 tools across 38 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 272 tools across 40 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 267 tools puts 254KB of tool definitions — roughly 64k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 272 tools puts ~260KB of tool definitions — roughly 65k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 267 tools. Loading all of them costs 254KB of `tools/list` —
+Scavio exposes 272 tools. Loading all of them costs ~260KB of `tools/list` —
 roughly 64k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **267 tools, 254KB** |
+| `all` | every platform — **272 tools, ~260KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -723,6 +723,27 @@ decode (.97 clearance, .00/.88 manager markdown; .49/.79/.89 special buy on requ
 not something Costco publishes, and only items Costco lists online are covered.
 `get_costco_coupons` returns the first 50 offers of a ~200-offer book by default; pass
 `limit` for more.
+
+### HEB
+
+| Tool | Description |
+|------|-------------|
+| `search_heb` | Search HEB grocery products: price (cents), sale status, unit price, size, UPC, stock, EBT/SNAP, aisle location |
+| `get_heb_product` | Full detail: nutrition facts, ingredients, images, similar products, coupons, EBT/SNAP, breadcrumbs |
+| `get_heb_stores` | Store locator by ZIP or city: address, hours, pharmacy, fulfillment channels, distance |
+
+2 credits per call. HEB is a Texas-based grocery chain. Pass `product_url` (from
+`search_heb`) or `slug` + `product_id` for product detail.
+
+### Kroger
+
+| Tool | Description |
+|------|-------------|
+| `search_kroger` | Search Kroger grocery products: price (cents), promo/n-for deals, unit price, UPC, stock, SNAP, dietary info, rating |
+| `get_kroger_product` | Full detail: nutrition with allergens/ingredients, rating distribution, store aisle, dietary flags, SNAP, dimensions |
+
+2 credits per call. Kroger operates Kroger, Ralphs, Fred Meyer, Harris Teeter, King
+Soopers, Fry's and other banners. Pass `product_url` (from `search_kroger`) or `upc`.
 
 ### [Mercado Libre](https://scavio.dev/docs/mercadolibre-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 

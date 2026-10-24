@@ -19,6 +19,8 @@ import { registerEbayTools } from "./ebay.js";
 import { registerTargetTools } from "./target.js";
 import { registerHomeDepotTools } from "./homedepot.js";
 import { registerCostcoTools } from "./costco.js";
+import { registerHebTools } from "./heb.js";
+import { registerKrogerTools } from "./kroger.js";
 import { registerMercadoLibreTools } from "./mercadolibre.js";
 import { registerTiktokShopTools } from "./tiktok-shop.js";
 import { registerBookingTools } from "./booking.js";
@@ -81,6 +83,8 @@ const PLATFORMS: Record<string, RegisterFn> = {
   target: registerTargetTools,
   homedepot: registerHomeDepotTools,
   costco: registerCostcoTools,
+  heb: registerHebTools,
+  kroger: registerKrogerTools,
   mercadolibre: registerMercadoLibreTools,
   "tiktok-shop": registerTiktokShopTools,
   // Travel and local
@@ -232,6 +236,7 @@ const TITLE_WORDS: Record<string, string> = {
   youtube: "YouTube",
   linkedin: "LinkedIn",
   ebay: "eBay",
+  heb: "HEB",
   sec: "SEC",
   g2: "G2",
   ai: "AI",
