@@ -21,6 +21,7 @@ import { registerHomeDepotTools } from "./homedepot.js";
 import { registerCostcoTools } from "./costco.js";
 import { registerHebTools } from "./heb.js";
 import { registerKrogerTools } from "./kroger.js";
+import { registerDecathlonTools } from "./decathlon.js";
 import { registerMercadoLibreTools } from "./mercadolibre.js";
 import { registerTiktokShopTools } from "./tiktok-shop.js";
 import { registerBookingTools } from "./booking.js";
@@ -85,6 +86,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   costco: registerCostcoTools,
   heb: registerHebTools,
   kroger: registerKrogerTools,
+  decathlon: registerDecathlonTools,
   mercadolibre: registerMercadoLibreTools,
   "tiktok-shop": registerTiktokShopTools,
   // Travel and local
