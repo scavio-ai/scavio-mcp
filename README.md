@@ -733,7 +733,11 @@ not something Costco publishes, and only items Costco lists online are covered.
 | `get_heb_stores` | Store locator by ZIP or city: address, hours, pharmacy, fulfillment channels, distance |
 
 2 credits per call. HEB is a Texas-based grocery chain. Pass `product_url` (from
-`search_heb`) or `slug` + `product_id` for product detail.
+`search_heb`) or `slug` + `product_id` for product detail. Pass `store_id` (the
+`store_number` from `get_heb_stores`, e.g. `"441"`) to `search_heb` or
+`get_heb_product` for that store's prices, stock, aisle location and assortment;
+the store used is echoed in `data.store`, and `product_id` alone is enough with a
+`store_id`. US only.
 
 ### Kroger
 
