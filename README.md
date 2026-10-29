@@ -747,7 +747,7 @@ the store used is echoed in `data.store`, and `product_id` alone is enough with 
 | `get_totalwine_product` | One product at one store: price, units in stock, aisle, bay, shelf, last restock date, ABV, taste profile |
 | `get_totalwine_stores` | Stores near a ZIP or city: store_id, address, phone, coordinates, distance |
 
-2 credits per call. Prices and stock are per store, so `store_id` (from
+10 credits per call. Prices and stock are per store, so `store_id` (from
 `get_totalwine_stores`, e.g. `"503"`) is required on search and product. When a
 store carries none of the matches, `products` is empty and `searched_all_stores`
 is true.
@@ -760,7 +760,7 @@ is true.
 | `get_specs_product` | Every store's price and stock for one product in `store_prices` (about 200 stores), plus the online price and details |
 | `get_specs_stores` | Stores in a Texas region: store_id, address, phone, coordinates, hours |
 
-1 credit per call. Pass the `slug` from `search_specs` to `get_specs_product`;
+5 credits per call. Pass the `slug` from `search_specs` to `get_specs_product`;
 add `store_id` (from `get_specs_stores`, e.g. `"169"`) to put that store's price
 at the top.
 
