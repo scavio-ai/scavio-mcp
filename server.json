@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.scavio-ai/scavio-mcp",
   "title": "Scavio",
-  "description": "Structured web data from 38 platforms: Google, ChatGPT, Gemini, YouTube, Amazon, Reddit, TikTok",
+  "description": "Structured web data from 42 platforms: Google, ChatGPT, Gemini, YouTube, Amazon, Reddit, TikTok",
   "version": "0.25.0",
   "repository": {
     "url": "https://github.com/scavio-ai/scavio-mcp",
