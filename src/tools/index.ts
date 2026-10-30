@@ -22,7 +22,6 @@ import { registerCostcoTools } from "./costco.js";
 import { registerHebTools } from "./heb.js";
 import { registerKrogerTools } from "./kroger.js";
 import { registerDecathlonTools } from "./decathlon.js";
-import { registerTotalWineTools } from "./totalwine.js";
 import { registerSpecsTools } from "./specs.js";
 import { registerMercadoLibreTools } from "./mercadolibre.js";
 import { registerTiktokShopTools } from "./tiktok-shop.js";
@@ -89,7 +88,6 @@ const PLATFORMS: Record<string, RegisterFn> = {
   heb: registerHebTools,
   kroger: registerKrogerTools,
   decathlon: registerDecathlonTools,
-  totalwine: registerTotalWineTools,
   specs: registerSpecsTools,
   mercadolibre: registerMercadoLibreTools,
   "tiktok-shop": registerTiktokShopTools,
