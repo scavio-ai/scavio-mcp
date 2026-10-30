@@ -904,7 +904,7 @@ address's past sales. A removed listing or an unknown id is a billed 404.
 | `get_glassdoor_reviews` | Up to three full reviews with per-axis scores and employer response, plus complete rating statistics |
 | `get_glassdoor_salaries` | Salaries by job title: base-pay and total-pay percentiles P10-P90, sample counts, pay period |
 
-1 credit per call. Start with `resolve_glassdoor_company` for the `employer_id`. Only `get_glassdoor_salaries` paginates (10 job titles per page; `page_count` is how many exist). `get_glassdoor_reviews` returns up to three full reviews plus complete rating statistics - it is not a paginated review feed.
+2 credits per call. Start with `resolve_glassdoor_company` for the `employer_id`. Only `get_glassdoor_salaries` paginates (10 job titles per page; `page_count` is how many exist). `get_glassdoor_reviews` returns up to three full reviews plus complete rating statistics - it is not a paginated review feed.
 
 ### [Apple App Store](https://scavio.dev/docs/app-store-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 

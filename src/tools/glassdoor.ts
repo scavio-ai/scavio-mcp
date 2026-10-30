@@ -16,7 +16,7 @@ const companyField = z.string().min(1).max(200).optional()
 export function registerGlassdoorTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "resolve_glassdoor_company",
-    `Resolve a company name to a Glassdoor employer_id. Start here. Slow (seconds-minutes), retry on 502. 1 credit.`,
+    `Resolve a company name to a Glassdoor employer_id. Start here. Retry on 502. 2 credits.`,
     {
       query: z.string().min(1).max(120)
         .describe("Company name, e.g. 'Nike'."),
@@ -33,7 +33,7 @@ export function registerGlassdoorTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_glassdoor_company",
-    `Get Glassdoor employer profile with ratings, reviews, and reviews_url/salaries_url for chaining. employer_id or url required. Slow; retry on 502. 1 credit.`,
+    `Get Glassdoor employer profile with ratings, reviews, and reviews_url/salaries_url for chaining. employer_id or url required. Retry on 502. 2 credits.`,
     {
       employer_id: employerIdField,
       company: companyField,
@@ -52,7 +52,7 @@ export function registerGlassdoorTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_glassdoor_reviews",
-    `Get Glassdoor reviews (max 3 per call, login wall). No pagination. Use category/employment_status to shift window. Pass reviews_url from get_glassdoor_company as url to skip a fetch. Slow (~75s). 1 credit.`,
+    `Get Glassdoor reviews (max 3 per call, login wall). No pagination. Use category/employment_status to shift window. Pass reviews_url from get_glassdoor_company as url to skip a fetch. 2 credits.`,
     {
       employer_id: employerIdField,
       company: companyField,
@@ -75,7 +75,7 @@ export function registerGlassdoorTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_glassdoor_salaries",
-    `Get Glassdoor salary estimates by job title (P10-P90 percentiles). 10 titles/page. Pass salaries_url from get_glassdoor_company to skip a fetch. Slow (~41s). 1 credit/page.`,
+    `Get Glassdoor salary estimates by job title (P10-P90 percentiles). 10 titles/page. Pass salaries_url from get_glassdoor_company to skip a fetch. 2 credits/page.`,
     {
       employer_id: employerIdField,
       company: companyField,
