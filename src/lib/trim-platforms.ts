@@ -176,7 +176,7 @@ const IG_MEDIA_KEEP = [
   "id", "pk", "code", "shortcode", "media_type", "product_type", "is_video", "taken_at",
   "taken_at_date", "expiring_at", "caption", "caption_text", "accessibility_caption", "title",
   "like_count", "comment_count", "play_count", "ig_play_count", "view_count", "video_view_count",
-  "share_count", "reshare_count", "save_count", "video_duration", "is_paid_partnership", "is_pinned",
+  "share_count", "reshare_count", "repost_count", "media_repost_count", "save_count", "video_duration", "is_paid_partnership", "is_pinned",
   "user", "owner", "coauthor_producers", "usertags", "tagged_users", "sponsor_tags", "location",
   "thumbnail_url", "display_uri", "display_url", "video_url", "image_versions2", "image_versions",
   "video_versions", "carousel_media", "carousel_media_count",
@@ -184,8 +184,18 @@ const IG_MEDIA_KEEP = [
 
 const IG_USER_KEEP = ["pk", "id", "username", "full_name", "is_verified", "is_private", "profile_pic_url", "follower_count"] as const;
 
+// The post endpoint's cheap tier nests shares, reposts and saves under
+// `metrics` and nowhere else, so they are lifted before the pick drops them.
+const IG_METRICS_HOIST = ["share_count", "repost_count", "save_count", "view_count"] as const;
+
 function instagramMedia(o: JsonObject): JsonObject {
   const out = pick(o, IG_MEDIA_KEEP);
+  if (isObj(o.metrics)) {
+    for (const k of IG_METRICS_HOIST) {
+      const v = o.metrics[k];
+      if (out[k] === undefined && v !== undefined && v !== null) out[k] = v;
+    }
+  }
   if (isObj(out.caption)) out.caption = pick(out.caption, ["text", "created_at"]);
   if (isObj(out.location)) out.location = pick(out.location, ["pk", "name", "short_name", "city", "address", "lat", "lng"]);
   // One display image and one video URL is enough. When the flat

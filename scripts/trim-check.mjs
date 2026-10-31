@@ -204,6 +204,17 @@ check("instagram: carousel child without flat URLs keeps one image candidate and
   assert.deepEqual(out.video_versions, [{ url: "v1", width: 720 }]);
 });
 
+check("instagram post: shares, reposts and saves lifted out of metrics; nulls and top-level values win", () => {
+  const item = { id: "1", pk: "1", code: "Df", media_type: 2, like_count: 12341, play_count: 2166203, metrics: { share_count: 119, repost_count: 133, save_count: 192, view_count: null, like_count: 1 } };
+  const out = shapeResponse({ data: { items: [item] } }, { platform: "instagram" }).data.items[0];
+  assert.equal(out.share_count, 119);
+  assert.equal(out.repost_count, 133);
+  assert.equal(out.save_count, 192);
+  assert.equal(out.like_count, 12341);
+  assert.equal("view_count" in out, false);
+  assert.equal("metrics" in out, false);
+});
+
 // ---------------------------------------------------------------- generic
 
 check("generic: data: URI thumbnails dropped, remote URLs kept", () => {
