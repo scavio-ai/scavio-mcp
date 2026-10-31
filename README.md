@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 277 tools across 41 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 298 tools across 45 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 277 tools puts ~260KB of tool definitions — roughly 65k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 298 tools puts ~287KB of tool definitions — roughly 72k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 277 tools. Loading all of them costs ~260KB of `tools/list` —
-roughly 64k tokens of context in every session before the user has said anything,
+Scavio exposes 298 tools. Loading all of them costs ~287KB of `tools/list` —
+roughly 72k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **277 tools, ~265KB** |
+| `all` | every platform — **298 tools, ~287KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -750,6 +750,66 @@ the store used is echoed in `data.store`, and `product_id` alone is enough with 
 5 credits per call. Pass the `slug` from `search_specs` to `get_specs_product`;
 add `store_id` (from `get_specs_stores`, e.g. `"169"`) to put that store's price
 at the top.
+
+### Lowe's
+
+| Tool | Description |
+|------|-------------|
+| `search_lowes` | Search Lowe's at one store by keyword or category: that store's price, was-price and savings, stock quantity, pickup/delivery/parcel availability, rating; `on_sale` for the store's deals |
+| `get_lowes_product` | One item at one store: price, on-hand stock and lead times, stock at nearby stores, aisle and bay, specifications, UPC, dimensions |
+| `get_lowes_stores` | Stores near a ZIP: store_id, address, phone, coordinates, distance, hours, features |
+| `get_lowes_reviews` | Review bodies, 10 per page: rating, title, text, recommended, helpful votes, verified flag, photos, brand replies, star counts |
+
+2 credits per call; `get_lowes_reviews` is 1. Prices and stock are per store, so
+`store_id` and that store's own `zip` (both from `get_lowes_stores`, e.g. `"0595"`
+and `"28117"`) are required on search and product. Deals are `search_lowes` with
+`on_sale: true`; there is no clearance tool.
+
+### Sam's Club
+
+| Tool | Description |
+|------|-------------|
+| `search_sams_club` | Search Sam's Club: price, was price, savings, unit price, Instant Savings, rating, stock, fulfillment, aisle |
+| `get_sams_club_product` | One item: online and club shelf price, Instant Savings, rating histogram, specifications, per-method stock and aisle; `club_id` for a specific club |
+| `get_sams_club_clubs` | Clubs near a ZIP: club_id, address, coordinates, distance, phone, hours, services |
+| `get_sams_club_savings` | Every Instant Savings item: offer amount, end date, purchase limit, channels |
+| `get_sams_club_category` | Products in a category, same fields as search; clearance is category `1150109` |
+| `get_sams_club_reviews` | Review bodies, 10 per page, with average rating and 1-5 star breakdown |
+
+1 credit per call. Search, savings and category use a nearby club chosen by
+location (echoed in `club`); for one specific club, call `get_sams_club_product`
+with a `club_id` from `get_sams_club_clubs`. `available_quantity` is capped at 8 by
+the site, so 8 means 8 or more.
+
+### Canadian Tire
+
+| Tool | Description |
+|------|-------------|
+| `search_canadian_tire` | Search at one store by keyword or category: price and regular price (CAD), savings, clearance/sale/rebate badges, rating, SKU, stock at the store |
+| `get_canadian_tire_product` | One product at one store: specifications, variants with SKUs, warranty, manuals, store price, stock, pickup and ship-to-home dates |
+| `get_canadian_tire_stores` | Stores near a postal code or coordinates; with `sku`, each store's stock quantity and aisle for it |
+| `get_canadian_tire_availability` | Up to 50 SKUs at one store in one call: price, clearance and sale flags, price valid-until date, stock, aisle |
+| `get_canadian_tire_clearance` | Every clearance item at one store, 100 per page |
+| `get_canadian_tire_deals` | Sale, instant rebate, special buy or Triangle Rewards items at one store |
+
+1 credit per call. `store_id` (from `get_canadian_tire_stores`, e.g. `"600"`) is
+required on search, product, availability, clearance and deals. Prices differ by
+store and province (Quebec prices differ). Rating and review count only, no
+review text.
+
+### Dollar General
+
+| Tool | Description |
+|------|-------------|
+| `search_dollar_general` | Search at one store: price, original price, units on hand at that store, rating, coupons and promotions, UPC |
+| `get_dollar_general_product` | One product by UPC at one store: price, units on hand, nearby stores with stock, description, images, coupons |
+| `get_dollar_general_stores` | Stores near a ZIP or coordinates (up to 25); with `upc`, that product's unit count at every store in one call |
+| `get_dollar_general_deals` | On-sale or clearance items priced and stocked at one store |
+| `get_dollar_general_coupons` | Current digital coupons: value, brand, minimum quantity, start and expiration dates |
+
+1 credit per call. `store_id` (from `get_dollar_general_stores`, e.g. `"14838"`) is
+required on search, product and deals. Clearance items carry the current price
+only, with no was-price. Rating and review count only, no review text.
 
 ### Kroger
 

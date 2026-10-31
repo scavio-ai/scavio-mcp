@@ -23,6 +23,10 @@ import { registerHebTools } from "./heb.js";
 import { registerKrogerTools } from "./kroger.js";
 import { registerDecathlonTools } from "./decathlon.js";
 import { registerSpecsTools } from "./specs.js";
+import { registerLowesTools } from "./lowes.js";
+import { registerSamsClubTools } from "./samsclub.js";
+import { registerCanadianTireTools } from "./canadiantire.js";
+import { registerDollarGeneralTools } from "./dollargeneral.js";
 import { registerMercadoLibreTools } from "./mercadolibre.js";
 import { registerTiktokShopTools } from "./tiktok-shop.js";
 import { registerBookingTools } from "./booking.js";
@@ -89,6 +93,10 @@ const PLATFORMS: Record<string, RegisterFn> = {
   kroger: registerKrogerTools,
   decathlon: registerDecathlonTools,
   specs: registerSpecsTools,
+  lowes: registerLowesTools,
+  samsclub: registerSamsClubTools,
+  canadiantire: registerCanadianTireTools,
+  dollargeneral: registerDollarGeneralTools,
   mercadolibre: registerMercadoLibreTools,
   "tiktok-shop": registerTiktokShopTools,
   // Travel and local
@@ -125,9 +133,9 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
 /**
  * What registers when SCAVIO_PLATFORMS is unset.
  *
- * Registering everything is not an option any more. The full surface is 267
- * tools, which serialises to 254KB of tools/list (measured with
- * `npm run toolslist`, not estimated) — roughly 64k tokens pushed into the
+ * Registering everything is not an option any more. The full surface is 298
+ * tools, which serialises to 287KB of tools/list (measured with
+ * `npm run toolslist`, not estimated) — roughly 72k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 142
  * tools, 112KB (0.20.0: TikTok, YouTube, Reddit and X gained 19 tools; 0.21.0:
@@ -185,7 +193,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (267 tools)
+ *   all      — every platform (298 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -241,6 +249,8 @@ const TITLE_WORDS: Record<string, string> = {
   linkedin: "LinkedIn",
   ebay: "eBay",
   heb: "HEB",
+  lowes: "Lowe's",
+  sams: "Sam's",
   sec: "SEC",
   g2: "G2",
   ai: "AI",
