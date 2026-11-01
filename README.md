@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 298 tools across 45 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 318 tools across 51 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 298 tools puts ~287KB of tool definitions — roughly 72k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 318 tools puts ~311KB of tool definitions — roughly 78k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 298 tools. Loading all of them costs ~287KB of `tools/list` —
-roughly 72k tokens of context in every session before the user has said anything,
+Scavio exposes 318 tools. Loading all of them costs ~311KB of `tools/list` —
+roughly 78k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **298 tools, ~287KB** |
+| `all` | every platform — **318 tools, ~311KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -810,6 +810,81 @@ review text.
 1 credit per call. `store_id` (from `get_dollar_general_stores`, e.g. `"14838"`) is
 required on search, product and deals. Clearance items carry the current price
 only, with no was-price. Rating and review count only, no review text.
+
+### Sephora
+
+| Tool | Description |
+|------|-------------|
+| `search_sephora` | Search sephora.com (US): price, list and sale price, rating, review count, bestseller/new/exclusive flags, category facets; `zip` for same-day eligibility |
+| `get_sephora_category` | Products in a category, same fields as search, with subcategories, parent category and breadcrumbs |
+| `get_sephora_product` | One product: every shade or size with price, stock, ingredients and pickup/same-day eligibility, plus a review summary with pro and con sentiment counts |
+
+1 credit per call. `get_sephora_product` takes a result's `url` (faster) or
+`product_id` (e.g. `"P510799"`). The review summary and sentiment counts come
+with no review text.
+
+### Ulta Beauty
+
+| Tool | Description |
+|------|-------------|
+| `search_ulta` | Search Ulta Beauty: list and sale price, discount, promo text, rating, review count, badge, variant count |
+| `get_ulta_category` | Products in a category (e.g. `/shop/makeup/lips/lipstick`), same fields as search |
+| `get_ulta_product` | One product by URL: price, GTIN, ingredients, every shade or size variant, ship/pickup/same-day eligibility, five most recent reviews |
+| `get_ulta_stores` | One shade or size at the 10 stores nearest a ZIP: in stock or out of stock per store, hours, distance |
+
+1 credit per call. `get_ulta_stores` takes a result's `product_id` and `sku_id`
+plus a ZIP. Ulta publishes in stock / out of stock per store, not unit counts.
+
+### ALDI
+
+| Tool | Description |
+|------|-------------|
+| `search_aldi` | Search at one store: price and was-price, unit price, stock level, aisle location, ALDI-exclusive brand flag, dietary labels |
+| `get_aldi_product` | One product at one store: price, stock, description, ingredients, allergen warnings, images |
+| `get_aldi_stores` | Stores near a ZIP: store_id, address, coordinates, distance |
+
+1 credit per call. Prices are per store and per `service_type`: `instore` (the
+shelf price, default), `pickup` or `delivery` (online prices, often higher).
+Pass `store_id` (from `get_aldi_stores`, e.g. `"151248"`) or a `zip` to use the
+nearest store. ALDI has no product ratings.
+
+### Micro Center
+
+| Tool | Description |
+|------|-------------|
+| `search_micro_center` | Search by keyword or category at one store: price, original price, stock count at that store, open-box count and lowest price, rebate text |
+| `get_micro_center_product` | One product: specs, UPC, reviews, the store's stock and open-box units, and an in-stock yes/no for every store |
+| `get_micro_center_stores` | Every store with its 3-digit store_id, city, state and address |
+
+2 credits per call; `get_micro_center_stores` is 1. Stock is per 3-digit
+`store_id` (e.g. `"131"`, Dallas); without one, the web store `029` (shippable
+items) is used. Counts are capped at 25+ (`quantity_capped`).
+
+### Walgreens
+
+| Tool | Description |
+|------|-------------|
+| `search_walgreens` | Search retail products (no pharmacy): regular, sale and unit price, promotions, coupons, rating, availability, clearance flag |
+| `get_walgreens_product` | One product: SKU, UPC, price, savings, offers, ingredients, warnings, rating, category path, images |
+| `get_walgreens_stores` | Walgreens and Duane Reade stores near a ZIP or coordinates: store number, address, phone, hours |
+| `get_walgreens_stock` | One product's live stock at up to 20 stores in one call: status, unit count, in_stock |
+
+2 credits per call; `get_walgreens_stock` is 4. Prices are national, the same
+at every store. Store numbers (from `get_walgreens_stores`, e.g. `"9438"`) go to
+`get_walgreens_stock` as `store_ids`.
+
+### CVS
+
+| Tool | Description |
+|------|-------------|
+| `search_cvs` | Search front-store products (no pharmacy): regular, sale and unit price, promotions, coupons, rating, and units in store, for pickup and same-day delivery at one store |
+| `get_cvs_product` | One product by URL or id: price, promotion end date, UPC, ingredients, directions, warnings, every variant |
+| `get_cvs_stock` | Units at one store for up to 20 SKUs: in store, pickup, online (same-day units come from search) |
+
+1 credit per call. There is no store locator: the store number is on every
+cvs.com store page (e.g. `"7019"`). Search stock defaults to store 7019 (New
+York). Prices are the same at every store. `get_cvs_product` can take 10-30+
+seconds.
 
 ### Kroger
 
