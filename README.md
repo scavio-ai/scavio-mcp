@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 318 tools across 51 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 351 tools across 58 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 318 tools puts ~311KB of tool definitions — roughly 78k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 351 tools puts ~355KB of tool definitions — roughly 89k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 318 tools. Loading all of them costs ~311KB of `tools/list` —
-roughly 78k tokens of context in every session before the user has said anything,
+Scavio exposes 351 tools. Loading all of them costs ~355KB of `tools/list` —
+roughly 89k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **318 tools, ~311KB** |
+| `all` | every platform — **351 tools, ~355KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -885,6 +885,101 @@ at every store. Store numbers (from `get_walgreens_stores`, e.g. `"9438"`) go to
 cvs.com store page (e.g. `"7019"`). Search stock defaults to store 7019 (New
 York). Prices are the same at every store. `get_cvs_product` can take 10-30+
 seconds.
+
+### Whole Foods Market
+
+| Tool | Description |
+|------|-------------|
+| `search_whole_foods` | Search at one store: regular, sale and Prime member price, sale dates, on-sale and local flags, category and diet facets |
+| `get_whole_foods_category` | One category at one store, same fields as search, with 6 sorts and on-sale and diet filters |
+| `get_whole_foods_deals` | Every sale item at one store, store-wide or in one category |
+| `get_whole_foods_product` | One product by ASIN, URL or slug: ingredients, nutrition facts, diets, plus that store's in-store and online prices as separate blocks |
+| `get_whole_foods_stores` | Stores near a ZIP: store_id, address, phone, distance, in-store and pickup hours |
+| `get_whole_foods_store` | One store: status, phone, Prime eligibility, opening date, address, sales flyer URL |
+| `get_whole_foods_sales_flyer` | One store's current weekly flyer: each promotion's regular, sale and Prime price as printed, dates, ASINs covered |
+
+1 credit per call. Prices are per 5-digit `store_id` (from
+`get_whole_foods_stores`); without one, store `10145` (Austin) is used. Search
+sorts only by relevance, `price_asc` or `price_desc`. No ratings, reviews, UPCs
+or per-store unit stock.
+
+### Harbor Freight
+
+| Tool | Description |
+|------|-------------|
+| `search_harbor_freight` | Search by keyword and/or category: price, sale price and end date, public coupon price, Inside Track member price, compare-at price, rating, facets |
+| `get_harbor_freight_clearance` | Clearance items, optionally narrowed by keyword, category or brand, same fields as search |
+| `get_harbor_freight_product` | One product by item number, id or URL: every price above, UPC, specs, warranty, manuals, variants |
+| `get_harbor_freight_prices` | Current prices for up to 50 item numbers in one call |
+| `get_harbor_freight_stores` | Stores near a ZIP, "City, ST" or coordinates: store_id, address, phone, hours |
+| `get_harbor_freight_availability` | Up to 20 items at chosen or nearest stores: stock status (in_stock, limited, out_of_stock, not_carried) and aisle |
+| `get_harbor_freight_reviews` | Reviews for one item, newest first, with average rating and total count |
+
+1 credit per call. Prices are national. Store stock is a status from a daily
+snapshot (`inventory_updated_at`), not a unit count.
+
+### PetSmart
+
+| Tool | Description |
+|------|-------------|
+| `search_petsmart` | Search products: price, original and sale price, rating, how many stores stock it, pickup and Autoship eligibility; `store_id` lists only what that store has |
+| `get_petsmart_product` | One product with every size/flavor: price, sale price and end date, Autoship first-order and recurring price, ship and pickup options |
+| `get_petsmart_stores` | The 12 stores nearest a ZIP with hours and services; pass a `sku` for each store's unit count |
+| `get_petsmart_store_stock` | Units at one store for up to 20 SKUs, plus a nearby store that has it |
+| `get_petsmart_availability` | Unit counts for up to 20 store and SKU pairs in one call |
+| `get_petsmart_deals` | The Sale section by pet, sale event or keyword, with the current sale events |
+
+1 credit per call. Prices are national. The Sale section also lists points and
+Autoship promotions, so `on_sale` marks the rows whose price is actually
+reduced.
+
+### Petco
+
+| Tool | Description |
+|------|-------------|
+| `search_petco` | Search products: price, list price, Repeat Delivery (autoship) price, rating, fulfillment flags, every variation |
+| `get_petco_category` | Products in a category path, e.g. `dog/dog-food/dry-dog-food`, same fields as search |
+| `get_petco_product` | One product by part number or URL with every variant: cat_entry_id, UPC, prices, first-autoship price, ingredients, guaranteed analysis |
+| `get_petco_stores` | Up to 10 stores nearest a ZIP: store_id, store number, address, hours |
+| `get_petco_store_inventory` | Units on hand at one store for up to 10 products |
+
+1 credit per call. Prices are national. `get_petco_store_inventory` takes
+`cat_entry_id` values (from search or product), not part numbers, and a
+`store_id` from `get_petco_stores` or a ZIP. `get_petco_product` and
+`get_petco_category` can take 10-30 seconds.
+
+### iHerb
+
+| Tool | Description |
+|------|-------------|
+| `search_iherb` | Search by keyword: price, list price, discount, rating, review count, stock, badges, recent sales; brand filter |
+| `get_iherb_product` | One product: UPC, price per serving, supplement facts, expiration date, best-seller rankings, variants |
+| `get_iherb_prices` | Price, discount, stock, rating and review count for up to 50 products in one call |
+| `get_iherb_reviews` | Rating summary: average, star histogram, counts per language, top positive and top critical review |
+
+2 credits per call. US store, USD. iHerb is online only, so there are no store
+tools. `get_iherb_reviews` is a summary, not a full review list.
+
+### Chewy
+
+| Tool | Description |
+|------|-------------|
+| `search_chewy` | Search or browse a category: one-time, Autoship and first-Autoship price, MAP price, per-unit price, rating, stock |
+| `get_chewy_product` | One product by id or URL: every price above, review count and star distribution, GTIN, ingredients, every variant |
+
+10 credits per call. Some broad queries go straight to a category; `redirect`
+then names it. No store data.
+
+### Menards
+
+| Tool | Description |
+|------|-------------|
+| `get_menards_product` | One product by item id or URL: everyday and sale price, mail-in rebates (e.g. 11%), final price after rebates; `store_id` adds stock quantity and aisle |
+| `get_menards_stores` | Stores near a ZIP or a city and state: store_id, address, distance, services |
+
+1 credit per call; `get_menards_product` with `store_id` is 2 credits and can
+take 10-40 seconds. There is no search: pass the item id from a menards.com
+product URL (`p-60893666613.htm`).
 
 ### Kroger
 

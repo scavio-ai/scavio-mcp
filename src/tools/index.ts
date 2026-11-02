@@ -33,6 +33,13 @@ import { registerAldiTools } from "./aldi.js";
 import { registerMicroCenterTools } from "./microcenter.js";
 import { registerWalgreensTools } from "./walgreens.js";
 import { registerCvsTools } from "./cvs.js";
+import { registerWholeFoodsTools } from "./wholefoods.js";
+import { registerHarborFreightTools } from "./harborfreight.js";
+import { registerPetsmartTools } from "./petsmart.js";
+import { registerPetcoTools } from "./petco.js";
+import { registerIherbTools } from "./iherb.js";
+import { registerChewyTools } from "./chewy.js";
+import { registerMenardsTools } from "./menards.js";
 import { registerMercadoLibreTools } from "./mercadolibre.js";
 import { registerTiktokShopTools } from "./tiktok-shop.js";
 import { registerBookingTools } from "./booking.js";
@@ -109,6 +116,13 @@ const PLATFORMS: Record<string, RegisterFn> = {
   microcenter: registerMicroCenterTools,
   walgreens: registerWalgreensTools,
   cvs: registerCvsTools,
+  wholefoods: registerWholeFoodsTools,
+  harborfreight: registerHarborFreightTools,
+  petsmart: registerPetsmartTools,
+  petco: registerPetcoTools,
+  iherb: registerIherbTools,
+  chewy: registerChewyTools,
+  menards: registerMenardsTools,
   mercadolibre: registerMercadoLibreTools,
   "tiktok-shop": registerTiktokShopTools,
   // Travel and local
@@ -145,9 +159,9 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
 /**
  * What registers when SCAVIO_PLATFORMS is unset.
  *
- * Registering everything is not an option any more. The full surface is 318
- * tools, which serialises to 311KB of tools/list (measured with
- * `npm run toolslist`, not estimated) — roughly 78k tokens pushed into the
+ * Registering everything is not an option any more. The full surface is 351
+ * tools, which serialises to 355KB of tools/list (measured with
+ * `npm run toolslist`, not estimated) — roughly 89k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 142
  * tools, 112KB (0.20.0: TikTok, YouTube, Reddit and X gained 19 tools; 0.21.0:
@@ -205,7 +219,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (318 tools)
+ *   all      — every platform (351 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -265,6 +279,8 @@ const TITLE_WORDS: Record<string, string> = {
   sams: "Sam's",
   aldi: "ALDI",
   cvs: "CVS",
+  petsmart: "PetSmart",
+  iherb: "iHerb",
   sec: "SEC",
   g2: "G2",
   ai: "AI",
