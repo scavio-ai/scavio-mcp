@@ -739,6 +739,12 @@ not something Costco publishes, and only items Costco lists online are covered.
 the store used is echoed in `data.store`, and `product_id` alone is enough with a
 `store_id`. US only.
 
+HEB Mexico: pass `country: "mx"` to `search_heb` and `get_heb_product` for
+heb.com.mx. Prices are Mexican peso cents (`10000` = MX$100.00) for HEB Mexico's
+default store, and every row adds `stock` (units on hand), `promotions` (price
+cuts, multi-buys, free gifts, with end dates), `is_sponsored` and the EAN barcode
+in `upc`. Search pages are 20 rows with `total_pages`. `get_heb_stores` is US only.
+
 ### Spec's
 
 | Tool | Description |
