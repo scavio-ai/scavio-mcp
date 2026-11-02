@@ -26,7 +26,7 @@ export function registerCvsTools(server: McpServer, getClient: () => ScavioClien
 
   server.tool(
     "search_cvs",
-    `Search CVS front-store products (no pharmacy). Each result has product_id and sku_id, name, brand, URL, regular, sale and unit price, promotion text, rating, review count, size, image, coupons (ExtraBucks rewards and manufacturer coupons) and stock at one store: units in store, for pickup and for same-day delivery, plus online ship availability. Prices are in dollars and the same at every store. Stock defaults to store 7019 (New York) when store_id is omitted. Includes brand, price-range and rating facets. 1 credit/call.`,
+    `Search CVS front-store products (no pharmacy). Each result has product_id and sku_id, name, brand, URL, regular, sale and unit price, promotion text, rating, review count, size, image, coupons (ExtraBucks rewards and manufacturer coupons) and stock at one store: units in store and for pickup, plus online ship stock (chain-wide). same_day_delivery is always null: CVS does not report it per store. Prices are in dollars and the same at every store. Stock defaults to store 7019 (New York) when store_id is omitted. Includes brand, price-range and rating facets. 1 credit/call.`,
     {
       query: z.string().min(1).max(200)
         .describe("Search keywords, e.g. 'toothpaste', or a CVS item number."),
@@ -54,7 +54,7 @@ export function registerCvsTools(server: McpServer, getClient: () => ScavioClien
 
   server.tool(
     "get_cvs_stock",
-    `Units available at one CVS store for up to 20 SKUs in one call: in_store (on the shelf), pickup (order online, pick up there) and ship (online stock, chain-wide). same_day_delivery is always null here; search returns same-day units. An unknown SKU or store number reads as 0. 1 credit.`,
+    `Units available at one CVS store for up to 20 SKUs in one call: in_store (on the shelf), pickup (order online, pick up there) and ship (online stock, chain-wide). same_day_delivery is always null: CVS does not report it per store. An unknown SKU or store number reads as 0. 1 credit.`,
     {
       sku_ids: z.array(numericId()).min(1).max(20)
         .describe("Up to 20 CVS SKU ids (a search result's sku_id or a product's variants[].sku_id), e.g. ['789787', '949346']."),

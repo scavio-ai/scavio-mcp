@@ -877,9 +877,9 @@ at every store. Store numbers (from `get_walgreens_stores`, e.g. `"9438"`) go to
 
 | Tool | Description |
 |------|-------------|
-| `search_cvs` | Search front-store products (no pharmacy): regular, sale and unit price, promotions, coupons, rating, and units in store, for pickup and same-day delivery at one store |
+| `search_cvs` | Search front-store products (no pharmacy): regular, sale and unit price, promotions, coupons, rating, and units in store and for pickup at one store |
 | `get_cvs_product` | One product by URL or id: price, promotion end date, UPC, ingredients, directions, warnings, every variant |
-| `get_cvs_stock` | Units at one store for up to 20 SKUs: in store, pickup, online (same-day units come from search) |
+| `get_cvs_stock` | Units at one store for up to 20 SKUs: in store, pickup, online |
 
 1 credit per call. There is no store locator: the store number is on every
 cvs.com store page (e.g. `"7019"`). Search stock defaults to store 7019 (New
