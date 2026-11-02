@@ -22,7 +22,7 @@ export function registerMenardsTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "search_menards",
-    `Search menards.com at one store, 40 products a page. Each result has item_id, SKU, name, URL, image, the price ladder (price, everyday_price, sale_price, price_type regular/sale/clearance/minimum_advertised, rebates such as "11% REBATE*", final_price after rebates; price_in_cart true when the rebate shows only in the cart) and that store's stock: stock_quantity, stock_message, not_available_at_store, pickup and delivery flags. Also total_results, total_pages and facets. store_id is required (get one from get_menards_stores); an unknown store number is a 400. Pass an item_id to get_menards_product for specifications and the aisle. 2 credits.`,
+    `Search menards.com at one store, 40 products a page. Each result has item_id, SKU, name, URL, image, the price ladder (price, everyday_price, sale_price, price_type regular/sale/clearance/minimum_advertised, rebates such as "11% REBATE*", final_price after rebates; price_in_cart true when the rebate shows only in the cart) and that store's stock: stock_quantity, stock_message, pickup and delivery flags (not_available_at_store is always null in search; use get_menards_product with store_id). Also total_results, total_pages and facets. store_id is required (get one from get_menards_stores); an unknown store number is a 400. Pass an item_id to get_menards_product for specifications and the aisle. 2 credits.`,
     {
       query: z.string().min(1).max(200).describe("Search keywords, e.g. 'sledge hammer'."),
       store_id: z.string().regex(/^\d{1,5}$/)
