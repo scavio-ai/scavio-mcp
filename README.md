@@ -355,7 +355,7 @@ pagination: the whole page comes back in one call.
 
 | Tool | Description |
 |------|-------------|
-| `search_google` | Web search (v2) with organic results, ads, and AI Overview |
+| `search_google` | Web search (v2) with organic results, ads, and AI Overview; `web_only` + `location` for organic rankings as seen from a city (local rank tracking) |
 | `google_custom_search` | Google results in the Custom Search JSON API format (`items[]`, `searchInformation`, `queries.nextPage`) for code ported from CSE |
 | `google_ai_mode` | AI Mode conversational answer with cited sources |
 | `google_maps_search` | Search Google Maps for local businesses |

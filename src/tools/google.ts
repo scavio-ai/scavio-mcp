@@ -54,7 +54,7 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
       google_domain: z.string().optional()
         .describe("e.g. 'google.co.uk'."),
       location: z.string().optional()
-        .describe("Location name, auto-encoded to UULE."),
+        .describe("Location name, auto-encoded to UULE, e.g. 'Austin,Texas,United States'. Localizes the local pack only; set web_only for organic results ranked for this location."),
       uule: z.string().optional()
         .describe("UULE string, overrides location."),
       lr: z.string().optional()
@@ -71,6 +71,8 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
         .describe("Time window."),
       resolve_ai_overview: z.boolean().optional()
         .describe("Resolve deferred AI Overview (default true)."),
+      web_only: z.boolean().optional()
+        .describe("Google's Web results only: organic_results ranked for location (local rank tracking). No local pack, ads, PAA or AI Overview; call again without it for local_results."),
     },
     async (params) => {
       try {
