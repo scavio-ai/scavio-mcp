@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 351 tools across 58 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 352 tools across 58 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 351 tools puts ~355KB of tool definitions — roughly 89k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 352 tools puts ~358KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,8 +207,8 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 351 tools. Loading all of them costs ~355KB of `tools/list` —
-roughly 89k tokens of context in every session before the user has said anything,
+Scavio exposes 352 tools. Loading all of them costs ~358KB of `tools/list` —
+roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
 measured, not estimated: `npm run toolslist` reproduces them.
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **351 tools, ~355KB** |
+| `all` | every platform — **352 tools, ~358KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -980,12 +980,14 @@ then names it. No store data.
 
 | Tool | Description |
 |------|-------------|
+| `search_menards` | Search one store, 40 per page: price, sale price, rebate, final price and that store's stock count; sort by price or brand, in-stock-today and price filters |
 | `get_menards_product` | One product by item id or URL: everyday and sale price, mail-in rebates (e.g. 11%), final price after rebates; `store_id` adds stock quantity and aisle |
 | `get_menards_stores` | Stores near a ZIP or a city and state: store_id, address, distance, services |
 
-1 credit per call; `get_menards_product` with `store_id` is 2 credits and can
-take 10-40 seconds. There is no search: pass the item id from a menards.com
-product URL (`p-60893666613.htm`).
+`search_menards` is 2 credits and needs a `store_id` from `get_menards_stores`.
+`get_menards_product` is 1 credit, 2 with `store_id` (10-40 seconds); take the
+item id from a search result or a menards.com product URL (`p-60893666613.htm`).
+`get_menards_stores` is 1 credit.
 
 ### Kroger
 
