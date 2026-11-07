@@ -5,12 +5,13 @@ import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
 // Shapes mirror backend/src/routes/nordstrom.ts. Cross-field rules the backend
-// enforces and zod here does not: product and availability take url OR
-// style_id; stores takes exactly one of zip, latitude+longitude or
-// store_numbers. No zod `.default()`: the MCP SDK would post a defaulted field
+// enforces and zod here does not: product, availability and reviews take url
+// OR style_id; stores takes exactly one of zip, latitude+longitude or
+// store_numbers; reviews rejects sort together with search. No zod `.default()`: the MCP SDK would post a defaulted field
 // on every call.
 
 const SORTS = ["relevance", "rating", "price_high", "price_low", "newest", "percent_off"] as const;
+const REVIEW_SORTS = ["most_helpful", "most_recent", "highest_rated", "lowest_rated"] as const;
 
 const LISTING_FIELDS = `Each product has the same fields as a search_nordstrom result: style id, URL, name, brand, image, current price and price range in dollars, original price range, percent off and on-sale flag, rating, review count, badges, a low-inventory flag, marketplace seller and every color. Also returns the total result count, page count, and the filter sidebar: each filter group (Product Type > Clothing, Size > Women's Clothing, Color, Brand, Discount...) with its options and product counts (price buckets carry no count on the site, so theirs are null; groups with more than 100 options, such as Brand, list the 100 with the most products and give the full option_count).`;
 
@@ -31,7 +32,7 @@ export function registerNordstromTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "search_nordstrom",
-    `Search nordstrom.com (US) products, 24 per page, sorted by relevance, rating, price, newest or percent off. Each result has style id, URL, name, brand, image, current price and price range in dollars, original price range, percent off and on-sale flag, rating, review count, badges such as new or new_markdown, a low-inventory flag, whether it is sold by a marketplace seller (and the seller's name), and every color with its color family and image. Also returns the total result count and page count. Use a result's url or style_id with get_nordstrom_product or get_nordstrom_availability. 5 credits/call.`,
+    `Search nordstrom.com (US) products, 24 per page, sorted by relevance, rating, price, newest or percent off. Each result has style id, URL, name, brand, image, current price and price range in dollars, original price range, percent off and on-sale flag, rating, review count, badges such as new or new_markdown, a low-inventory flag, whether it is sold by a marketplace seller (and the seller's name), and every color with its color family and image. Also returns the total result count and page count. Use a result's url or style_id with get_nordstrom_product, get_nordstrom_reviews or get_nordstrom_availability. 5 credits/call.`,
     {
       query: z.string().min(1).max(200)
         .describe("Search keywords."),
@@ -45,7 +46,7 @@ export function registerNordstromTools(server: McpServer, getClient: () => Scavi
 
   server.tool(
     "get_nordstrom_product",
-    `One nordstrom.com (US) product by URL or style id: name, brand, description, feature bullets, fit notes, final-sale flag, current, original and clearance price ranges, percent off, rating, review count, the star histogram, the size-fit distribution (too small to too big), the AI review summary when the site shows one, the most mentioned praised and criticized features with a quote each, breadcrumbs and images. Every color lists its images and every size as a sku with sku id, size, size type, UPC, price, original price, percent off, price type (regular, clearance, promotion), in_stock and the quantity available to ship. in_stock is true when the sku can be shipped or picked up in a store, so a sku held only in a store reads in stock with quantity 0 (get_nordstrom_availability lists its pickup stores). Includes the reviews shown on the product page (up to about 13), with the total review count; each review has title, text, rating, size rating, author, date, helpful votes and verified-purchase flag. An unknown style id is a 404. 5 credits.`,
+    `One nordstrom.com (US) product by URL or style id: name, brand, description, feature bullets, fit notes, final-sale flag, current, original and clearance price ranges, percent off, rating, review count, the star histogram, the size-fit distribution (too small to too big), the AI review summary when the site shows one, the most mentioned praised and criticized features with a quote each, breadcrumbs and images. Every color lists its images and every size as a sku with sku id, size, size type, UPC, price, original price, percent off, price type (regular, clearance, promotion), in_stock and the quantity available to ship. in_stock is true when the sku can be shipped or picked up in a store, so a sku held only in a store reads in stock with quantity 0 (get_nordstrom_availability lists its pickup stores). Includes the reviews shown on the product page (up to about 13), with the total review count; each review has title, text, rating, size rating, author, date, helpful votes and verified-purchase flag (get_nordstrom_reviews pages the full review history). An unknown style id is a 404. 5 credits.`,
     {
       url: z.string().min(1).max(500).optional()
         .describe("nordstrom.com product URL (the `url` of a search result)."),
@@ -121,5 +122,29 @@ export function registerNordstromTools(server: McpServer, getClient: () => Scavi
         .describe("Suggestions to return, 1-20. Defaults to 8. The site may return fewer."),
     },
     post("suggestions"),
+  );
+
+  server.tool(
+    "get_nordstrom_reviews",
+    `Customer reviews of one nordstrom.com (US) product by URL or style id, up to 200 per call (default 60), sorted most helpful (default), most recent, highest rated or lowest rated, optionally filtered to star ratings, verified purchases, reviews with photos, or a text search. Returns the product's review summary (average rating, total reviews, star histogram, size rating 1 runs small to 5 runs big, width rating where the site has one, the most mentioned praised and criticized features with a quote each, and the count of rating-only reviews), the AI review summary when the site shows one, the number of reviews matching the filters (total_results), returned and has_more. Each review has id, title, text, star rating, size rating, author, date, helpful votes, verified-purchase flag, reviewer badges (verified_purchaser, top_250, top_1000), size and color purchased, the reviewer's height, weight, body type and usual sizes when given, secondary ratings (Size, with its scale), the site it was syndicated from (e.g. nordstromrack.com) and photos with thumbnails. Rating-only reviews are included without title or text. Takes 20-60s, up to about 100s at max_reviews 200: use a smaller max_reviews when a quick answer is enough. A product with no reviews returns an empty list; an unknown style id is a 404. 10 credits.`,
+    {
+      url: z.string().min(1).max(500).optional()
+        .describe("nordstrom.com product URL (the `url` of a search, category or brand result)."),
+      style_id: z.string().regex(/^\d{4,10}$/).optional()
+        .describe("Nordstrom style id, used when url is not given."),
+      sort: z.enum(REVIEW_SORTS).optional()
+        .describe("most_helpful (default), most_recent, highest_rated or lowest_rated. Cannot be combined with search: Nordstrom returns review search results in its own order."),
+      stars: z.array(z.number().int().min(1).max(5)).min(1).max(5).optional()
+        .describe("Only reviews with these star ratings, e.g. [1, 2] for the critical ones."),
+      verified_only: z.boolean().optional()
+        .describe("Only reviews from verified purchasers."),
+      with_photos: z.boolean().optional()
+        .describe("Only reviews that include customer photos."),
+      search: z.string().min(1).max(100).optional()
+        .describe("Only reviews mentioning this text (the review search box), 1-100 characters. Results come in Nordstrom's search order, so sort cannot be set with it."),
+      max_reviews: z.number().int().min(1).max(200).optional()
+        .describe("Reviews to return, 1-200. Defaults to 60. Larger values take longer (45-100s for 200)."),
+    },
+    post("reviews"),
   );
 }
