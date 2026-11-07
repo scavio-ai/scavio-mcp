@@ -139,6 +139,12 @@ authApp.all("/authorize", async (c) => {
   const dashboardUrl = new URL(`${env.DASHBOARD_URL}/mcp/authorize`);
   dashboardUrl.searchParams.set("session", sessionId);
   dashboardUrl.searchParams.set("callback", callbackUrl);
+  // Self-reported by the client at registration (Claude, Cursor, Codex...), shown on the consent page.
+  const clientName = String((client as { client_name?: unknown }).client_name ?? "")
+    .replace(/[^\w .()-]/g, "")
+    .trim()
+    .slice(0, 40);
+  if (clientName) dashboardUrl.searchParams.set("client", clientName);
 
   return c.redirect(dashboardUrl.toString(), 302);
 });
