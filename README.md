@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 354 tools across 59 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 359 tools across 59 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 354 tools puts ~361KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 359 tools puts ~369KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 354 tools. Loading all of them costs ~361KB of `tools/list` —
+Scavio exposes 359 tools. Loading all of them costs ~369KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **354 tools, ~361KB** |
+| `all` | every platform — **359 tools, ~369KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -995,11 +995,21 @@ item id from a search result or a menards.com product URL (`p-60893666613.htm`).
 |------|-------------|
 | `search_nordstrom` | Search nordstrom.com (US), 24 per page: price and price range, original price, percent off, on-sale flag, rating, review count, badges, low-inventory flag, marketplace seller, colors; sort by rating, price, newest or percent off |
 | `get_nordstrom_product` | One product by URL or style id: every color and size as a sku with UPC, price, price type and quantity available to ship, star histogram, size-fit distribution, praised and criticized features, and the reviews shown on the product page |
+| `get_nordstrom_category` | Browse a category, sale section (`sale/women`) or new arrivals (`/browse/new`), 24 per page: the same product rows as search plus the category's breadcrumbs, subcategories and filter sidebar with product counts |
+| `get_nordstrom_brand` | A brand page (`/brands/astr-the-label--53360` or a product's `brand_url`), 24 per page: the same product rows as search plus the brand's sub-pages and filter sidebar |
+| `get_nordstrom_stores` | Full-line stores and Nordstrom Local near a ZIP or latitude/longitude (up to 100 miles), or by store number: address, phone, weekly and daily hours, coordinates, pickup and curbside flags, amenities |
+| `get_nordstrom_availability` | Per sku of one product: ship quantity, pickup quantity (chain-wide) and the stores that offer in-store pickup |
+| `get_nordstrom_suggestions` | The nordstrom.com search-box autocomplete for a partial term |
 
-5 credits per call. US site only. `get_nordstrom_product` takes a result's `url`
-or `style_id`; an unknown style id is a 404. Reviews are the 12-13 embedded on
-the product page, with no deeper paging. Quantity is units available to ship
-online; there is no store-level stock.
+5 credits per call; `get_nordstrom_availability` is 10 (the product page plus the
+store lookup). US site only. Product and availability take a result's `url` or
+`style_id`; an unknown style id is a 404. Product reviews are the ones shown on
+the product page (up to about 13) plus the total review count and star
+histogram; there is no deeper review paging. A sku's `quantity` is units
+available to ship, and `in_stock` means it can be shipped or picked up in a
+store, so a sku can read in stock with quantity 0. Availability quantities are
+chain-wide: per store Nordstrom only says whether pickup is available, not how
+many units. A ZIP with no store within range returns an empty list (billed).
 
 ### Kroger
 
