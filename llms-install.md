@@ -1,6 +1,6 @@
 # Scavio MCP Server - LLM Installation Guide
 
-Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software and business reviews, ad libraries and company filings. 360 tools across 59 platforms plus Extract (single pages, site maps, crawls and batches), one API key.
+Scavio is a unified search and data API for AI agents: web search (Google SERP, AI Mode, Maps, Shopping, Flights, Hotels, News, Trends), page extraction for any URL, and structured data across e-commerce, social, travel, real estate, jobs, app stores, software and business reviews, ad libraries and company filings. 368 tools across 60 platforms plus Extract (single pages, site maps, crawls and batches), one API key.
 
 ## Prerequisites
 
@@ -11,15 +11,15 @@ Ask the user for their API key before configuring. Never invent or reuse a place
 
 ## Important: only a subset of tools loads by default
 
-The server exposes 360 tools. Registering all of them writes 372KB into `tools/list`, which is roughly 90k tokens of context in every session and more tools than some clients accept. So the server registers a default set (142 tools, 112KB) and gates the rest behind `SCAVIO_PLATFORMS`.
+The server exposes 368 tools. Registering all of them writes 388KB into `tools/list`, which is roughly 90k tokens of context in every session and more tools than some clients accept. So the server registers a default set (142 tools, 112KB) and gates the rest behind `SCAVIO_PLATFORMS`.
 
 **Default (env var unset):** `extract`, `google`, `youtube`, `amazon`, `walmart`, `reddit`, `tiktok`, `tiktok-shop`, `instagram`, `x`, `linkedin` - 142 tools including `get_usage`. This is the platform set 0.12.x shipped plus Extract, so upgrading never removes a tool.
 
-**To add platforms**, set `SCAVIO_PLATFORMS` to a comma-separated list of platform keys. `default` expands to the set above, so `SCAVIO_PLATFORMS=default,zillow,redfin` is additive. `SCAVIO_PLATFORMS=all` registers all 360 tools. `SCAVIO_PLATFORMS=none` registers only `get_usage`.
+**To add platforms**, set `SCAVIO_PLATFORMS` to a comma-separated list of platform keys. `default` expands to the set above, so `SCAVIO_PLATFORMS=default,zillow,redfin` is additive. `SCAVIO_PLATFORMS=all` registers all 368 tools. `SCAVIO_PLATFORMS=none` registers only `get_usage`.
 
 Ask the user which platforms they actually need, and set only those. Do not set `all` unless the user asks for it - it is the configuration that causes context bloat and client tool-limit errors.
 
-**Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`, `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`, `target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`, `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`, `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
+**Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`, `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`, `target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`, `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`, `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
 Keys are matched case- and punctuation-insensitively (`meta-ads` = `metaads` = `META_ADS`), and `twitter` resolves to `x`. Unknown keys are logged to stderr and skipped, never fatal.
 

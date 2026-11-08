@@ -5,7 +5,7 @@
 
 [Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 360 tools across 59 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 360 tools puts ~372KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 368 tools puts ~388KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 360 tools. Loading all of them costs ~372KB of `tools/list` —
+Scavio exposes 368 tools. Loading all of them costs ~388KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **360 tools, ~372KB** |
+| `all` | every platform — **368 tools, ~388KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1015,6 +1015,34 @@ available to ship, and `in_stock` means it can be shipped or picked up in a
 store, so a sku can read in stock with quantity 0. Availability quantities are
 chain-wide: per store Nordstrom only says whether pickup is available, not how
 many units. A ZIP with no store within range returns an empty list (billed).
+For nordstromrack.com see [Nordstrom Rack](#nordstrom-rack).
+
+### Nordstrom Rack
+
+| Tool | Description |
+|------|-------------|
+| `search_nordstromrack` | Search nordstromrack.com (US), 24 per page: price and price range, compare-at price, percent off, on-sale flag, clearance price range, any promotion on top (`promotion_price_range`, `promotion_percent_off`), rating, review count, badges, low-inventory flag, marketplace seller, colors; sort by rating, price, newest or percent off |
+| `get_nordstromrack_product` | One product by URL or style id: every color and size as a sku with UPC, price, price type and quantity available to ship, clearance and promotion price ranges, star histogram, size-fit distribution, praised and criticized features, and the reviews shown on the product page |
+| `get_nordstromrack_category` | Browse any `/shop` or `/clearance` listing: departments, deals, new arrivals, Clear the Rack (`/clearance`) and flash events (`/shop/flash` lists them, `/shop/flash/event-7` opens one), 24 per page, with breadcrumbs, subcategories and the filter sidebar |
+| `get_nordstromrack_brand` | A brand page (`/brands/adidas` or a product's `brand_url`), 24 per page: the same product rows as search plus the filter sidebar |
+| `get_nordstromrack_stores` | Nordstrom Rack stores near a ZIP or latitude/longitude (up to 100 miles), or by store number: address, phone, weekly and daily hours, coordinates, pickup and curbside flags, amenities |
+| `get_nordstromrack_availability` | Per sku of one product: ship quantity, pickup quantity (chain-wide) and the Rack stores that offer in-store pickup |
+| `get_nordstromrack_suggestions` | The nordstromrack.com search-box autocomplete for a partial term |
+| `get_nordstromrack_reviews` | A product's Rack review history, up to 200 per call: sort by most helpful, most recent, highest or lowest rated; filter by stars, verified purchases, photos or text; plus the rating summary, histogram, size and width rating, praised and criticized features and the AI review summary |
+
+Nordstrom Rack is its own platform key (`nordstromrack`), separate from
+`nordstrom`. 5 credits per call; `get_nordstromrack_availability` is 10 and
+`get_nordstromrack_reviews` is 10. US site only. Category takes Rack paths
+(`/shop/...`, `/clearance/...`, `/shop/flash/event-N`); there is no `/browse`.
+Brand paths have no id (`/brands/adidas`); the nordstrom.com `--<id>` form is a
+404. During Clear the Rack a clearance item can carry an extra percent off on
+top of its clearance price: `promotion_price_range` is the price after it and
+`promotion_percent_off` the extra percent. Rack has its own review pool,
+separate from nordstrom.com's, so the same style can show a different rating
+and review count on each. Reviews take 15-60s, up to about 100s at 200; lower
+`max_reviews` if your client times out long tool calls. Stores and availability
+cover Rack stores only, and availability quantities are chain-wide: per store
+the site only says whether pickup is available, not how many units.
 
 ### Kroger
 
