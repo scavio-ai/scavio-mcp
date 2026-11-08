@@ -5,7 +5,7 @@
 
 [Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 360 tools across 59 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 368 tools puts ~388KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 377 tools puts ~402KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 368 tools. Loading all of them costs ~388KB of `tools/list` —
+Scavio exposes 377 tools. Loading all of them costs ~402KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **368 tools, ~388KB** |
+| `all` | every platform — **377 tools, ~402KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1043,6 +1043,31 @@ and review count on each. Reviews take 15-60s, up to about 100s at 200; lower
 `max_reviews` if your client times out long tool calls. Stores and availability
 cover Rack stores only, and availability quantities are chain-wide: per store
 the site only says whether pickup is available, not how many units.
+
+### Best Buy
+
+| Tool | Description |
+|------|-------------|
+| `search_bestbuy` | Search bestbuy.com (US), 18 organic products per page: SKU, model, price, regular price, savings, on-sale flag, deal badge, condition, rating, review count, seller type; filter by brand, on sale, clearance, open box or a price range; sort by best match, best selling, best discount, price, rating or newest; plus the filter sidebar with counts |
+| `get_bestbuy_product` | One product by SKU or URL: UPC, model, every open-box offer by condition (fair, good, excellent) with its price and savings against new and against the regular price, financing, the full specification table, the AI review summary, features, images and manuals |
+| `get_bestbuy_reviews` | First-party Best Buy reviews, 20 per page, sorted or filtered to one star rating, with the star histogram, recommended percent and the most mentioned pros and cons with mention counts |
+| `get_bestbuy_category` | Browse a category (`abcat...`) or merchandised deals page (`pcmcat...`) by id or URL, 18 per page, with the same filters and sorts as search |
+| `get_bestbuy_deals` | Today's Deal of the Day and the more-deals row, up to 15 products with live prices |
+| `get_bestbuy_stores` | Best Buy stores near a US ZIP, up to 15, with dated opening hours for the next 35 days |
+| `get_bestbuy_availability` | Store pickup status of one SKU at up to 8 stores (nearest a ZIP or given store ids): in_stock, limited, ship_to_store, out_of_stock, not_available_for_pickup or unknown, with the pickup date |
+| `get_bestbuy_suggestions` | The bestbuy.com search-box autocomplete, each term with its categories and SKUs |
+| `get_bestbuy_prices` | Current price, regular price, savings, deal badge and deal end for up to 15 SKUs in one call |
+
+Platform key `bestbuy`. 2 credits per call; `get_bestbuy_category` is 3 on a
+`pcmcat` page, `get_bestbuy_deals` 3, `get_bestbuy_stores` and
+`get_bestbuy_suggestions` 1, and `get_bestbuy_availability` 2 flat for up to 8
+stores. `get_bestbuy_prices` is 2 per call whatever the number of SKUs (up to
+15). US site only. Product, reviews and availability take `sku` or `url`;
+availability takes exactly one of `zip` or `store_ids`, and `min_price` and
+`max_price` go together. Availability is store pickup status, not unit counts:
+Best Buy publishes a quantity only when it shows "only N left" (`limited`), so
+`quantity` is null for `in_stock`. Availability takes 5-20s. An unknown SKU is
+a 404 and is not billed.
 
 ### Kroger
 
