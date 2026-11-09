@@ -5,7 +5,7 @@
 
 [Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 360 tools across 59 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 377 tools puts ~402KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 390 tools puts ~421KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 377 tools. Loading all of them costs ~402KB of `tools/list` —
+Scavio exposes 390 tools. Loading all of them costs ~421KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **377 tools, ~402KB** |
+| `all` | every platform — **390 tools, ~421KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1068,6 +1068,35 @@ availability takes exactly one of `zip` or `store_ids`, and `min_price` and
 Best Buy publishes a quantity only when it shows "only N left" (`limited`), so
 `quantity` is null for `in_stock`. Availability takes 5-20s. An unknown SKU is
 a 404 and is not billed.
+
+### TCGplayer
+
+| Tool | Description |
+|------|-------------|
+| `search_tcgplayer` | Search TCGplayer (US, USD) cards and sealed products across every game (Pokemon, Magic: The Gathering, Yu-Gi-Oh!, One Piece, Lorcana and 60+ more), up to 50 per page: market, median and lowest price, listing count, set, rarity, card number and up to 3 featured listings; filter by game, set, rarity or cards vs sealed; sort by relevance, best selling, name or market price; plus facets with counts |
+| `get_tcgplayer_product` | One product by id or URL: images, card attributes, market / median / lowest listing price, listing and seller counts, and every SKU (condition x printing x language) with its market price and the recent sale range (lowest and highest sale price, sale count) |
+| `get_tcgplayer_listings` | Every live seller offer on a product, up to 50 per page, filtered by condition, printing, language, verified sellers or Direct, sorted by price plus shipping or price, with seller rating percent, sales band, gold star and location |
+| `get_tcgplayer_price_history` | Up to a year of sales history per SKU (month, quarter, semi_annual, annual): per bucket market price, quantity sold, transaction count and the low and high sale price |
+| `get_tcgplayer_sales` | The 5 most recent sales of a product: date, condition, printing, quantity, price and shipping |
+| `get_tcgplayer_games` | Every game (product line) on TCGplayer, 70+, with the url_name the other tools accept |
+| `get_tcgplayer_sets` | Every set of one game, newest first, with the set_id the price guide takes |
+| `get_tcgplayer_price_guide` | A whole set's price table, cards or sealed, up to 500 rows per page: market and low price per card per condition and printing |
+| `get_tcgplayer_suggestions` | The tcgplayer.com search-box autocomplete: products, sets and games |
+| `get_tcgplayer_trending` | Trending searches right now, overall or for Pokemon, Magic or Yu-Gi-Oh! |
+| `get_tcgplayer_seller` | A seller's profile by seller key, with the 365-day feedback summary and rating percent |
+| `get_tcgplayer_seller_feedback` | Individual feedback rows on a seller from the last 365 days, filterable by star rating or with a comment; buyers appear only as the site's masked nickname |
+| `get_tcgplayer_seller_products` | A seller's catalogue with their own listings of each product, filtered by keywords or game |
+
+Platform key `tcgplayer`. 1 credit per call, every tool. US marketplace,
+prices in USD. Product, listings, price history and sales take `product_id`
+or a tcgplayer.com `/product/<id>/` URL; an unknown id is a 404 and is not
+billed. SKU sale fields on `get_tcgplayer_product` (`lowest_sale_price`,
+`highest_sale_price`, `sale_count`) are recent SALE statistics, not live
+listings; use `get_tcgplayer_listings` for offers. `get_tcgplayer_sales`
+returns only the 5 newest sales; for sold volume use
+`get_tcgplayer_price_history`, whose low and high sale prices are null in a
+bucket with no sales. Seller tools take the 8-character `seller.key` from a
+listing. No store locator, product reviews or buylist prices.
 
 ### Kroger
 
