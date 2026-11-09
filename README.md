@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 399 tools across 63 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 408 tools across 64 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 399 tools puts ~437KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 408 tools puts ~459KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 399 tools. Loading all of them costs ~437KB of `tools/list` —
+Scavio exposes 408 tools. Loading all of them costs ~459KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **399 tools, ~437KB** |
+| `all` | every platform — **408 tools, ~459KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1127,6 +1127,35 @@ the Buyer Protection fee). Search serves at most 10 pages of 96
 matching cheap listings, so pair them with a category or price range. Live
 listings only: no sold-item search, shipping prices, pickup points or similar
 items. Seller data is limited to public buyer-relevant fields.
+
+### Macy's
+
+| Tool | Description |
+|------|-------------|
+| `search_macys` | Search macys.com (US), 60 organic items per page: price, regular and sale price, percent off, sale end date, deal label (Black Friday Deal, Clearance, LAST ACT, Today Only), promotions, rating, review count, colors; filter by brand, color, special offer, any price range, pickup store or any facet; sort by featured, price, top rated, best sellers or newest; plus the facets with counts |
+| `get_macys_product` | One product by id or URL, or up to 10 ids in one call: price block with sale end, rating histogram, text vs total review counts, fit slider, AI review summary, colors with prices, sizes and every variant (UPC, color, size, availability, low-stock flag, ship days) |
+| `get_macys_reviews` | Macy's own reviews, up to 100 per page, newest, highest or lowest rated or with photos first, filtered by star rating or a word, with slider ratings, photos, syndication source and the brand's response |
+| `get_macys_category` | Browse a category by id or URL, 60 per page, with the same filters and sorts as search |
+| `get_macys_brand` | Browse a brand's page by its page id (a product's `brand_page_id`) or URL, 60 per page, with the same filters and sorts as search |
+| `get_macys_deals` | Sales & Offers, Clearance, Today Only, Last Act, Limited-Time Specials or Black Friday Deals, 60 per page, with the same filters and sorts as search |
+| `get_macys_stores` | Macy's stores near a ZIP, a point or a city + state, up to 15, with hours, curbside hours and the same-day pickup cut-off |
+| `get_macys_store_availability` | Store pickup for one product: which stores near a location can hand it over, or per variant at one `store_id` whether it can be picked up and whether it is in the store |
+| `get_macys_suggestions` | The macys.com search-box autocomplete, up to 7 suggested searches |
+
+Platform key `macys`. 1 credit per call, every tool. US site only, prices in
+USD. Search, category, brand and deals share one grid: 60 organic items per
+page with `total` and `total_pages`, and totals can differ between sorts, as
+they do on the site. Ad-only sponsored tiles are dropped (`sponsored_dropped`
+counts them) unless `include_sponsored`; organic items that also hold a paid
+slot stay, flagged `is_sponsored`. A keyword Macy's maps to a category returns
+`redirected_to_category`. A batch of `product_ids` (up to 10) gets Macy's
+summary view: no rating histogram, and a collection without its members'
+variants. A collection member's id answers with the collection product
+(`requested_id` echoes the id asked for). `review_count` includes ratings
+without text; reviews returns written reviews only (`text_review_count`).
+Store availability is pickup and in-store flags, never unit counts: Macy's
+publishes no quantities. A `store_id` comes from `get_macys_stores`. No coupon
+codes, Q&A text or price history: to track prices, poll and store your own.
 
 ### Kroger
 
