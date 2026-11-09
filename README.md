@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 360 tools across 59 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 399 tools across 63 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 390 tools puts ~421KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 399 tools puts ~437KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 390 tools. Loading all of them costs ~421KB of `tools/list` —
+Scavio exposes 399 tools. Loading all of them costs ~437KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **390 tools, ~421KB** |
+| `all` | every platform — **399 tools, ~437KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1097,6 +1097,35 @@ returns only the 5 newest sales; for sold volume use
 `get_tcgplayer_price_history`, whose low and high sale prices are null in a
 bucket with no sales. Seller tools take the 8-character `seller.key` from a
 listing. No store locator, product reviews or buylist prices.
+
+### Vinted
+
+| Tool | Description |
+|------|-------------|
+| `search_vinted` | Search second-hand listings on any of 27 Vinted country sites by keywords, category, brand, condition, size, color, material and price range, sorted by relevance, newest or price: 96 items per page, pages 1-10, with price, the Vinted fee, total price, brand, size, condition, favourites, photos and the seller id |
+| `get_vinted_product` | One listing by item id or URL: description, price in the seller's currency, brand, size, condition, color, material, category path, all photos, reserved and sold state, and the seller's login, feedback count and rating |
+| `get_vinted_seller` | A member's public seller profile: feedback count and rating, positive / neutral / negative counts, listed item count, verification, response time, holiday mode, last seen |
+| `get_vinted_seller_products` | The items one member has listed, newest first, cheapest first or by relevance, up to 96 per page |
+| `get_vinted_seller_feedback` | Reviews left for a member, newest first, up to 50 per page: rating 1-5, text, date, automatic flag and the member's reply; no reviewer identity |
+| `get_vinted_brands` | Find brands by name: brand id (for search's `brand_ids`), listing count, luxury flag and whether Vinted authenticity-checks it |
+| `get_vinted_suggestions` | The Vinted search-box autocomplete in the site's language, up to 10 suggestions with their type |
+| `get_vinted_filters` | The options of one search filter (size, condition, color, material) with live item counts, optionally for a query and category |
+| `get_vinted_categories` | The category tree in the site's language (9 top-level, about 3,000 in all), or one category's subtree with its path |
+
+Platform key `vinted`. 1 credit per call, every tool. Every tool takes an
+optional `country`: `fr` (default), `be`, `lu`, `es`, `nl`, `lt`, `de`, `at`,
+`it`, `uk`, `pt`, `us`, `cz`, `sk`, `pl`, `se`, `ro`, `hu`, `dk`, `fi`, `hr`,
+`gr`, `ie`, `ee`, `lv`, `si`, `au`. Category, condition and filter names come
+back in that site's language. The EU sites share one cross-border listing
+pool, priced in the site's currency (vinted.pl shows the same EU listings in
+PLN); `uk` (GBP), `us` (USD) and `au` (AUD) are separate catalogs. A product
+is priced in the SELLER's currency, which can differ from the site's.
+`service_fee` is the Vinted fee the buyer pays on top of the price (formerly
+the Buyer Protection fee). Search serves at most 10 pages of 96
+(`total_is_capped` is true past 960 matches), and price sorts surface loosely
+matching cheap listings, so pair them with a category or price range. Live
+listings only: no sold-item search, shipping prices, pickup points or similar
+items. Seller data is limited to public buyer-relevant fields.
 
 ### Kroger
 
