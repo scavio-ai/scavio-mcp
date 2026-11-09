@@ -21,7 +21,7 @@ const CONDITIONS = "6 New with tags, 1 New without tags, 2 Very good, 3 Good, 4 
 const FEE = "service_fee is the Vinted fee the buyer pays on top of the price (formerly the Buyer Protection fee) and total_price is price plus that fee";
 
 const country = () => z.enum(COUNTRIES).optional()
-  .describe("Vinted country site: fr (default), be, lu, es, nl, lt, de, at, it, uk (vinted.co.uk), pt, us (vinted.com), cz, sk, pl, se, ro, hu, dk, fi, hr, gr, ie, ee, lv, si, au (vinted.com.au). Category, condition and filter names come back in the site's language. The EU sites share one cross-border listing pool, priced in the site's currency (EUR, or CZK, PLN, SEK, RON, HUF, DKK); uk (GBP), us (USD) and au (AUD) are separate catalogs.");
+  .describe("Vinted country site: fr (default), be, lu, es, nl, lt, de, at, it, uk (vinted.co.uk), pt, us (vinted.com), cz, sk, pl, se, ro, hu, dk, fi, hr, gr, ie, ee, lv, si, au (vinted.com.au). Category, condition and filter names come back in the site's language. Every site can show listings from sellers in other countries, with the price converted to the site's currency (EUR, or CZK, PLN, SEK, RON, HUF, DKK, GBP for uk, USD for us, AUD for au); the EU sites share one cross-border pool. get_vinted_product returns the seller's own price and currency.");
 const siteCode = () => z.enum(COUNTRIES).optional()
   .describe("Vinted country site, one of the 27 codes search_vinted takes (fr default, uk, us, de, pl, es, it, nl, au...). Names come back in the site's language.");
 const numericId = (max: number) => z.union([z.number().int().positive(), z.string().regex(new RegExp(`^\\d{1,${max}}$`))]);

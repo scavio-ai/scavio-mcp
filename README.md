@@ -1116,10 +1116,11 @@ Platform key `vinted`. 1 credit per call, every tool. Every tool takes an
 optional `country`: `fr` (default), `be`, `lu`, `es`, `nl`, `lt`, `de`, `at`,
 `it`, `uk`, `pt`, `us`, `cz`, `sk`, `pl`, `se`, `ro`, `hu`, `dk`, `fi`, `hr`,
 `gr`, `ie`, `ee`, `lv`, `si`, `au`. Category, condition and filter names come
-back in that site's language. The EU sites share one cross-border listing
-pool, priced in the site's currency (vinted.pl shows the same EU listings in
-PLN); `uk` (GBP), `us` (USD) and `au` (AUD) are separate catalogs. A product
-is priced in the SELLER's currency, which can differ from the site's.
+back in that site's language. Every site, `uk`, `us` and `au` included, can
+show listings from sellers in other countries, with the price converted to the
+site's currency (vinted.co.uk shows an Australian seller's 20 AUD item at
+10.43 GBP); the EU sites share one cross-border pool. A product is priced in
+the SELLER's own currency, which can differ from the site's.
 `service_fee` is the Vinted fee the buyer pays on top of the price (formerly
 the Buyer Protection fee). Search serves at most 10 pages of 96
 (`total_is_capped` is true past 960 matches), and price sorts surface loosely
