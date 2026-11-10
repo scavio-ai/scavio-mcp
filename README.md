@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 426 tools across 66 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 435 tools across 67 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 426 tools puts ~495KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 435 tools puts ~516KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 426 tools. Loading all of them costs ~495KB of `tools/list` —
+Scavio exposes 435 tools. Loading all of them costs ~516KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **426 tools, ~495KB** |
+| `all` | every platform — **435 tools, ~516KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1211,6 +1211,34 @@ and returns real pickup unit counts per store. `with_code_price` is the
 price after a public offer code, with the code. Rating and review count only:
 review text is not available. No price history, international sites, account
 offers or checkout: to track clearance prices, poll and store your own.
+
+### JCPenney
+
+| Tool | Description |
+|------|-------------|
+| `search_jcpenney` | Search jcpenney.com (US), 48 products per page (at most 25 pages): current, regular and after-coupon price ranges with the coupon code, price type (sale / clearance / original), percent off, deal label, rating, review count, badge, availability label, colors with SKU ids, marketplace flag and seller; filter by brand, color, size, price range, deal label or any facet value; sort by relevance, new arrivals, best sellers, rating or price; plus the facets with counts, `corrected_query` and `redirected_to` |
+| `get_jcpenney_product` | One product by id or URL, or up to 20 by `product_ids`: price block (regular, sale and clearance ranges, percent off, after-coupon price with its code, price window), breadcrumbs, average rating, review count, question and answer counts, and every variant with sku, UPC, color, size, status and online stock level (high / low / out) |
+| `get_jcpenney_category` | Browse a category by its `/g/` path or URL (the path carries its `id=cat...`), 48 per page, with the same filters and sorts as search, plus breadcrumbs |
+| `get_jcpenney_brand` | Browse one brand by name or brand page URL, 48 per page, with the same filters and sorts as search |
+| `get_jcpenney_deals` | Clearance (default), Sale, Black Friday deals, Big Buy, Limited Time Special, Best Value, Gotta Have It, Closeout, Buy 1 Get 1 or any Deals & Promotions label, across all products or one department |
+| `get_jcpenney_stores` | JCPenney stores near a ZIP, a city + state or a point within 1-100 miles (default 25), paged: `store_id`, address, phone, weekly hours, timezone, services (salon, portrait studio, JCPenney Beauty, Curbside Pickup...), pickup directions and bookable appointments |
+| `get_jcpenney_store_availability` | Real unit counts of one SKU at the 5 nearest stores to a ZIP (or lat + lng): `quantity`, `status`, `updated_at`, store hours, plus `stores_with_stock` and `total_quantity` |
+| `get_jcpenney_suggestions` | The search-box suggestions: keyword completions with their search URL and department refinements where JCPenney offers them |
+| `get_jcpenney_coupons` | Today's public JCPenney coupons: code (null for in-store offers that need none), channel, headline, details, start and end dates, disclaimer and eligible-products URL |
+
+Platform key `jcpenney`. 1 credit per call. US site only (Puerto Rico
+stores included), prices in USD. Search, category, brand and deals share one
+grid: 48 products per page, at most 25 pages (1,200 items deep), with
+`total` and `total_pages`. Facet values feed `filters` as
+`{facet id: value}`. A category needs a jcpenney.com `/g/` path or URL that
+carries its `id=cat...`; a department page lists no products without a
+filter. Prices are product-level ranges plus the after-coupon price and its
+code: JCPenney does not expose a price per size or color. Store availability
+takes a product's `variants[].sku` and returns real unit counts at exactly
+the 5 nearest stores. Rating and review count only: review text is not
+available. No price history, international sites, account offers or
+JCPenney Rewards balances, or checkout: to track clearance prices, poll and
+store your own.
 
 ### Kroger
 
