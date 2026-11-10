@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 435 tools across 67 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 437 tools across 67 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 435 tools puts ~516KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 437 tools puts ~520KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 435 tools. Loading all of them costs ~516KB of `tools/list` —
+Scavio exposes 437 tools. Loading all of them costs ~520KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **435 tools, ~516KB** |
+| `all` | every platform — **437 tools, ~520KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -1225,8 +1225,10 @@ offers or checkout: to track clearance prices, poll and store your own.
 | `get_jcpenney_store_availability` | Real unit counts of one SKU at the 5 nearest stores to a ZIP (or lat + lng): `quantity`, `status`, `updated_at`, store hours, plus `stores_with_stock` and `total_quantity` |
 | `get_jcpenney_suggestions` | The search-box suggestions: keyword completions with their search URL and department refinements where JCPenney offers them |
 | `get_jcpenney_coupons` | Today's public JCPenney coupons: code (null for in-store offers that need none), channel, headline, details, start and end dates, disclaimer and eligible-products URL |
+| `get_jcpenney_reviews` | Real review text of one product by id or URL, up to 98 per call (default 38), sorted most recent, most helpful, highest or lowest rating, or relevance, optionally one star rating: `total_reviews` (every language), `displayed_reviews` (the English reviews JCPenney lists), `matching_reviews` for the sort and filter, rating distribution, recommended percent, secondary ratings (Quality, Value...), and per review the text, rating, author nickname, location, dates, helpful votes, `verified_purchaser`, `incentivized`, `syndicated` with `syndication_source`, photos, videos and the brand's response |
+| `get_jcpenney_questions` | Customer questions and every answer for one product, up to 50 questions (default 10), newest answers first: `total_questions`, `total_answers`, and per answer the text, author, `author_type` (brand, retailer for JCPenney staff, ai, customer), `ai_label` (AI-Generated / AI-Assisted), `is_best_answer` and votes |
 
-Platform key `jcpenney`. 1 credit per call. US site only (Puerto Rico
+Platform key `jcpenney`. 1 credit per call, reviews and questions included. US site only (Puerto Rico
 stores included), prices in USD. Search, category, brand and deals share one
 grid: 48 products per page, at most 25 pages (1,200 items deep), with
 `total` and `total_pages`. Facet values feed `filters` as
@@ -1235,10 +1237,13 @@ carries its `id=cat...`; a department page lists no products without a
 filter. Prices are product-level ranges plus the after-coupon price and its
 code: JCPenney does not expose a price per size or color. Store availability
 takes a product's `variants[].sku` and returns real unit counts at exactly
-the 5 nearest stores. Rating and review count only: review text is not
-available. No price history, international sites, account offers or
-JCPenney Rewards balances, or checkout: to track clearance prices, poll and
-store your own.
+the 5 nearest stores. Reviews and questions are slower than the other
+tools: usually 15-90s, up to about 3 minutes, and failed calls are not
+charged. `total_reviews` counts every language and is often larger than
+`displayed_reviews`; the questions list has no sort option. Reviewer age,
+gender and IP addresses are never returned. No price history, international
+sites, account offers or JCPenney Rewards balances, or checkout: to track
+clearance prices, poll and store your own.
 
 ### Kroger
 
