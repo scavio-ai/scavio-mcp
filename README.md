@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 408 tools across 64 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 417 tools across 65 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 408 tools puts ~459KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 417 tools puts ~478KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 408 tools. Loading all of them costs ~459KB of `tools/list` —
+Scavio exposes 417 tools. Loading all of them costs ~478KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **408 tools, ~459KB** |
+| `all` | every platform — **417 tools, ~478KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1156,6 +1156,34 @@ without text; reviews returns written reviews only (`text_review_count`).
 Store availability is pickup and in-store flags, never unit counts: Macy's
 publishes no quantities. A `store_id` comes from `get_macys_stores`. No coupon
 codes, Q&A text or price history: to track prices, poll and store your own.
+
+### Saks Fifth Avenue
+
+| Tool | Description |
+|------|-------------|
+| `search_saks` | Search saksfifthavenue.com (US), 24 grid positions per page: price, regular and sale price, percent off, badge, final-sale and clearance flags, returnable, limited inventory, promotions, review count, colors; filter by designer, color, size, any price range, on sale, new arrivals or any facet; sort by featured, best sellers, newest, price, sale first or designer A-Z; plus the facets with counts and price ranges |
+| `get_saks_product` | One product by id or URL, optionally one color + size: price block, final-sale / returnable / marketplace flags, promotions, colors and sizes with availability, every SKU with its online warehouse units, availability message and restock date, merchandising attributes, average rating and review count |
+| `get_saks_category` | Browse a category by its `/c/` path or URL, 24 per page, with the same filters and sorts as search, plus breadcrumbs |
+| `get_saks_brand` | Browse a designer's page by slug (from `get_saks_designers`) or URL, 24 per page, with the same filters and sorts as search |
+| `get_saks_deals` | Sale, Women's Clothing Sale, Men's Sale, Women's New Arrivals or Men's New Arrivals, 24 per page, with the same filters and sorts as search |
+| `get_saks_stores` | Saks stores near a ZIP or a point within 15-300 miles, with today's hours and a `pickup` flag for stores that offer in-store pickup |
+| `get_saks_store_availability` | Pickup availability of one variant sku at stores near a location: availability message, in stock, limited, and `units_at_store` when the site shows a count |
+| `get_saks_suggestions` | The search-box suggestions: result count, designers, categories (with paths for `get_saks_category`), up to 5 products and popular searches |
+| `get_saks_designers` | The A-Z designer index (about 1,200 designers) with the slugs `get_saks_brand` takes, optionally one letter |
+
+Platform key `saks`. 2 credits per call, every tool. US site only, prices in
+USD. Search, category, brand and deals share one grid: 24 positions per page
+with `total`, `total_pages`, `start` and `next_start`. An editorial tile can
+take a grid position, so a page may carry 22-23 items: walk with `start` =
+the previous `next_start` to miss nothing (`page` also works). A keyword the
+site maps to a designer or category page returns `redirected_to`. Facet
+values feed the filters as listed: `size` takes the facet label ("Medium",
+not "M"). Store availability needs a VARIANT sku (a product's
+`variants[].sku`, or a product resolved with color + size); `units_at_store`
+is present only when the site shows a count, otherwise null. Rating and
+review count only: review text is not available. No clearance list, coupon
+codes, international prices or price history: to track designer sale
+prices, poll and store your own.
 
 ### Kroger
 
