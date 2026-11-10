@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 417 tools across 65 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 426 tools across 66 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 417 tools puts ~478KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 426 tools puts ~495KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 417 tools. Loading all of them costs ~478KB of `tools/list` —
+Scavio exposes 426 tools. Loading all of them costs ~495KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **417 tools, ~478KB** |
+| `all` | every platform — **426 tools, ~495KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1184,6 +1184,33 @@ is present only when the site shows a count, otherwise null. Rating and
 review count only: review text is not available. No clearance list, coupon
 codes, international prices or price history: to track designer sale
 prices, poll and store your own.
+
+### Kohl's
+
+| Tool | Description |
+|------|-------------|
+| `search_kohls` | Search kohls.com (US), 120 products per page: price, regular and sale price, price label (sale / clearance), percent off, with-code price and its offer codes, cart-only price flag, promotions, rating, review count, badges, Sephora and pickup / ship-to-store flags, sponsored flag; filter by brand, color, size, on sale, clearance or any facet value (price buckets included); sort by featured, new arrivals, best sellers, price, highest rated or percent off; plus the facets with counts and `corrected_query` |
+| `get_kohls_product` | One product by id or URL, optionally at one store: price block with with-code price and offer codes, Kohl's Cash earn and redeem windows, the public offers that apply, `dept`, every variant with sku, UPC, color, size, availability and online units, average rating, review count and recommended percent |
+| `get_kohls_category` | Browse a catalog listing by its path or URL (the path carries its `CN=` filter), 120 per page, with the same filters and sorts as search, plus breadcrumbs |
+| `get_kohls_brand` | Browse one brand by name or URL, 120 per page, with the same filters and sorts as search |
+| `get_kohls_deals` | Clearance (default), Sale, items that earn Kohl's Cash now, or Sephora at Kohl's, 120 per page, with the same filters and sorts as search |
+| `get_kohls_stores` | Kohl's stores near a ZIP, a city + state or a point within 1-100 miles (default 25): `store_id`, address, phone, weekly hours, badges (Sephora...) and services |
+| `get_kohls_store_availability` | Pickup stock of one SKU at every store within about 50 miles of a ZIP: `pickup_units` (a unit count), `stock_level`, ship-to-store units and window, store hours |
+| `get_kohls_suggestions` | The search-box suggestions: keyword completions, or matching products with `type: "products"` |
+| `get_kohls_coupons` | Today's public Kohl's coupon codes: code, description, end date, Kohl's Card-only flag, terms and eligible-products URLs |
+
+Platform key `kohls`. 2 credits per call, except `get_kohls_stores` (1
+credit). US site only, prices in USD. Search, category, brand and deals share
+one grid: 120 products per page with `total` and `total_pages`; up to about 8
+sponsored items stay in the list, flagged `is_sponsored` and counted in
+`sponsored_count`. Facet value ids feed `filters` as returned; price is a
+facet bucket ("Price:$25 to $50"), not a free min / max. A category needs a
+kohls.com catalog path or URL that carries its `CN=` filter. Store
+availability takes a product's `variants[].sku` (and optionally its `dept`)
+and returns real pickup unit counts per store. `with_code_price` is the
+price after a public offer code, with the code. Rating and review count only:
+review text is not available. No price history, international sites, account
+offers or checkout: to track clearance prices, poll and store your own.
 
 ### Kroger
 
