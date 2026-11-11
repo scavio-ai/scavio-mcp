@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 456 tools across 69 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 461 tools across 70 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 456 tools puts ~570KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 461 tools puts ~585KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 456 tools. Loading all of them costs ~570KB of `tools/list` —
+Scavio exposes 461 tools. Loading all of them costs ~585KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **456 tools, ~570KB** |
+| `all` | every platform — **461 tools, ~585KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1310,6 +1310,37 @@ calls are not charged. Unknown SKUs, categories and brands are a charged
 404. No search suggestions, member (FLX) prices or account data, Kids Foot
 Locker or Champs stores, price history or checkout: to track prices, poll and
 store your own.
+
+### Fanatics
+
+Fanatics merchandise and product data (jerseys, hats, fan gear, collectibles), not sportsbook odds.
+
+| Tool | Description |
+|------|-------------|
+| `search_fanatics` | Search Fanatics by keyword on 8 storefronts and 4 US league stores, up to 72 items per page: price, regular, sale, clearance and with-code price, price label, percent off, top seller, customizable, ready to ship, ship-by and delivery estimate; narrow by gender, league, department or any facet via `filters`; 4 sorts; plus facets with ids, `corrected_query`, `total` (9000 cap on the US site) and `data_as_of` |
+| `get_fanatics_product` | One product by id or URL: league, team, player, the price block (regular / sale / clearance / with-code price), the site's current promo code, every size with `stock_level` (low / out, never a unit count), ship-by and delivery window, every colorway, personalization fields with the team roster, jersey assurance and authentic flags, and the rating with fit, value and quality |
+| `browse_fanatics` | Browse a team, player, league section, department, brand or collection by URL or ids, with `price_band`, `on_sale`, `gender` and facet filters |
+| `get_fanatics_deals` | Sale, clearance or under-25 listings, optionally for one league, team, department or brand |
+| `get_fanatics_reviews` | 1-50 reviews of one product (default 10) with full text, 4 sorts, star filter, fit / quality / value, the site's own AI-written summary and the features reviewers mention; reviews cover the whole style, so each carries its `product_id` |
+
+Platform key `fanatics`. 1 credit per call. Storefronts (`country`): us
+(fanatics.com, USD, default), gb (GBP), de, fr, es, it (EUR), jp (JPY) and
+ca (CAD, `language` en or fr); titles come in the storefront's language.
+US league stores (`site`, with country us): fanatics (default), nflshop,
+mlbshop, nhlshop and mlsstore; the same product ids work on every store.
+Search, product, browse and deals work on every storefront and store;
+`price_band` and the under-25 deals are not on jp; reviews are US only
+(fanatics.com). Search, browse and deals share one grid: 24, 48 or 72 items
+per page, sorted by top sellers, price or newest, facet values feed
+`filters`. `data_as_of` says when Fanatics built each listing (it can be a
+few minutes old). The with-code price is the price with the site-wide promo
+code shown on the page; product prices already include personalization.
+Reviews are slow: usually 20-90 s, up to about 4 minutes, so allow a client
+timeout of at least 300 s; when busy they return 503 with Retry-After.
+Failed calls are not charged; unknown products are a charged 404. No search
+suggestions, store locator or store stock, Q&A, FanCash, member pricing,
+unit counts, price history or checkout: to track jersey sale prices, poll
+and store your own.
 
 ### Kroger
 
