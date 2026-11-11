@@ -24,7 +24,7 @@ const REVIEW_SORTS = ["highest_rated", "lowest_rated", "most_recent", "most_help
 
 const MARKETS = "us (fanatics.com, USD, default), gb (GBP), de, fr, es, it (EUR), jp (JPY) or ca (CAD; language en or fr)";
 const STORES = "fanatics (default), nflshop (NFL Shop), mlbshop (MLB Shop), nhlshop (NHL Shop) or mlsstore (MLS Store)";
-const ITEM_FIELDS = "id (for get_fanatics_product and get_fanatics_reviews), title, brand, url, image, price (current), regular_price, sale_price, clearance_price, with_code_price and code_percent_off (the price with the site's current promo code, when it applies), price_label (none, coupon or clearance), percent_off, top_seller, customizable, ready_to_ship, ship_by, est_delivery, urgency signals and is_sponsored";
+const ITEM_FIELDS = "id (for get_fanatics_product and get_fanatics_reviews), title, brand, url, image, price (current), regular_price, sale_price, clearance_price, with_code_price and code_percent_off (the price with the site's current promo code, when it applies), price_label (none, coupon or clearance; coupon means coupon-eligible on the page, not that the code applies: a null with_code_price says it does not), percent_off, top_seller, customizable, ready_to_ship, ship_by, est_delivery, urgency signals and is_sponsored";
 const GRID = `Items with ${ITEM_FIELDS}. Also returns total (the US site counts at most 9000: total_capped is true when the real number is 9000 or more), page, page_size, total_pages, the sort, every facet (id, label, values with label, filter, value and count: send {filter: value} in filters), country, language, currency, site and data_as_of (when Fanatics built the page; listings can be a few minutes old)`;
 const GRID_SHORT = "The same item fields, totals (9000 cap on the US site), facets and data_as_of as search_fanatics";
 const WHERE = `Storefronts (country): ${MARKETS}. US league stores (site): ${STORES}.`;
@@ -35,7 +35,7 @@ const country = () => z.enum(COUNTRIES).optional()
 const language = () => z.enum(["en", "fr"]).optional()
   .describe("ca only: en (default) or fr.");
 const site = () => z.enum(SITES).optional()
-  .describe(`US only: the store to read, ${STORES}. Same product ids on every store; each store writes its own titles.`);
+  .describe(`US only: the store to read, ${STORES}. Same product ids on every store; each store writes its own titles. Department and filter ids are per store (Jerseys is 8011 on fanatics, 14012 on nflshop): take them from the facets of the store you query, since an id from another store is silently ignored.`);
 const idField = (description: string) =>
   z.union([z.number().int().min(0), z.string().regex(/^\d{1,9}(-\d{1,9})?$/)]).optional().describe(description);
 const gender = () => z.enum(GENDERS).optional().describe("men, women, kids or baby.");
@@ -46,7 +46,7 @@ const gridFields = {
   page_size: z.union([z.literal(24), z.literal(48), z.literal(72)]).optional()
     .describe("Items per page: 24, 48 or 72. Defaults to 72."),
   sort: z.enum(SORTS).optional()
-    .describe("top_sellers (default), price_low_to_high, price_high_to_low or newest. Price sorts follow the site's lowest price, which is the with-code price when a promo code applies."),
+    .describe("top_sellers (default), price_low_to_high, price_high_to_low or newest. Price sorts order by the current price (price, before any promo code), not the with-code price."),
 };
 
 const filters = () => z.record(z.string(), z.union([z.string(), z.number()])).optional()
@@ -78,7 +78,7 @@ export function registerFanaticsTools(server: McpServer, getClient: () => Scavio
       site: site(),
       gender: gender(),
       league_id: idField("Narrow to one league (an id from facets: NFL 25, MLB 19, NBA 23, NHL 26, College 5)."),
-      department_id: idField("Narrow to one department (an id from facets: Jerseys 8011, Hats 8008, T-Shirts 8022)."),
+      department_id: idField("Narrow to one department (an id from the facets of the same storefront / store: on fanatics.com Jerseys 8011, Hats 8008, T-Shirts 8022; nflshop Jerseys 14012)."),
       filters: filters(),
       ...gridFields,
     },
@@ -87,7 +87,7 @@ export function registerFanaticsTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "get_fanatics_product",
-    `One Fanatics product by id or URL: title, brand, league, team, player, gender, categories, breadcrumb, description, details, images, the price block (price, regular_price, sale_price, clearance_price, with_code_price, code_percent_off, percent_off, price_label), the site's current promo code (code, percent_off, tiered, ends_on, applies_to_product), in_stock, every size (item_id, available, stock_level low / out, price, with_code_price, ship_by, estimated delivery window, promise_ship_days), every colorway, personalization (name / number fields with their rules and the team roster; the price already includes personalization), flags (jersey_assurance, non_returnable, exclusive, authentic for autographed / authenticated items), the rating (average, count, distribution, fit, value, quality), review_count and data_as_of. Stock is a level, never a unit count. ${WHERE} ${CHARGE}`,
+    `One Fanatics product by id or URL: title, brand, league, team, player, gender, categories, breadcrumb, description, details, images, the price block (price, regular_price, sale_price, clearance_price, with_code_price, code_percent_off, percent_off, price_label), on_sale (true for sale and clearance markdowns), the site's current promo code (code, percent_off, tiered, ends_on, applies_to_product), in_stock, every size (item_id, available, stock_level low / out, price, with_code_price, ship_by, estimated delivery window, promise_ship_days), every colorway, personalization (name / number fields with their rules and the team roster; the price already includes personalization), flags (jersey_assurance, non_returnable, exclusive, authentic for autographed / authenticated items), the rating (average, count, distribution, fit, value, quality), review_count and data_as_of. Stock is a level, never a unit count. ${WHERE} ${CHARGE}`,
     {
       ...productTarget,
       url: z.string().min(1).max(800).optional()
@@ -101,14 +101,14 @@ export function registerFanaticsTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "browse_fanatics",
-    `Browse a Fanatics listing by its URL or by ids: a team (Lakers 5,000+ products), a player (Mahomes), a league section (NFL hats), a department, a brand ('47, Nike, New Era) or a collection, with price_band, on_sale, gender and any facet as filters (sizes, color style, autographed). The facets list the listing's teams, players (up to 100 on a team page), departments, brands, collections and sizes with their ids. browse names the league, team, player, department, brand and collection the page shows. Send url or ids, not both; a league alone is a landing page: combine it with another id or a filter. ${GRID_SHORT}. ${WHERE} ${CHARGE}`,
+    `Browse a Fanatics listing by its URL or by ids: a team (Lakers 5,000+ products), a player (Mahomes), a league section (NFL hats), a department, a brand ('47, Nike, New Era) or a collection, with price_band, on_sale, gender and any facet as filters (sizes, color style, autographed). The facets list the listing's teams, departments, brands, collections and sizes with their ids, plus players when the page lists them (the Lakers team page does, the Chiefs page does not; a product's player field also carries player ids). Ids are per site: take them from the facets of the storefront / store you query. browse names the league, team, player, department, brand and collection the page shows. Send url or ids, not both; a league alone is a landing page: combine it with another id or a filter. ${GRID_SHORT}. ${WHERE} ${CHARGE}`,
     {
       url: z.string().min(1).max(800).optional()
         .describe("A Fanatics listing URL: a team, player, league section, department, brand or collection page, e.g. 'https://www.fanatics.com/nba/los-angeles-lakers/o-23+t-3372'. Alternative to the ids."),
       league_id: idField("League id (NFL 25, MLB 19, NBA 23, NHL 26, College 5). A league alone is a landing page: combine it with another id or a filter."),
       team_id: idField("Team id (from facets: Los Angeles Lakers 3372, Kansas City Chiefs 3433)."),
-      player_id: idField("Player id (from facets.players: Patrick Mahomes 12072, Aaron Judge 31)."),
-      department_id: idField("Department id (Hats 8008, Jerseys 8011), or parent-child for a sub-department ('8008-8084')."),
+      player_id: idField("Player id, from the players facet when the page lists one (e.g. Lakers) or from a product's player field: Patrick Mahomes 12072, Aaron Judge 31."),
+      department_id: idField("Department id from the facets of the same storefront / store (fanatics.com: Hats 8008, Jerseys 8011; nflshop Jerseys 14012), or parent-child for a sub-department ('8008-8084')."),
       brand_id: idField("Brand id (from facets.brands: '47 479, Nike 76, New Era 127)."),
       collection_id: idField("Collection id (from facets.productGroups: City Edition 11552)."),
       country: country(),
@@ -133,7 +133,7 @@ export function registerFanaticsTools(server: McpServer, getClient: () => Scavio
         .describe("sale (default), clearance or under_25 (not on jp)."),
       league_id: idField("Only one league (NFL 25, MLB 19, NBA 23, NHL 26, College 5)."),
       team_id: idField("Only one team (Los Angeles Lakers 3372, Kansas City Chiefs 3433)."),
-      department_id: idField("Only one department (Hats 8008, Jerseys 8011)."),
+      department_id: idField("Only one department, an id from the same store's facets (fanatics.com: Hats 8008, Jerseys 8011; nflshop Jerseys 14012)."),
       brand_id: idField("Only one brand ('47 479, Nike 76, New Era 127)."),
       country: country(),
       language: language(),
