@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 437 tools across 67 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 446 tools across 68 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 437 tools puts ~520KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 446 tools puts ~540KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 437 tools. Loading all of them costs ~520KB of `tools/list` —
+Scavio exposes 446 tools. Loading all of them costs ~540KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **437 tools, ~520KB** |
+| `all` | every platform — **446 tools, ~540KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1244,6 +1244,39 @@ charged. `total_reviews` counts every language and is often larger than
 gender and IP addresses are never returned. No price history, international
 sites, account offers or JCPenney Rewards balances, or checkout: to track
 clearance prices, poll and store your own.
+
+### Dick's Sporting Goods
+
+| Tool | Description |
+|------|-------------|
+| `search_dicks` | Search dickssportinggoods.com (US), 48 items per page by default (up to 144): current and list price ranges, percent off, MAP "see price in cart" flag, rating, review count, badge, options, `is_pinned` and `scheduled_prices` (the offer-price windows Dick's has planned); filter by brand, an approximate price range or any facet value; sort by relevance, top sellers, savings, price, featured, new arrivals or brand A-Z; plus facets with counts, categories, `did_you_mean` and `redirected_to` |
+| `get_dicks_product` | One product by id or URL with every SKU: price, list price, percent off, MAP flag, `is_clearance`, `online_units`, UPC, `buyable`, ship class and lead time per variant, plus specs, attributes, category, rating, review count and question and answer counts (2 credits) |
+| `get_dicks_products` | Up to 5 products in one call: the fast style-level summary (price and list-price ranges, percent off, clearance, buyable, options, specs, rating, review count), unknown ids in `not_found` |
+| `get_dicks_reviews` | The 15 newest reviews of one product with full text, pros, cons, badges, secondary ratings, photos and the brand's response, plus rating stats and distribution and question and answer counts (2 credits) |
+| `get_dicks_category` | Browse a category by its `/f/` or `/c/` path, URL or id, in the site's featured order by default, with the same filters and sorts as search |
+| `get_dicks_brand` | Browse one brand by name, optionally narrowed by a keyword, with the same filters and sorts as search |
+| `get_dicks_deals` | Clearance (default), Sale or This Week's Deals, with the same filters and sorts as search (sort `savings` for the biggest discounts first) |
+| `get_dicks_store_availability` | Unit counts for 1-20 SKUs at up to 100 stores near a ZIP or a point within 1-250 miles (default 25): DICK'S, Golf Galaxy or Public Lands stores with address, phone, hours, distance, `units` and `in_store_units` per SKU, plus `sku_totals` |
+| `get_dicks_suggestions` | The search-box suggestions: keyword completions, brands, categories and products with prices |
+
+Platform key `dicks`. 1 credit per call, except `get_dicks_product` and
+`get_dicks_reviews` at 2 credits. US site only, prices in USD. Search,
+category, brand and deals share one grid: 48 items per page by default, up
+to 144, with `total` and `total_pages`. Facet values feed `filters` as
+`{facet id: value}`; the price range is approximate. Merchandised items are
+flagged `is_pinned` and can make page 1 a few items longer than
+`page_size`. `scheduled_prices` are the retailer's own planned price windows
+and can change: not a forecast or price history. Prices differ per size and
+color (some sizes on clearance, others not), so read the variant in
+`get_dicks_product`; `get_dicks_products` is the cheap style-level check.
+Product and reviews are slower than the other tools: usually 20-75 s, up to
+about 2.5 minutes, and failed calls are not charged. Reviews are the newest
+15 only: no paging, sort or star filter, and questions and answers are
+counts only. There is no standalone store locator: store details come with a
+SKU lookup, and an unknown SKU reads 0 at every store, so take SKUs from
+`get_dicks_product`. No price history, ScoreCard prices or points, international
+sites, account data or checkout: to track clearance prices, poll and store
+your own.
 
 ### Kroger
 
