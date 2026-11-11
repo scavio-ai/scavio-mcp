@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 446 tools across 68 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 456 tools across 69 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 446 tools puts ~540KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 456 tools puts ~570KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 446 tools. Loading all of them costs ~540KB of `tools/list` —
+Scavio exposes 456 tools. Loading all of them costs ~570KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **446 tools, ~540KB** |
+| `all` | every platform — **456 tools, ~570KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1277,6 +1277,39 @@ SKU lookup, and an unknown SKU reads 0 at every store, so take SKUs from
 `get_dicks_product`. No price history, ScoreCard prices or points, international
 sites, account data or checkout: to track clearance prices, poll and store
 your own.
+
+### Foot Locker
+
+| Tool | Description |
+|------|-------------|
+| `search_footlocker` | Search Foot Locker on any of 13 storefronts, 48 items per page: price, list price, percent off, `lowest_price_30d` (European storefronts), sale, new and launch flags, rating, review count and every colorway with its price; filter by brand, gender, color, price bucket, `on_sale` or any facet (shoe size per gender, style, sport...); 7 sorts; plus facets with counts, `data_as_of` and `redirected_to` |
+| `get_footlocker_product` | One product by SKU or URL: description, style code, price block, availability online / to ship / for pickup, launch info, size chart, every colorway and every size with `available`, `ship`, `pickup`, `stores_available` (a store count, not units), UPC and store SKU |
+| `get_footlocker_category` | Browse a category by its `/category/` path, URL or collection id, with the same filters and sorts as search |
+| `get_footlocker_brand` | Browse one brand by name (any case) or brand page URL, optionally narrowed by a keyword |
+| `get_footlocker_deals` | Sale (every storefront), Foot Locker Exclusives (us and ca) or the items a promo code applies to |
+| `get_footlocker_releases` | The release calendar (us, ca, gb): launch date and time, retail price (us and ca), colorway, style code, heat level, size run and reservation windows where the storefront runs them; filter by upcoming / launched, a date window and brand |
+| `get_footlocker_stores` | Foot Locker stores near a US ZIP, a city + state or a point (up to 50): address, phone, weekly hours, opening date, alert and closure notices |
+| `get_footlocker_store_availability` | Which nearby Foot Locker stores show a product (or one size) as available: yes / no per store and per size, plus ship and pickup flags |
+| `get_footlocker_reviews` | 1-98 reviews of one product (default 38) with full text, sort, star filter, secondary ratings, photos and the brand's response, plus rating stats and distribution |
+| `get_footlocker_questions` | 1-50 shopper questions of one product (default 10) with every answer and its author type (brand, retailer or customer) |
+
+Platform key `footlocker`. 1 credit per call. Storefronts (`country`): us
+(footlocker.com, USD, default), ca (CAD, `language` en or fr), gb (GBP), de,
+fr, it, es, nl, be (`language` nl or fr), at, ie (EUR), au (AUD) and nz (NZD);
+titles come in the storefront's language. Search, product, category, brand
+and deals (sale, discount_eligible) work on all 13; exclusives on us and ca;
+releases on us, ca and gb (gb has no prices or reservation windows); stores,
+store availability, reviews and questions are US only. Search, category,
+brand and deals share one grid: 48 items per page, 7 sorts, facet values feed
+`filters`. Listings can be a few hours old: `data_as_of` says when each one
+was built. Availability is yes / no per size: Foot Locker publishes no unit
+counts. The release calendar is monitoring data only: nothing here enters,
+reserves or buys a release. Reviews and questions are slow: usually 25-90 s,
+up to about 3-4 minutes, so allow a client timeout of at least 240 s; failed
+calls are not charged. Unknown SKUs, categories and brands are a charged
+404. No search suggestions, member (FLX) prices or account data, Kids Foot
+Locker or Champs stores, price history or checkout: to track prices, poll and
+store your own.
 
 ### Kroger
 
