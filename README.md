@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 470 tools across 71 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 477 tools across 72 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 470 tools puts ~606KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 477 tools puts ~627KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 470 tools. Loading all of them costs ~606KB of `tools/list` —
+Scavio exposes 477 tools. Loading all of them costs ~627KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **470 tools, ~606KB** |
+| `all` | every platform — **477 tools, ~627KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1373,6 +1373,39 @@ price the deal. Failed calls are not charged; a not-found (unknown product, stor
 category) is a charged 404. No Q&A, printed leaflet, delivery-slot booking,
 cart, loyalty account data or price history: to track prices, poll and store
 your own. Spain, Italy, Poland, Brazil and the Middle East sites are not covered.
+
+### Allegro
+
+Allegro marketplace offers, every seller's price for one product, sellers, sold counts and auctions (allegro.pl, plus allegro.cz, allegro.sk and allegro.hu).
+
+| Tool | Description |
+|------|-------------|
+| `search_allegro` | Search Allegro by keyword, 60 organic offers per page: price, price with delivery, condition, auction state, discount with `lowest_price_30d`, seller (super seller, positive feedback %, business or private), rating, `sold_count`, Allegro Smart!, sponsored / promoted `placement`; 8 sorts; filter by price, new / used, buy now / auction (pl), Smart! and deals (pl), optionally inside one category; exact `total` and every facet |
+| `get_allegro_offer` | One offer (one seller's listing) by number or URL: price, original price and `lowest_price_30d` on a discount, price with delivery, stock, sold count, auction state (current price, minimum next bid, ends at, has bids), every parameter with GTIN and brand, description, delivery methods, returns, warranty, and the seller with `company_name` for business sellers |
+| `get_allegro_product` | One catalogue product (groups many sellers' offers) by id or URL: brand, GTIN, parameters, `lowest_price` and `offer_count`, the featured (buy box) offer, sold count, rating with star distribution, review aspects and the first 20 reviews as shown on the page |
+| `get_allegro_product_offers` | Every seller's offer for one product, 60 per page: price, price with delivery, condition, seller, Smart!, `is_featured` (buy box); sortable by price or price with delivery, filterable by condition, price and Smart! |
+| `get_allegro_seller` | One seller's offers by login, with id, login, `is_business`, the categories the seller sells in (with a `slug` for `category`), search within the seller's offers and the search sorts and filters |
+| `get_allegro_seller_feedback` | One seller's buyer ratings, 20 per page, newest first: summary (positive %, recommended / not recommended counts, member since, super seller) and each rating's comment, reasons, date and offers rated; no buyer identity |
+| `get_allegro_category` | One category's offers by id or URL, with the search sorts and filters, an optional query, and the category's breadcrumb, subcategories or sibling categories |
+
+Platform key `allegro`. 2 credits per call. Markets (`country`, every tool):
+pl (allegro.pl, PLN, default), cz (allegro.cz, CZK), sk (allegro.sk, EUR) and
+hu (allegro.hu, HUF); `buying_format` and `deals` are pl only (a 400
+elsewhere). Titles, parameters and labels come back in the site's language:
+Polish on pl. An offer is one seller's listing (`offer_id`); a catalogue
+product (`product_id`) groups many sellers' offers, and
+`get_allegro_product_offers` lists every seller's price for it, the
+price-monitoring call. `lowest_price_30d` is the EU disclosure Allegro shows
+next to a discount (the lowest price in the 30 days before it); it is null
+without a discount and is not a price history. `sold_count` is null on
+auctions and on cz, sk and hu offer pages. Allegro Lokalnie offers inside pl
+results are marked `source: "allegro_lokalnie"`. sk and hu calls can take up
+to about a minute, so allow a client timeout of at least 120 s. Failed calls
+are not charged; a not-found (unknown offer, product, seller or category) is a
+charged 404. No search suggestions, bidding, buying or checkout, Allegro
+Lokalnie as its own source, Smart! account data, seller revenue, seller
+addresses or tax ids, price history or reviews past the first 20: to track
+prices, poll and store your own.
 
 ### Kroger
 
