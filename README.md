@@ -1366,8 +1366,9 @@ market's language: French titles, labels and ingredients on fr. Without
 `store` a price is carrefour.fr's national online price; pass a store ref from
 `find_carrefour_stores` or `get_carrefour_store_availability` for that store's
 shelf price and assortment (Nutella 400 g: 3.99 national, 3.69 at two stores,
-4.61 at another). Multi-buy promotions ("Le 2eme a -50%") have no single
-discounted price. Failed calls are not charged; a not-found (unknown product, store or
+4.61 at another). On multi-buy promotions ("Le 2ème à -50%") the prices
+cover `quantity` items and `discounted_price` is null when the site does not
+price the deal. Failed calls are not charged; a not-found (unknown product, store or
 category) is a charged 404. No Q&A, printed leaflet, delivery-slot booking,
 cart, loyalty account data or price history: to track prices, poll and store
 your own. Spain, Italy, Poland, Brazil and the Middle East sites are not covered.
