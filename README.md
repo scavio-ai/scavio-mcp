@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 461 tools across 70 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 470 tools across 71 platforms plus Extract, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 461 tools puts ~585KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 470 tools puts ~606KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 461 tools. Loading all of them costs ~585KB of `tools/list` —
+Scavio exposes 470 tools. Loading all of them costs ~606KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **461 tools, ~585KB** |
+| `all` | every platform — **470 tools, ~606KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1341,6 +1341,36 @@ Failed calls are not charged; unknown products are a charged 404. No search
 suggestions, store locator or store stock, Q&A, FanCash, member pricing,
 unit counts, price history or checkout: to track jersey sale prices, poll
 and store your own.
+
+### Carrefour
+
+Carrefour grocery prices by store, promotions, Nutri-Score and stores (carrefour.fr, plus Argentina, Romania and Belgium for search and product).
+
+| Tool | Description |
+|------|-------------|
+| `search_carrefour` | Search Carrefour by keyword, 30 items per page on carrefour.fr: price, unit price (per kg / L), promotion with `loyalty_only` and start / end dates, Nutri-Score, Eco-Score, rating, availability and marketplace seller; filter by brand, promotion, Nutri-Score, organic, Carrefour brands or price range; 6 sorts (price, unit price, top rated); `store` for one store's shelf prices; also Argentina, Romania and Belgium |
+| `get_carrefour_product` | One product by EAN or URL: description, breadcrumb, ingredients, allergens, nutrition per 100 g and per portion, Nutri-Score, Eco-Score, the price block with unit price and promotion, marketplace seller and offers, and the rating distribution |
+| `get_carrefour_reviews` | 1-50 verified-purchase reviews of one product (default 10), 4 sorts, star filter, offset paging; author as published (first name and last initial) |
+| `get_carrefour_category` | A category (aisle) grid by URL or path (`/r/cremerie`), with the search filters, sorts and `store` |
+| `get_carrefour_promotions` | Items on promotion: all, catalogue, immediate discounts, loyalty-card offers or the site's festive selection, optionally for one aisle |
+| `get_carrefour_suggestions` | Search box suggestions and category suggestions for a partial query |
+| `find_carrefour_stores` | Stores near a French postal code or a point (up to 20 per page), optionally with one service (drive, fuel station...): `store_ref` and `pickup_refs` for `store`, address, distance, today's hours, slug |
+| `get_carrefour_store_availability` | Whether the stores around a postal code carry one product (EAN): yes / no per store, no price |
+| `get_carrefour_store` | One store by slug or URL: services, weekly hours, drive hours, next pickup slots as shown, nearby stores and fuel prices per litre with update times at stores with a fuel station |
+
+Platform key `carrefour`. 1 credit per call; search and product on Belgium
+cost 2. Markets (`country`): fr (carrefour.fr, EUR, default, every tool), ar
+(Argentina, ARS), ro (Romania, RON) and be (Belgium, EUR, `language` fr or
+nl); ar, ro and be serve search and product only. Data comes back in the
+market's language: French titles, labels and ingredients on fr. Without
+`store` a price is carrefour.fr's national online price; pass a store ref from
+`find_carrefour_stores` or `get_carrefour_store_availability` for that store's
+shelf price and assortment (Nutella 400 g: 3.99 national, 3.69 at two stores,
+4.61 at another). Multi-buy promotions ("Le 2eme a -50%") have no single
+discounted price. Failed calls are not charged; a not-found (unknown product, store or
+category) is a charged 404. No Q&A, printed leaflet, delivery-slot booking,
+cart, loyalty account data or price history: to track prices, poll and store
+your own. Spain, Italy, Poland, Brazil and the Middle East sites are not covered.
 
 ### Kroger
 
