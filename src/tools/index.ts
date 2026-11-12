@@ -3,6 +3,7 @@ import type { ScavioClient } from "../lib/client.js";
 import { env } from "../lib/env.js";
 
 import { registerExtractTool } from "./extract.js";
+import { registerCompanyTools } from "./company.js";
 import { registerGoogleTools } from "./google.js";
 import { registerChatgptTools, registerGeminiTools } from "./ai-chat.js";
 import { registerYoutubeTools } from "./youtube.js";
@@ -95,6 +96,7 @@ type RegisterFn = (server: McpServer, getClient: () => ScavioClient) => void;
 const PLATFORMS: Record<string, RegisterFn> = {
   // Core
   extract: registerExtractTool,
+  company: registerCompanyTools,
   // Search
   google: registerGoogleTools,
   // AI assistants
@@ -188,11 +190,11 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 627KB of tools/list (measured with
+ * tools, which serialises to 628KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
- * hard tool-count ceiling some clients enforce. The default set below is 142
- * tools, 112KB (0.20.0: TikTok, YouTube, Reddit and X gained 19 tools; 0.21.0:
+ * hard tool-count ceiling some clients enforce. The default set below is 143
+ * tools, 114KB (0.20.0: TikTok, YouTube, Reddit and X gained 19 tools; 0.21.0:
  * Extract gained map, crawl and batch, 7 tools; 0.22.0: Instagram gained 8; 0.23.0: google_custom_search; 0.24.0 added the opt-in chatgpt and gemini platforms).
  *
  * The default is therefore exactly what 0.12.x registered, plus extract:
@@ -200,13 +202,16 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * user who had TikTok or LinkedIn working yesterday still has it today, and
  * the context cost is unchanged from the version they were already running.
  * extract joins them because it is a single tool and the read-any-page
- * primitive an agent reaches for in almost every session.
+ * primitive an agent reaches for in almost every session. company (0.50.0)
+ * joins for the same reason: one tool, and the step after google_maps_search,
+ * which is already in the default set (place_id -> emails, phones, owner).
  *
  * The 22 platforms added in 0.13.0 are opt-in via SCAVIO_PLATFORMS — growth
  * goes behind the flag, the existing contract does not move.
  */
 export const DEFAULT_PLATFORMS = [
   "extract",
+  "company",
   "google",
   "youtube",
   "amazon",
@@ -247,7 +252,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (477 tools)
+ *   all      — every platform (478 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *

@@ -182,7 +182,7 @@ export function registerGoogleTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "google_maps_search",
-    `Search Google Maps for local businesses and places. 1 credit.`,
+    `Search Google Maps for local businesses and places. Each result carries a place_id: pass it to company_enrich for the business's emails, phones, socials and owner. 1 credit.`,
     {
       query: z.string().min(1).max(500)
         .describe("Search query."),

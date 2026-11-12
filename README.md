@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 477 tools across 72 platforms plus Extract, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 478 tools across 72 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 477 tools puts ~627KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract: 142 tools, 112KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 478 tools puts ~628KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 477 tools. Loading all of them costs ~627KB of `tools/list` —
+Scavio exposes 478 tools. Loading all of them costs ~628KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -217,11 +217,11 @@ measured, not estimated: `npm run toolslist` reproduces them.
 
 | Value | Registers |
 |-------|-----------|
-| *(unset)* or `default` | Every platform 0.12.x had, plus `extract` — **142 tools, 112KB** |
-| `all` | every platform — **477 tools, ~627KB** |
+| *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
+| `all` | every platform — **478 tools, ~628KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
-| `default,zillow,metaads` | the default set plus two more — 148 tools, 120KB |
-| `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 144 tools, 115KB |
+| `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
+| `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
 | `none` | no platform tools, only `get_usage` |
 
 Keys are matched case- and punctuation-insensitively, so `meta-ads`, `metaads`
@@ -231,7 +231,7 @@ is logged to stderr and skipped rather than failing the server.
 `get_usage` always registers — it is free, and it is what every install guide
 tells you to call to check the server works.
 
-**Platform keys:** `extract`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
+**Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
 `target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
@@ -281,7 +281,7 @@ https://mcp.scavio.dev/mcp?platforms=all
 Nothing to do. The default set is exactly the 10 platforms 0.12.x registered,
 plus Extract — every tool you were using still loads. Those platforms keep gaining
 tools (Walmart grew from 2 to 7; TikTok, YouTube, Reddit and X gained 19 in 0.20.0;
-Extract gained map, crawl and batch in 0.21.0; Instagram gained 8 in 0.22.0; Google gained google_custom_search in 0.23.0), which is why the default count is now 142.
+Extract gained map, crawl and batch in 0.21.0; Instagram gained 8 in 0.22.0; Google gained google_custom_search in 0.23.0; company_enrich joined the default in 0.50.0), which is why the default count is now 143.
 
 The 22 platforms added in 0.13.0 are opt-in. Add them additively:
 
@@ -350,6 +350,30 @@ pagination: the whole page comes back in one call.
   (the API default is 1,000). Every response that has more to read carries a
   `_hint` naming the exact next call. Repeat a start call with the same
   `idempotency_key` and you get the original job back instead of a second one.
+
+### [Company Enrich](https://scavio.dev/docs/company-enrich?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+| Tool | Description |
+|------|-------------|
+| `company_enrich` | A company's published emails, phone numbers, social profiles and contact page, plus the owner or founder's name and title with the page that names them, from its website or a Google Maps `place_id` |
+
+Platform key `company`, in the default set. The step after `google_maps_search`:
+pass each local result's `place_id` and get the business's contact details, a
+lead list from a Maps search in two calls. Provide `url` (the company's own
+site; a social profile is a 400) or `place_id` (the listing is looked up first,
+then its website is read).
+
+Returns `data.company` (`name`, `website`, `domain`, `emails[]`, `phones[]`,
+`socials` keyed by network, `contact_page`, `address`, `place_id`),
+`data.owner` (`name`, `title`, `source_url`, `email`, `email_status`) or null
+when no page names one, and `data.pages_read[]`. An owner is only returned when
+the cited page names them; `email_status` is `published` when an address on the
+site matches the owner's name, otherwise `not_found`.
+
+10 credits from a `url`, 20 from a `place_id` (1 when the listing has no
+readable website); a site that cannot be reached is free. Each call reads
+several pages live, so it takes 10-45 seconds; a `place_id` call can pass 60
+seconds, so raise the client's tool-call timeout if it cancels at 60.
 
 ### [Google Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
@@ -1679,6 +1703,7 @@ id is a billed 404 that names what was not found.
 
 - [Google Search API](https://scavio.dev/google-search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — SERP results, news, images, maps, and knowledge graph
 - [Extract](https://scavio.dev/docs/extract?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — read any URL as Markdown, plain text or raw HTML
+- [Company Enrich](https://scavio.dev/docs/company-enrich?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — a business's emails, phones, socials and owner from its website or a Google Maps place_id
 - [Amazon Product API](https://scavio.dev/amazon-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Walmart Product API](https://scavio.dev/walmart-product-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — product search and details, alongside [eBay](https://scavio.dev/docs/ebay-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/docs/target-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Home Depot](https://scavio.dev/docs/home-depot-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Costco](https://scavio.dev/costco-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (per-warehouse prices, stock, gas prices, coupon book), and [Mercado Libre](https://scavio.dev/mercadolibre-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (Mexico, Brazil, Argentina and Colombia listings, sellers, reviews, questions and best sellers)
 - [TikTok API](https://scavio.dev/tiktok-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Instagram API](https://scavio.dev/instagram-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Reddit API](https://scavio.dev/reddit-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [X API](https://scavio.dev/x-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [LinkedIn API](https://scavio.dev/linkedin-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), and [YouTube API](https://scavio.dev/youtube-transcript-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) — social and video data
 - Travel and local — [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Airbnb](https://scavio.dev/docs/airbnb-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Yelp](https://scavio.dev/docs/yelp-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
