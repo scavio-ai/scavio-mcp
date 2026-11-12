@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 478 tools across 72 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 487 tools across 73 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 478 tools puts ~628KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 487 tools puts ~655KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 478 tools. Loading all of them costs ~628KB of `tools/list` —
+Scavio exposes 487 tools. Loading all of them costs ~655KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **478 tools, ~628KB** |
+| `all` | every platform — **487 tools, ~655KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1430,6 +1430,45 @@ charged 404. No search suggestions, bidding, buying or checkout, Allegro
 Lokalnie as its own source, Smart! account data, seller revenue, seller
 addresses or tax ids, price history or reviews past the first 20: to track
 prices, poll and store your own.
+
+### OLX
+
+OLX Europe classifieds: used goods, cars, real estate and jobs, with sellers, category filters and similar ads (olx.pl, olx.ro, olx.pt, olx.bg, olx.ua, olx.kz and olx.uz). OLX Brasil, olx.in and other OLX-branded sites are not covered.
+
+| Tool | Description |
+|------|-------------|
+| `search_olx` | Search by keyword and / or category, up to 50 ads per page (promoted ads interleaved on top of these, flagged `is_promoted` with `promoted_position`): price (with `original_value` / `original_currency` when the site converts it), salary for jobs, condition, params, location with ids, `created_at` / `refreshed_at`, OLX delivery, seller id; sort by relevance, newest or price; filter by price, condition, private / business seller, OLX delivery, photos, region / city / district with a radius and the category's own `filter_*` keys; `total` and `total_capped` |
+| `get_olx_offer` | One ad by id or URL: full description, price, salary, every parameter, category breadcrumb, photos, location, dates, status, OLX delivery and the seller (id, `is_business`, `business_name` for businesses, `member_since`) |
+| `get_olx_seller` | One seller by id: `is_business`, `business_name` (business sellers only), `member_since`, `active_ads`, `ads_url` |
+| `get_olx_seller_ads` | One seller's live ads, with the search sorts and filters and an optional query |
+| `get_olx_filters` | A category's filters ready for `filters` (rooms, area, year, mileage ...): key, kind (range or choice), `send_as`, values with ad counts, plus ad counts per region and subcategory (not kz or uz) |
+| `get_olx_categories` | The category tree: top level with direct children, or one category's whole subtree, with active ad counts |
+| `search_olx_locations` | City and district autocomplete with `city_id`, `district_id` and `region_id` for search |
+| `get_olx_suggestions` | Search box suggestions, each with the category it is most searched in |
+| `get_olx_similar` | The ads OLX recommends next to one ad (about 30), in the search item shape (not kz or uz) |
+
+Platform key `olx`. 1 credit per call. Markets (`country`): pl (olx.pl, PLN,
+default), ro (olx.ro, RON), pt (olx.pt, EUR), bg (olx.bg, EUR), ua (olx.ua,
+UAH), kz (olx.kz, KZT) and uz (olx.uz, UZS) on every tool except
+`get_olx_filters` and `get_olx_similar` (pl, ro, pt, bg, ua). Titles, params
+and labels come back in the site's language: Polish on pl, Russian by default
+on kz and uz; `language` (`kk` on kz, `uz` on uz) switches search, seller ads
+and offer to Kazakh or Uzbek. `olx_delivery` is not available on kz and uz.
+OLX lets anyone page through the first 1,000 results of a search only
+(`total_capped`); kz and uz hide large totals (`total` null). `newest` orders
+by last refresh (sellers can refresh an ad), not first posting. Discover a
+category's `filter_*` keys with `get_olx_filters`, then pass them as
+`filters`. When the site converts a price (olx.uz y.e. to UZS, EUR to RON on
+ro, USD / EUR to UAH on ua), `price.value` is the converted figure and
+`original_value` / `original_currency` keep what the seller entered. Private
+sellers' names, phone numbers, emails, exact map positions, last-seen times
+and car VINs are never returned, and phone numbers and emails in ad text are
+replaced; `business_name` is set for business sellers only. Failed calls are
+not charged; a not-found is a charged 404, and an ended ad answers the same
+404 as a missing one ("not found or no longer active"). OLX shows no seller
+ratings or reviews. No view counts, phone numbers, messaging, delivery prices,
+checkout, average prices, notifications or price history: to watch for new
+listings or track prices, poll `newest` and store your own.
 
 ### Kroger
 
