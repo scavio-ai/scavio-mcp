@@ -52,7 +52,7 @@ export function registerSephoraTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_sephora_product",
-    `One sephora.com (US) product: name, brand, rating, review count, loves count, price range, description, suggested usage, category and breadcrumbs, a summary of what reviews say with pro and con sentiment counts (no review text), and every shade or size as a sku with sku_id, shade, size, price, list and sale price, in_stock, only_few_left, ingredients, images, swatch, and pickup and same-day eligibility. An unknown product is a 404. 1 credit.`,
+    `One sephora.com (US) product: name, brand, rating, review count, loves count, price range, description, suggested usage, category and breadcrumbs, a summary of what reviews say with pro and con sentiment counts (no review text), and every shade or size as a sku with sku_id, shade, size, price, list and sale price, in_stock, only_few_left, ingredients, images, swatch, and pickup and same-day eligibility. An unknown product is a 404. 2 credits.`,
     {
       url: z.string().min(1).max(500).optional()
         .describe("sephora.com product URL (a search or category result's url), e.g. 'https://www.sephora.com/product/mac-cosmetics-m-a-cximal-silky-matte-lipstick-P510799'. Preferred: it answers faster. Pass this or product_id."),

@@ -825,7 +825,8 @@ only, with no was-price. Rating and review count only, no review text.
 | `get_sephora_category` | Products in a category, same fields as search, with subcategories, parent category and breadcrumbs |
 | `get_sephora_product` | One product: every shade or size with price, stock, ingredients and pickup/same-day eligibility, plus a review summary with pro and con sentiment counts |
 
-1 credit per call. `get_sephora_product` takes a result's `url` (faster) or
+`search_sephora` and `get_sephora_category` are 1 credit per call, `get_sephora_product` 2.
+`get_sephora_product` takes a result's `url` (faster) or
 `product_id` (e.g. `"P510799"`). The review summary and sentiment counts come
 with no review text.
 
