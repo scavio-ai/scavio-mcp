@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 504 tools across 74 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 516 tools across 75 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 504 tools puts ~689KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 516 tools puts ~725KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 504 tools. Loading all of them costs ~689KB of `tools/list` —
+Scavio exposes 516 tools. Loading all of them costs ~725KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **504 tools, ~689KB** |
+| `all` | every platform — **516 tools, ~725KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1535,6 +1535,48 @@ publish UPCs, ingredients, allergens or reviews online). Coupons are listed,
 never clipped (no account); no cart or ordering. Stores cover FL, GA, AL, SC,
 NC, TN, VA and KY. Failed calls are not charged; an unknown item code or store
 id is a charged 404.
+
+### [IKEA](https://scavio.dev/docs/ikea-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+IKEA product data across 55 markets: IKEA prices by country for one article number, search, product detail, reviews, categories, deal lists, stores, stock by store, bulk item lookup and As-is (second-hand) offers.
+
+| Tool | Description |
+|------|-------------|
+| `search_ikea` | Search by keyword: item number, name, type, design, price, previous price, discount, price tag (IKEA Family price, new lower price ...), rating, variants, last chance, category path; sort by price, newest, rating, name or popularity; filter by color, price range, category, new, last chance, IKEA Family price, best seller, store availability or any facet; facets, did-you-mean, related searches |
+| `get_ikea_product` | One product by article number or product URL: price and previous price with dates, IKEA Family price, measurements, materials, care, packaging (packages, dimensions, weight), assembly PDFs, manuals, designer, variants, secondary ratings, 3 newest reviews |
+| `get_ikea_reviews` | Rating, rating count, secondary ratings and the 20 most recent reviews, plus highlighted reviews with their country |
+| `get_ikea_category` | A category's products by category id or URL, with the search sorts and filters |
+| `get_ikea_categories` | The market's category tree (about 1,500 categories) with ids for `get_ikea_category` |
+| `get_ikea_deals` | A deal list: new products, IKEA Family price, new lower price, last chance, lowest price, top seller, limited edition and more, with the search sorts and filters |
+| `get_ikea_suggestions` | Search box suggestions for a partial query |
+| `find_ikea_stores` | The market's stores and pick-up / plan-and-order points: store id, address, coordinates, opening hours, restaurant and Swedish Food Market hours; filter by text or sort by distance |
+| `get_ikea_stock` | Stock level at one store (in stock high / low, out of stock) for up to 100 article numbers, plus home delivery to a postal code |
+| `get_ikea_items` | Up to 100 article numbers on one market in one call, in the search item shape |
+| `compare_ikea_prices` | One article number across 2 to 10 markets: name, price, previous price, price tag and URL per market, each in its own currency |
+| `get_ikea_as_is` | One store's As-is offers (ex-display, returned and second-hand items): original price, offer prices, condition and discount reason |
+
+Platform key `ikea`. 1 credit per call; `compare_ikea_prices` costs 1 credit
+per market that answered. Markets (`country`, default `us`): search and product
+cover 55 markets, the 50 ikea.com markets (us ca gb ie de at ch fr be nl dk se
+no fi ee lv lt pl cz sk hu hr si rs ro pt es it il ae sa kw qa bh om jo eg ma in
+my sg ph th jp kr au nz mx cl co) plus cn (ikea.cn), pr (Puerto Rico), do
+(Dominican Republic), es_islands (Canary and Balearic islands, with `island`)
+and is (Iceland). Category, deals, suggestions and items serve the 50 ikea.com
+markets plus cn; reviews, categories, stores, stock and compare the 50 ikea.com
+markets; As-is serves us, gb, de, fr, se, jp, nl, es, it, pl, au, ch and at.
+Ukraine, Greece, Cyprus, Bulgaria, Hong Kong, Taiwan, Indonesia and Turkey are
+not available. `language` picks one of the market's languages (ca en/fr, be
+nl/fr/en, ch de/fr/it/en, us en/es ...); data comes in that language and prices
+in the market's own currency, never converted. On 2026-11-13 KALLAX 80275887
+was EUR 49.99 in de and nl, EUR 59.99 in fr and SEK 599 in se. Some markets
+(us, ca, jp, au, kr, in, my, sg, ph ...) sell the same product under a
+different article number, so `found` is false there. Reviews are the 20 most
+recent the product page shows (no paging, sort or star filter) and ratings are
+pooled across markets. Stock is a level per store, not a quantity. A product or
+reviews call can take up to about 100 seconds. Puerto Rico, Dominican Republic
+and the islands return the first 40 search results only, and franchise products
+(pr, do, es_islands, is) return basic detail. Failed calls are not charged; an
+unknown article number, category or store id is a charged 404.
 
 ### [Mercado Libre](https://scavio.dev/docs/mercadolibre-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
