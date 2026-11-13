@@ -36,7 +36,7 @@ const CHARGE = "1 credit. Failed upstream calls are not charged (they are retrie
 const LANG =
   "Data comes in the market's language and prices are numbers in the market's own currency (never converted); every answer echoes country, language and currency.";
 const ITEM =
-  "item_no, item_no_global, is_combination, name, type_name, design, measure_text, url, image, images, price, previous_price, discount_amount, discount_percent, price_tag (family_price: price is the IKEA Family member price and previous_price the regular one; new_lower_price, lower_price_in_store, new_product, discontinued or none), price_tag_text, lowest_price, price_valid_from, price_valid_to, rating, rating_count (ratings are pooled across IKEA markets), badge (top_seller / limited_edition), colors, variant_count, variants, last_chance, online_sellable, category_path and availability (with store_id: the store's stock level and home delivery)";
+  "item_no, item_no_global, is_combination, name, type_name, design, measure_text, url, image, images, price, previous_price, discount_amount, discount_percent, price_tag (family_price: price is the IKEA Family member price and previous_price the regular one; new_lower_price, time_restricted_offer (a limited-time reduced price, with previous_price and valid dates), lower_price_in_store, new_product, discontinued or none), price_tag_text, lowest_price, price_valid_from, price_valid_to, rating, rating_count (ratings are per market as shown; many markets share one pool, some show none), badge (top_seller / limited_edition), colors, variant_count, variants, last_chance, online_sellable, category_path and availability (with store_id: the store's stock level and home delivery)";
 const GRID = `items with ${ITEM}. Also total, page, page_size, total_pages, count, sort, applied_filters and facets (name, parameter, type, values with id, label and count; the parameter is the key filters takes).`;
 
 const country = (markets: readonly string[], scope: string) => z.enum(markets as unknown as [string, ...string[]]).optional()
@@ -122,7 +122,7 @@ export function registerIkeaTools(server: McpServer, getClient: () => ScavioClie
 
   server.tool(
     "get_ikea_reviews",
-    `An IKEA product's rating, rating_count, secondary_ratings (appearance, ease of assembly, quality, value for money ...) and the 20 most recent reviews the product page shows (title, text, rating, date, author first name as shown, country), plus highlighted reviews with their country. No paging, sort or star filter: always the 20 newest. Ratings and reviews are pooled across IKEA markets (the same count on every market). A call can take up to about 100 seconds. ${CHARGE}`,
+    `An IKEA product's rating, rating_count, secondary_ratings (appearance, ease of assembly, quality, value for money ...) and the 20 most recent reviews the product page shows (title, text, rating, date, author first name as shown, country), plus highlighted reviews with their country. No paging, sort or star filter: always the 20 newest. rating and rating_count are what that market's site shows: many markets share one pool (KALLAX: 8,241 in Germany, Spain, Sweden), others have their own (France 2,760, Italy 1,887), and some show none (Estonia, Latvia, Lithuania, Israel, Iceland). A call can take up to about 100 seconds. ${CHARGE}`,
     {
       item_no: itemNo().optional(),
       url: z.string().min(10).max(500).optional()

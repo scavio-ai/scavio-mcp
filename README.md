@@ -1571,8 +1571,10 @@ in the market's own currency, never converted. On 2026-11-13 KALLAX 80275887
 was EUR 49.99 in de and nl, EUR 59.99 in fr and SEK 599 in se. Some markets
 (us, ca, jp, au, kr, in, my, sg, ph ...) sell the same product under a
 different article number, so `found` is false there. Reviews are the 20 most
-recent the product page shows (no paging, sort or star filter) and ratings are
-pooled across markets. Stock is a level per store, not a quantity. A product or
+recent the product page shows (no paging, sort or star filter). Ratings are
+what each market's site shows: many markets share one pool (KALLAX: 8,241 in
+Germany, Spain, Sweden), others have their own (France 2,760, Italy 1,887) and
+some show none (Estonia, Latvia, Lithuania, Israel, Iceland). Stock is a level per store, not a quantity. A product or
 reviews call can take up to about 100 seconds. Puerto Rico, Dominican Republic
 and the islands return the first 40 search results only, and franchise products
 (pr, do, es_islands, is) return basic detail. Failed calls are not charged; an
