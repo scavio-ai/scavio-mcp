@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 493 tools across 73 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 504 tools across 74 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 493 tools puts ~670KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 504 tools puts ~689KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 493 tools. Loading all of them costs ~670KB of `tools/list` —
+Scavio exposes 504 tools. Loading all of them costs ~689KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **493 tools, ~670KB** |
+| `all` | every platform — **504 tools, ~689KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1502,6 +1502,39 @@ and star distribution; review text is not available. Fuel center locations are
 returned, fuel prices are not. Coupons are listed, never clipped (no account).
 The printed weekly ad circular is not available. Failed calls are not charged;
 an unknown UPC or store id is a charged 404.
+
+### [Publix](https://scavio.dev/docs/publix-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Publix grocery data by store: the weekly ad with BOGO deals, Extra Savings, digital coupons, the deli and bakery order-ahead menu (Pub Subs) with store prices, product search, category listings, nutrition facts and store locations.
+
+| Tool | Description |
+|------|-------------|
+| `search_publix` | Search at one store by keyword, 48 per page: item code, title, brand, size, aisle, on-sale flag, promo (single, BOGO or multi-buy, with dates), price where Publix shows one, coupon flag; sort by name, popularity, savings or views; filter to on sale, BOGO or a brand; facets |
+| `get_publix_product` | One product by item code at one store: the product card plus nutrition facts (every nutrient with amount, unit and % daily value) |
+| `get_publix_category` | A category's products at one store by `category_url` or `category_id`, in the search item shape, with the search sorts and filters |
+| `get_publix_categories` | The category tree (departments, categories, sub-categories) with ids for `get_publix_category` |
+| `get_publix_weekly_ad` | The store's current weekly ad (about 700 items, about 230 BOGO): savings text, deal type (bogo, b2g1, multi, price, percent_off), price, bundle, department, ad start and end dates; filter by department, BOGO only or text |
+| `get_publix_extra_savings` | The store's Extra Savings (temporary price reductions): amount saved, reduced price, minimum quantity and the period's dates |
+| `get_publix_coupons` | The store's digital coupons (about 100-130): savings text, dollar value, minimum quantity, limit, dates and terms |
+| `search_publix_savings` | One keyword across the store's weekly ad, Extra Savings and digital coupons, each item tagged with its `saving_type` |
+| `get_publix_order_ahead` | The store's deli and bakery order-ahead menu with its prices: Pub Subs (`section` subs) or every sub, platter, cake and meal (`section` all, 60 per page), with lead time, serves and calories |
+| `find_publix_stores` | Stores near a ZIP, in a city + state, or one by `store_id`: address, phone, 7 days of hours, departments, services, pharmacy phone and hours, coordinates, distance and `weekly_ad_break_day` |
+| `get_publix_suggestions` | Search box suggestions for a partial query, plus up to 4 products with `store_id` |
+
+Platform key `publix`. 1 credit per call. Every price tool is store-scoped: get
+a `store_id` (the Publix store number, e.g. `"1614"` Miami, `"1825"` Atlanta)
+from `find_publix_stores`; prices and promotions differ by store (a Publix
+Chicken Tender Sub measured $12.09 in Miami and $11.99 in Atlanta). Publix does
+not show regular shelf prices online: `price` is a number only for items on
+promotion (weekly ad, BOGO, multi-buy, Extra Savings) and order-ahead items, and
+null otherwise, never estimated. Multi-buys ("2 for $5.00") carry `bundle`
+{quantity, price}. Weekly ads run Thursday to Wednesday in Florida and Wednesday
+to Tuesday in Georgia and North Carolina (`weekly_ad_break_day` per store);
+English ad only. Products are keyed by Publix item code, not UPC (Publix does not
+publish UPCs, ingredients, allergens or reviews online). Coupons are listed,
+never clipped (no account); no cart or ordering. Stores cover FL, GA, AL, SC,
+NC, TN, VA and KY. Failed calls are not charged; an unknown item code or store
+id is a charged 404.
 
 ### [Mercado Libre](https://scavio.dev/docs/mercadolibre-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
