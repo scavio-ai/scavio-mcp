@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 520 tools across 76 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 526 tools across 77 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 520 tools puts ~741KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 526 tools puts ~756KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 520 tools. Loading all of them costs ~741KB of `tools/list` —
+Scavio exposes 526 tools. Loading all of them costs ~756KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **520 tools, ~741KB** |
+| `all` | every platform — **526 tools, ~756KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1608,6 +1608,40 @@ approximate. `brand` takes brand ids, not names. ZIP delivery estimates are us
 and ca only. Sale events are listed, not expanded: use `on_sale`, `closeout` or
 `open_box` on search or category for products. Failed calls are not charged; an
 unknown SKU or category is a charged 404.
+
+### [Ashley Furniture](https://scavio.dev/docs/ashley-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Ashley Furniture product data for ashleyfurniture.com, plus search and product on Ashley's licensed storefronts in Canada, Mexico, the Philippines, Saudi Arabia and Turkey: price next to Ashley's Regular Price, badges, stock and delivery, specifications, ratings, the first 10 reviews, customer Q&A, category grids, deal events and stores.
+
+| Tool | Description |
+|------|-------------|
+| `search_ashley` | Search by keyword: sku, name, brand, price, regular price, discount percent, color, size, badges (sale, clearance, doorbuster, hot buy ...), rating, review count, variants with their own prices, promotions; us: 48 per page with the exact total, sort by best sellers, price, newest, rating or name; licensed storefronts: up to 10 best matches with the handle for `get_ashley_product` |
+| `get_ashley_product` | One product by item number or URL (licensed storefronts: by handle or URL): prices, badges, options, variants, set components with their own prices and stock, dimensions, materials, assembly, stock and delivery, nearest store, rating histogram, the first 10 reviews, customer photos and Q&A |
+| `get_ashley_category` | A category's products (30 per page) by path or URL, sorted by best sellers, price, newest, rating or name and filtered by any facet or a price range |
+| `get_ashley_deals` | The products of one deal event: Black Friday, clearance or Hot Buys, with the category sorts and filters |
+| `get_ashley_stores` | Ashley stores near a latitude / longitude (10 to 100 miles): store id, name and URL |
+| `get_ashley_store` | One store by store id or URL: address, phone, coordinates, opening hours, payment accepted, services, rating |
+
+Platform key `ashley`. `search_ashley` and `get_ashley_product` cost 2 credits
+on us and mx and 1 credit on ca, ph, sa and tr; the other four tools are us
+only at 2 credits. Markets (`country`, default `us`): us (ashleyfurniture.com,
+USD), ca (ashleyhomestore.ca, CAD), mx (store.ashleyfurniture.com.mx, MXN,
+Spanish), ph (store.ashleyfurniture.ph, PHP), sa (store.ashley.sa, SAR,
+English) and tr (ashleyturkiye.com, TRY, Turkish). Prices are in the market's
+currency, never converted. `regular_price` is Ashley's own Regular Price,
+which Ashley's terms define as its highest advertised price in store and
+online, offered to customers using special long-term financing. Ashley prices
+vary by region and there is no ZIP input: every us answer returns `priced_for`
+(`zipcode`, `price_zone`), the ZIP and price zone Ashley priced that answer
+for, so two calls can come back priced for different zones. Reviews are the
+first 10 the product page shows plus the rating histogram (no review paging).
+On the licensed storefronts search returns up to 10 matches (tr its first
+results page) with no paging or sort, and product takes the `handle` from
+search, not a sku. Search facets are informational: filter on
+`get_ashley_category`. `get_ashley_stores` takes coordinates only (no ZIP or
+city lookup) and lists stores alphabetically; call `get_ashley_store` for the
+address and hours. Failed calls are not charged; an unknown item number,
+category or store is a charged 404.
 
 ### [Mercado Libre](https://scavio.dev/docs/mercadolibre-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
