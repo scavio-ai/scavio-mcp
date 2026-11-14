@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 526 tools across 77 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 535 tools across 78 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 526 tools puts ~756KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 535 tools puts ~788KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 526 tools. Loading all of them costs ~756KB of `tools/list` —
+Scavio exposes 535 tools. Loading all of them costs ~788KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **526 tools, ~756KB** |
+| `all` | every platform — **535 tools, ~788KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1642,6 +1642,45 @@ search, not a sku. Search facets are informational: filter on
 city lookup) and lists stores alphabetically; call `get_ashley_store` for the
 address and hours. Failed calls are not charged; an unknown item number,
 category or store is a charged 404.
+
+### [Maisons du Monde](https://scavio.dev/docs/maisonsdumonde-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Maisons du Monde (furniture and home decor) product data for France, Belgium (French or Dutch), Luxembourg, the Netherlands, Germany, Spain, Italy, Portugal and Switzerland (French, German or Italian): promo price next to the crossed-out price and discount per storefront, whether an item is sold by Maisons du Monde or a marketplace seller, product detail, pooled customer reviews, category grids, Black Friday and Seconde Chance deals, stores, store stock and marketplace sellers.
+
+| Tool | Description |
+|------|-------------|
+| `search_maisonsdumonde` | Search by keyword, 40 per page with the exact total: id, name, collection, brand, price, was price (crossed out), discount percent, eco participation (fr), badges, rating, review count, sold by (Maisons du Monde or marketplace), sponsored flag; sort by price or rating; filter by price, discount, stock, rating, color, material, style, brand, seller or any facet |
+| `get_maisonsdumonde_product` | One product by reference or URL: prices, stock with the online quantity, seller, variants, dimensions, materials, assembly, documents, review summary, Q&A and the same product's URL on every other market |
+| `get_maisonsdumonde_category` | A category's products by hash or URL (the hash is the same on every market), with the search sorts and filters |
+| `get_maisonsdumonde_deals` | Black Friday (every market while it runs), Seconde Chance (fr: used and returned items) or any category's discounted items |
+| `get_maisonsdumonde_reviews` | A product's reviews, pooled across markets and translated into the request language: rating histogram, criteria scores, source market, brand replies; cursor paging |
+| `get_maisonsdumonde_stores` | Up to 10 stores nearest a postcode: address, coordinates, distance, hours, click and collect |
+| `get_maisonsdumonde_store` | One store by id or URL: address, phone, hours, services |
+| `get_maisonsdumonde_availability` | One item's stock at one store (quantity, display model) plus the delivery options with the home delivery from-price |
+| `get_maisonsdumonde_seller` | A marketplace seller's profile (rating, orders, member since, shipping, returns) and catalog |
+
+Platform key `maisonsdumonde`. Every tool costs 1 credit. Markets (`country`,
+default `fr`) and languages (`language`, default the market's first): fr
+(French), be (French or Dutch), lu (French), nl (Dutch), de (German), es
+(Spanish), it (Italian), pt (Portuguese), all in EUR, and ch (French, German or
+Italian) in CHF. Search, product, category, deals and reviews serve all nine;
+stores, store and availability serve fr, be, de, es, it, pt and ch (not nl or
+lu); the marketplace (`get_maisonsdumonde_seller`, the `seller` and `sold_by`
+filters) exists on fr, de, es and it. Prices are in the market's currency,
+never converted: the euro storefronts shared one price per product and
+Switzerland was priced separately in CHF, measured on 2026-11-14 on 4
+products (round mirror 204172: 74.99, now 37.45 EUR on every euro market;
+91.90, now 45.95 CHF). `was_price` is the crossed-out price shown next to a
+discount; Maisons du Monde shows no 30-day lowest price and no price history,
+so poll to track changes. Reviews are pooled across every market and shown
+translated into the request language, with no star filter; a product with no
+reviews is a charged 404. Home delivery is a from-price per product and market
+(no postcode-exact cost). Store stock: `get_maisonsdumonde_stores` for the
+store id, then `get_maisonsdumonde_availability` (Maisons du Monde items only,
+not marketplace items). Search tiles carry `sold_by` but not the seller name
+(the product has it). The German site does not sort keyword results, so a
+sorted search on de comes back in relevance order with a note. No search
+suggestions. Failed calls are not charged; a not-found is charged.
 
 ### [Mercado Libre](https://scavio.dev/docs/mercadolibre-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
