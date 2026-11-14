@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 516 tools across 75 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 520 tools across 76 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 516 tools puts ~725KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 520 tools puts ~741KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 516 tools. Loading all of them costs ~725KB of `tools/list` —
+Scavio exposes 520 tools. Loading all of them costs ~741KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **516 tools, ~725KB** |
+| `all` | every platform — **520 tools, ~741KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1579,6 +1579,34 @@ reviews call can take up to about 100 seconds. Puerto Rico, Dominican Republic
 and the islands return the first 40 search results only, and franchise products
 (pr, do, es_islands, is) return basic detail. Failed calls are not charged; an
 unknown article number, category or store id is a charged 404.
+
+### [Wayfair](https://scavio.dev/docs/wayfair-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Wayfair product data for wayfair.com, wayfair.ca (English or French), wayfair.co.uk and wayfair.ie, plus the AllModern, Birch Lane, Joss & Main and Perigold sites: price, sale price, was price, badge, stock, options, specifications, ratings, reviews, ZIP delivery estimates and the current sale events.
+
+| Tool | Description |
+|------|-------------|
+| `search_wayfair` | Search by keyword: sku, name, brand (id, name), price, sale price, was price, price label, discount percent, per-item price, badge, rating, review count, stock, open-box price, option counts, sponsored flag; sort by price or customer rating; filter by sale, closeout, open box, new arrivals, in stock, brand id, minimum rating, price range or any facet; a keyword that matches a category answers that category (`redirected_to`) |
+| `get_wayfair_product` | One product by SKU or URL: prices, badge, limited-time deal, stock, max quantity, options with option ids, dimensions, specifications, features, images, documents, returns, rating, rating histogram, review summary, review aspects, the 5 reviews the page shows, and delivery estimates for a ZIP / postal code (us, ca) |
+| `get_wayfair_category` | A category's products (48 per page) by category id or URL, with the search sorts and filters, plus the category breadcrumbs |
+| `get_wayfair_deals` | The market's current sale events (event id, title, URL, image) |
+
+Platform key `wayfair`. 1 credit per call. Markets (`country`, default `us`): us
+(USD), ca (CAD; `language` en or fr), gb (GBP) and ie (EUR); Wayfair no longer
+sells in Germany or Austria. `site` picks a US banner site (allmodern,
+birchlane, jossandmain, perigold; search, product and category). Prices are in
+the market's currency, never converted. `was_price` is Wayfair's strikethrough
+price: Wayfair's terms state it is the manufacturer's suggested price or the
+highest price Wayfair offered or sold the item at in the past, and its Sale
+label means a discount against a price in the previous 90 days. Wayfair shows
+no price history, so poll `price`, `sale_price`, `was_price` and `badge` to build
+one. Option choices carry no price: call `get_wayfair_product` with `option_id`
+for each option's price and stock. Reviews are the 5 the product page shows
+(no paging). Keyword pages return 30 results (category pages 48) and totals are
+approximate. `brand` takes brand ids, not names. ZIP delivery estimates are us
+and ca only. Sale events are listed, not expanded: use `on_sale`, `closeout` or
+`open_box` on search or category for products. Failed calls are not charged; an
+unknown SKU or category is a charged 404.
 
 ### [Mercado Libre](https://scavio.dev/docs/mercadolibre-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 

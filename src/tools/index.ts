@@ -24,6 +24,7 @@ import { registerHebTools } from "./heb.js";
 import { registerKrogerTools } from "./kroger.js";
 import { registerPublixTools } from "./publix.js";
 import { registerIkeaTools } from "./ikea.js";
+import { registerWayfairTools } from "./wayfair.js";
 import { registerDecathlonTools } from "./decathlon.js";
 import { registerSpecsTools } from "./specs.js";
 import { registerLowesTools } from "./lowes.js";
@@ -125,6 +126,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   kroger: registerKrogerTools,
   publix: registerPublixTools,
   ikea: registerIkeaTools,
+  wayfair: registerWayfairTools,
   decathlon: registerDecathlonTools,
   specs: registerSpecsTools,
   lowes: registerLowesTools,
@@ -196,7 +198,7 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 725KB of tools/list (measured with
+ * tools, which serialises to 741KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 143
@@ -258,7 +260,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (516 tools)
+ *   all      — every platform (520 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
