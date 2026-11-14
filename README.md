@@ -806,7 +806,8 @@ and `"28117"`) are required on search and product. Deals are `search_lowes` with
 | `get_sams_club_category` | Products in a category, same fields as search; clearance is category `1150109` |
 | `get_sams_club_reviews` | Review bodies, 10 per page, with average rating and 1-5 star breakdown |
 
-1 credit per call. Search, savings and category use a nearby club chosen by
+`get_sams_club_clubs` is 1 credit per call; every other Sam's Club tool is 2.
+Search, savings and category use a nearby club chosen by
 location (echoed in `club`); for one specific club, call `get_sams_club_product`
 with a `club_id` from `get_sams_club_clubs`. `available_quantity` is capped at 8 by
 the site, so 8 means 8 or more.

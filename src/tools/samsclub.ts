@@ -32,7 +32,7 @@ export function registerSamsClubTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "search_sams_club",
-    `Search Sam's Club. Each result has item_id, price, was_price and savings_amount, unit price, Instant Savings (amount, end date, purchase limit), rating, review count, stock, pickup/delivery/shipping availability and aisle. Up to 45 per page. ${CLUB_NOTE} 1 credit/call.`,
+    `Search Sam's Club. Each result has item_id, price, was_price and savings_amount, unit price, Instant Savings (amount, end date, purchase limit), rating, review count, stock, pickup/delivery/shipping availability and aisle. Up to 45 per page. ${CLUB_NOTE} 2 credits/call.`,
     {
       query: z.string().min(1).max(200)
         .describe("Search keywords, e.g. 'paper towels'."),
@@ -45,7 +45,7 @@ export function registerSamsClubTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "get_sams_club_product",
-    `One Sam's Club item: online price and the club shelf price (club_price) with was price, savings and unit price, Instant Savings (amount, end date, limit), rating histogram, images, UPC, model, specifications, and fulfillment per method with stock status and aisle. Pass club_id (from get_sams_club_clubs) to price and stock a specific club. available_quantity is capped at 8: 8 means 8 or more. 1 credit.`,
+    `One Sam's Club item: online price and the club shelf price (club_price) with was price, savings and unit price, Instant Savings (amount, end date, limit), rating histogram, images, UPC, model, specifications, and fulfillment per method with stock status and aisle. Pass club_id (from get_sams_club_clubs) to price and stock a specific club. available_quantity is capped at 8: 8 means 8 or more. 2 credits.`,
     {
       item_id: itemId(),
       club_id: z.string().regex(/^\d{1,6}$/).optional()
@@ -68,7 +68,7 @@ export function registerSamsClubTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "get_sams_club_savings",
-    `Every item on Sam's Club Instant Savings, paged (up to 45 per page): price, was price and savings amount, plus each offer's amount, end date, purchase limit and the channels (shipping, pickup, delivery) it applies to. ${CLUB_NOTE} 1 credit/call.`,
+    `Every item on Sam's Club Instant Savings, paged (up to 45 per page): price, was price and savings amount, plus each offer's amount, end date, purchase limit and the channels (shipping, pickup, delivery) it applies to. ${CLUB_NOTE} 2 credits/call.`,
     {
       page: z.number().int().min(1).max(100).optional()
         .describe("Page, 1-based."),
@@ -79,7 +79,7 @@ export function registerSamsClubTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "get_sams_club_category",
-    `Products in a Sam's Club category, paged, with the same fields as search_sams_club. Clearance is category 1150109. A category with nothing on its shelf returns an empty list. ${CLUB_NOTE} 1 credit/call.`,
+    `Products in a Sam's Club category, paged, with the same fields as search_sams_club. Clearance is category 1150109. A category with nothing on its shelf returns an empty list. ${CLUB_NOTE} 2 credits/call.`,
     {
       category_id: z.string().regex(/^\d{1,12}$/)
         .describe("Category id: the number at the end of a samsclub.com /browse/ or /cp/ URL. Clearance is '1150109'."),
@@ -92,7 +92,7 @@ export function registerSamsClubTools(server: McpServer, getClient: () => Scavio
 
   server.tool(
     "get_sams_club_reviews",
-    `Customer reviews for a Sam's Club item, 10 per page: rating, title, text, author, date, verified purchase and helpful votes, plus the average rating, total count and 1-5 star breakdown. 1 credit/page.`,
+    `Customer reviews for a Sam's Club item, 10 per page: rating, title, text, author, date, verified purchase and helpful votes, plus the average rating, total count and 1-5 star breakdown. 2 credits/page.`,
     {
       item_id: itemId(),
       page: z.number().int().min(1).max(100).optional()
