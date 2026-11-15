@@ -16,7 +16,7 @@ export function registerCompanyTools(server: McpServer, getClient: () => ScavioC
     "company_enrich",
     "Find a company's contact details and its owner from its website or a Google Maps place_id: published emails, phone numbers, social profiles (facebook, instagram, linkedin, x, tiktok, youtube, pinterest) and the contact page, plus the owner or founder's name and title with source_url, the page that names them. " +
       "Use it after google_maps_search: pass each local result's place_id to turn a list of local businesses into leads. " +
-      "Returns data.company {name, website, domain, emails[], phones[], socials, contact_page, address, place_id}, data.owner {name, title, source_url, email, email_status} or null when no page names one, and data.pages_read[]. " +
+      "Returns data.company {name, website, domain, emails[], phones[], socials, contact_page, address, place_id}, data.owner {name, title, source_url, email, email_status} or null when no page names one. " +
       "Provide url or place_id. 10 credits from a url, 20 from a place_id (1 when the listing has no readable website); a site that cannot be reached is free. Takes 10-45s.",
     {
       url: z.string().min(3).max(2048).optional()

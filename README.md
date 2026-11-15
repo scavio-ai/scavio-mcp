@@ -366,7 +366,7 @@ then its website is read).
 Returns `data.company` (`name`, `website`, `domain`, `emails[]`, `phones[]`,
 `socials` keyed by network, `contact_page`, `address`, `place_id`),
 `data.owner` (`name`, `title`, `source_url`, `email`, `email_status`) or null
-when no page names one, and `data.pages_read[]`. An owner is only returned when
+when no page names one. An owner is only returned when
 the cited page names them; `email_status` is `published` when an address on the
 site matches the owner's name, otherwise `not_found`.
 
