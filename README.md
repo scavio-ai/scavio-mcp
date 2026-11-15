@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 535 tools across 78 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 547 tools across 79 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 535 tools puts ~788KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 547 tools puts ~842KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 535 tools. Loading all of them costs ~788KB of `tools/list` —
+Scavio exposes 547 tools. Loading all of them costs ~842KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **535 tools, ~788KB** |
+| `all` | every platform — **547 tools, ~842KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1470,6 +1470,57 @@ not charged; a not-found is a charged 404, and an ended ad answers the same
 ratings or reviews. No view counts, phone numbers, messaging, delivery prices,
 checkout, average prices, notifications or price history: to watch for new
 listings or track prices, poll `newest` and store your own.
+
+### [Trendyol](https://scavio.dev/docs/trendyol-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Trendyol (Turkey's largest online marketplace, plus its international storefronts across Europe, the Gulf and Azerbaijan) product data: for one product, the buy-box seller and every other seller's price, seller score, the crossed-out price and Trendyol's lowest-price badge; search, category and brand grids, reviews, seller Q&A, seller stores, flash deals, coupons, top-100 rankings, search suggestions and delivery estimates.
+
+| Tool | Description |
+|------|-------------|
+| `search_trendyol` | Search by keyword, 36 per page: price, original (crossed-out) price, discount, rrp, Plus price, lowest-price badge (day count), badges, rating, review count, favourites and orders (the site's rounded text), seller id, sponsored flag; 7 sorts; filter by price, brand, category, seller, rating, free shipping, rush delivery, discount, lowest-price badge, seller type, flash sale, coupon or any facet |
+| `get_trendyol_product` | One product by content id or link: prices, variants with barcode, attributes, rating, favourite count, category rankings, the `buy_box` (seller name, score out of 10, badges, city, prices, free shipping, rush delivery) and `other_sellers` (every other seller's price, score, badges, lowest-price badge), promotions, installments, VAT and optionally the description |
+| `get_trendyol_category` | A category's products by id or link (ids are the same on every market), with the search sorts and filters |
+| `get_trendyol_brand` | A brand's products by id or link, with the search sorts and filters |
+| `get_trendyol_reviews` | A product's reviews: rating histogram, review topics with positive / negative counts, sizes bought, Trendyol's own review summary, and reviews (rating, text, date, likes, masked author, verified buyer, seller, size, fit, photos); 5 sorts, star and photo filters, up to 50 per page |
+| `get_trendyol_questions` | A product's answered seller questions with the seller's answer; askers not named |
+| `get_trendyol_seller` | A seller's store profile (score out of 10, product count, followers, badges, average shipping time, question response time, ratings) and optionally its products as a grid |
+| `get_trendyol_deals` | Flash deals (slots and the live or chosen slot's items) or Super Firsatlar super discounts (tr only) |
+| `get_trendyol_coupons` | The collectable coupons on one product's listing, the buy box's or another seller's (`seller_id`): discount, minimum basket, valid until, issuer (tr only) |
+| `get_trendyol_rankings` | A category's top-100 list: best_seller, most_favourited, most_rated or top_viewed, 20 per page (not on the English-language EU storefronts) |
+| `get_trendyol_suggestions` | Search-box suggestions (keyword, category, brand, store) for a partial query |
+| `get_trendyol_delivery` | Delivery estimate per seller listing for one variant: delivery window, ships by, cutoffs, rush delivery, carriers; a Turkish city / district narrows it (tr only) |
+
+Platform key `trendyol`. Every tool costs 1 credit. Markets (`country`,
+default `tr`) and languages (`language`, default the market's first): tr
+(TRY; Turkish, English or Arabic), de and at (EUR; German), fr, be, hr, dk,
+ee, fi, it, lv, lt, nl, pt, si, es, se and lu (EUR; English), bg (EUR;
+Bulgarian or English), gr (EUR; Greek or English), sk (EUR; Slovak or
+English), cz (CZK; Czech or English), hu (HUF; Hungarian or English), pl
+(PLN; Polish or English), ro (RON; Romanian or English), rs (RSD; Serbian or
+English), ua (UAH; Ukrainian or English), md (MDL; Romanian or English), ae
+(AED; English or Arabic), sa (SAR; Arabic or English), qa, kw, om and bh
+(QAR, KWD, OMR, BHD; Arabic or English) and az (AZN; Turkish). ge, kz, kg and
+iq are served as the Turkish storefront and are not accepted; a market
+Trendyol does not sell to answers 400 before anything is charged. Every tool
+serves all 35 markets except `get_trendyol_deals` and `get_trendyol_coupons`
+(tr only) and `get_trendyol_rankings` (not on the 15 English-language EU
+storefronts fr, be, hr, dk, ee, fi, it, lv, lt, nl, pt, si, es, se and lu,
+which have no ranking lists); `city_id` / `district_id` on delivery are tr only (Istanbul 133,
+Sisli 54; there is no city list). The international storefronts are mostly
+sold cross-border by Trendyol itself and have their own price lists, not a
+currency conversion of the Turkish price (measured on 2 products on
+2026-11-15). Trendyol's developer FAQ says the buy box is chosen by algorithm
+metrics, not price alone, so compare `buy_box` with `other_sellers` rather
+than assuming the buy box is the lowest price. `lowest_price_badge` is the
+site's "lowest price of the last N days" tag (7, 10, 14, 30 or 90 days): a
+day count, not a numeric 30-day lowest price, and there is no price history,
+so poll to track changes. Search lists 36 per page and at most 138 pages, and
+`total` stops counting at 100,000 (`total_capped`); sponsored cards are
+flagged, kept and repeat across pages. Coupons belong to each seller's
+listing: the buy box often has none while another seller has some. Reviews
+carry the site's masked author only; no personal data beyond what the page
+shows masked, and no seller e-mail, tax number or address. Failed calls are
+not charged; a not-found is charged.
 
 ### [Kroger](https://scavio.dev/docs/kroger-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
