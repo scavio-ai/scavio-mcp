@@ -25,8 +25,8 @@ const buildOAuthMetadata = () => ({
   client_id_metadata_document_supported: true,
 });
 
-const buildResourceMetadata = () => ({
-  resource: `${env.ISSUER_URL}/mcp`,
+const buildResourceMetadata = (path: "mcp" | "chatgpt" = "mcp") => ({
+  resource: `${env.ISSUER_URL}/${path}`,
   authorization_servers: [env.ISSUER_URL],
   resource_name: "Scavio MCP Server",
   resource_documentation: "https://scavio.dev/docs/mcp",
@@ -42,6 +42,13 @@ authApp.get(
   "/.well-known/oauth-protected-resource/mcp",
   cors({ origin: "*" }),
   (c) => c.json(buildResourceMetadata())
+);
+
+// The /chatgpt endpoint is a second resource on the same authorization server.
+authApp.get(
+  "/.well-known/oauth-protected-resource/chatgpt",
+  cors({ origin: "*" }),
+  (c) => c.json(buildResourceMetadata("chatgpt"))
 );
 
 // --- Dynamic Client Registration (RFC 7591) ---

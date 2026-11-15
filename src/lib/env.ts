@@ -16,6 +16,9 @@ const envSchema = z.object({
   MCP_AUTH_SECRET: z.string().min(32).optional(),
   ISSUER_URL: z.string().url().default("https://mcp.scavio.dev"),
   DASHBOARD_URL: z.string().url().default("https://dashboard.scavio.dev"),
+  // Domain-verification token from the OpenAI plugin submission portal, served
+  // verbatim at /.well-known/openai-apps-challenge. Unset = that path 404s.
+  OPENAI_APPS_CHALLENGE: z.string().trim().min(1).optional(),
 });
 
 export const env = envSchema.parse(process.env);

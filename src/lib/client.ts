@@ -9,14 +9,18 @@ export const USER_AGENT = `scavio-mcp/${SERVER_VERSION}`;
  * over HTTP. The API logs this header per call, so the two are told apart.
  */
 export const CLIENT_SOURCE = env.TRANSPORT === "http" ? "scavio-mcp-remote" : "scavio-mcp";
+/** Calls made through the /chatgpt endpoint (the ChatGPT / Codex plugin). */
+export const CHATGPT_CLIENT_SOURCE = "scavio-mcp-chatgpt";
 
 export class ScavioClient {
   private baseUrl: string;
   private apiKey: string;
+  private source: string;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, source: string = CLIENT_SOURCE) {
     this.baseUrl = env.SCAVIO_API_BASE_URL;
     this.apiKey = apiKey;
+    this.source = source;
   }
 
   private async request<T>(method: string, path: string, body?: unknown, extraHeaders?: Record<string, string>): Promise<T> {
@@ -26,7 +30,7 @@ export class ScavioClient {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${this.apiKey}`,
         "User-Agent": USER_AGENT,
-        "X-Client-Source": CLIENT_SOURCE,
+        "X-Client-Source": this.source,
         ...extraHeaders,
       },
       ...(body !== undefined ? { body: JSON.stringify(body) } : {}),

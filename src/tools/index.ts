@@ -87,6 +87,8 @@ import { registerMetaAdsTools } from "./metaads.js";
 import { registerSecTools } from "./sec.js";
 import { registerCompaniesHouseTools } from "./companieshouse.js";
 import { registerUsageTool } from "./usage.js";
+import { applyChatgptProfile, CHATGPT_PLATFORMS } from "./chatgpt-app.js";
+import type { RegisteredTool } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 type RegisterFn = (server: McpServer, getClient: () => ScavioClient) => void;
 
@@ -377,7 +379,7 @@ const ANNOTATION_OVERRIDES: Record<string, { readOnlyHint?: boolean; destructive
  * Wrap the server so every tool() call is annotated at registration, instead
  * of editing 266 call sites. A tool added later picks this up automatically.
  */
-function annotating(server: McpServer): McpServer {
+function annotating(server: McpServer, captured?: Map<string, RegisteredTool>): McpServer {
   return new Proxy(server, {
     get(target, prop, receiver) {
       if (prop !== "tool") return Reflect.get(target, prop, receiver);
@@ -385,6 +387,7 @@ function annotating(server: McpServer): McpServer {
         const registered: ReturnType<McpServer["tool"]> = Reflect.apply(target.tool, target, [name, ...rest]);
         const title = toolTitle(name);
         registered.update({ title, annotations: { title, ...READ_ONLY_ANNOTATIONS, ...ANNOTATION_OVERRIDES[name] } });
+        captured?.set(name, registered);
         return registered;
       };
     },
@@ -407,4 +410,17 @@ export function registerAllTools(
   for (const key of platforms) PLATFORMS[key](annotated, getClient);
   registerUsageTool(annotated, getClient);
   return platforms;
+}
+
+/**
+ * Register the fixed tool set served at /chatgpt (see chatgpt-app.ts). Ignores
+ * SCAVIO_PLATFORMS and per-connection overrides: the directory listing is
+ * reviewed against one tool set, so the endpoint always serves exactly that.
+ */
+export function registerChatgptAppTools(server: McpServer, getClient: () => ScavioClient): void {
+  const captured = new Map<string, RegisteredTool>();
+  const annotated = annotating(server, captured);
+  for (const key of CHATGPT_PLATFORMS) PLATFORMS[key](annotated, getClient);
+  registerUsageTool(annotated, getClient);
+  applyChatgptProfile(captured);
 }

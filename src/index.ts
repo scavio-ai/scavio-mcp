@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { env } from "./lib/env.js";
-import { ScavioClient } from "./lib/client.js";
+import { ScavioClient, CHATGPT_CLIENT_SOURCE } from "./lib/client.js";
 import { SERVER_VERSION } from "./lib/version.js";
-import { registerAllTools, PLATFORM_KEYS, DEFAULT_PLATFORMS } from "./tools/index.js";
+import { registerAllTools, registerChatgptAppTools, PLATFORM_KEYS, DEFAULT_PLATFORMS } from "./tools/index.js";
 
 const SERVER_NAME = "scavio-mcp";
 
@@ -38,6 +38,7 @@ async function startStdio() {
 
 async function startHttp() {
   const { Hono } = await import("hono");
+  type Context = import("hono").Context;
   const { serve } = await import("@hono/node-server");
   const { WebStandardStreamableHTTPServerTransport } = await import(
     "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js"
@@ -69,8 +70,15 @@ async function startHttp() {
   // Mount OAuth routes (well-known, authorize, token, register, callback)
   app.route("/", authApp);
 
-  // MCP endpoint with dual auth: OAuth bearer or legacy API key
-  app.post("/mcp", async (c) => {
+  // OpenAI plugin directory domain verification: the portal shows a token
+  // that must be served here as plain text, nothing else.
+  app.get("/.well-known/openai-apps-challenge", (c) =>
+    env.OPENAI_APPS_CHALLENGE ? c.text(env.OPENAI_APPS_CHALLENGE) : c.text("Not Found", 404),
+  );
+
+  type Profile = "default" | "chatgpt";
+  const handleMcp = async (c: Context, profile: Profile) => {
+    // Dual auth: OAuth bearer (the issued token is the user's API key) or a raw API key.
     const apiKey =
       c.req.header("x-api-key") ??
       c.req.header("authorization")?.replace("Bearer ", "") ??
@@ -78,7 +86,7 @@ async function startHttp() {
 
     if (!apiKey) {
       // Return 401 with OAuth discovery for OAuth-capable clients
-      const resourceMetadataUrl = `${env.ISSUER_URL}/.well-known/oauth-protected-resource/mcp`;
+      const resourceMetadataUrl = `${env.ISSUER_URL}/.well-known/oauth-protected-resource/${profile === "chatgpt" ? "chatgpt" : "mcp"}`;
       c.header(
         "WWW-Authenticate",
         `Bearer resource_metadata="${resourceMetadataUrl}"`
@@ -86,19 +94,27 @@ async function startHttp() {
       return c.json({ error: "Unauthorized" }, 401);
     }
 
-    // A hosted remote has no per-user env var, so the allowlist is selectable
-    // per connection. Falls back to SCAVIO_PLATFORMS, then to the default set.
-    const platforms =
-      c.req.header("x-scavio-platforms") ?? c.req.query("platforms") ?? env.SCAVIO_PLATFORMS;
-
     const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION });
-    const client = new ScavioClient(apiKey);
-    registerAllTools(server, () => client, platforms);
+    const client = profile === "chatgpt" ? new ScavioClient(apiKey, CHATGPT_CLIENT_SOURCE) : new ScavioClient(apiKey);
+    if (profile === "chatgpt") {
+      // Fixed, reviewed tool set; per-connection platform overrides do not apply.
+      registerChatgptAppTools(server, () => client);
+    } else {
+      // A hosted remote has no per-user env var, so the allowlist is selectable
+      // per connection. Falls back to SCAVIO_PLATFORMS, then to the default set.
+      const platforms =
+        c.req.header("x-scavio-platforms") ?? c.req.query("platforms") ?? env.SCAVIO_PLATFORMS;
+      registerAllTools(server, () => client, platforms);
+    }
 
     const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined });
     await server.connect(transport);
     return transport.handleRequest(c.req.raw);
-  });
+  };
+
+  app.post("/mcp", (c) => handleMcp(c, "default"));
+  // The endpoint submitted to the ChatGPT / Codex plugin directory.
+  app.post("/chatgpt", (c) => handleMcp(c, "chatgpt"));
 
   serve({ fetch: app.fetch, port: env.PORT }, (info) => {
     console.error(`${SERVER_NAME} v${SERVER_VERSION} started (http) on port ${info.port}`);

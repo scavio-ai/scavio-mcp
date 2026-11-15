@@ -1,6 +1,11 @@
 import { McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 import { ApiError } from "./errors.js";
 
+/** Start of the 402 text below; the ChatGPT profile matches on it to swap the message. */
+export const OUT_OF_CREDITS_PREFIX = "Out of Scavio credits (402).";
+/** Message of the 401 McpError below; the ChatGPT profile matches on it too. */
+export const INVALID_KEY_MESSAGE = "Invalid SCAVIO_API_KEY. Check your configuration.";
+
 /**
  * The catch block every tool handler shares.
  *
@@ -34,10 +39,10 @@ export function handleApiError(err: unknown): never | { isError: true; content: 
       const url = err.billingUrl ?? "https://dashboard.scavio.dev/billing";
       return {
         isError: true,
-        content: [{ type: "text", text: `Out of Scavio credits (402). Top up or upgrade at ${url}; the same key keeps working afterwards, no config change needed.` }],
+        content: [{ type: "text", text: `${OUT_OF_CREDITS_PREFIX} Top up or upgrade at ${url}; the same key keeps working afterwards, no config change needed.` }],
       };
     }
-    if (err.status === 401) throw new McpError(ErrorCode.InternalError, "Invalid SCAVIO_API_KEY. Check your configuration.");
+    if (err.status === 401) throw new McpError(ErrorCode.InternalError, INVALID_KEY_MESSAGE);
     return { isError: true, content: [{ type: "text", text: `Scavio API error (${err.status}): ${err.message}` }] };
   }
   throw new McpError(ErrorCode.InternalError, String(err));
