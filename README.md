@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 553 tools across 80 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 562 tools across 81 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 553 tools puts ~869KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 562 tools puts ~903KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 553 tools. Loading all of them costs ~869KB of `tools/list` —
+Scavio exposes 562 tools. Loading all of them costs ~903KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **553 tools, ~869KB** |
+| `all` | every platform — **562 tools, ~903KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1169,6 +1169,54 @@ lists are one page; an unsupported sort or filter answers 400, never silently
 dropped. No user reviews (Nintendo's stores have none; age ratings only), no
 best-seller charts and no autocomplete. Failed calls are not charged; a
 not-found is charged.
+
+### [H&M](https://scavio.dev/docs/hm-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+H&M product data API: one article's price, sale price, member price and online stock by size in each H&M market, in that market's currency, plus catalog search, category, sale and new-arrivals grids, search suggestions, stores and where an article is made, across 47 countries.
+
+| Tool | Description |
+|------|-------------|
+| `search_hm` | Search one market's catalog by keyword or article code: article code, title, price, regular price, sale price, member price, discount, prior price (EU), colours, sizes with online stock, category id; up to 72 per page, sorted by relevance, newest or price, filtered by department, store assortment, colour, size, material, fit, product type and on sale; facets and price range |
+| `get_hm_product` | One article by article code or link (2 credits, can take up to about a minute): description, composition, materials, care, fit attributes, the prices with H&M's price disclosure, every colourway with its own prices, sizes with online stock and few-left, rating and the latest reviews H&M shows (up to 10, with fit feedback) |
+| `get_hm_stock` | Online stock per size for every colour of a product, by article or product code (not store stock) |
+| `get_hm_stores` | A country's stores with address, coordinates, phone, opening hours and exceptions, departments; filtered by city, postal code or a lat / lng radius |
+| `get_hm_category` | A category grid by H&M's category id (the same ids in every market, e.g. `ladies_dresses`, `men_jeans`), with the search sorts and filters |
+| `get_hm_deals` | A department's sale grid (default women) with sale price, regular price and discount; may be empty between sales |
+| `get_hm_new_arrivals` | A department's new-arrivals grid (default women), with the search sorts and filters |
+| `get_hm_suggestions` | Search suggestions for what a shopper has typed, in the market's language |
+| `get_hm_production` | Where an article is made as H&M publishes it: production countries, suppliers and factories (name, city, workers range; no street addresses) |
+
+Platform key `hm`. `get_hm_product` costs 2 credits, every other tool 1.
+Markets (`country`, default `us`) and languages (`language`, default the
+market's first): us (USD), ca (CAD; English or French), mx (MXN; Spanish),
+gb (GBP), ie (EUR), de and at (EUR; German), ch (CHF; German, French or
+Italian), fr, be (Dutch or French), nl, it, es, pt (EUR), se (SEK), fi (EUR;
+Finnish or Swedish), dk (DKK), no (NOK), pl (PLN), cz (CZK), sk (EUR), hu
+(HUF), ro (RON), bg (EUR), gr (EUR), rs (RSD), tr (TRY), ua (UAH), il (ILS;
+Hebrew), hk and mo (HKD; Chinese or English), tw (TWD; Chinese or English),
+jp (JPY), kr (KRW), in (INR), my (MYR), ph (PHP), sg (SGD), vn (VND), au
+(AUD), each in its own language; and hr, cy, ee, lv, lt, lu and si on H&M's
+shared English EUR store (answers say store `eu`). Every tool serves all 47
+except `get_hm_product` (not mo, tw or the shared EU store countries: use
+`search_hm` or `get_hm_stock` there) and `get_hm_stores` (not mo: H&M lists
+no stores there). Countries where H&M runs a separate site (ae, eg, id, th,
+br, cn) or has no online store, ru, and uk (use gb) answer 400 before
+anything is charged.
+
+Article codes are global: the same 10-digit code (7-digit product code +
+3-digit colour) in every market, so one code compares a price across markets
+with one call per `country`. `price` is what a non-member pays now;
+`member_price` is H&M's member price as shown to signed-in members;
+`prior_price` is the earlier price H&M shows next to an EU markdown. Stock is
+online stock per size: H&M publishes no per-size store stock (`search_hm`
+with `store` lists a store's assortment). Category ids are the same in every
+market, and a category returns everything H&M files under that id, which can
+be more than the site's curated page. H&M runs sales in seasons, so
+`get_hm_deals` may return an empty grid between sales. No price history
+(poll to track changes), no full review list (the 10 latest only), no
+checkout or member-only cart prices, and H&M's sibling brands (COS, Weekday,
+& Other Stories, Monki, ARKET) are not covered. Failed calls are not
+charged; a not-found is charged.
 
 ### Vinted
 
