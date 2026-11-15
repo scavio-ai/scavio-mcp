@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 547 tools across 79 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 553 tools across 80 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 547 tools puts ~842KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 553 tools puts ~869KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 547 tools. Loading all of them costs ~842KB of `tools/list` —
+Scavio exposes 553 tools. Loading all of them costs ~869KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **547 tools, ~842KB** |
+| `all` | every platform — **553 tools, ~869KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1123,6 +1123,52 @@ returns only the 5 newest sales; for sold volume use
 `get_tcgplayer_price_history`, whose low and high sale prices are null in a
 bucket with no sales. Seller tools take the 8-character `seller.key` from a
 listing. No store locator, product reviews or buylist prices.
+
+### [Nintendo](https://scavio.dev/docs/nintendo-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Nintendo eShop API: one game's regular price, sale price and sale end date in each eShop country, in that country's currency, plus catalog search, product detail, deals, new and upcoming releases and a game's DLC, across 46 countries.
+
+| Tool | Description |
+|------|-------------|
+| `search_nintendo` | Search one country's eShop catalog by keyword: nsuid, title, platform (Switch / Switch 2), release date, publisher, price, regular price, sale price, discount, sale start and end, age rating; Europe and Japan with sorts and filters (platform, on sale, publisher, type; Europe also price range, genre, players, demo), the Americas 40 tiles per page by relevance or newest |
+| `get_nintendo_product` | One product by nsuid, link or (Americas) slug: publisher, developer, genres, players, languages, file size, age rating and descriptors, description, prices with the sale window, demo, Nintendo Switch Online; Americas also editions, play modes, the game's DLC with prices and the stock signal for hardware, amiibo and merchandise |
+| `get_nintendo_prices` | The eShop price of 1 to 50 item ids in one country: price, regular price, sale price, discount, sale start and end, sales status; every market including the prices-only kr, hk, tw and il |
+| `get_nintendo_deals` | Games on sale now: Europe and Japan every discounted game in the catalog, the Americas Nintendo's featured sale pages (with each item's sale page and the list of sale pages) |
+| `get_nintendo_releases` | New releases (newest first) or upcoming games (soonest first) with prices, filtered by platform |
+| `get_nintendo_dlc` | A game's DLC, bundles and upgrade packs with prices and sale windows |
+
+Platform key `nintendo`. Every tool costs 1 credit. Markets (`country`,
+default `us`) and languages (`language`, default the market's first):
+Americas us (USD), ca (CAD; English or French), mx (MXN), br (BRL;
+Portuguese), ar (ARS), cl (CLP), co (COP) and pe (PEN) (Spanish); Europe in
+the market's language: gb (GBP) and ie (EUR) (English), de and at (EUR;
+German), ch (CHF; German, French or Italian), fr, be (French or Dutch), nl,
+lu (French), it, es and pt (EUR), au (AUD), nz (NZD) and za (ZAR) (English);
+pl (PLN), cz (CZK), se (SEK), no (NOK), dk (DKK), fi, sk, hu, ro, bg, gr, hr,
+si, ee, lv, lt, mt and cy (EUR) have no Nintendo site of their own and read
+the English European catalog with that country's own prices; jp (JPY;
+Japanese). `get_nintendo_prices` also serves kr (KRW), hk (HKD), tw (TWD) and
+il (EUR, European item ids). ph (no Philippines item ids published yet), ru
+(no eShop), uk (use gb) and countries with no eShop data answer 400 before
+anything is charged.
+
+Item ids (`nsuid`) are per eShop region: Americas (US CA MX BR AR CL CO PE),
+Europe (EU / EFTA, GB, AU, NZ, ZA, IL), Japan, Korea, and Hong Kong + Taiwan
+(Taiwan uses Hong Kong ids). An id from one region is `not_found` in another
+and there is no cross-region title mapping: look the game up with
+`search_nintendo` or `get_nintendo_product` in that region, then call
+`get_nintendo_prices` for any country of the region (up to 50 ids). Americas
+search tiles carry a `slug` and no `nsuid`: read the product with the slug.
+Prices are always the requested country's eShop price in its currency;
+`sale_start` and `sale_end` are the eShop's own sale window. Nintendo shows
+no price history or historical low: poll `get_nintendo_prices` to build one.
+Americas deals are Nintendo's featured sale pages, not every discounted game;
+Europe and Japan deals are every game on sale. Americas search sorts by
+relevance or newest only and takes no filters, and the Americas releases
+lists are one page; an unsupported sort or filter answers 400, never silently
+dropped. No user reviews (Nintendo's stores have none; age ratings only), no
+best-seller charts and no autocomplete. Failed calls are not charged; a
+not-found is charged.
 
 ### Vinted
 
