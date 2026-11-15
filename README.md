@@ -1506,10 +1506,10 @@ serves all 35 markets except `get_trendyol_deals` and `get_trendyol_coupons`
 (tr only) and `get_trendyol_rankings` (not on the 15 English-language EU
 storefronts fr, be, hr, dk, ee, fi, it, lv, lt, nl, pt, si, es, se and lu,
 which have no ranking lists); `city_id` / `district_id` on delivery are tr only (Istanbul 133,
-Sisli 54; there is no city list). The international storefronts are mostly
-sold cross-border by Trendyol itself and have their own price lists, not a
-currency conversion of the Turkish price (measured on 2 products on
-2026-11-15). Trendyol's developer FAQ says the buy box is chosen by algorithm
+Sisli 54; there is no city list). The international storefronts have their
+own price lists, not a currency conversion of the Turkish price (measured on 2
+products on 2026-11-15), and their items are sold by Trendyol itself or by
+other sellers (check `buy_box` and `other_sellers`). Trendyol's developer FAQ says the buy box is chosen by algorithm
 metrics, not price alone, so compare `buy_box` with `other_sellers` rather
 than assuming the buy box is the lowest price. `lowest_price_badge` is the
 site's "lowest price of the last N days" tag (7, 10, 14, 30 or 90 days): a
