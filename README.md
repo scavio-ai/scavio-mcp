@@ -1263,10 +1263,10 @@ or iq: Zara lists no stores there), `get_zara_new_arrivals` (not dz) and
 Belarus, uk (use gb) and the countries Zara serves only from its worldwide
 store answer 400 before anything is charged.
 
-Product ids (one per colour) and references are global on Zara's
-international site, so one reference compares a price across markets in a
-single `get_zara_prices` call; China (`cn`) runs its own ids, so use the
-reference there. Prices are numbers in the market's own currency, never
+References are global on Zara's international site, so one reference
+compares a price across markets in a single `get_zara_prices` call. A
+colour's product id is usually the same across markets but can differ, and
+China (`cn`) runs its own ids, so match across markets with the reference. Prices are numbers in the market's own currency, never
 converted; `old_price` is set only on a markdown. Zara runs seasonal sales
 and lists special prices between them: `get_zara_deals` resolves each
 market's special-prices list live and answers an empty list (not an error)

@@ -62,7 +62,7 @@ const MARKET_LIST = Object.entries(MARKETS)
 const MARKETS_TEXT = `Markets (country, default us; language, default the first listed, Zara's own default): ${MARKET_LIST}. gb is the United Kingdom, ic the Canary Islands, xe Abu Dhabi, Al Ain and Ras Al Khaimah, xk Kosovo. Belarus, uk (use gb) and the countries Zara serves only from its worldwide store answer 400 before anything is charged. Every answer carries country, language and currency.`;
 const SEE_MARKETS = "Markets and the languages each serves are listed in the search_zara description; a language the market does not serve answers 400. Every answer carries country, language and currency.";
 const IDS =
-  "Product ids (the colour's product id) and references are global on Zara's international site: the same id names the same colour in every market. China (cn) is Zara's separate site with its own ids: use the reference across markets.";
+  "References are global on Zara's international site. A colour's product id is usually the same in every market but can differ, and China (cn) runs its own ids: match across markets with the reference.";
 const PRICES =
   "Prices are numbers in the market's own currency, never converted: price, old_price (set only on a markdown, above price) and discount_percent. No price history: poll get_zara_prices or get_zara_product.";
 const ITEM =
