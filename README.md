@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 574 tools across 82 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 585 tools across 83 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 574 tools puts ~941KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 585 tools puts ~976KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 574 tools. Loading all of them costs ~941KB of `tools/list` —
+Scavio exposes 585 tools. Loading all of them costs ~976KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **574 tools, ~941KB** |
+| `all` | every platform — **585 tools, ~976KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `asos`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1278,6 +1278,60 @@ them from `get_zara_categories`). No reviews (Zara shows none), no price
 history (poll `get_zara_prices`), and Inditex's other brands (Pull&Bear,
 Massimo Dutti, Bershka, Stradivarius, Oysho, Zara Home, Lefties) are not
 covered. Failed calls are not charged; a not-found is charged.
+
+### [ASOS](https://scavio.dev/docs/asos-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+ASOS product data API: ASOS prices by country and currency (one product's price, previous price, RRP, sale flag and online stock by size in each ASOS store and currency), catalogue search, product detail, reviews per store with ASOS's AI summary, categories, brands, the sale and new-in lists, and the markets table, across 235 countries and 245 country-currency combinations.
+
+| Tool | Description |
+|------|-------------|
+| `search_asos` | Search one store by keyword: product id, title, brand, price, previous price, RRP, lowest 30-day price, discount, colours; up to 200 per page, sorted by relevance, newest or price, filtered by gender, brand, colour, size, body-fit range, product type, price and sale; facets and price range |
+| `get_asos_product` | One product by id, co-ord group id or link: description, composition, care, size and fit, every size variant with price and online stock, rating with fit and quality, ASOS's AI review summary and the other colours |
+| `get_asos_stock` | Price and online stock per variant of up to 100 product ids in one call, plus the ids the store does not sell |
+| `get_asos_reviews` | Reviews of one product on one store, up to 50 per page, sorted and filtered by star rating, with fit and quality averages and ASOS's labelled AI summary |
+| `get_asos_suggestions` | Search suggestions for what a shopper has typed, in the store's language |
+| `get_asos_category` | Every product of one category or brand page, paged and sorted, with the search filters |
+| `get_asos_categories` | The store's women and men navigation tree with category ids |
+| `get_asos_brands` | The store's A-Z brand list for women or men (brand_id is a category id) |
+| `get_asos_deals` | The store's SALE category for women or men, with previous price and discount |
+| `get_asos_new_arrivals` | The store's NEW IN category for women or men |
+| `get_asos_markets` | Every country ASOS sells in with its store, language, currencies and size schema |
+
+Platform key `asos`. 1 credit per call on every tool.
+
+Markets (`country`, default `gb`; `currency`, default ASOS's own default for
+the country): the 235 countries in ASOS's own country selector, served by 13
+ASOS stores. Eleven have a site of their own in their own language: gb (GBP),
+us and pr (USD), fr and mc (EUR, French; the French overseas territories in
+USD), de and at (EUR, German), es and ad (EUR, Spanish), it, sm and va (EUR,
+Italian), au (AUD), dk (DKK), nl (EUR), pl (PLN) and se (SEK). ASOS's
+European store (33 countries, English: ie, pt, be, fi, gr, cz, hu, ro, no ...)
+and its international store (170 countries, English: ca, mx, in, za, ch, nz,
+ae, sa, hk, il, jp, kr, sg, tw, cn ...) serve the rest. `currency` takes any
+currency ASOS offers the country (245 country-currency combinations, e.g. ae
+AED or GBP, il ILS, GBP or USD, jp USD or GBP). Every tool serves every
+combination except `get_asos_suggestions` on pl (ASOS's Polish store answers
+no suggestions). Russia and Belarus (ASOS is not selling there), uk (use gb)
+and countries ASOS does not list answer 400 before anything is charged.
+
+Product and category ids are the same on every store (titles come back in the
+store's language), so one product id compares a price across stores and
+currencies with one call per store. Prices are set per store and currency,
+not per country inside a store (the European store prices Ireland and
+Portugal alike in EUR); which products are offered can still differ by
+country. Prices are numbers in the requested currency, never converted:
+`price`, `previous_price` (ASOS's "was"), `rrp`, `lowest_price_30d` where ASOS
+shows it, `is_marked_down`, `is_outlet`, `discount_percent` and
+`discount_basis`. `get_asos_stock` is online stock per variant (ASOS has no
+physical stores) and carries variant ids, not size names: map them with
+`get_asos_product`. Reviews are per store (the European and international
+stores share one pool); reviewer names are never returned. Keyword search
+serves at most 2,088 results whatever `total` says (`max_reachable`); category
+lists page through everything. The `search_asos` brand filter takes brand
+facet ids from a search answer; `get_asos_brands` returns category ids to pass
+to `get_asos_category`. No outlet (ASOS's outlet categories are empty), no
+promo codes (shown only to signed-in shoppers) and no price history (poll
+`get_asos_stock`). Failed calls are not charged; a not-found is charged.
 
 ### Vinted
 
