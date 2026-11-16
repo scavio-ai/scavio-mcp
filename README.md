@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 585 tools across 83 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 596 tools across 84 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 585 tools puts ~976KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 596 tools puts ~1005KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 585 tools. Loading all of them costs ~976KB of `tools/list` —
+Scavio exposes 596 tools. Loading all of them costs ~1005KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **585 tools, ~976KB** |
+| `all` | every platform — **596 tools, ~1005KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `asos`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `asos`, `vinted`, `mercari`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1367,6 +1367,44 @@ the Buyer Protection fee). Search serves at most 10 pages of 96
 matching cheap listings, so pair them with a category or price range. Live
 listings only: no sold-item search, shipping prices, pickup points or similar
 items. Seller data is limited to public buyer-relevant fields.
+
+### [Mercari](https://scavio.dev/docs/mercari-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Mercari API for Mercari US (mercari.com, USD, English) and Mercari Japan (jp.mercari.com, JPY, Japanese): Mercari sold prices and on-sale listings for the same query, item detail with price drops, categories, brands, US deals and trending, and Mercari Japan seller profiles, seller reviews and Mercari Shops shops.
+
+| Tool | Description |
+|------|-------------|
+| `search_mercari` | Search listings by keyword, category or brand: price, original price and discount when the seller dropped it, condition, brand, size, seller id, free shipping, created time; `status` on_sale, sold (sold and in transit) or all; sorted by relevance, newest, price, likes (jp) or recently sold (us); us 50 per page up to page 20, jp 120 per page up to page 91 |
+| `get_mercari_item` | One listing by item id or link: description, price, original price, sold_at, condition, category path, size, color, shipping (payer, method, days to ship, ships from), likes, photos and the seller summary; jp adds the full public comment list and Mercari Shops products |
+| `get_mercari_category` | Listings in one category, paged and sorted, with keywords and the search filters |
+| `get_mercari_categories` | The category tree: us one level at a time, jp the full tree or one parent's children |
+| `get_mercari_brands` | The brand list (us about 28,800, jp about 52,600), filtered by name, pages of 1,000 |
+| `get_mercari_brand` | Listings of one brand, paged and sorted, optionally within a category |
+| `get_mercari_deals` | Listings on Mercari's deals filter (price dropped), with original price and discount (us) |
+| `get_mercari_trending` | Mercari's trending keywords and brands with rank, change, demand and 7-day sold rate as Mercari shows them (us) |
+| `get_mercari_seller` | A seller's public profile: good / normal / bad ratings, listing count, followers, badges and the first 30 listings (jp) |
+| `get_mercari_seller_reviews` | The most recent 100 reviews of a user: rating, text, date and role (seller or buyer), no reviewer names (jp) |
+| `get_mercari_shop` | A Mercari Shops shop profile: rating, review count, followers, open state, badges (jp; no product list) |
+
+Platform key `mercari`. 1 credit per call on every tool.
+
+Markets (`country`): `us` (default) and `jp`. Search, item, category,
+categories, brands and brand serve both; deals and trending are us only;
+seller, seller reviews and shop are jp only. A market a tool does not serve,
+Mercari UK (closed: `gb` / `uk`) and any other value answer 400 before
+anything is charged. Item, category, brand and seller ids are per market: an
+id from us is not valid on jp. `status: "sold"` returns sold listings (sold
+and in transit) with their prices, so asking prices and sold prices for the
+same query come from one tool; sold US items keep full data including
+`sold_at` on `get_mercari_item`. Search grids carry no likes and no sold time
+(the item has both). Prices are numbers, US dollars on us and whole yen on jp;
+`original_price` is the seller's earlier price when above `price`, with
+`discount_percent` against it. Mercari Japan data is in Japanese as sellers
+wrote it (not translated), and jp calls are slower (search typically 30-60 s,
+other tools 10-30 s; us about 3-20 s). jp `newest` follows Mercari Japan's own
+order, where relisted items move up. Not available: US seller profiles and
+reviews, US search suggestions, Japanese trending, price-drop history, buying
+or messaging. Failed calls are not charged; a not-found is charged.
 
 ### Macy's
 
