@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 562 tools across 81 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 574 tools across 82 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 562 tools puts ~903KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 574 tools puts ~941KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 562 tools. Loading all of them costs ~903KB of `tools/list` —
+Scavio exposes 574 tools. Loading all of them costs ~941KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **562 tools, ~903KB** |
+| `all` | every platform — **574 tools, ~941KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `vinted`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1217,6 +1217,67 @@ be more than the site's curated page. H&M runs sales in seasons, so
 checkout or member-only cart prices, and H&M's sibling brands (COS, Weekday,
 & Other Stories, Monki, ARKET) are not covered. Failed calls are not
 charged; a not-found is charged.
+
+### [Zara](https://scavio.dev/docs/zara-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Zara product data API: Zara prices by country (one reference's price, sale price and availability in up to 10 markets per call, each in that market's own currency), stock by size online and in physical stores, catalogue search, product detail, materials and origin, category, special-prices and new-arrivals lists, stores and search suggestions, across 102 Zara storefronts.
+
+| Tool | Description |
+|------|-------------|
+| `search_zara` | Search one market's catalogue by keyword, or look up a reference (all its colours): product id, reference, title, price, old price, discount, availability, colours; up to 96 per page, sorted by relevance or price, filtered by section, colour, size and price range; facets and price range |
+| `get_zara_product` | One product by link, product id + slug, or reference: description, prices, composition, every colour with its sizes, online availability per size, promotions and images |
+| `get_zara_materials` | Composition, care, certifications and origin (country of production as Zara states it; France shows traceability steps) |
+| `get_zara_stock` | Online availability per size of one colour (in_stock, out_of_stock, low_on_stock, coming_soon) |
+| `get_zara_stores` | Stores near a point, nearest first, with address, coordinates, phones, 7 dated days of opening hours and services |
+| `get_zara_store_stock` | Units per size of one colour in physical stores (sales floor and stockroom), by store ids or a point |
+| `get_zara_categories` | A market's category tree (id, name, section, parent, leaf, redirect id) |
+| `get_zara_category` | Every product of one category, paged and sorted over the whole list, optionally only marked-down items |
+| `get_zara_deals` | A section's SPECIAL PRICES list (woman, man, girl or boy) with old price and discount |
+| `get_zara_new_arrivals` | A section's NEW ARRIVALS list (woman, man, girl or boy) |
+| `get_zara_prices` | One reference across up to 10 markets: price, old price, discount, currency, title and availability per market, plus the markets that do not sell it |
+| `get_zara_suggestions` | Search suggestions for what a shopper has typed, in the market's language |
+
+Platform key `zara`. Every request is billed what it spent (`credits_used`
+in the answer): 2 credits per call for `search_zara`, `get_zara_materials`,
+`get_zara_stock`, `get_zara_stores`, `get_zara_categories` and
+`get_zara_category`; `get_zara_product` 2 (4 when opened by reference or
+when the slug is another market's or language's, 6 for both);
+`get_zara_store_stock` 2 with store ids, 4 with a point; `get_zara_deals` 4
+(2 when the market has no special-prices category); `get_zara_new_arrivals`
+4; `get_zara_prices` 2 per market that answered; `get_zara_suggestions` 2 (4
+when the English fallback runs). China (`cn`, Zara's separate site) costs 1
+credit per call instead of 2.
+
+Markets (`country`, default `us`): the 102 Zara storefronts with an online
+store of their own, each in its own currency, e.g. us (USD), ca (CAD), mx
+(MXN), br (BRL), gb (GBP; the United Kingdom), the euro countries, ch (CHF),
+se, dk, no, pl, cz, hu, ro, tr, ua, il, ae, sa, kw, qa, eg, ma, in, jp (JPY),
+kr (KRW), cn (CNY), hk, tw, sg, my, th, id, vn, au, nz, za and the rest of
+Latin America and Europe Zara sells online in; ic is the Canary Islands, xe
+Abu Dhabi, Al Ain and Ras Al Khaimah, xk Kosovo. `language` takes Zara's own
+languages for the market (205 market-languages; the first listed is Zara's
+default), listed per market in the `search_zara` description. Every tool
+serves all 102 except `get_zara_stores` and `get_zara_store_stock` (not ao
+or iq: Zara lists no stores there), `get_zara_new_arrivals` (not dz) and
+`get_zara_suggestions` (not ad, al, am, az, ba, dz, mk, mo, uz or xk).
+Belarus, uk (use gb) and the countries Zara serves only from its worldwide
+store answer 400 before anything is charged.
+
+Product ids (one per colour) and references are global on Zara's
+international site, so one reference compares a price across markets in a
+single `get_zara_prices` call; China (`cn`) runs its own ids, so use the
+reference there. Prices are numbers in the market's own currency, never
+converted; `old_price` is set only on a markdown. Zara runs seasonal sales
+and lists special prices between them: `get_zara_deals` resolves each
+market's special-prices list live and answers an empty list (not an error)
+where a market has none for the section; in fr, be, lu, mc and iq Zara lists
+special prices without a previous price. `get_zara_stock` is online stock;
+`get_zara_store_stock` is units in physical stores. Category ids are shared
+across the northern-hemisphere catalogue; au, za and br run their own (get
+them from `get_zara_categories`). No reviews (Zara shows none), no price
+history (poll `get_zara_prices`), and Inditex's other brands (Pull&Bear,
+Massimo Dutti, Bershka, Stradivarius, Oysho, Zara Home, Lefties) are not
+covered. Failed calls are not charged; a not-found is charged.
 
 ### Vinted
 
