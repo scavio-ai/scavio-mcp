@@ -1281,7 +1281,7 @@ covered. Failed calls are not charged; a not-found is charged.
 
 ### [ASOS](https://scavio.dev/docs/asos-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-ASOS product data API: ASOS prices by country and currency (one product's price, previous price, RRP, sale flag and online stock by size in each ASOS store and currency), catalogue search, product detail, reviews per store with ASOS's AI summary, categories, brands, the sale and new-in lists, and the markets table, across 235 countries and 245 country-currency combinations.
+ASOS product data API: ASOS prices by country and currency (one product's price, previous price, RRP, sale flag and online stock by size in each ASOS store and currency), catalogue search, product detail, reviews by store with ASOS's AI summary, categories, brands, the sale and new-in lists, and the markets table, across 235 countries and 245 country-currency combinations.
 
 | Tool | Description |
 |------|-------------|
@@ -1315,17 +1315,22 @@ no suggestions). Russia and Belarus (ASOS is not selling there), uk (use gb)
 and countries ASOS does not list answer 400 before anything is charged.
 
 Product and category ids are the same on every store (titles come back in the
-store's language), so one product id compares a price across stores and
-currencies with one call per store. Prices are set per store and currency,
-not per country inside a store (the European store prices Ireland and
-Portugal alike in EUR); which products are offered can still differ by
-country. Prices are numbers in the requested currency, never converted:
+store's language), so one product id compares a price across countries and
+currencies with one call per country. Countries served by the same ASOS store
+in the same currency share one price list, except Ireland, which has its own
+euro prices on ASOS's European store (measured 2026-11-16 on all 245
+country-currency combinations); which products are offered still differs by
+country. `price` is the lowest size price when ASOS prices sizes differently
+(variants carry each size's price). Prices are numbers in the requested currency, never converted:
 `price`, `previous_price` (ASOS's "was"), `rrp`, `lowest_price_30d` where ASOS
 shows it, `is_marked_down`, `is_outlet`, `discount_percent` and
 `discount_basis`. `get_asos_stock` is online stock per variant (ASOS has no
 physical stores) and carries variant ids, not size names: map them with
-`get_asos_product`. Reviews are per store (the European and international
-stores share one pool); reviewer names are never returned. Keyword search
+`get_asos_product`. Which reviews come back depends on the store: gb,
+us, au and ASOS's European and international stores share one English review
+pool; es, it, nl, se, dk and pl add reviews written in their own language to
+that pool; fr and de show only reviews written in French or German (each
+review carries its language). Reviewer names are never returned. Keyword search
 serves at most 2,088 results whatever `total` says (`max_reachable`); category
 lists page through everything. The `search_asos` brand filter takes brand
 facet ids from a search answer; `get_asos_brands` returns category ids to pass
