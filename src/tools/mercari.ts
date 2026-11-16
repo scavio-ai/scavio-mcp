@@ -22,14 +22,15 @@ const SHIPPING = ["free", "buyer_pays"] as const;
 const CHARGE = "Costs 1 credit. Failed upstream calls are not charged; a not-found is charged.";
 const IDS = "Item, category, brand and seller ids are per market: an id from us is not valid on jp (a not-found, charged).";
 const JP =
-  "jp data is in Japanese as sellers wrote it (not translated), prices in yen; jp answers take longer (search 30-60 s, other tools 10-30 s).";
+  "jp data is in Japanese as sellers wrote it (not translated), prices in yen; jp answers are slower than us (typically 10-20 s, up to about a minute).";
 const PRICES =
-  "Prices are numbers: US dollars on us, whole yen on jp; original_price is the seller's earlier price when above price, with discount_percent computed against it.";
+  "Prices are numbers: US dollars on us, whole yen on jp; original_price is the seller's earlier price when above price, with discount_percent computed against it (never set on jp results).";
 const ITEM =
-  "item_id, title, url, price, original_price, discount_percent, currency, status (on_sale, trading = sold and in transit, sold), condition (new, like_new, good, fair, poor, bad) and condition_name, brand, category_id, size, thumbnail, seller_id, free_shipping, created_at; jp adds is_shop, shop_id, is_auction and updated_at. Grid results carry no likes and no sold time (get_mercari_item has both)";
+  "item_id, title, url, price, original_price, discount_percent, currency, status (on_sale, trading = sold and in transit, sold), condition (new, like_new, good, fair, poor, bad) and condition_name, brand, category_id, size, thumbnail, seller_id, free_shipping (us: set only when you filter by shipping; jp: null on Mercari Shops rows), created_at; jp adds is_shop, shop_id, is_auction and updated_at. Grid results carry no likes, no sold time and on us no shipping payer (get_mercari_item has all three)";
 const FILTERS =
   "Filters: status (on_sale default, sold, all), sort (relevance, newest, price_asc, price_desc; likes on jp, recently_sold on us; jp newest follows Mercari Japan's own order, where relisted items move up), price_min / price_max, condition, shipping (free, buyer_pays), size_id and deals_only (us), shops_only (jp).";
-const DEPTH = "us 50 per page up to page 20 (1,000 results), jp 120 per page up to page 91.";
+const DEPTH =
+  "us 50 per page up to page 20 (later pages can repeat earlier items: dedupe by item_id), jp 120 per page up to page 91. total stops at 10,000 on us and 15,000 on jp (the cap means that many or more).";
 const NOT_AVAILABLE =
   "Not available: US seller profiles and reviews, US search suggestions, price-drop history, buying or messaging; Mercari UK (closed).";
 
@@ -54,7 +55,7 @@ const gridFilters = {
     .describe("on_sale (default), sold (sold listings, including items sold but still in transit: sold prices), or all."),
   page: z.number().int().min(1).max(91).optional().describe(`Results page, 1-based: ${DEPTH}`),
   sort: z.enum(SORTS).optional()
-    .describe("relevance (default), newest, price_asc, price_desc; likes (jp only); recently_sold (us only)."),
+    .describe("relevance (default), newest, price_asc, price_desc; likes (jp only); recently_sold (us only). A us sold search comes most recently sold first under relevance too."),
   price_min: z.number().min(0).optional().describe("Lowest price: US dollars on us, whole yen on jp."),
   price_max: z.number().min(0).optional().describe("Highest price: US dollars on us, whole yen on jp."),
   condition: z
@@ -87,7 +88,7 @@ export function registerMercariTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "search_mercari",
-    `Search Mercari listings by keyword (Mercari US or Mercari Japan): items (${ITEM}), total (Mercari's own capped count), page, page_size, max_page, has_more, status, sort and filters. status sold returns sold listings (sold and in transit) with their prices, so asking prices (on_sale) and sold prices for the same query come from one tool; sort recently_sold on us. Depth: ${DEPTH} ${FILTERS} ${PRICES} ${JP} ${IDS} Markets: us and jp. ${CHARGE}`,
+    `Search Mercari listings by keyword (Mercari US or Mercari Japan): items (${ITEM}), total (Mercari's own count, capped), page, page_size, max_page, has_more, status, sort and filters. status sold returns sold listings (sold and in transit) with their prices, so asking prices (on_sale) and sold prices for the same query come from one tool. On us, Mercari orders sold results most recently sold first whatever relevance asks (price sorts apply) and matches the keyword more loosely than on-sale results (set names, descriptions): check titles before comparing prices. Depth: ${DEPTH} ${FILTERS} ${PRICES} ${JP} ${IDS} Markets: us and jp. ${CHARGE}`,
     {
       query: z.string().min(1).max(200).optional()
         .describe("Search keywords, e.g. 'nintendo switch' (required unless category_id or brand_id is sent). On jp, Japanese keywords match best."),
@@ -101,7 +102,7 @@ export function registerMercariTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_mercari_item",
-    `One Mercari listing by item_id or link: item_id, title, description, url, price, original_price, discount_percent (us also price_with_buyer_fee), currency, status, sold_at (when it sold), condition and condition_name, brand, category with its path, size, color, shipping (payer, method, service, fee, days_to_ship, ships_from: US state or Japanese prefecture), likes, photos, created_at, updated_at, seller (seller_id, public display name, rating, review_count, listings_count, badges; us sold_count, jp good / normal / bad ratings). A sold listing keeps its full data. jp adds the item's full public comment list (text, date, is_seller; who wrote each is not returned); a jp Mercari Shops product (22-character id) answers is_shop with its shop and some of the shop's other products. ${PRICES} ${JP} ${IDS} Markets: us and jp. ${CHARGE}`,
+    `One Mercari listing by item_id or link: item_id, title, description, url, price, original_price, discount_percent (us also price_with_buyer_fee: price plus buyer fees, plus shipping when the buyer pays it), currency, status, sold_at (when it sold, if Mercari shows it), condition and condition_name, brand, category with its path, size, color, shipping (payer, method, service, fee: the shipping label cost paid by payer, days_to_ship, ships_from: US state or Japanese prefecture), likes, photos, created_at, updated_at, seller (seller_id, public display name, rating, review_count, listings_count, badges; us sold_count, jp good / normal / bad ratings). A sold listing keeps its full data. jp adds the item's full public comment list (text, date, is_seller; who wrote each is not returned); a jp Mercari Shops product (22-character id) answers is_shop with its shop and some of the shop's other products. ${PRICES} ${JP} ${IDS} Markets: us and jp. ${CHARGE}`,
     {
       item_id: z.string().min(9).max(22).optional()
         .describe("A Mercari item id (items[].item_id of a search answer): m and 11 digits, e.g. 'm38943035688', or on jp a 22-character Mercari Shops product id."),

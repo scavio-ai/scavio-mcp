@@ -1374,8 +1374,8 @@ Mercari API for Mercari US (mercari.com, USD, English) and Mercari Japan (jp.mer
 
 | Tool | Description |
 |------|-------------|
-| `search_mercari` | Search listings by keyword, category or brand: price, original price and discount when the seller dropped it, condition, brand, size, seller id, free shipping, created time; `status` on_sale, sold (sold and in transit) or all; sorted by relevance, newest, price, likes (jp) or recently sold (us); us 50 per page up to page 20, jp 120 per page up to page 91 |
-| `get_mercari_item` | One listing by item id or link: description, price, original price, sold_at, condition, category path, size, color, shipping (payer, method, days to ship, ships from), likes, photos and the seller summary; jp adds the full public comment list and Mercari Shops products |
+| `search_mercari` | Search listings by keyword, category or brand: price, original price and discount when the seller dropped it, condition, brand, size, seller id, free shipping (us: with the shipping filter), created time; `status` on_sale, sold (sold and in transit) or all; sorted by relevance, newest, price, likes (jp) or recently sold (us; us sold searches come most recently sold first); us 50 per page up to page 20, jp 120 per page up to page 91 |
+| `get_mercari_item` | One listing by item id or link: description, price, original price, sold_at (when Mercari shows it), condition, category path, size, color, shipping (payer, method, days to ship, ships from), likes, photos and the seller summary; jp adds the full public comment list and Mercari Shops products |
 | `get_mercari_category` | Listings in one category, paged and sorted, with keywords and the search filters |
 | `get_mercari_categories` | The category tree: us one level at a time, jp the full tree or one parent's children |
 | `get_mercari_brands` | The brand list (us about 28,800, jp about 52,600), filtered by name, pages of 1,000 |
@@ -1395,13 +1395,18 @@ Mercari UK (closed: `gb` / `uk`) and any other value answer 400 before
 anything is charged. Item, category, brand and seller ids are per market: an
 id from us is not valid on jp. `status: "sold"` returns sold listings (sold
 and in transit) with their prices, so asking prices and sold prices for the
-same query come from one tool; sold US items keep full data including
-`sold_at` on `get_mercari_item`. Search grids carry no likes and no sold time
-(the item has both). Prices are numbers, US dollars on us and whole yen on jp;
+same query come from one tool. On us, Mercari orders sold results most
+recently sold first whatever relevance asks (price sorts apply) and matches the
+keyword more loosely than on-sale results, so check titles before comparing
+prices. Sold US items keep full data on `get_mercari_item`, with `sold_at` when
+Mercari shows it. Search grids carry no likes and no sold time (the item has
+both); on us they carry `free_shipping` only when you filter by shipping. us
+pages run to page 20 and later pages can repeat earlier items, so dedupe by
+`item_id`; `total` stops at 10,000 on us and 15,000 on jp (that many or more). Prices are numbers, US dollars on us and whole yen on jp;
 `original_price` is the seller's earlier price when above `price`, with
-`discount_percent` against it. Mercari Japan data is in Japanese as sellers
-wrote it (not translated), and jp calls are slower (search typically 30-60 s,
-other tools 10-30 s; us about 3-20 s). jp `newest` follows Mercari Japan's own
+`discount_percent` against it (never set on jp results). Mercari Japan data is in Japanese as sellers
+wrote it (not translated), and jp calls are slower (typically 10-20 s, up to
+about a minute; us about 3-20 s). jp `newest` follows Mercari Japan's own
 order, where relisted items move up. Not available: US seller profiles and
 reviews, US search suggestions, Japanese trending, price-drop history, buying
 or messaging. Failed calls are not charged; a not-found is charged.
