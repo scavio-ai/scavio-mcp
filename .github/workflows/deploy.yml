@@ -37,6 +37,7 @@ jobs:
             MCP_AUTH_SECRET=${{ secrets.MCP_AUTH_SECRET }}
             ISSUER_URL=https://mcp.scavio.dev
             DASHBOARD_URL=https://dashboard.scavio.dev
+            OPENAI_APPS_CHALLENGE=${{ secrets.OPENAI_APPS_CHALLENGE }}
             ENVFILE
 
             sed -i 's/^[[:space:]]*//' "$APP_DIR/.env"
