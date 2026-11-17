@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 605 tools across 85 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 617 tools across 86 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 605 tools puts ~1037KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 617 tools puts ~1071KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 605 tools. Loading all of them costs ~1037KB of `tools/list` —
+Scavio exposes 617 tools. Loading all of them costs ~1071KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **605 tools, ~1037KB** |
+| `all` | every platform — **617 tools, ~1071KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `asos`, `vinted`, `mercari`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `vinted`, `mercari`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1278,6 +1278,56 @@ them from `get_zara_categories`). No reviews (Zara shows none), no price
 history (poll `get_zara_prices`), and Inditex's other brands (Pull&Bear,
 Massimo Dutti, Bershka, Stradivarius, Oysho, Zara Home, Lefties) are not
 covered. Failed calls are not charged; a not-found is charged.
+
+### [Uniqlo](https://scavio.dev/docs/uniqlo-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Uniqlo API: Uniqlo prices by country (one product id priced in up to 10 markets per call, each in its own currency, never converted), online stock by colour and size, store stock near a point, reviews with fit feedback, sale and limited-time offers, new arrivals, catalogue search, product detail, categories, stores and search suggestions, across 41 Uniqlo markets.
+
+| Tool | Description |
+|------|-------------|
+| `search_uniqlo` | Search by keyword on us, jp, kr (up to 100 per page; featured, newest, price or top-rated sort; gender, category, flag, colour, size and price filters; facets and related keywords) and on Uniqlo's Greater China sites tw, hk, cn (their own product codes; best-selling sort) |
+| `get_uniqlo_product` | One product by id or link on 41 markets: description, composition, care, origin, category, price, promo price, sale and limited-offer flags, 30-day lowest price (Europe), colours, sizes, rating with fit, images; variants with l2_id on us, jp, kr |
+| `get_uniqlo_stock` | Online stock of every colour x size x length variant (in_stock, low_stock, out_of_stock; quantity capped at 11 as Uniqlo shows it) |
+| `get_uniqlo_store_stock` | Stock of one variant in the stores nearest a point (status per store, no unit counts), by l2_id or by product id + colour + size |
+| `get_uniqlo_stores` | Stores near a point, or one store by id, with address, phone, weekly opening hours, store type, sections and services |
+| `get_uniqlo_reviews` | Reviews with rating, title, text, date, fit (1 tight to 5 loose), purchased size and colour, height, weight and age ranges; 5 sorts |
+| `get_uniqlo_suggestions` | Search suggestions, categories and feature pages for a partial query; trending search words with no query |
+| `get_uniqlo_category` | Every product of one category path, paged and sorted, optionally one flag |
+| `get_uniqlo_deals` | The sale or limited-time-offer list of a market, optionally one gender |
+| `get_uniqlo_new_arrivals` | Items Uniqlo flags New, optionally one gender |
+| `get_uniqlo_categories` | A market's category tree (gender, class, category, subcategory) with the paths search and category take |
+| `get_uniqlo_prices` | One product id across up to 10 of 38 uniqlo.com markets: price, promo price, discount, flags, tax and availability per market, plus the markets that do not sell it |
+
+Platform key `uniqlo`. 1 credit per call; `get_uniqlo_store_stock` is 2
+when resolved from product id + colour + size (1 with `l2_id`), and
+`get_uniqlo_prices` is 1 credit per market that answered (a market that does
+not sell the product answers too; failed markets are free).
+
+Markets (`country`, default `us`) by tool:
+- **Every tool:** us (USD, en), jp (JPY, ja), kr (KRW, ko).
+- **Search + product:** tw (TWD), hk (HKD), cn (CNY), Uniqlo's Greater China
+  sites, in Chinese, with their own product codes (not valid elsewhere).
+- **Product + prices:** au, be (nl, fr, en), ca (en, fr), de, dk (en), es, fr,
+  gb (GBP; `uk` accepted), id, in, it, my, nl, ph, se (en), sg, th, vn, and
+  Uniqlo's EU store (EUR, English) for at, bg, cz, ee, fi, gr, hr, hu, ie,
+  lt, lu, lv, pl, pt, ro, si and sk.
+
+Countries with no Uniqlo online store (ch, no, nz, mx, tr, ae, il, ru), a
+market a tool does not serve and a language a market does not serve answer
+400 before anything is charged.
+
+Product ids (`E479000-000`) are global on uniqlo.com, so one id compares a
+price across markets in a single `get_uniqlo_prices` call. Prices are numbers
+in the market's own currency, never converted. On us, jp and kr Uniqlo shows
+a sale or limited-time-offer drop only as a flag: `promo_price` equals
+`price` there, and `on_sale`, `limited_offer` and `price_flags` (with start
+and end dates) carry it; Europe and Southeast Asia show `promo_price` below
+`price`. `get_uniqlo_stock` is online stock; `get_uniqlo_store_stock` is per
+store, and many stores answer `out_of_stock`, which is Uniqlo's real answer.
+Review totals are pooled per region (the European markets share one pool).
+No reviewer names or locations, no price history (poll and store your own),
+no store-level prices, and GU is not covered. Failed calls are not charged; a
+not-found is charged.
 
 ### [ASOS](https://scavio.dev/docs/asos-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
