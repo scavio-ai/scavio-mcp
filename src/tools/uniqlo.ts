@@ -52,7 +52,10 @@ const MARKETS_TEXT = `Markets (country; language, default the first listed): eve
 const A_MARKETS =
   "Markets: us (USD, en), jp (JPY, ja), kr (KRW, ko) only; other markets answer 400 before anything is charged. Every answer carries country, language and currency.";
 const PRICES =
-  "Prices are numbers in the market's own currency, never converted: price is Uniqlo's regular price, promo_price its promotional price. On us, jp and kr Uniqlo shows a sale or limited-time-offer drop only as a flag (promo_price equals price there): on_sale, limited_offer (start, end) and price_flags (code, name, start, end, ISO dates) carry it. Europe and Southeast Asia show promo_price below price. No price history: poll and store your own.";
+  'Prices are numbers in the market\'s own currency, never converted: price is Uniqlo\'s regular price, promo_price its promotional price. On us, jp, kr and ca (and on some items sg, my and in) Uniqlo marks a drop with flags only, so promo_price equals price; in Europe, Australia and most of Southeast Asia promo_price is below price. on_sale, limited_offer and price_flags (code, name, start, end, ISO dates) carry the flags. Only a limited-time offer has a window: quote Uniqlo\'s own label in price_flags.name (e.g. "until 11/18"), not a date read from end; a sale flag carries a start but no end, and Select Colors/Sizes Only carries no dates. No price history: poll and store your own.';
+const PRICE_GROUPS =
+  "price_group: product and prices default to 00, Uniqlo's regular price list. Search can list the same product_id a second time in price group 01, mostly Uniqlo's Select Colors/Sizes Only sale price for some colours / sizes (us E471601-000: 00 at 29.9, 01 at 19.9); pass price_group 01 to get_uniqlo_product to read that price and the colours / sizes it covers. get_uniqlo_prices compares group 00 unless price_group is sent.";
+const GU = "GU is a separate brand and not a separate platform here; Uniqlo's own listings can include GU collaboration items (kr limited offers did).";
 const IDS =
   "Product ids (e.g. E479000-000) are global on uniqlo.com: the same id opens the product in every market that sells it. Uniqlo's Greater China sites (tw, hk, cn) use their own codes (u0000000055478), not valid elsewhere.";
 const ITEM =
@@ -70,7 +73,9 @@ const language = () =>
 const productId = () =>
   z.string().min(6).max(20)
     .describe("A Uniqlo product id (items[].product_id): E + 6 digits + -000 on uniqlo.com (e.g. 'E479000-000'), the same in every market; u + 13 digits on tw, hk and cn.");
-const priceGroup = () => z.string().min(2).max(2).optional().describe("Price group (items[].price_group, default 00).");
+const priceGroup = () =>
+  z.string().min(2).max(2).optional()
+    .describe("Price group (items[].price_group, default 00 = Uniqlo's regular price list; 01 is mostly the Select Colors/Sizes Only sale price search lists for some colours / sizes).");
 const page = () => z.number().int().min(1).max(500).optional().describe("Results page, 1-based.");
 const pageSize = () =>
   z.number().int().min(1).max(100).optional()
@@ -102,7 +107,7 @@ export function registerUniqloTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "search_uniqlo",
-    `Search Uniqlo's catalogue by keyword. On us, jp, kr: items (${ITEM}), total, count, page, page_size (up to 100), has_more, sort (featured, newest, price_asc, price_desc, top_rated), filters gender, category_path (ids from get_uniqlo_categories), flag, color, size, price_min / price_max, facets (colors, sizes, lengths, flags with counts, price ranges, genders / classes / categories) and related_keywords. On tw (TWD), hk (HKD) and cn (CNY), Uniqlo's Greater China catalogue in Chinese: items (product_id u-code, style_code, title, url, gender, price, promo_price, max_price, discount_percent, on_sale, limited_offer, colors and sizes as codes, rating, review_count, in_stock, season, image), total, sorts featured, newest, price_asc, price_desc, best_selling, price_min / price_max. Not served on Uniqlo's other storefronts (use get_uniqlo_product and get_uniqlo_prices there). ${PRICES} ${IDS} ${MARKETS_TEXT} ${ONE}`,
+    `Search Uniqlo's catalogue by keyword. On us, jp, kr: items (${ITEM}), total, count, page, page_size (up to 100), has_more, sort (featured, newest, price_asc, price_desc, top_rated), filters gender, category_path (ids from get_uniqlo_categories), flag, color, size, price_min / price_max, facets (colors, sizes, lengths, flags with counts, price ranges, genders / classes / categories) and related_keywords. On tw (TWD), hk (HKD) and cn (CNY), Uniqlo's Greater China catalogue in Chinese: items (product_id u-code, style_code, title, url, gender, price, promo_price, max_price, discount_percent, on_sale, limited_offer, colors and sizes as codes, rating, review_count, in_stock, season, image), total, sorts featured, newest, price_asc, price_desc, best_selling, price_min / price_max. Not served on Uniqlo's other storefronts (use get_uniqlo_product and get_uniqlo_prices there). ${PRICES} ${PRICE_GROUPS} ${IDS} ${MARKETS_TEXT} ${ONE}`,
     {
       query: z.string().min(1).max(200).describe("Search keywords in the market's language (Chinese on tw, hk, cn), e.g. 'heattech'."),
       country: country(SEARCH_COUNTRIES, "Uniqlo market (default us): us, jp, kr, tw, hk or cn."),
@@ -124,7 +129,7 @@ export function registerUniqloTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_uniqlo_product",
-    `One Uniqlo product by product_id or link, on 41 markets: product_id, price_group, title, description, information, design_details, composition, washing, care, countries_of_origin, gender, category (gender, class, category, subcategory with ids), price, promo_price, currency, discount_percent, on_sale, limited_offer, price_flags, lowest_price_30d (the 30-day lowest price Uniqlo shows next to a discount in Europe), tax, flags, colors (code, name, image), sizes, lengths, rating (average, count, fit 1 tight to 5 loose, distribution), review_count, images, size_chart_url, tags, best_seller, discontinued. On us, jp, kr also variants (l2_id, sku, color, size, length, price, promo_price, price_flags; per-size stock is get_uniqlo_stock). On tw, hk, cn the Greater China product (title, price, promo_price, limited_offer, colours, sizes, rating, images; variants with per-SKU online stock on tw and hk). A product a market does not sell answers 404 (charged). Ratings are Uniqlo's per region: the European markets share one pool. Not available: price history, store-level prices, GU (Uniqlo's sister brand). ${PRICES} ${IDS} ${MARKETS_TEXT} ${ONE}`,
+    `One Uniqlo product by product_id or link, on 41 markets: product_id, price_group, title, description, information, design_details, composition, washing, care, countries_of_origin, gender, category (gender, class, category, subcategory with ids), price, promo_price, currency, discount_percent, on_sale, limited_offer, price_flags, lowest_price_30d (the 30-day lowest price Uniqlo shows next to a discount in Europe), tax, flags, colors (code, name, image), sizes, lengths, rating (average, count, fit 1 tight to 5 loose, distribution), review_count, images, size_chart_url, tags, best_seller, discontinued. On us, jp, kr also variants (l2_id, sku, color, size, length, price, promo_price, price_flags; per-size stock is get_uniqlo_stock). On tw, hk, cn the Greater China product (title, price, promo_price, limited_offer, colours, sizes, rating, images; variants with per-SKU online stock on tw and hk). A product a market does not sell answers 404 (charged). Ratings are Uniqlo's per region: the European markets share one pool. Not available: price history, store-level prices. ${GU} ${PRICES} ${PRICE_GROUPS} ${IDS} ${MARKETS_TEXT} ${ONE}`,
     {
       product_id: productId().optional(),
       url: z.string().min(10).max(600).optional()
@@ -150,12 +155,13 @@ export function registerUniqloTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_uniqlo_store_stock",
-    `Stock of one variant in the Uniqlo stores nearest a point: l2_id, point, stores (store_code, name, distance_km, status in_stock / low_stock / out_of_stock as Uniqlo states it, status_raw, store_status, order_and_pick, sections; no unit counts per store), count, stores_with_stock, total_stores. By l2_id (variants[].l2_id of get_uniqlo_stock or get_uniqlo_product) or by product_id + color + size (+ length), resolved through the product's variant list. Store stock, not online stock; many stores answer out_of_stock, which is Uniqlo's real answer. ${A_MARKETS} ${charge("1 credit with l2_id, 2 with product_id + color + size (the variant lookup, then the store stock)")}`,
+    `Stock of one variant in the Uniqlo stores nearest a point: l2_id, price_group, point, stores (store_code, name, distance_km, status in_stock / low_stock / out_of_stock as Uniqlo states it, status_raw, store_status, order_and_pick, sections; no unit counts per store), count, stores_with_stock, total_stores. By l2_id (variants[].l2_id of get_uniqlo_stock or get_uniqlo_product) with its price_group (default 00), or by product_id + color + size (+ length, + price_group), resolved through the product's variant list. Send the price group the variant came from: a variant of price group 01 asked as 00 reads out of stock in every store. Store stock, not online stock. ${A_MARKETS} ${charge("1 credit with l2_id, 2 with product_id + color + size (the variant lookup, then the store stock)")}`,
     {
       l2_id: z.string().min(8).max(8).optional()
         .describe("Variant id (variants[].l2_id of get_uniqlo_stock or get_uniqlo_product), e.g. '08665900'. One of l2_id or product_id + color + size."),
       product_id: productId().optional(),
-      price_group: priceGroup(),
+      price_group: z.string().min(2).max(2).optional()
+        .describe("Price group the variant came from (items[].price_group or the product's price_group, default 00), with l2_id or with product_id + color + size. A variant of price group 01 asked as 00 reads out of stock in every store."),
       color: z.string().min(2).max(5).optional().describe("With product_id: colour code (colors[].code, e.g. COL67)."),
       size: z.string().min(6).max(6).optional().describe("With product_id: size code (sizes[].code, e.g. INS028)."),
       length: z.string().min(6).max(6).optional()
@@ -227,7 +233,7 @@ export function registerUniqloTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_uniqlo_deals",
-    `Uniqlo's sale (type sale) or limited-time offers (type limited_offer) of a market, optionally for one gender: type, gender, items (${ITEM}) with limited_offer start / end where Uniqlo shows them, ${LIST}. ${PRICES} ${A_MARKETS} ${ONE}`,
+    `Uniqlo's sale (type sale) or limited-time offers (type limited_offer) of a market, optionally for one gender: type, gender, items (${ITEM}) with limited_offer (name: Uniqlo's own label, start / end its window) where Uniqlo shows them, ${LIST}. Uniqlo's own listings can include GU collaboration items (kr limited offers did). ${PRICES} ${PRICE_GROUPS} ${A_MARKETS} ${ONE}`,
     {
       type: z.enum(["sale", "limited_offer"]).optional()
         .describe("sale (default: items flagged Sale) or limited_offer (items flagged Limited-Time Offer)."),
@@ -270,7 +276,7 @@ export function registerUniqloTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_uniqlo_prices",
-    `Uniqlo prices by country: one uniqlo.com product across up to 10 markets in one call (default ${PRICES_DEFAULT}): product_id, price_group, markets (country, language, currency, available, title, product_id, price, promo_price, discount_percent, on_sale, limited_offer, price_flags, lowest_price_30d (Europe), tax, url), not_sold (the markets that do not sell it), errors (markets that failed, not charged), count. Each price is in that market's own currency and never converted. Any of the 38 uniqlo.com markets (us, jp, kr and the product + prices storefronts listed in search_uniqlo); Greater China (tw, hk, cn) uses its own product codes and is not offered here. ${PRICES} ${IDS} Costs 1 credit per market that answered (a market that does not sell the product answers too). Failed markets are not charged.`,
+    `Uniqlo prices by country: one uniqlo.com product across up to 10 markets in one call (default ${PRICES_DEFAULT}): product_id, price_group, markets (country, language, currency, available, title, product_id, price, promo_price, discount_percent, on_sale, limited_offer, price_flags, lowest_price_30d (Europe), tax, url), not_sold (the markets that do not sell it), errors (markets that failed, not charged), count. Each price is in that market's own currency and never converted. Any of the 38 uniqlo.com markets (us, jp, kr and the product + prices storefronts listed in search_uniqlo); Greater China (tw, hk, cn) uses its own product codes and is not offered here. ${PRICES} ${PRICE_GROUPS} ${IDS} Costs 1 credit per market that answered (a market that does not sell the product answers too). Failed markets are not charged.`,
     {
       product_id: productId(),
       price_group: priceGroup(),

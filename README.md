@@ -5,7 +5,7 @@
 
 [Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 617 tools across 86 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 617 tools puts ~1071KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 617 tools puts ~1075KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 617 tools. Loading all of them costs ~1071KB of `tools/list` —
+Scavio exposes 617 tools. Loading all of them costs ~1075KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **617 tools, ~1071KB** |
+| `all` | every platform — **617 tools, ~1075KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -1288,7 +1288,7 @@ Uniqlo API: Uniqlo prices by country (one product id priced in up to 10 markets 
 | `search_uniqlo` | Search by keyword on us, jp, kr (up to 100 per page; featured, newest, price or top-rated sort; gender, category, flag, colour, size and price filters; facets and related keywords) and on Uniqlo's Greater China sites tw, hk, cn (their own product codes; best-selling sort) |
 | `get_uniqlo_product` | One product by id or link on 41 markets: description, composition, care, origin, category, price, promo price, sale and limited-offer flags, 30-day lowest price (Europe), colours, sizes, rating with fit, images; variants with l2_id on us, jp, kr |
 | `get_uniqlo_stock` | Online stock of every colour x size x length variant (in_stock, low_stock, out_of_stock; quantity capped at 11 as Uniqlo shows it) |
-| `get_uniqlo_store_stock` | Stock of one variant in the stores nearest a point (status per store, no unit counts), by l2_id or by product id + colour + size |
+| `get_uniqlo_store_stock` | Stock of one variant in the stores nearest a point (status per store, no unit counts), by l2_id or by product id + colour + size, with the variant's price group |
 | `get_uniqlo_stores` | Stores near a point, or one store by id, with address, phone, weekly opening hours, store type, sections and services |
 | `get_uniqlo_reviews` | Reviews with rating, title, text, date, fit (1 tight to 5 loose), purchased size and colour, height, weight and age ranges; 5 sorts |
 | `get_uniqlo_suggestions` | Search suggestions, categories and feature pages for a partial query; trending search words with no query |
@@ -1318,16 +1318,30 @@ market a tool does not serve and a language a market does not serve answer
 
 Product ids (`E479000-000`) are global on uniqlo.com, so one id compares a
 price across markets in a single `get_uniqlo_prices` call. Prices are numbers
-in the market's own currency, never converted. On us, jp and kr Uniqlo shows
-a sale or limited-time-offer drop only as a flag: `promo_price` equals
-`price` there, and `on_sale`, `limited_offer` and `price_flags` (with start
-and end dates) carry it; Europe and Southeast Asia show `promo_price` below
-`price`. `get_uniqlo_stock` is online stock; `get_uniqlo_store_stock` is per
-store, and many stores answer `out_of_stock`, which is Uniqlo's real answer.
+in the market's own currency, never converted. On us, jp, kr and ca (and on
+some items sg, my and in) Uniqlo marks a drop with flags only, so
+`promo_price` equals `price`; in Europe, Australia and most of Southeast Asia
+`promo_price` is below `price`. `on_sale`, `limited_offer` and `price_flags`
+carry the flags. Only a limited-time offer has a window: quote Uniqlo's own
+label in `price_flags.name` (e.g. "until 11/18"), not a date read from `end`;
+a sale flag carries a start but no end, and Select Colors/Sizes Only carries
+no dates.
+
+`price_group`: product and prices default to `00`, Uniqlo's regular price
+list. Search can list the same `product_id` a second time in price group
+`01`, mostly Uniqlo's Select Colors/Sizes Only sale price for some colours /
+sizes; pass `price_group: "01"` to `get_uniqlo_product` to read that price
+and the colours / sizes it covers. `get_uniqlo_prices` compares group `00`
+unless `price_group` is sent.
+
+`get_uniqlo_stock` is online stock; `get_uniqlo_store_stock` is per store.
+Send it the price group the variant came from (`price_group`, default `00`):
+a variant of price group `01` asked as `00` reads out of stock in every store.
 Review totals are pooled per region (the European markets share one pool).
-No reviewer names or locations, no price history (poll and store your own),
-no store-level prices, and GU is not covered. Failed calls are not charged; a
-not-found is charged.
+No reviewer names or locations, no price history (poll and store your own)
+and no store-level prices. GU is a separate brand and not a separate platform
+here; Uniqlo's own listings can include GU collaboration items (kr limited
+offers did). Failed calls are not charged; a not-found is charged.
 
 ### [ASOS](https://scavio.dev/docs/asos-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
