@@ -25,7 +25,7 @@ const STORES =
 const IDS =
   "Product ids, EANs, category ids, seller ids and offer ids are the same on every storefront; prices, offers and stock can differ between the Netherlands and Belgium.";
 const BEFR =
-  "On be-fr bol's own texts are French, some partner titles stay Dutch, and review texts are bol's own translation (is_translated).";
+  "On be-fr bol's own texts are French, some partner titles stay Dutch, review_topics (topic and summary) come back in Dutch as bol serves them, and review texts are bol's own translation (is_translated).";
 const PRICES =
   "Prices are numbers in euros. reference_price is the price bol shows next to the price: reference_price_type rrp (the supplier's recommended price, 'Adviesprijs') or most_shown_price (bol's most-shown non-promotional price over the last 90 days); discount_percent is against it, discount_shown when bol shows it struck through. bol shows no price history and no 30-day lowest price: to track prices, poll and store your own.";
 const ITEM =
@@ -49,10 +49,10 @@ const productId = () =>
     .describe("A bol.com product id as a STRING (items[].product_id of a search answer), e.g. '9300000239314960'. 16 digits: too long for a JSON number, so never send it as a number.");
 
 const page = (search: boolean) =>
-  z.number().int().min(1).max(search ? 10 : 250).optional()
+  z.number().int().min(1).max(search ? 10 : 500).optional()
     .describe(search
       ? "Results page, 1-based, about 24-30 items per page. bol.com search stops at page 10 (about 280 results); higher answers 400."
-      : "Results page, 1-based, about 24 items per page (max_page in the answer). A page past the end answers an empty page with a note.");
+      : "Results page, 1-500, 1-based, about 24 items per page (max_page in the answer; bol lists at most 500 pages, higher answers 400). A page past max_page answers an empty page with a note.");
 const searchSort = () =>
   z.enum(SEARCH_SORTS).optional()
     .describe("relevance (default), popularity, price_asc, price_desc, rating or wishlist (most wished for). No newest sort. Sorting by anything but relevance can narrow bol's result set (measured 6,655 results down to 30); price sorts follow bol's own ordering, so small inversions against the live buy-box price occur.");
@@ -102,7 +102,7 @@ export function registerBolcomTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_bolcom_product",
-    `One bol.com product by product_id, link or EAN, the competitor-price call: product_id, ean, title, subtitle, brand, description (plain text), specifications (group, name, key, value), category_path, buy_box (offer_id, price, reference_price and reference_price_type, discount_percent, condition, seller with seller_id, name, sold_by_bol, rating out of 10, rating_percent and top_seller, shipping_cost, delivery_text, delivery_date, low_stock, labels), offer_count, cheapest_new, fastest_new (price and delivery promise), cheapest_second_hand, refurbished (grades with their cheapest offer), energy_label, images, video, series, rating (average, count, 1-5 distribution), review_topics and review_summary (bol's own AI-generated summaries; review_summary can be null), reviews (the first 10 as bol shows them, pooled across the product family, each with the product_id it was written for: rating, title, text, pros, cons, verified, is_translated, date, helpful counts; no reviewer names), more_reviews. By EAN the answer adds requested_ean. Every seller's offer is on get_bolcom_offers. An unknown product answers 404 (charged). ${PRICES} ${IDS} ${BEFR} ${NOT_BUILT} ${STORES} Costs 2 credits (4 by EAN: a search plus the product page, billed on actual cost). Failed upstream calls are not charged; a not-found is charged.`,
+    `One bol.com product by product_id, link or EAN, the competitor-price call: product_id, ean, title, subtitle, brand, description (plain text), specifications (group, name, key, value), category_path, buy_box (offer_id, price, reference_price and reference_price_type, discount_percent, condition, seller with seller_id, name, sold_by_bol, rating out of 10 and top_seller, shipping_cost, delivery_text, delivery_date, low_stock, labels), offer_count, cheapest_new, fastest_new (price and delivery promise), cheapest_second_hand, refurbished (grades with their cheapest offer), energy_label, images, video, series, rating (average, count, 1-5 distribution), review_topics and review_summary (bol's own AI-generated summaries; review_summary can be null), reviews (the first 10 as bol shows them, pooled across the product family, each with the product_id it was written for: rating, title, text, pros, cons, verified, is_translated, date, helpful counts; no reviewer names), more_reviews. By EAN the answer adds requested_ean. The 10 lowest-priced offers are on get_bolcom_offers. An unknown product answers 404 (charged). ${PRICES} ${IDS} ${BEFR} ${NOT_BUILT} ${STORES} Costs 2 credits (4 by EAN: a search plus the product page, billed on actual cost). Failed upstream calls are not charged; a not-found is charged.`,
     {
       product_id: productId(),
       url: z.string().min(20).max(500).optional()
@@ -117,7 +117,7 @@ export function registerBolcomTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_bolcom_offers",
-    `Every seller's offer for one bol.com product, for price comparison and price monitoring: product_id, title, url, counts (new, refurbished, second_hand), offers (offer_id, price, reference_price, reference_price_type, discount_percent, condition, refurbished_grade, second_hand_state, condition_note, shipping_cost, delivery_text, delivery_date, seller with seller_id, name, sold_by_bol, rating out of 10, rating_percent, top_seller, labels), count, has_more. The list does not mark the buy box: get_bolcom_product's buy_box.offer_id names it. Fewer sellers ship to Belgium. An unknown product answers 404 (charged). ${PRICES} ${IDS} ${STORES} ${CHARGE}`,
+    `The lowest-priced 10 offers for one bol.com product, for price comparison and price monitoring: product_id, title, url, counts (new, refurbished, second_hand: all of the product's offers), offers (up to 10, lowest price first: offer_id, price, reference_price, reference_price_type, discount_percent, condition, refurbished_grade, second_hand_state, condition_note, shipping_cost, delivery_text, delivery_date, seller with seller_id, name, sold_by_bol, rating out of 10, top_seller, labels), count, has_more (true when bol has more offers than the 10 returned: the higher-priced ones are not returned and there is no paging). The list does not mark the buy box: get_bolcom_product's buy_box.offer_id names it. Fewer sellers ship to Belgium. An unknown product answers 404 (charged). ${PRICES} ${IDS} ${STORES} ${CHARGE}`,
     {
       product_id: productId(),
       url: z.string().min(20).max(500).optional()
@@ -130,7 +130,7 @@ export function registerBolcomTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_bolcom_seller",
-    `A bol.com seller's public profile by seller_id or link: seller (seller_id, name, url, active_since, description, rating out of 10 with product_info / delivery_time / shipping / service sub-ratings, rating_method, reviews_used_for_rating, positive_percent, top_seller, reviews positive / neutral / negative / total, product_count, business: company_name, city, country, registration_number, vat_number and country_of_origin as bol publishes them under EU trader rules; no street address). Review texts are not returned. The seller's products are on get_bolcom_seller_products. An unknown seller answers 404 (charged). ${IDS} ${STORES} ${CHARGE}`,
+    `A bol.com seller's public profile by seller_id or link: seller (seller_id, name, url, active_since, description, rating out of 10 with up to four sub-ratings (product_info / delivery_time / shipping / service; some sellers have fewer), rating_method (recent_reviews: the last 3 months; all_reviews: all of the seller's reviews), reviews_used_for_rating, positive_percent (bol's positive percentage over those reviews), top_seller, reviews positive / neutral / negative / total, product_count, business: company_name, city, country, registration_number, vat_number and country_of_origin as bol publishes them under EU trader rules; no street address). Review texts are not returned. The seller's products are on get_bolcom_seller_products. An unknown seller answers 404 (charged). ${IDS} ${STORES} ${CHARGE}`,
     {
       seller_id: id("A bol.com seller id (offer.seller_id or buy_box.seller.seller_id of an answer), e.g. '1770745'. Seller id '0' is bol itself.").optional(),
       url: z.string().min(20).max(500).optional()
@@ -157,7 +157,7 @@ export function registerBolcomTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_bolcom_category",
-    `Products in one bol.com category (category_id), paged, sorted and filtered like search_bolcom (price, condition, deals_only, select_deals, delivery, brand_facet_id, facets): category (category_id, name, url, breadcrumbs), items (${ITEM}), ${LIST}. Defaults to popularity; categories go deeper than search (tens of pages). An unknown category answers 404 (charged). ${PRICES} ${IDS} ${BEFR} ${STORES} ${CHARGE}`,
+    `Products in one bol.com category (category_id), paged, sorted and filtered like search_bolcom (price, condition, deals_only, select_deals, delivery, brand_facet_id, facets): category (category_id, name, url, breadcrumbs), items (${ITEM}), ${LIST}. Defaults to popularity; categories go deeper than search (up to page 500). An unknown category answers 404 (charged). ${PRICES} ${IDS} ${BEFR} ${STORES} ${CHARGE}`,
     {
       category_id: id("A bol.com category id (category_path[].category_id of a product, the category facet of a search), e.g. '8440'."),
       country: country(),
@@ -185,7 +185,7 @@ export function registerBolcomTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_bolcom_deals",
-    `Today's bol.com deals as its deals page serves them: day_deal (title, campaign_id, url, ends_at, highlighted_product) and category_deals (category_id, category_name, products with product_id, title, url, image and offer: price, reference price, discount, labels; deal products carry seller_id only), more_deal_category_ids, count. Open the day deal's products with get_bolcom_campaign and its campaign_id. ${PRICES} ${STORES} ${CHARGE}`,
+    `Today's bol.com deals as its deals page serves them: day_deal (title, campaign_id, url on the asked storefront, ends_at, highlighted_product) and category_deals (category_id, category_name, products with product_id, title, url, image and offer: price, reference price, discount, labels; deal products carry seller_id only), more_deal_category_ids, count. Open the day deal's products with get_bolcom_campaign and its campaign_id. ${PRICES} ${STORES} ${CHARGE}`,
     {
       country: country(),
       language: language(),
@@ -195,7 +195,7 @@ export function registerBolcomTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_bolcom_campaign",
-    `The products of one bol.com promotion (a Black Friday deal list, the day deal ...) by campaign_id or link, paged and sorted: campaign (campaign_id, name, description, type, ends_at), items (${ITEM}), ${LIST}. Defaults to popularity. An ended or unknown campaign answers 404 (charged). ${PRICES} ${IDS} ${STORES} ${CHARGE}`,
+    `The products of one bol.com promotion (a Black Friday deal list, the day deal ...) by campaign_id or link, paged and sorted: campaign (campaign_id, name, description, type, ends_at), items (${ITEM}; offer is each product's buy box, which does not always carry this campaign's label), ${LIST}. Defaults to popularity. An ended or unknown campaign answers 404 (charged). ${PRICES} ${IDS} ${STORES} ${CHARGE}`,
     {
       campaign_id: id("A bol.com campaign id (labels[].campaign_id of an offer, day_deal.campaign_id of get_bolcom_deals), e.g. '555136'.").optional(),
       url: z.string().min(20).max(500).optional().describe("A bol.com campaign (promotion) link."),

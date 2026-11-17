@@ -1691,18 +1691,18 @@ prices, poll and store your own.
 
 ### [bol.com](https://scavio.dev/docs/bolcom-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-bol.com API for the Netherlands and Belgium (EUR): bol.com competitor prices from the buy box and every seller's offer on a product, product lookup by id, link or EAN, sellers with ratings and public trader data, category, brand and seller listings, today's deals and promotions such as Black Friday lists.
+bol.com API for the Netherlands and Belgium (EUR): bol.com competitor prices from the buy box and the lowest-priced competing offers on a product, product lookup by id, link or EAN, sellers with ratings and public trader data, category, brand and seller listings, today's deals and promotions such as Black Friday lists.
 
 | Tool | Description |
 |------|-------------|
 | `search_bolcom` | Search by keyword, up to page 10: each item with its buy-box offer (price, `reference_price` and its type, discount, seller, condition, delivery promise, labels), rating, brand, category and `sponsored` flag; 6 sorts (relevance, popularity, price, rating, wishlist); filter by price, condition (new, refurbished, second-hand), deals, Select deals, delivery (today, tomorrow, evening, sunday, free shipping), category, brand facet and any facet value |
 | `get_bolcom_product` | One product by `product_id`, URL or EAN: EAN, specifications, category path, the buy box (price, reference price, seller with rating out of 10, shipping cost, delivery promise), `offer_count`, cheapest new, fastest new, cheapest second-hand and refurbished grades, rating with 1-5 distribution, bol's AI review topics and the first 10 reviews |
-| `get_bolcom_offers` | Every seller's offer on one product: price, condition (with refurbished grade or second-hand state), shipping cost, delivery promise, seller rating, plus counts by condition |
-| `get_bolcom_seller` | A seller's profile: rating out of 10 with four sub-ratings, positive %, review totals, product count and the public EU trader data (company, city, country, registration and VAT number; no street address) |
+| `get_bolcom_offers` | The 10 lowest-priced offers on one product, lowest price first: price, condition (with refurbished grade or second-hand state), shipping cost, delivery promise, seller rating out of 10, plus counts by condition for all its offers; `has_more` when bol has more (no paging) |
+| `get_bolcom_seller` | A seller's profile: rating out of 10 with up to four sub-ratings, positive %, review totals, product count and the public EU trader data (company, city, country, registration and VAT number; no street address) |
 | `get_bolcom_seller_products` | The products a seller sells, paged and sorted, each with its buy box |
-| `get_bolcom_category` | One category's products, paged, sorted and filtered like search, with the category breadcrumbs |
+| `get_bolcom_category` | One category's products, paged (up to page 500), sorted and filtered like search, with the category breadcrumbs |
 | `get_bolcom_brand` | One brand's products by `brand_id` or URL, paged and sorted |
-| `get_bolcom_deals` | Today's day deal (with its `campaign_id` and end time) and the category deals |
+| `get_bolcom_deals` | Today's day deal (with its `campaign_id`, its link on the asked storefront and end time) and the category deals |
 | `get_bolcom_campaign` | The products of one promotion (a Black Friday list, the day deal) by `campaign_id` or URL, paged and sorted |
 
 Platform key `bolcom`. 2 credits per call; `get_bolcom_product` by `ean` is
@@ -1712,8 +1712,8 @@ default, Dutch), be-nl (`country: "be"`, Dutch) and be-fr (`country: "be"`,
 `language: "fr"`, French), all EUR; `fr` with `nl` answers 400. Product, EAN,
 category, seller and offer ids are the same on every storefront; prices,
 offers and stock can differ between the Netherlands and Belgium. On be-fr
-bol's own texts are French, some partner titles stay Dutch and review texts
-are bol's translation (`is_translated`). `product_id` is a 16-digit STRING:
+bol's own texts are French, some partner titles and the review topics stay
+Dutch, and review texts are bol's translation (`is_translated`). `product_id` is a 16-digit STRING:
 send it quoted, never as a JSON number. `reference_price_type` is `rrp` (the
 supplier's recommended price) or `most_shown_price` (bol's most-shown
 non-promotional price over the last 90 days), and `discount_percent` is
@@ -1723,8 +1723,8 @@ different id spaces. Search stops at page 10; sorting by anything but
 relevance can narrow the result set, and price sorts follow bol's own order
 (small inversions against the live buy-box price occur). Listing tools
 (seller products, category, brand, campaign) default to popularity and do not
-offer relevance. List items carry no EAN; the offers list does not mark the
-buy box (the product's `buy_box.offer_id` names it). Reviews are the first 10
+offer relevance; their pages run 1 to 500. List items carry no EAN; the offers
+list returns the 10 lowest-priced offers (no paging) and does not mark the buy box (the product's `buy_box.offer_id` names it). Reviews are the first 10
 as bol shows them, pooled across the product family, with no reviewer names.
 Failed calls are not charged; a not-found is a charged 404. No search
 suggestions, review paging, seller review texts, price history or 30-day
