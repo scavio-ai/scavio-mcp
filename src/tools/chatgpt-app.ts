@@ -31,16 +31,30 @@ import { INVALID_KEY_MESSAGE, OUT_OF_CREDITS_PREFIX } from "../lib/tool-error.js
 export const CHATGPT_PLATFORMS = ["extract", "company", "google"] as const;
 
 /**
- * Social, retail and real estate platforms added in plugin 1.1. Their tools keep
- * their shared descriptions with pricing sentences removed (scrubPricing),
- * except the ones in BROAD_EXCLUDED. Sized against tools/list: the whole profile
- * stays near 150KB; the full catalog (~960KB) is too large for one connector.
+ * Platforms added in plugin 1.1, in the owner's priority order (2026-11-17):
+ * Google products, then every US retailer, then TikTok, YouTube, Instagram,
+ * then real estate. ChatGPT stops exposing tools once tools/list gets too
+ * large (measured: 568 tools / 964KB exposed only 3), and the guidelines forbid
+ * a generic executor for the rest, so the list is cut at the measured budget,
+ * from the end. Their tools keep their shared descriptions with pricing
+ * clauses removed (scrubPricing), except the tools in BROAD_EXCLUDED.
  */
 export const CHATGPT_BROAD_PLATFORMS = [
-  "tiktok", "instagram", "youtube", "reddit", "x", "linkedin",
-  "amazon", "walmart", "target", "homedepot", "ebay", "bestbuy",
+  // Google products beyond search, news, shopping and Maps (those are in CHATGPT_TOOLS)
+  "googleplay", "googleads",
+  // US retailers
+  "amazon", "walmart", "target", "costco", "homedepot", "lowes", "bestbuy", "ebay", "kroger", "samsclub",
+  "cvs", "walgreens", "wholefoods", "heb", "publix", "aldi", "dollargeneral", "sephora", "ulta", "macys",
+  "nordstrom", "nordstromrack", "kohls", "jcpenney", "saks", "dicks", "footlocker", "fanatics", "chewy",
+  "petsmart", "petco", "iherb", "menards", "harborfreight", "microcenter", "wayfair", "ashley", "tcgplayer",
+  "mercari", "specs",
+  // If room
+  "tiktok", "youtube", "instagram",
   "zillow", "redfin", "realtor",
 ] as const;
+
+/** Tools from the core registrars that are not served: a format variant of search_google. */
+const CORE_EXCLUDED = new Set(["google_custom_search"]);
 
 /**
  * Broad tools left out: follower, liker and retweeter lists and individuals'
@@ -261,6 +275,16 @@ function wrap(name: string, tool: RegisteredTool) {
   };
 }
 
+/** Keep a shared tool with its own description and inputs, pricing clauses removed. */
+function applyShared(name: string, tool: RegisteredTool): void {
+  const shape = { ...((tool.inputSchema as z.ZodObject | undefined)?.shape ?? {}) } as Record<string, z.ZodType>;
+  for (const [param, schema] of Object.entries(shape)) {
+    if (schema.description) shape[param] = schema.describe(scrubPricing(schema.description));
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tool.update({ description: scrubPricing(tool.description ?? ""), paramsSchema: shape as any, callback: wrap(name, tool) as any });
+}
+
 /**
  * Turn the tools registered by CHATGPT_PLATFORMS + get_usage (core) and
  * CHATGPT_BROAD_PLATFORMS (broad) into the ChatGPT profile: remove the rest,
@@ -271,21 +295,14 @@ export function applyChatgptProfile(
   broad: Map<string, RegisteredTool> = new Map(),
 ): void {
   for (const [name, tool] of broad) {
-    if (BROAD_EXCLUDED.has(name) || registered.has(name)) {
-      tool.remove();
-      continue;
-    }
-    const shape = { ...((tool.inputSchema as z.ZodObject | undefined)?.shape ?? {}) } as Record<string, z.ZodType>;
-    for (const [param, schema] of Object.entries(shape)) {
-      if (schema.description) shape[param] = schema.describe(scrubPricing(schema.description));
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    tool.update({ description: scrubPricing(tool.description ?? ""), paramsSchema: shape as any, callback: wrap(name, tool) as any });
+    if (BROAD_EXCLUDED.has(name) || registered.has(name)) tool.remove();
+    else applyShared(name, tool);
   }
   const keep = new Set<string>(CHATGPT_TOOLS);
   for (const [name, tool] of registered) {
     if (!keep.has(name)) {
-      tool.remove();
+      if (CORE_EXCLUDED.has(name)) tool.remove();
+      else applyShared(name, tool);
       continue;
     }
     const key = name as (typeof CHATGPT_TOOLS)[number];

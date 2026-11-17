@@ -22,9 +22,8 @@ const EXPECTED = [
   "google_maps_reviews", "company_enrich", "extract_url", "map_website", "crawl_website",
   "get_crawl_status", "cancel_crawl", "batch_extract", "get_batch_status", "cancel_batch", "get_usage",
 ];
-// Plugin 1.1: social, retail and real estate tools. Exact count pinned so an
-// added or removed upstream tool is a deliberate review, not drift.
-const BROAD_PREFIXES = /tiktok|instagram|youtube|reddit|tweet|_x_|search_x|linkedin|amazon|walmart|ebay|target|home_depot|bestbuy|zillow|redfin|realtor/;
+// Plugin 1.1: Google products, US retailers, then social and real estate as room allows.
+// Exact count pinned so an added or removed upstream tool is a deliberate review, not drift.
 const EXCLUDED = [
   "get_tiktok_user_followers", "get_tiktok_user_followings", "get_tiktok_user_region",
   "get_instagram_user_followers", "get_instagram_user_followings", "get_instagram_post_likers",
@@ -32,8 +31,8 @@ const EXCLUDED = [
   "get_x_user_followers", "get_x_user_followings", "get_linkedin_person", "get_linkedin_person_about",
   "get_linkedin_person_posts", "get_youtube_streams", "get_youtube_metadata",
 ];
-const BROAD_COUNT = Number(process.env.CHATGPT_BROAD_COUNT ?? 126);
-const MAX_BYTES = 160 * 1024;
+const BROAD_COUNT = Number(process.env.CHATGPT_BROAD_COUNT ?? 328);
+const MAX_BYTES = Number(process.env.CHATGPT_MAX_KB ?? 600) * 1024;
 const HIDDEN = {
   search_google: ["include_html", "location", "uule", "web_only"],
   google_shopping: ["location", "uule"],
@@ -123,7 +122,7 @@ try {
   const names = tools.map((t) => t.name);
   const broadNames = names.filter((n) => !EXPECTED.includes(n));
   check(EXPECTED.every((n) => names.includes(n)), `all ${EXPECTED.length} core tools`, names.join(", "));
-  check(broadNames.every((n) => BROAD_PREFIXES.test(n)), "only social, retail and real estate tools beyond the core", broadNames.filter((n) => !BROAD_PREFIXES.test(n)).join(", "));
+  check(!broadNames.some((n) => /chatgpt|gemini|google_custom_search/.test(n)), "no AI-assistant scraper or duplicate tools", broadNames.filter((n) => /chatgpt|gemini|google_custom_search/.test(n)).join(", "));
   check(broadNames.length === BROAD_COUNT, `exactly ${BROAD_COUNT} broad tools`, `got ${broadNames.length}`);
   check(!EXCLUDED.some((n) => names.includes(n)), "excluded people-data and media tools absent", EXCLUDED.filter((n) => names.includes(n)).join(", "));
   const bytes = Buffer.byteLength(JSON.stringify(tools), "utf8");
