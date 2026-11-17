@@ -31,12 +31,16 @@ import { INVALID_KEY_MESSAGE, OUT_OF_CREDITS_PREFIX } from "../lib/tool-error.js
 export const CHATGPT_PLATFORMS = ["extract", "company", "google"] as const;
 
 /**
- * Platforms never served at /chatgpt: scrapers of other AI assistants. Every
- * other platform registrar is served (plugin 1.1), its tools keeping their
- * shared descriptions with pricing clauses removed (scrubPricing), except the
- * tools in BROAD_EXCLUDED.
+ * Social, retail and real estate platforms added in plugin 1.1. Their tools keep
+ * their shared descriptions with pricing sentences removed (scrubPricing),
+ * except the ones in BROAD_EXCLUDED. Sized against tools/list: the whole profile
+ * stays near 150KB; the full catalog (~960KB) is too large for one connector.
  */
-export const CHATGPT_EXCLUDED_PLATFORMS = ["chatgpt", "gemini"] as const;
+export const CHATGPT_BROAD_PLATFORMS = [
+  "tiktok", "instagram", "youtube", "reddit", "x", "linkedin",
+  "amazon", "walmart", "target", "homedepot", "ebay", "bestbuy",
+  "zillow", "redfin", "realtor",
+] as const;
 
 /**
  * Broad tools left out: follower, liker and retweeter lists and individuals'
@@ -60,7 +64,6 @@ const BROAD_EXCLUDED = new Set([
   "get_linkedin_person_posts",
   "get_youtube_streams",
   "get_youtube_metadata",
-  "search_kuaishou_live",
 ]);
 
 /** Exposed core tools. Anything else the core registrars add is removed. */
@@ -260,7 +263,7 @@ function wrap(name: string, tool: RegisteredTool) {
 
 /**
  * Turn the tools registered by CHATGPT_PLATFORMS + get_usage (core) and
- * every other platform (broad) into the ChatGPT profile: remove the rest,
+ * CHATGPT_BROAD_PLATFORMS (broad) into the ChatGPT profile: remove the rest,
  * rewrite descriptions and inputs, wrap handlers.
  */
 export function applyChatgptProfile(

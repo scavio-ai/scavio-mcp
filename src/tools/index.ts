@@ -89,7 +89,7 @@ import { registerMetaAdsTools } from "./metaads.js";
 import { registerSecTools } from "./sec.js";
 import { registerCompaniesHouseTools } from "./companieshouse.js";
 import { registerUsageTool } from "./usage.js";
-import { applyChatgptProfile, CHATGPT_EXCLUDED_PLATFORMS, CHATGPT_PLATFORMS } from "./chatgpt-app.js";
+import { applyChatgptProfile, CHATGPT_BROAD_PLATFORMS, CHATGPT_PLATFORMS } from "./chatgpt-app.js";
 import type { RegisteredTool } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 type RegisterFn = (server: McpServer, getClient: () => ScavioClient) => void;
@@ -428,7 +428,6 @@ export function registerChatgptAppTools(server: McpServer, getClient: () => Scav
   registerUsageTool(annotated, getClient);
   const broad = new Map<string, RegisteredTool>();
   const annotatedBroad = annotating(server, broad);
-  const skip = new Set<string>([...CHATGPT_PLATFORMS, ...CHATGPT_EXCLUDED_PLATFORMS]);
-  for (const [key, register] of Object.entries(PLATFORMS)) if (!skip.has(key)) register(annotatedBroad, getClient);
+  for (const key of CHATGPT_BROAD_PLATFORMS) PLATFORMS[key](annotatedBroad, getClient);
   applyChatgptProfile(captured, broad);
 }
