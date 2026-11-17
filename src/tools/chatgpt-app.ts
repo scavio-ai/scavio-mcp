@@ -16,6 +16,10 @@
  *  - response minimization: billing counters, timings, request ids and job
  *    timestamps are stripped from results.
  *
+ * Plugin 1.1 adds social, retail and real estate platforms
+ * (CHATGPT_BROAD_PLATFORMS) on the same rules, minus tools that list or profile
+ * private individuals in bulk.
+ *
  * Everything here applies to /chatgpt only. /mcp and the REST API are unchanged.
  */
 import type { RegisteredTool } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -23,10 +27,46 @@ import { McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { INVALID_KEY_MESSAGE, OUT_OF_CREDITS_PREFIX } from "../lib/tool-error.js";
 
-/** The platform registrars the profile draws from (keys of PLATFORMS in index.ts). */
+/** The platform registrars the hand-written core draws from (keys of PLATFORMS in index.ts). */
 export const CHATGPT_PLATFORMS = ["extract", "company", "google"] as const;
 
-/** Exposed tools. Anything else those registrars add is removed. */
+/**
+ * Social, retail and real estate platforms added in plugin 1.1. Their tools keep
+ * their shared descriptions with pricing sentences removed (scrubPricing),
+ * except the ones in BROAD_EXCLUDED. Sized against tools/list: the whole profile
+ * stays near 150KB; the full catalog (~960KB) is too large for one connector.
+ */
+export const CHATGPT_BROAD_PLATFORMS = [
+  "tiktok", "instagram", "youtube", "reddit", "x", "linkedin",
+  "amazon", "walmart", "target", "homedepot", "ebay", "bestbuy",
+  "zillow", "redfin", "realtor",
+] as const;
+
+/**
+ * Broad tools left out: follower, liker and retweeter lists and individuals'
+ * stories, profiles and account region (bulk data about private people), raw
+ * media stream URLs, and a deprecated alias.
+ */
+const BROAD_EXCLUDED = new Set([
+  "get_tiktok_user_followers",
+  "get_tiktok_user_followings",
+  "get_tiktok_user_region",
+  "get_instagram_user_followers",
+  "get_instagram_user_followings",
+  "get_instagram_post_likers",
+  "get_instagram_user_stories",
+  "get_instagram_highlight_stories",
+  "get_tweet_retweeters",
+  "get_x_user_followers",
+  "get_x_user_followings",
+  "get_linkedin_person",
+  "get_linkedin_person_about",
+  "get_linkedin_person_posts",
+  "get_youtube_streams",
+  "get_youtube_metadata",
+]);
+
+/** Exposed core tools. Anything else the core registrars add is removed. */
 export const CHATGPT_TOOLS = [
   "search_google",
   "google_news",
@@ -142,6 +182,32 @@ export const CHATGPT_NOT_AUTHORIZED = "The Scavio connection is no longer author
 type Json = null | boolean | number | string | Json[] | { [k: string]: Json };
 type ToolResult = { content?: { type: string; text?: string }[]; isError?: boolean; [k: string]: unknown };
 
+/** Pricing, billing and plan words; kept in step with BANNED in scripts/chatgpt-check.mjs. */
+const PRICING =
+  /\b\d+\s*cr\b|\bcredits?\b|\bfree\b(?! shipping)|\bPAYG\b|\bBootstrap\b|\bStartup\b|\bGrowth\b|\bProject\b|\bHobby\b|\bbill(ed|ing)?\b|\bupgrade\b|\btop up\b|\bultra\b|\bcost\b/i;
+
+const balanced = (s: string) => (s.match(/\(/g)?.length ?? 0) === (s.match(/\)/g)?.length ?? 0);
+
+/**
+ * Remove pricing from a shared description. Sentences end at a period followed
+ * by whitespace (so domains and field paths like data.location survive). In a
+ * sentence that quotes pricing, drop just the clauses that do; drop the whole
+ * sentence when its opening clause does or what is left would not parse.
+ */
+export function scrubPricing(text: string): string {
+  const sentences = text.split(/(?<=\.)\s+/);
+  const kept = sentences.map((sentence) => {
+    if (!PRICING.test(sentence)) return sentence;
+    const parts = sentence.split(/(, |; | - )/);
+    if (PRICING.test(parts[0])) return "";
+    let out = parts[0];
+    for (let i = 1; i < parts.length; i += 2) if (!PRICING.test(parts[i + 1])) out += parts[i] + parts[i + 1];
+    if (!balanced(out) || PRICING.test(out)) return "";
+    return /[.!?]$/.test(out) ? out : `${out}.`;
+  });
+  return kept.filter(Boolean).join(" ").trim();
+}
+
 export function stripTelemetry(value: Json): Json {
   if (Array.isArray(value)) return value.map(stripTelemetry);
   if (value && typeof value === "object") {
@@ -181,11 +247,41 @@ function reshapeResult(name: string, result: ToolResult): ToolResult {
   return { ...result, content };
 }
 
+function wrap(name: string, tool: RegisteredTool) {
+  const original = tool.handler as (...args: unknown[]) => Promise<ToolResult>;
+  return async (...args: unknown[]): Promise<ToolResult> => {
+    try {
+      return reshapeResult(name, await original(...args));
+    } catch (err) {
+      if (err instanceof McpError && err.message.includes(INVALID_KEY_MESSAGE)) {
+        throw new McpError(ErrorCode.InternalError, CHATGPT_NOT_AUTHORIZED);
+      }
+      throw err;
+    }
+  };
+}
+
 /**
- * Turn the tools registered by CHATGPT_PLATFORMS + get_usage into the ChatGPT
- * profile: remove the rest, rewrite descriptions and inputs, wrap handlers.
+ * Turn the tools registered by CHATGPT_PLATFORMS + get_usage (core) and
+ * CHATGPT_BROAD_PLATFORMS (broad) into the ChatGPT profile: remove the rest,
+ * rewrite descriptions and inputs, wrap handlers.
  */
-export function applyChatgptProfile(registered: Map<string, RegisteredTool>): void {
+export function applyChatgptProfile(
+  registered: Map<string, RegisteredTool>,
+  broad: Map<string, RegisteredTool> = new Map(),
+): void {
+  for (const [name, tool] of broad) {
+    if (BROAD_EXCLUDED.has(name) || registered.has(name)) {
+      tool.remove();
+      continue;
+    }
+    const shape = { ...((tool.inputSchema as z.ZodObject | undefined)?.shape ?? {}) } as Record<string, z.ZodType>;
+    for (const [param, schema] of Object.entries(shape)) {
+      if (schema.description) shape[param] = schema.describe(scrubPricing(schema.description));
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    tool.update({ description: scrubPricing(tool.description ?? ""), paramsSchema: shape as any, callback: wrap(name, tool) as any });
+  }
   const keep = new Set<string>(CHATGPT_TOOLS);
   for (const [name, tool] of registered) {
     if (!keep.has(name)) {
@@ -197,19 +293,8 @@ export function applyChatgptProfile(registered: Map<string, RegisteredTool>): vo
     for (const hidden of HIDDEN_PARAMS[key] ?? []) delete shape[hidden];
     Object.assign(shape, PARAM_OVERRIDES[key] ?? {});
 
-    const original = tool.handler as (...args: unknown[]) => Promise<ToolResult>;
-    const callback = async (...args: unknown[]): Promise<ToolResult> => {
-      try {
-        return reshapeResult(name, await original(...args));
-      } catch (err) {
-        if (err instanceof McpError && err.message.includes(INVALID_KEY_MESSAGE)) {
-          throw new McpError(ErrorCode.InternalError, CHATGPT_NOT_AUTHORIZED);
-        }
-        throw err;
-      }
-    };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    tool.update({ description: DESCRIPTIONS[key], paramsSchema: shape as any, callback: callback as any });
+    tool.update({ description: DESCRIPTIONS[key], paramsSchema: shape as any, callback: wrap(name, tool) as any });
   }
   const missing = CHATGPT_TOOLS.filter((n) => !registered.has(n));
   if (missing.length) throw new Error(`[scavio-mcp] ChatGPT profile: tools not registered: ${missing.join(", ")}`);

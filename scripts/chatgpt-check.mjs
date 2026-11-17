@@ -22,6 +22,18 @@ const EXPECTED = [
   "google_maps_reviews", "company_enrich", "extract_url", "map_website", "crawl_website",
   "get_crawl_status", "cancel_crawl", "batch_extract", "get_batch_status", "cancel_batch", "get_usage",
 ];
+// Plugin 1.1: social, retail and real estate tools. Exact count pinned so an
+// added or removed upstream tool is a deliberate review, not drift.
+const BROAD_PREFIXES = /tiktok|instagram|youtube|reddit|tweet|_x_|search_x|linkedin|amazon|walmart|ebay|target|home_depot|bestbuy|zillow|redfin|realtor/;
+const EXCLUDED = [
+  "get_tiktok_user_followers", "get_tiktok_user_followings", "get_tiktok_user_region",
+  "get_instagram_user_followers", "get_instagram_user_followings", "get_instagram_post_likers",
+  "get_instagram_user_stories", "get_instagram_highlight_stories", "get_tweet_retweeters",
+  "get_x_user_followers", "get_x_user_followings", "get_linkedin_person", "get_linkedin_person_about",
+  "get_linkedin_person_posts", "get_youtube_streams", "get_youtube_metadata",
+];
+const BROAD_COUNT = Number(process.env.CHATGPT_BROAD_COUNT ?? 126);
+const MAX_BYTES = 160 * 1024;
 const HIDDEN = {
   search_google: ["include_html", "location", "uule", "web_only"],
   google_shopping: ["location", "uule"],
@@ -109,11 +121,14 @@ try {
 
   const tools = await listTools(port, "/chatgpt", key);
   const names = tools.map((t) => t.name);
-  check(
-    names.length === EXPECTED.length && EXPECTED.every((n) => names.includes(n)),
-    `exactly the ${EXPECTED.length} reviewed tools`,
-    `got ${names.length}: ${names.join(", ")}`,
-  );
+  const broadNames = names.filter((n) => !EXPECTED.includes(n));
+  check(EXPECTED.every((n) => names.includes(n)), `all ${EXPECTED.length} core tools`, names.join(", "));
+  check(broadNames.every((n) => BROAD_PREFIXES.test(n)), "only social, retail and real estate tools beyond the core", broadNames.filter((n) => !BROAD_PREFIXES.test(n)).join(", "));
+  check(broadNames.length === BROAD_COUNT, `exactly ${BROAD_COUNT} broad tools`, `got ${broadNames.length}`);
+  check(!EXCLUDED.some((n) => names.includes(n)), "excluded people-data and media tools absent", EXCLUDED.filter((n) => names.includes(n)).join(", "));
+  const bytes = Buffer.byteLength(JSON.stringify(tools), "utf8");
+  check(bytes <= MAX_BYTES, `tools/list under ${MAX_BYTES / 1024}KB`, `${bytes} bytes`);
+  console.log(`      ${names.length} tools, ${(bytes / 1024).toFixed(1)}KB`);
   for (const t of tools) {
     const a = t.annotations ?? {};
     check(
