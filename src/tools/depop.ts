@@ -31,12 +31,15 @@ const LIST_CREDITS = charge("1 credit on us, gb, au, ie, ca, de, fr, it and 5 on
 const FIRST_24 =
   "Only the first 24 results per query: Depop serves no next page, so narrow with filters, sort or a price range to reach more listings. price_asc / price_desc return Depop's first 24 for that order, in strict listing-price order (listings priced in another currency than the market's come last).";
 const PRICES =
-  "Prices are numbers for a buyer in the market, as Depop shows them: price (the listing price), original_price, buyer_fee, tax (tax_type, e.g. UK_IMPORT_VAT), shipping (shipping_boundary national / international), total (their sum) and headline_price (Depop's headline, which may leave out shipping). The same listing shows a different total in each market. price.currency is the seller's listing currency, usually the market's (a few sellers list in USD or GBP elsewhere). On us Depop shows a buyer fee on some calls and not on others: report what it returns.";
+  "Prices are numbers as Depop shows them to a buyer in the market: price (the listing price), original_price (the seller's own original price before a markdown; seller-set, it can be far above price), buyer_fee, tax (tax_type, e.g. UK_IMPORT_VAT), shipping (the shipping the buyer pays; shipping_boundary national / international, as Depop rates the listing's country against the market), total (computed by Scavio: price + buyer_fee + tax + shipping) and headline_price (the price Depop itself headlines in that market: on us it leaves out shipping, on gb it includes the fee and shipping). The same listing shows a different total in each market. price.currency is the listing's currency, usually the market's (a few sellers list in another one, e.g. USD or GBP on ca, ie, de, fr, it). On us Depop returns a buyer fee on some calls and not on others for the same listing: report what it returns.";
+const MARKET_PRICE =
+  "buyer_market_price is true when the listing is priced in the market's currency. false: the listing is priced in another currency (often a seller in the market who lists in USD or GBP) and Depop shows it unconverted, with the listing's own price block; get_depop_product returns the same block, so no price in the market's currency exists for it. List items carry no seller country: get_depop_product has seller.country.";
 const TEXT =
   "Depop's interface is English on every market; titles and descriptions are what sellers wrote (often the local language on de, fr, it).";
 const ITEM =
-  "product_id, slug, url, title, description, brand (id, name, slug), category, group, product_type, status (on_sale, sold), seller_country, pictures (first 3) and picture_count, sizes, condition, colors, gender, kids, like_count, boosted, discounted, discount_percentage, price";
-const LIST_OUT = `items (${ITEM}), count, total_count (Depop's approximate count of matches), country, currency, sort, filters`;
+  "product_id, slug, url, title, description, brand (id, name, slug), category, group, product_type, status, pictures (first 3) and picture_count, sizes, condition, colors, gender, kids, like_count, boosted, discounted, discount_percentage, price";
+const MARKET_ITEM = `${ITEM}, buyer_market_price`;
+const LIST_OUT = `items (${MARKET_ITEM}; status on_sale), count, total_count (Depop's approximate count of matches), country, currency, sort, filters`;
 const NOT_AVAILABLE =
   "Not available: results past the first 24, keyword search of sold listings (Depop has none: sold prices come per shop from get_depop_shop_sold), trending searches, views, join date, Top Seller badge, offers / bundles, price history.";
 
@@ -93,7 +96,7 @@ export function registerDepopTools(server: McpServer, getClient: () => ScavioCli
 
   server.tool(
     "search_depop",
-    `Search Depop listings for sale in one buyer market: ${LIST_OUT}, facets (counts per department / group / product type, brand, colour, condition, size). Sorts relevance, price_asc, price_desc. Filters: brand_ids, conditions, colors, price_min / price_max, on_sale (marked down), gender, group / product_type (ids from get_depop_categories), kids, size. Listing ids are global; search shows that market's sellers. ${FIRST_24} ${PRICES} ${TEXT} ${NOT_AVAILABLE} ${LIST_CREDITS}.`,
+    `Search Depop listings for sale in one buyer market: ${LIST_OUT}, facets (counts per department / group / product type, brand, colour, condition, size). Sorts relevance, price_asc, price_desc. Filters: brand_ids, conditions, colors, price_min / price_max, on_sale (marked down), gender, group / product_type (ids from get_depop_categories), kids, size. Listing ids are global; search shows that market's sellers. ${FIRST_24} ${PRICES} ${MARKET_PRICE} ${TEXT} ${NOT_AVAILABLE} ${LIST_CREDITS}.`,
     {
       query: z.string().min(1).max(200).describe("Search keywords, e.g. 'levis 501'."),
       country: market(),
@@ -105,7 +108,7 @@ export function registerDepopTools(server: McpServer, getClient: () => ScavioCli
 
   server.tool(
     "get_depop_product",
-    `One Depop listing by slug, link or product_id, priced for a buyer in the market: product_id, slug, url, status (on_sale, sold), title, description, hashtags, brand, category (group, product type, breadcrumbs with the category path), condition, colors, sizes, gender, kids, pictures, like_count, boosted, quantity, shipping (method, parcel_size, payer, free_shipping, national_cost), discounted, discount_percentage, price (buyer market), listing_price (the seller's own currency and price), seller (id, username, url, verified, country, reviews_rating, reviews_total, items_sold, last_seen, average_shipping_days). Listing ids and slugs are global: the same listing priced from another market adds that buyer's fee, tax and shipping. No seller names or city, no views or listing date (get_depop_shop_products has created_at / updated_at). ${PRICES} ${TEXT} ${charge("1 credit on us, 2 on gb, au, ie, ca, de, fr, it and 6 on nz")}`,
+    `One Depop listing by slug, link or product_id, priced for a buyer in the market: product_id, slug, url, status (on_sale, sold), title, description, hashtags, brand, category (group, product type, breadcrumbs with the category path), condition, colors, sizes, gender, kids, pictures, like_count, boosted, quantity, shipping (method, parcel_size, payer, free_shipping, national_cost: the seller's domestic shipping rate, which can differ from price.shipping, the shipping the buyer pays), discounted, discount_percentage, price (buyer market), listing_price (the seller's own currency and price), seller (id, username, url, verified, country: the seller account's country, reviews_rating, reviews_total, items_sold, last_seen, average_shipping_days). Listing ids and slugs are global: the same listing priced from another market shows that buyer's fee, tax and shipping, in the listing's own currency. No seller names or city, no views or listing date (get_depop_shop_products has created_at / updated_at). ${PRICES} ${TEXT} ${charge("1 credit on us, 2 on gb, au, ie, ca, de, fr, it and 6 on nz")}`,
     {
       slug: z.string().min(3).max(200).optional()
         .describe("Listing slug (items[].slug), e.g. 'f0omem-levis-550-38x36-blue-jeans-662f'."),
@@ -119,7 +122,7 @@ export function registerDepopTools(server: McpServer, getClient: () => ScavioCli
 
   server.tool(
     "get_depop_category",
-    `The first 24 listings of one Depop category (path from get_depop_categories, e.g. mens/bottoms/jeans) in a buyer market: ${LIST_OUT}, category. Sorts relevance, price_asc, price_desc. Filters: brand_ids, conditions, colors, price_min / price_max, on_sale, size; gender on kids. ${FIRST_24} ${PRICES} ${TEXT} ${LIST_CREDITS}.`,
+    `The first 24 listings of one Depop category (path from get_depop_categories, e.g. mens/bottoms/jeans) in a buyer market: ${LIST_OUT}, category. Sorts relevance, price_asc, price_desc. Filters: brand_ids, conditions, colors, price_min / price_max, on_sale, size; gender on kids. ${FIRST_24} ${PRICES} ${MARKET_PRICE} ${TEXT} ${LIST_CREDITS}.`,
     {
       category: z.union([z.string().min(3).max(120), z.array(z.string().min(1).max(60)).min(1).max(3)])
         .describe("Category path department[/group[/product_type]] (mens, womens, kids, everything-else), e.g. 'mens/bottoms/jeans', 'womens/tops', 'kids'."),
@@ -132,7 +135,7 @@ export function registerDepopTools(server: McpServer, getClient: () => ScavioCli
 
   server.tool(
     "get_depop_brand",
-    `The first 24 listings of one Depop brand (slug from get_depop_brands) in a buyer market: brand (id, name, slug), ${LIST_OUT}. An unknown brand is a charged 404. Sorts relevance, price_asc, price_desc; filters as search_depop (no brand_ids). ${FIRST_24} ${PRICES} ${TEXT} ${LIST_CREDITS}.`,
+    `The first 24 listings of one Depop brand (slug from get_depop_brands) in a buyer market: brand (id, name, slug), ${LIST_OUT}. An unknown brand is a charged 404. Sorts relevance, price_asc, price_desc; filters as search_depop (no brand_ids). ${FIRST_24} ${PRICES} ${MARKET_PRICE} ${TEXT} ${LIST_CREDITS}.`,
     {
       slug: z.string().min(1).max(120).describe("Brand slug (brands[].slug, items[].brand.slug), e.g. 'carhartt', 'levi-s', 'nike'."),
       country: market(),
@@ -144,7 +147,7 @@ export function registerDepopTools(server: McpServer, getClient: () => ScavioCli
 
   server.tool(
     "get_depop_explore",
-    `One of Depop's curated explore pages (slug, e.g. 90s-menswear) in a buyer market: title, search_query (the search the page runs), the first 24 listings (${ITEM}), count, total_count, and more_slugs (the market's other explore pages). An unknown page is a charged 404. ${FIRST_24} ${PRICES} ${TEXT} ${LIST_CREDITS}.`,
+    `One of Depop's curated explore pages (slug, e.g. 90s-menswear) in a buyer market: title, search_query (the search the page runs), the first 24 listings (${MARKET_ITEM}; status on_sale), count, total_count, and more_slugs (the market's other explore pages). An unknown page is a charged 404. ${FIRST_24} ${PRICES} ${MARKET_PRICE} ${TEXT} ${LIST_CREDITS}.`,
     {
       slug: z.string().min(1).max(120)
         .describe("Explore page slug (depop.com/explore/<slug>/), e.g. '90s-menswear', '90s-womenswear'. Every answer lists the market's other pages in more_slugs."),
@@ -172,14 +175,14 @@ export function registerDepopTools(server: McpServer, getClient: () => ScavioCli
 
   server.tool(
     "get_depop_shop_products",
-    `A Depop shop's listings for sale, paged by cursor (up to 24 per page): shop (shop_id, username), items (${ITEM}, created_at, updated_at), count, has_more, next_cursor. Prices are in the seller's listing currency. Global (no country). ${charge("1 credit per page")}`,
+    `A Depop shop's listings for sale, paged by cursor (up to 24 per page): shop (shop_id, username), items (${ITEM}, created_at, updated_at; status on_sale), count, has_more, next_cursor. Prices are in the seller's listing currency; shop lists carry no buyer_market_price. Global (no country). ${charge("1 credit per page")}`,
     { ...shopRef, ...shopPaging },
     post("shop-products"),
   );
 
   server.tool(
     "get_depop_shop_sold",
-    `A Depop shop's sold listings with the price they sold at (price, original_price, discounted, discount_percentage), paged by cursor (up to 24 per page): shop, items (${ITEM}, created_at, updated_at; status sold), count, has_more, next_cursor. updated_at is the listing's last update: Depop shows no sale date. Prices are in the seller's listing currency. This is Depop's only sold data: sold prices come per shop, there is no keyword search of sold listings. Global (no country). ${charge("1 credit per page")}`,
+    `A Depop shop's sold listings with the price they sold at (price, original_price, discounted, discount_percentage), paged by cursor (up to 24 per page): shop, items (${ITEM}, created_at, updated_at; status sold = sold on Depop, marked_as_sold = the seller marked it sold, which may be outside Depop, so its price may not be a Depop sale), count, has_more, next_cursor. updated_at is the listing's last update: Depop shows no sale date. Prices are in the seller's listing currency. This is Depop's only sold data: sold prices come per shop, there is no keyword search of sold listings. Global (no country). ${charge("1 credit per page")}`,
     { ...shopRef, ...shopPaging },
     post("shop-sold"),
   );
@@ -228,7 +231,7 @@ export function registerDepopTools(server: McpServer, getClient: () => ScavioCli
 
   server.tool(
     "get_depop_similar",
-    `Listings Depop shows as similar to one listing, for a US buyer: product_id, items (${ITEM}, created_at, updated_at), count. Market: us only. ${PRICES} ${charge("1 credit")}`,
+    `Listings Depop shows as similar to one listing, for a US buyer: product_id, items (${MARKET_ITEM}, created_at, updated_at), count. Market: us only. ${PRICES} ${MARKET_PRICE} ${charge("1 credit")}`,
     {
       product_id: numId("Product id (items[].product_id), e.g. 1002884801."),
       country: market(["us"]),

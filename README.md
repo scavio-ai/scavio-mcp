@@ -1489,7 +1489,7 @@ Depop API for Depop resale prices: what Depop listings ask in each storefront (t
 | `get_depop_suggestions` | Search suggestions for a partial query, with their group and gender |
 | `get_depop_shop` | A shop's profile: bio, verified, followers, rating, review counts, items sold, last seen, listings per category |
 | `get_depop_shop_products` | A shop's listings for sale, cursor-paged (24 per page), with created and updated times |
-| `get_depop_shop_sold` | A shop's sold listings with the price they sold at and any markdown, cursor-paged (24 per page) |
+| `get_depop_shop_sold` | A shop's sold listings with the price they sold at, any markdown and whether it sold on Depop or was marked sold by the seller, cursor-paged (24 per page) |
 | `get_depop_shop_reviews` | Reviews a shop got as a seller or as a buyer, 24 per page: date, rating, text and the product; no reviewer names |
 | `search_depop_shops` | Shops whose username matches a query |
 | `get_depop_categories` | The category tree (departments, groups, product types) with the paths and ids the other tools take; names in en, en-US, de, fr or it; optional size sets |
@@ -1512,14 +1512,20 @@ Depop serves no next page, so narrow with filters, sort or a price range.
 Sorts are relevance, `price_asc` and `price_desc` (newest and most popular are
 not available). The market is the buyer's: listing ids are global, search
 shows that market's sellers, and the same listing priced from another market
-adds that buyer's fee, tax (for example UK import VAT) and shipping. Prices
-are numbers: `price`, `original_price`, `buyer_fee`, `tax`, `shipping`,
-`total` and `headline_price`, in the listing's currency (`price.currency`),
-which is usually the market's but some sellers list in another one. On us,
+shows that buyer's fee, tax (for example UK import VAT) and shipping. Prices
+are numbers: `price`, `original_price` (the seller's own original price),
+`buyer_fee`, `tax`, `shipping` (what the buyer pays), `total` (Scavio's sum of
+price, buyer fee, tax and shipping) and `headline_price` (the price Depop
+itself headlines: us leaves out shipping, gb includes the fee and shipping),
+in the listing's currency (`price.currency`), which is usually the market's
+but some sellers list in another one: list items carry `buyer_market_price`,
+false for those, which Depop shows unconverted (product too). List items
+carry no seller country; `get_depop_product` has `seller.country`. On us,
 Depop returns a buyer fee on some calls and not on others for the same
 listing: report what it returns. Depop has no keyword search of sold
-listings: sold prices come per shop from `get_depop_shop_sold`, and Depop
-shows no sale date (`updated_at` is the listing's last update). Depop's
+listings: sold prices come per shop from `get_depop_shop_sold` (`status` `sold` =
+sold on Depop, `marked_as_sold` = the seller marked it sold, which may be
+outside Depop), and Depop shows no sale date (`updated_at` is the listing's last update). Depop's
 interface is English in every storefront; titles and descriptions are what
 sellers wrote (often German, French or Italian on de, fr, it). No seller real
 names, cities or reviewer identities. Not available: results past the first
