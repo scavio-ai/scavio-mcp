@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 617 tools across 86 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 631 tools across 87 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 617 tools puts ~1075KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 631 tools puts ~1106KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 617 tools. Loading all of them costs ~1075KB of `tools/list` —
+Scavio exposes 631 tools. Loading all of them costs ~1106KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **617 tools, ~1075KB** |
+| `all` | every platform — **631 tools, ~1106KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `vinted`, `mercari`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `vinted`, `mercari`, `depop`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1474,6 +1474,58 @@ about a minute; us about 3-20 s). jp `newest` follows Mercari Japan's own
 order, where relisted items move up. Not available: US seller profiles and
 reviews, US search suggestions, Japanese trending, price-drop history, buying
 or messaging. Failed calls are not charged; a not-found is charged.
+
+### [Depop](https://scavio.dev/docs/depop-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Depop API for Depop resale prices: what Depop listings ask in each storefront (the buyer-market price with buyer fee, tax and shipping as Depop shows them), what a shop's items sold for, shop profiles with ratings, reviews and items sold, plus brand, category and curated explore pages, search suggestions and similar listings, across Depop's 9 storefronts.
+
+| Tool | Description |
+|------|-------------|
+| `search_depop` | Search listings for sale in one buyer market: the first 24 results per query, sorted by relevance or price; brand, condition, colour, price range, marked-down, gender, group / product type, kids and size filters; facets with counts |
+| `get_depop_product` | One listing by slug, link or product id, priced for a buyer in the market: description, hashtags, brand, category path, condition, colours, sizes, shipping, discount, the buyer-market price and the seller's own listing price, and the seller summary (rating, reviews, items sold, last seen) |
+| `get_depop_category` | The first 24 listings of one category path (e.g. `mens/bottoms/jeans`) |
+| `get_depop_brand` | The first 24 listings of one brand by slug |
+| `get_depop_explore` | One of Depop's curated explore pages (e.g. `90s-menswear`) with the market's other explore pages |
+| `get_depop_suggestions` | Search suggestions for a partial query, with their group and gender |
+| `get_depop_shop` | A shop's profile: bio, verified, followers, rating, review counts, items sold, last seen, listings per category |
+| `get_depop_shop_products` | A shop's listings for sale, cursor-paged (24 per page), with created and updated times |
+| `get_depop_shop_sold` | A shop's sold listings with the price they sold at and any markdown, cursor-paged (24 per page) |
+| `get_depop_shop_reviews` | Reviews a shop got as a seller or as a buyer, 24 per page: date, rating, text and the product; no reviewer names |
+| `search_depop_shops` | Shops whose username matches a query |
+| `get_depop_categories` | The category tree (departments, groups, product types) with the paths and ids the other tools take; names in en, en-US, de, fr or it; optional size sets |
+| `get_depop_brands` | Brands by first letter, or one brand by slug with its description |
+| `get_depop_similar` | Listings Depop shows as similar to one listing (us) |
+
+Platform key `depop`. Credits per call: search, category, brand and explore
+1 (5 on nz); product 1 on us, 2 on gb, au, ie, ca, de, fr, it and 6 on nz;
+suggestions 1 on every market; shop, shop products, shop sold, shop reviews,
+shops search, categories, brands and similar 1.
+
+Markets (`country`, the buyer's country, default `us`): us (USD), gb (GBP;
+`uk` accepted), au (AUD), ie (EUR), ca (CAD), nz (NZD), de (EUR), fr (EUR),
+it (EUR). Search, product, category, brand, explore and suggestions serve all
+nine; similar is us only; shop data, categories and brands are global (no
+`country`). Any other country answers 400 before anything is charged.
+
+Search, category, brand and explore return the first 24 results per query:
+Depop serves no next page, so narrow with filters, sort or a price range.
+Sorts are relevance, `price_asc` and `price_desc` (newest and most popular are
+not available). The market is the buyer's: listing ids are global, search
+shows that market's sellers, and the same listing priced from another market
+adds that buyer's fee, tax (for example UK import VAT) and shipping. Prices
+are numbers: `price`, `original_price`, `buyer_fee`, `tax`, `shipping`,
+`total` and `headline_price`, in the listing's currency (`price.currency`),
+which is usually the market's but some sellers list in another one. On us,
+Depop returns a buyer fee on some calls and not on others for the same
+listing: report what it returns. Depop has no keyword search of sold
+listings: sold prices come per shop from `get_depop_shop_sold`, and Depop
+shows no sale date (`updated_at` is the listing's last update). Depop's
+interface is English in every storefront; titles and descriptions are what
+sellers wrote (often German, French or Italian on de, fr, it). No seller real
+names, cities or reviewer identities. Not available: results past the first
+24, keyword sold search, trending searches, views, join date, Top Seller
+badge, offers / bundles, price history, similar outside us. Failed calls are
+not charged; a not-found is charged.
 
 ### Macy's
 
