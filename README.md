@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 646 tools across 88 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 658 tools across 89 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 646 tools puts ~1145KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 658 tools puts ~1183KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 646 tools. Loading all of them costs ~1145KB of `tools/list` —
+Scavio exposes 658 tools. Loading all of them costs ~1183KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **646 tools, ~1145KB** |
+| `all` | every platform — **658 tools, ~1183KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `vinted`, `mercari`, `depop`, `poshmark`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1583,6 +1583,53 @@ Not available: sold results beyond 480 per query and filter combination, Love
 Notes beyond the latest 100, Posh Shows, trending searches, the full brand
 directory (top 50; brand inputs take any name), offers, bundles, price
 history. Failed calls are not charged; a not-found is charged.
+
+### [thredUP](https://scavio.dev/docs/thredup-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+thredUP API for thredUP prices: each item's price, the estimated original retail and % off, condition and flaws, measurements, materials and who priced it (thredUP, a Direct Listing seller or a dropship partner); search, sold listings by brand or category, category, brand and deal grids (clearance, under $10, new arrivals, price drops), Rescue boxes, the category and filter values, the brand directory, suggestions, trending searches and similar items, on thredUP's US store (thredup.com, USD).
+
+| Tool | Description |
+|------|-------------|
+| `search_thredup` | Search items, 119 per page up to page 21 (about 2,500 per query); semantic free text plus brand, department, category, size, condition, colour, material, pattern, price, clearance and seller-type filters; 7 sorts |
+| `get_thredup_sold` | Sold listings by filters only (brand and / or category, no keyword), with the price the item last listed at; thredUP shows no sold date |
+| `get_thredup_product` | One item by item number or link: price, estimated original retail, % off, condition notes (the flaws thredUP noted), measurements, characteristics, materials, pictures, authentication, Direct Listing shipping and buyer protection, similar brands |
+| `get_thredup_category` | One department's category (department and category tag from `get_thredup_categories`) |
+| `get_thredup_brand` | One brand's items in a department |
+| `get_thredup_deals` | Deal collections: `clearance`, `under_10`, `new_arrivals`, `price_drops` |
+| `get_thredup_rescue_boxes` | Rescue boxes (mystery bundles): bundles with item count, price and state |
+| `get_thredup_categories` | One department's categories and filter values: sizing ids, conditions, colours, materials, patterns, price ranges |
+| `get_thredup_brands` | The brand directory: brands matching a term, every brand under a letter, or the letter groups |
+| `get_thredup_suggestions` | Search suggestions for a partial query, each a ready filter set |
+| `get_thredup_trending` | Trending searches for women, girls or boys |
+| `get_thredup_similar` | The first 120 items thredUP shows as similar to one item |
+
+Platform key `thredup`. 1 credit per call on every tool.
+
+One store: thredup.com in USD (thredUP ships to the US and Canada from it),
+so there is no `country` input. Departments: `women` (default), `girls`,
+`boys`, `handbags`, `shoes`, `designer`, `plus`, `juniors`, `maternity`,
+`accessories`; thredUP has no men's department.
+
+`estimated_retail` is the estimated original retail: thredUP's own estimate on
+items thredUP prices, entered by the seller on Direct Listing items.
+`percent_off` is computed from the price and the estimated retail
+(`round((1 - price / estimated_retail) * 100)`), null when the estimated retail
+is missing or not above the price. `seller_type` says who priced the item:
+`thredup`, `direct_listing` (peer sellers) or `dropship` (partner listings).
+`status`: `available`, `reserved`, `sold`. Conditions: `new_with_tags`,
+`excellent`, `very_good`, `good`, `flawed`.
+
+List tools answer 119 items per page, pages 1 to 21 (about 2,500 items per
+query and filter combination); `total` caps at 10,000 (`total_capped` true
+means 10,000+). Free text is matched loosely (semantic), so use the `brand`
+filter for one brand. `size` takes sizing ids from `get_thredup_categories`,
+not labels; `condition`, `color` and `material` take up to 5 values. The price
+filter is approximate (thredUP matches a base price). Every answer reports the
+`sort` applied. Sold listings take filters only, with the price the item last
+listed at and no sold date. List calls take 15 to 45 seconds. Not available:
+product reviews (thredUP shows none), seller shops, sold dates, men's clothing,
+price history. No seller or consignor names or ids are returned. Failed calls
+are not charged; a not-found is charged.
 
 ### Macy's
 
