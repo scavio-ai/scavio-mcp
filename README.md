@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 631 tools across 87 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 646 tools across 88 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 631 tools puts ~1106KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 646 tools puts ~1145KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 631 tools. Loading all of them costs ~1106KB of `tools/list` —
+Scavio exposes 646 tools. Loading all of them costs ~1145KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **631 tools, ~1106KB** |
+| `all` | every platform — **646 tools, ~1145KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `vinted`, `mercari`, `depop`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `vinted`, `mercari`, `depop`, `poshmark`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1532,6 +1532,57 @@ names, cities or reviewer identities. Not available: results past the first
 24, keyword sold search, trending searches, views, join date, Top Seller
 badge, offers / bundles, price history, similar outside us. Failed calls are
 not charged; a not-found is charged.
+
+### [Poshmark](https://scavio.dev/docs/poshmark-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Poshmark API for Poshmark sold prices: sold listings by keyword with the price shown on the sold listing and the date Poshmark marked it sold, filtered by brand, department, category, size, condition, colour and price; active listings with the original price the seller entered and price drops; closets with items sold and Love Notes; plus categories, top brands, suggestions, Posh Parties and similar listings, on poshmark.com (USD) and poshmark.ca (CAD).
+
+| Tool | Description |
+|------|-------------|
+| `search_poshmark` | Search listings in one market, 48 per page (about 5,000 reachable per query): available, sold or all; brand, department, category, size, condition, colour and price filters; 7 sorts incl. just in and price drop; facets |
+| `get_poshmark_sold` | Sold listings by keyword with the price shown on the sold listing and `sold_at`, the date Poshmark marked it sold; up to 480 per query and filter combination (10 pages of 48) |
+| `get_poshmark_product` | One listing by id or link: description, prices (price, original price, first price, price drop), shipping, bundle discount, sizes with quantities, comments (no authors), and the seller summary (Posh Ambassador, items sold, orders shipped, Love Notes) |
+| `get_poshmark_category` | One category's listings (department, category, subcategory from `get_poshmark_categories`), available, sold or all |
+| `get_poshmark_brand` | One brand's listings, optionally in one department and category, available, sold or all |
+| `get_poshmark_closet` | A closet (seller) by username: followers, listings, shares, items sold, orders shipped, Love Notes count, Posh Ambassador, last active, joined |
+| `get_poshmark_closet_listings` | A closet's available or sold listings, 48 per page, in the seller's home market |
+| `get_poshmark_love_notes` | The latest 100 Love Notes a closet received, with the total count; no authors |
+| `search_poshmark_closets` | Closets whose username matches a query, 24 per page |
+| `get_poshmark_categories` | The category tree: 6 departments, their categories and subcategories with the slugs the other tools take |
+| `get_poshmark_brands` | Poshmark's top 50 brands in a market |
+| `get_poshmark_suggestions` | Brand and brand + category suggestions for a partial query |
+| `get_poshmark_parties` | Posh Parties of a market: upcoming and recent, with themes, hosts and listing counts |
+| `get_poshmark_party_listings` | Listings shared to one Posh Party, 20 per page by cursor |
+| `get_poshmark_similar` | 16 listings Poshmark shows as similar to one listing |
+
+Platform key `poshmark`. 1 credit per call on every tool.
+
+Markets (`country`, default `us`): us (poshmark.com, USD) and ca
+(poshmark.ca, CAD); both storefronts are English. Search, sold, category,
+brand, brands, suggestions, parties, party listings and similar return that
+market's own listings in its currency. Listing ids and closets are global: a
+listing opens from either market in its own currency (no conversion), and
+closet listings are read in the seller's home market. Any other country
+answers 400 before anything is charged.
+
+Sold search reaches up to 480 sold listings per query and filter combination
+(10 pages of 48, Poshmark's own limit); `total` is Poshmark's approximate
+count, so narrow with filters or split by `price_min` / `price_max` to reach
+more. On a sold listing, `price` is the price shown on the sold listing
+(Poshmark says a sold listing reflects the final order price; offers are
+private and not returned) and `sold_at` is the date Poshmark marked it sold.
+`original_price` is the original price the seller entered; `first_price` is
+the price it was first listed at, which can be below `price` when the seller
+raised the price. Active search reaches about 5,000 listings per query (105
+pages of 48). Conditions: `new_with_tags`, `new_with_tags_or_boutique`,
+`boutique`, `like_new`, `good`, `fair`. Sorts: relevance, `just_shared`,
+`just_in`, `price_asc`, `price_desc`, `price_drop`, `most_liked`.
+`items_sold` is Poshmark's display string (e.g. `700+`). Seller usernames
+only: no real names, cities, likers, comment authors or Love Note buyers.
+Not available: sold results beyond 480 per query and filter combination, Love
+Notes beyond the latest 100, Posh Shows, trending searches, the full brand
+directory (top 50; brand inputs take any name), offers, bundles, price
+history. Failed calls are not charged; a not-found is charged.
 
 ### Macy's
 
