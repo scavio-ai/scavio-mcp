@@ -1404,13 +1404,13 @@ promo codes (shown only to signed-in shoppers) and no price history (poll
 
 ### [Fashion Nova](https://scavio.dev/docs/fashionnova-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-Fashion Nova API for Fashion Nova sale prices: each style's price, compare-at (struck-through) price, percent off, final-sale flag and per-size stock in any of Fashion Nova's 104 countries in local currency, plus search, collections (sale, best sellers, new, back in stock) to full depth, product detail with every colour and size, the navigation tree, search suggestions, reviews and similar styles.
+Fashion Nova API for Fashion Nova sale prices: each style's price, compare-at (struck-through) price, percent off, final-sale flag and per-size stock in any of Fashion Nova's 104 countries in local currency, plus search, collections (sale, best sellers, new, back in stock) up to about 10,000 products each, product detail with every colour and size, the navigation tree, search suggestions, reviews and similar styles.
 
 | Tool | Description |
 |------|-------------|
 | `search_fashionnova` | Search one storefront, 60 per page up to page 18 (6 under a sort); size, colour, price, division, category and facet filters; 5 sorts |
 | `get_fashionnova_product` | One style in one colour by handle or link: every colour with its own sizes (SKU, price, compare-at, quantity, low stock), rating with fit, the first 3 reviews, Fashion Nova's own AI review summary, size guide, delivery and promo |
-| `get_fashionnova_collection` | One collection by handle or link (sale, best-sellers, new, new-this-week, back-in-stock, jeans ...), pages 1 to 200, with the search filters |
+| `get_fashionnova_collection` | One collection by handle or link (sale, best-sellers, new, new-this-week, back-in-stock, jeans ...), pages 1 to 166 (up to about 10,000 products), with the search filters |
 | `get_fashionnova_categories` | The navigation tree for women, men or curve as collection handles, plus the site's trending searches |
 | `get_fashionnova_suggestions` | Search suggestions for a partial query: suggested searches, products and collections |
 | `get_fashionnova_reviews` | One style's reviews, 10 per page up to page 8, 4 sorts and a star filter, with size purchased, usual size and fit |
@@ -1425,14 +1425,19 @@ the site's International storefront in USD). `language` is `en` (default,
 every country) or `es` (Spanish titles, descriptions and attributes, in 67
 countries; not the US store). A country or language Fashion Nova does not run
 answers 400 before anything is charged. Suggestions and categories are the
-same in every storefront; reviews are one English pool shared by every
-market (no `country`); similar answers from the US store in USD.
+same in every storefront; reviews are per style (not per colour), one pool
+shared by every market, mostly English (no `country`); similar answers from
+the US store in USD. A collection lists up to about 10,000 products (pages
+1-166); consecutive pages can repeat a few products, so dedupe by
+`product_id` + `color`.
 
 Prices are numbers in the storefront's currency, never converted: `price`
 (the lowest size price), `compare_at` (the site's struck-through price),
 `percent_off` (computed by Scavio: `round((1 - price / compare_at) * 100)`),
-`on_sale`, `price_with_code` (the price with the site's current promo code,
-when it shows one) and `final_sale`. In the 27 EEA countries (at, be, cy, cz,
+`on_sale`, `price_with_code` (the price with Fashion Nova's current code as
+the page computes it, 40% off the compare-at price), `code_lowers_price`
+(false when that code price is not below `price`: the code does not lower
+it) and `final_sale`. In the 27 EEA countries (at, be, cy, cz,
 de, dk, ee, es, fi, fr, gr, hu, ie, is, it, lt, lu, lv, mt, nl, no, pl, pt, ro,
 se, si, sk) Fashion Nova shows VAT-inclusive prices and no compare-at price,
 so `compare_at` and `percent_off` are null there. The same jeans read on

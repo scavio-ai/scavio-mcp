@@ -25,18 +25,18 @@ const CREDITS = "Costs 1 credit. Failed upstream calls are not charged; a not-fo
 const MARKETS =
   "Markets: 104 countries in Fashion Nova's own country selector (country, default us), each in its own currency (37 currencies: us USD, ca CAD, gb GBP, au AUD, mx MXN, jp JPY, ae AED, the euro countries EUR ...; zz is the site's International storefront, USD). English everywhere; Spanish (language es: titles, descriptions and attributes in Spanish) in 67 countries, not the US store. A country or language Fashion Nova does not run answers 400 before anything is charged. Every answer carries country, language and currency.";
 const PRICES =
-  "Prices are numbers in the storefront's currency, never converted: price is the lowest size price, compare_at the site's struck-through price, percent_off = round((1 - price / compare_at) * 100) (computed by Scavio from the two) and on_sale = compare_at above price (null / false without a compare-at). price_with_code is the price the site shows with its current promo code, when it shows one; final_sale flags a final-sale item.";
+  "Prices are numbers in the storefront's currency, never converted: price is the lowest size price, compare_at the site's struck-through price, percent_off = round((1 - price / compare_at) * 100) (computed by Scavio from the two) and on_sale = compare_at above price (null / false without a compare-at). price_with_code is the price with Fashion Nova's current code as the page computes it (40% off compare_at), when the page carries one; when it is not below price the code does not lower the price: code_lowers_price says which (true when price_with_code is below price, null without a code price). badge is the site's label; percent_off is computed from price and compare_at, so the two can differ. final_sale flags a final-sale item.";
 const EEA_TEXT = `In the 27 EEA storefronts (${EEA}) prices include VAT and Fashion Nova shows no compare-at price, so compare_at and percent_off are null and on_sale false there.`;
 const STOCK = "sizes[].quantity is the units in stock Fashion Nova's page shows for the size (available, low_stock); not a guaranteed inventory count.";
 const CARD =
-  "product_id, handle (the style), color, color_slug, title, base_title, url, product_type, price, compare_at, percent_off, on_sale, currency, price_with_code {price, currency}, final_sale, badge (e.g. 60% OFF, DEALS), in_stock, coming_soon, limited, sizes_in_stock, sizes [{size, quantity, available, low_stock}], image, colors [{color, color_slug, product_id}]";
-const LIST_OUT = `country, language, currency, sort, filters, unrecognized_filters (only when filters names a facet this list does not offer: the site matches nothing on it, so fix the name), page, page_size (60), total, total_pages, has_more, count, items (${CARD}), facets [{name, title, values [{value, label}]}] (the filter inputs this list offers)`;
+  "product_id, handle (the style), color, color_slug, title, base_title, url, product_type, price, compare_at, percent_off, on_sale, currency, price_with_code {price, currency}, code_lowers_price, final_sale, badge (the site's label, e.g. 60% OFF, DEALS), in_stock, coming_soon, limited, sizes_in_stock, sizes [{size, quantity, available, low_stock}], image, colors [{color, color_slug, product_id}]";
+const LIST_OUT = `country, language, currency, sort, filters, unrecognized_filters (only when filters names a facet this list does not offer: the site matches nothing on it, so fix the name), page, page_size (60), total, total_pages (approximate: it can differ between pages of one list), has_more, count, items (${CARD}), facets [{name, title, values [{value, label}]}] (the filter inputs this list offers)`;
 const FILTERS =
   "Filters (several values = OR): size (e.g. M, 7, 1X), color (colour families), price_min / price_max (whole units of the storefront's currency), division (women, curve), category (e.g. Jeans, Dresses), filters (any other facet by facets[].name: occasion, fit_type, rise, stretch, wash, fabric, detail, neckline, sleeve, print ...). Sorts: featured (default), best_selling, price_low, price_high, newest.";
 const REVIEW =
-  "id, rating, title, body, date, verified_buyer, votes_up, votes_down, fit (runs_small, true_to_size, runs_large: the page's own fit labels), fit_score, size_purchased, usual_size, color_purchased, language, topics. Reviewer names are never returned.";
+  "id, rating, title, body, date, verified_buyer, votes_up, votes_down, fit (runs_small, true_to_size, runs_large: the page's own fit labels), fit_score, size_purchased and usual_size (the reviewer's own free text), color_purchased, language (per review: the pool is mostly English), topics. Reviewer names are never returned.";
 const NOT_AVAILABLE =
-  "Not available: stores and store stock (Fashion Nova lists no stores), a brand directory (everything is Fashion Nova), price history (poll and store the answers), gift cards, new-arrival dates.";
+  "Not available: stores and store stock (Fashion Nova lists no stores), a brand directory or brand filter (brand is the store's vendor field; collab and licensed brand names appear in titles), price history (poll and store the answers), gift cards, new-arrival dates.";
 
 const country = z.string().length(2).optional()
   .describe("Country, ISO-2 lower case (default us): the storefront and its currency, any of Fashion Nova's 104 countries (zz = International, USD). One Fashion Nova does not run answers 400 before anything is charged.");
@@ -83,7 +83,7 @@ export function registerFashionnovaTools(server: McpServer, getClient: () => Sca
 
   server.tool(
     "search_fashionnova",
-    `Search one Fashion Nova storefront for sale prices, compare-at prices and sizes in stock: query, ${LIST_OUT}. The search is semantic (loosely related items further down): its total moves between calls and a later page can repeat a few items; it shows its first 18 pages of 60 (6 under a sort other than featured). Narrow with filters, or use get_fashionnova_collection for full depth. ${FILTERS} ${PRICES} ${EEA_TEXT} ${STOCK} ${MARKETS} ${NOT_AVAILABLE} ${CREDITS}`,
+    `Search one Fashion Nova storefront for sale prices, compare-at prices and sizes in stock: query, ${LIST_OUT}. The search is semantic (loosely related items further down): its total moves between calls and a later page can repeat a few items; it shows its first 18 pages of 60 (6 under a sort other than featured). Narrow with filters, or use get_fashionnova_collection for more depth. ${FILTERS} ${PRICES} ${EEA_TEXT} ${STOCK} ${MARKETS} ${NOT_AVAILABLE} ${CREDITS}`,
     {
       query: z.string().min(1).max(200).describe("Search text, e.g. 'bodycon dress'. Semantic: narrow with filters."),
       ...listFields,
@@ -95,21 +95,21 @@ export function registerFashionnovaTools(server: McpServer, getClient: () => Sca
 
   server.tool(
     "get_fashionnova_product",
-    `One Fashion Nova style in one colour by handle (+ color) or link: country, language, currency, product_id, handle, color, color_slug, title, base_title, url, brand, division, product_type, description, details, materials, attributes (category, occasion, fit_type, rise, stretch, print ...), model_height (when the site gives it), price, compare_at, percent_off, on_sale, price_with_code, promo (the site's promo line), final_sale, badge, in_stock, coming_soon, limited, sizes [{size, sku, price, compare_at, quantity, available, low_stock}], images, colors (every colour of the style with its price, compare_at, percent_off, stock and sizes), rating {average, count, histogram (stars 1-5), fit, fit_score}, reviews (the first 3: ${REVIEW}), site_ai_review_summary (Fashion Nova's own AI summary of its reviews, labelled as such: summary, buy_if, topics, generated_at), size_guide {title, inches, cm}, delivery {standard, rush: {method, from, to, order_by}}, default_collection, collections [{handle, title}]. An unknown handle, or a colour the style does not have, answers 404 (charged). ${PRICES} ${EEA_TEXT} ${STOCK} ${MARKETS} ${CREDITS}`,
+    `One Fashion Nova style in one colour by handle (+ color) or link: country, language, currency, product_id, handle, color, color_slug, title, base_title, url, brand, division, product_type, description, details, materials, attributes (category, occasion, fit_type, rise, stretch, print ...), model_height (when the site gives it), price, compare_at, percent_off, on_sale, price_with_code, code_lowers_price, promo (the site's promo line), final_sale, badge, in_stock, coming_soon, limited, sizes [{size, sku, price, compare_at, quantity, available, low_stock}], images, colors (every colour of the style with its price, compare_at, percent_off, stock and sizes), rating {average, count, histogram (stars 1-5), fit, fit_score}, reviews (the first 3: ${REVIEW}), site_ai_review_summary (Fashion Nova's own AI summary of its reviews, labelled as such: summary, buy_if, topics, generated_at), size_guide {title, inches, cm}, delivery {standard, rush: {method, from, to, order_by}}, default_collection, collections [{handle, title}]. An unknown handle, or a colour the style does not have, answers 404 (charged). ${PRICES} ${EEA_TEXT} ${STOCK} ${MARKETS} ${CREDITS}`,
     { ...productRef, country, language },
     post("product"),
   );
 
   server.tool(
     "get_fashionnova_collection",
-    `One Fashion Nova collection by handle or link, to full depth (pages 1 to 200 of 60; has_more follows the site's page count, and a page can hold fewer than 60 without being the last): handle, title, description, url, ${LIST_OUT}. Handles: sale (the markdown collection; there is no clearance collection), best-sellers, new, new-this-week, back-in-stock, coming-soon, jeans, dresses, mens, plus ... (get_fashionnova_categories lists them; the same handles work in every storefront). An unknown handle answers 404 (charged). ${FILTERS} ${PRICES} ${EEA_TEXT} ${MARKETS} ${CREDITS}`,
+    `One Fashion Nova collection by handle or link, pages 1 to 166 of 60: a collection lists up to about 10,000 products (total can be larger); has_more follows the site's page count (a page can hold fewer than 60 without being the last) and is false at page 166. Consecutive pages can repeat a few products (the list moves while you page): dedupe by product_id + color. Returns handle, title, description, url, ${LIST_OUT}. Handles: sale (the markdown collection; there is no clearance collection), best-sellers, new, new-this-week, back-in-stock, coming-soon, jeans, dresses, mens, plus ... (get_fashionnova_categories lists them; the same handles work in every storefront). An unknown handle answers 404 (charged). ${FILTERS} ${PRICES} ${EEA_TEXT} ${MARKETS} ${CREDITS}`,
     {
       handle: z.string().min(1).max(200).optional()
         .describe("Collection handle (get_fashionnova_categories categories[].handle / sections[].items[].handle), e.g. sale, best-sellers, new, back-in-stock, jeans."),
       url: z.string().min(20).max(400).optional()
         .describe("A fashionnova.com collection link (https://www.fashionnova.com/collections/<handle>)."),
       ...listFields,
-      page: z.number().int().min(1).max(200).optional().describe("Page, 60 per page, 1 to 200."),
+      page: z.number().int().min(1).max(166).optional().describe("Page, 60 per page, 1 to 166 (a collection lists up to about 10,000 products)."),
     },
     post("collection"),
   );
@@ -133,7 +133,7 @@ export function registerFashionnovaTools(server: McpServer, getClient: () => Sca
 
   server.tool(
     "get_fashionnova_reviews",
-    `A page of one Fashion Nova style's reviews by handle (+ color) or link: 10 per page, pages 1 to 8, sorted highest_rated (default, the page's own), most_recent, most_helpful or lowest_rated, optionally one star rating. handle, color_slug, sort, star, page, page_size, language (en), total (reviews matching the filter, as returned), has_more, rating {average, count, histogram, fit, fit_score}, count, reviews (${REVIEW}). Fashion Nova keeps one English review pool for every storefront, so there is no country. Takes 20 to 60 seconds. An unknown product answers 404 (charged). ${CREDITS}`,
+    `A page of one Fashion Nova style's reviews by handle (+ color) or link: 10 per page, pages 1 to 8, sorted highest_rated (default, the page's own), most_recent, most_helpful or lowest_rated, optionally one star rating. handle, color_slug, sort, star, page, page_size, language (en), total (reviews matching the filter, as returned), has_more, rating {average, count, histogram, fit, fit_score}, count, reviews (${REVIEW}). Reviews are per style, not per colour (every colour returns the same reviews), in one pool Fashion Nova shares across every storefront, mostly English (language per review), so there is no country. Takes 20 to 60 seconds. An unknown product answers 404 (charged). ${CREDITS}`,
     {
       ...productRef,
       sort: z.enum(REVIEW_SORTS).optional().describe("highest_rated (default), most_recent, most_helpful, lowest_rated."),
