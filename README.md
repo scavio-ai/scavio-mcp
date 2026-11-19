@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 658 tools across 89 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 665 tools across 90 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 658 tools puts ~1183KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 665 tools puts ~1205KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 658 tools. Loading all of them costs ~1183KB of `tools/list` —
+Scavio exposes 665 tools. Loading all of them costs ~1205KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **658 tools, ~1183KB** |
+| `all` | every platform — **665 tools, ~1205KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1401,6 +1401,61 @@ facet ids from a search answer; `get_asos_brands` returns category ids to pass
 to `get_asos_category`. No outlet (ASOS's outlet categories are empty), no
 promo codes (shown only to signed-in shoppers) and no price history (poll
 `get_asos_stock`). Failed calls are not charged; a not-found is charged.
+
+### [Fashion Nova](https://scavio.dev/docs/fashionnova-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Fashion Nova API for Fashion Nova sale prices: each style's price, compare-at (struck-through) price, percent off, final-sale flag and per-size stock in any of Fashion Nova's 104 countries in local currency, plus search, collections (sale, best sellers, new, back in stock) to full depth, product detail with every colour and size, the navigation tree, search suggestions, reviews and similar styles.
+
+| Tool | Description |
+|------|-------------|
+| `search_fashionnova` | Search one storefront, 60 per page up to page 18 (6 under a sort); size, colour, price, division, category and facet filters; 5 sorts |
+| `get_fashionnova_product` | One style in one colour by handle or link: every colour with its own sizes (SKU, price, compare-at, quantity, low stock), rating with fit, the first 3 reviews, Fashion Nova's own AI review summary, size guide, delivery and promo |
+| `get_fashionnova_collection` | One collection by handle or link (sale, best-sellers, new, new-this-week, back-in-stock, jeans ...), pages 1 to 200, with the search filters |
+| `get_fashionnova_categories` | The navigation tree for women, men or curve as collection handles, plus the site's trending searches |
+| `get_fashionnova_suggestions` | Search suggestions for a partial query: suggested searches, products and collections |
+| `get_fashionnova_reviews` | One style's reviews, 10 per page up to page 8, 4 sorts and a star filter, with size purchased, usual size and fit |
+| `get_fashionnova_similar` | Up to 24 styles Fashion Nova recommends as similar (US store, USD) |
+
+Platform key `fashionnova`. 1 credit per call on every tool.
+
+Markets (`country`, default `us`): the 104 countries in Fashion Nova's own
+country selector, each in its own currency (37 currencies: us USD, ca CAD,
+gb GBP, au AUD, mx MXN, jp JPY, ae AED, the euro countries EUR ...; `zz` is
+the site's International storefront in USD). `language` is `en` (default,
+every country) or `es` (Spanish titles, descriptions and attributes, in 67
+countries; not the US store). A country or language Fashion Nova does not run
+answers 400 before anything is charged. Suggestions and categories are the
+same in every storefront; reviews are one English pool shared by every
+market (no `country`); similar answers from the US store in USD.
+
+Prices are numbers in the storefront's currency, never converted: `price`
+(the lowest size price), `compare_at` (the site's struck-through price),
+`percent_off` (computed by Scavio: `round((1 - price / compare_at) * 100)`),
+`on_sale`, `price_with_code` (the price with the site's current promo code,
+when it shows one) and `final_sale`. In the 27 EEA countries (at, be, cy, cz,
+de, dk, ee, es, fi, fr, gr, hu, ie, is, it, lt, lu, lv, mt, nl, no, pl, pt, ro,
+se, si, sk) Fashion Nova shows VAT-inclusive prices and no compare-at price,
+so `compare_at` and `percent_off` are null there. The same jeans read on
+2026-11-19: us 18 USD (compare-at 34.99, 49% off), ca 27 CAD (51), gb 17 GBP
+(32), au 31 AUD (60), mx 338 MXN (656), fr 20.95 EUR (no compare-at).
+`sizes[].quantity` is the stock Fashion Nova's page shows per size, not a
+guaranteed inventory count.
+
+Search is semantic and matched loosely: its `total` moves between calls, a
+later page can repeat a few items, and it shows its first 18 pages of 60 (6
+under a sort other than `featured`); narrow with filters. Collections page
+through fully (`has_more` follows the site's page count). Filters: `size`,
+`color`, `price_min` / `price_max` (whole units of the storefront's currency),
+`division` (`women`, `curve`), `category`, and `filters` for any other facet
+by `facets[].name`; a facet the list does not offer matches nothing and is
+listed in `unrecognized_filters` (present only then). Sorts: `featured`, `best_selling`,
+`price_low`, `price_high`, `newest`. Reviews: `highest_rated` (default),
+`most_recent`, `most_helpful`, `lowest_rated`, `star` 1-5, 10 per page, pages
+1 to 8, totals as returned; reviewer names are never returned. Review calls
+take 20 to 60 seconds. Not available: stores (Fashion Nova lists none), a
+brand directory (everything is Fashion Nova), price history (poll and store
+the answers), gift cards, new-arrival dates. Failed calls are not charged; a
+not-found is charged.
 
 ### Vinted
 
