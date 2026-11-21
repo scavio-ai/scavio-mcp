@@ -1913,7 +1913,7 @@ Argos API for Argos store stock, prices and reviews (argos.co.uk, UK, GBP): whic
 |------|-------------|
 | `search_argos` | Search Argos, 24 per page up to page 200: price, was price, save, offer text, badges, rating, seller (Argos or Trusted Seller); brand, seller, offers, colour, price, rating and facet filters; 4 sorts |
 | `get_argos_product` | One product by id or link: EAN, badges with start / end dates, specs, variants, special offers, Nectar points, care plans, payment options, bundles, rating distribution, Q&A counts and the first 10 reviews; Trusted Seller items with the fields their page shows |
-| `get_argos_store_stock` | 1 to 10 products at the Argos stores near a UK postcode (up to 10 stores, 50 miles): a collection state and time per store, plus delivery to a postcode (same day, next day) |
+| `get_argos_store_stock` | 1 to 10 products at the Argos stores near a UK postcode (up to 10 stores, 50 miles): a collection state and time per store, plus delivery to a postcode (same day, next day, within N days) |
 | `get_argos_stores` | Stores near a UK postcode, or one store by reference with opening hours, special hours and services |
 | `get_argos_reviews` | One product's reviews, up to 100 per page, 5 sorts and a star filter, syndicated reviews flagged with their source, Argos's own AI review summary |
 | `get_argos_questions` | One product's customer questions with answers (staff, brand or customer), up to 50 per page |
@@ -1929,11 +1929,13 @@ Store stock is availability, not unit counts: each store answers a
 collection state per product (`collect_now`, `collect_today`,
 `collect_tomorrow`, `collect_later`, `out_of_stock`, `not_available`) with
 `available_from` and the site's message, and `delivery` answers `same_day`
-(Fast Track), `next_day`, `later`, `out_of_stock` or `not_available`.
-`postcode` is where stores are searched; `delivery_postcode` (default
-`postcode`) is where delivery is checked. Store types: `argos_store`,
-`inside_sainsburys`, `collection_point`. Trusted Seller items are never
-stocked in stores (400).
+(Fast Track), `next_day`, `later` (Argos's "Delivery within N days", with
+`days`), `out_of_stock` or `not_available`; quote delivery from `state` and
+`message`. `postcode` is where stores are searched; `delivery_postcode` (default
+`postcode`) is where delivery is checked. Store types: `argos_store` (a
+standalone Argos store), `inside_sainsburys` (an Argos counter inside a
+Sainsbury's store), `collection_point` (a collect-only point, no shop).
+Trusted Seller items are never stocked in stores (400).
 
 Prices are numbers in GBP as Argos shows them: `price`, `was_price` (the
 site's was price), `save` (computed by Scavio as `was_price - price`),
@@ -1941,7 +1943,8 @@ site's was price), `save` (computed by Scavio as `was_price - price`),
 (e.g. `Black_Friday`, `price_guarantee`). `seller` is `argos` or
 `trusted_seller` (Argos's marketplace; the page names no seller, so
 `seller_name` is null there). Search, category and deals return 24 per page
-(`total_pages` says how deep the list goes); Tu Clothing items are left out
+(`total_pages` says how deep the list goes; Argos stops counting at 10,000,
+flagged by `total_capped`); Tu Clothing items are left out
 and counted in `tu_clothing_excluded`. Reviews: `newest` (default), `oldest`,
 `most_helpful`, `highest_rating`, `lowest_rating`, `rating` star filter, up to
 100 per page with every review reachable; reviewer names, locations, ages and
