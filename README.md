@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 665 tools across 90 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 675 tools across 91 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 665 tools puts ~1205KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 675 tools puts ~1233KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 665 tools. Loading all of them costs ~1205KB of `tools/list` —
+Scavio exposes 675 tools. Loading all of them costs ~1233KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **665 tools, ~1205KB** |
+| `all` | every platform — **675 tools, ~1233KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1904,6 +1904,51 @@ Failed calls are not charged; unknown products are a charged 404. No search
 suggestions, store locator or store stock, Q&A, FanCash, member pricing,
 unit counts, price history or checkout: to track jersey sale prices, poll
 and store your own.
+
+### [Argos](https://scavio.dev/docs/argos-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Argos API for Argos store stock, prices and reviews (argos.co.uk, UK, GBP): which Argos stores near a UK postcode can hand over one or more products (collect now, today, tomorrow, out of stock) and whether they can be delivered to a postcode, next to price, was price, offers and badges, plus search, categories, deal collections, product detail, reviews, Q&A and stores.
+
+| Tool | Description |
+|------|-------------|
+| `search_argos` | Search Argos, 24 per page up to page 200: price, was price, save, offer text, badges, rating, seller (Argos or Trusted Seller); brand, seller, offers, colour, price, rating and facet filters; 4 sorts |
+| `get_argos_product` | One product by id or link: EAN, badges with start / end dates, specs, variants, special offers, Nectar points, care plans, payment options, bundles, rating distribution, Q&A counts and the first 10 reviews; Trusted Seller items with the fields their page shows |
+| `get_argos_store_stock` | 1 to 10 products at the Argos stores near a UK postcode (up to 10 stores, 50 miles): a collection state and time per store, plus delivery to a postcode (same day, next day) |
+| `get_argos_stores` | Stores near a UK postcode, or one store by reference with opening hours, special hours and services |
+| `get_argos_reviews` | One product's reviews, up to 100 per page, 5 sorts and a star filter, syndicated reviews flagged with their source, Argos's own AI review summary |
+| `get_argos_questions` | One product's customer questions with answers (staff, brand or customer), up to 50 per page |
+| `get_argos_categories` | Argos's department tree (14 departments) with category ids |
+| `get_argos_category` | One category's products by category id, with the search filters and sorts |
+| `get_argos_deals` | Deal collections: black_friday, clearance, special_offers (full lists), or top_100 (Argos's Top 100, 2 pages of 60) |
+| `get_argos_suggestions` | Search suggestions for a partial query, with Argos's popularity weight |
+
+Platform key `argos`. 2 credits per call on every tool. One store:
+argos.co.uk, prices in GBP, no `country` input (Argos Ireland closed in 2023).
+
+Store stock is availability, not unit counts: each store answers a
+collection state per product (`collect_now`, `collect_today`,
+`collect_tomorrow`, `collect_later`, `out_of_stock`, `not_available`) with
+`available_from` and the site's message, and `delivery` answers `same_day`
+(Fast Track), `next_day`, `later`, `out_of_stock` or `not_available`.
+`postcode` is where stores are searched; `delivery_postcode` (default
+`postcode`) is where delivery is checked. Store types: `argos_store`,
+`inside_sainsburys`, `collection_point`. Trusted Seller items are never
+stocked in stores (400).
+
+Prices are numbers in GBP as Argos shows them: `price`, `was_price` (the
+site's was price), `save` (computed by Scavio as `was_price - price`),
+`offer_text` (the site's own words, e.g. Half Price) and `badges` as given
+(e.g. `Black_Friday`, `price_guarantee`). `seller` is `argos` or
+`trusted_seller` (Argos's marketplace; the page names no seller, so
+`seller_name` is null there). Search, category and deals return 24 per page
+(`total_pages` says how deep the list goes); Tu Clothing items are left out
+and counted in `tu_clothing_excluded`. Reviews: `newest` (default), `oldest`,
+`most_helpful`, `highest_rating`, `lowest_rating`, `rating` star filter, up to
+100 per page with every review reachable; reviewer names, locations, ages and
+genders are never returned. Not available: unit counts, price history (poll
+and store the answers), a brand directory (brand is a filter), Argos Ireland,
+card or checkout prices, Argos Pay terms. Failed calls are not charged; a
+not-found is charged.
 
 ### Carrefour
 
