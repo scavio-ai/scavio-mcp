@@ -1960,7 +1960,7 @@ Media Expert API for Media Expert Black Week prices and store stock (mediaexpert
 | Tool | Description |
 |------|-------------|
 | `search_mediaexpert` | Search Media Expert, 30 per page (up to 50) up to page 100: price, old price, `omnibus_lowest_30d`, `code_price`, discount, rating, marketplace seller; 10 sorts; `redirected_to` when Media Expert answers a term with a category page |
-| `get_mediaexpert_product` | One product by id or link: EANs, description, key attributes, specifications, variants, delivery and pickup labels, collect in 1 hour, installments, seller with rating, rating summary, breadcrumbs, related products |
+| `get_mediaexpert_product` | One product by id or link: EANs, description, key attributes, specifications, variants, delivery and pickup labels, the product page's one-hour pickup label (per-store one-hour pickup comes from `get_mediaexpert_store_stock`), installments, seller with rating, rating summary, breadcrumbs, related products |
 | `get_mediaexpert_store_stock` | One product's stock indicator at the up to 40 Media Expert stores nearest a Polish city, town or postcode: `stock_level`, `in_stock`, `collect_in_1h`, the in-store pickup day, distance and hours |
 | `get_mediaexpert_stores` | Every Media Expert store (about 640), one city's stores, or one store's page with phone, events and alerts |
 | `get_mediaexpert_reviews` | One product's reviews by sku, id or link, up to 100 per page, 6 sorts, star range and verified-purchase filters; verified purchase and promotional-campaign flags |
