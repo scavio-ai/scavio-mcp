@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 675 tools across 91 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 688 tools across 92 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 675 tools puts ~1233KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 688 tools puts ~1270KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 675 tools. Loading all of them costs ~1233KB of `tools/list` —
+Scavio exposes 688 tools. Loading all of them costs ~1270KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **675 tools, ~1233KB** |
+| `all` | every platform — **688 tools, ~1270KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1951,6 +1951,55 @@ and counted in `tu_clothing_excluded`. Reviews: `newest` (default), `oldest`,
 genders are never returned. Not available: unit counts, price history (poll
 and store the answers), a brand directory (brand is a filter), Argos Ireland,
 card or checkout prices, Argos Pay terms. Failed calls are not charged; a
+not-found is charged.
+
+### [Media Expert](https://scavio.dev/docs/mediaexpert-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Media Expert API for Media Expert Black Week prices and store stock (mediaexpert.pl, Poland, PLN): for any product the price, the old price, the EU Omnibus lowest price of the last 30 days and the code price with its code and dates, plus the stock indicator at the stores nearest a Polish city or postcode, search, categories, brands, promotions, outlet, marketplace sellers, reviews and stores.
+
+| Tool | Description |
+|------|-------------|
+| `search_mediaexpert` | Search Media Expert, 30 per page (up to 50) up to page 100: price, old price, `omnibus_lowest_30d`, `code_price`, discount, rating, marketplace seller; 10 sorts; `redirected_to` when Media Expert answers a term with a category page |
+| `get_mediaexpert_product` | One product by id or link: EANs, description, key attributes, specifications, variants, delivery and pickup labels, collect in 1 hour, installments, seller with rating, rating summary, breadcrumbs, related products |
+| `get_mediaexpert_store_stock` | One product's stock indicator at the up to 40 Media Expert stores nearest a Polish city, town or postcode: `stock_level`, `in_stock`, `collect_in_1h`, the in-store pickup day, distance and hours |
+| `get_mediaexpert_stores` | Every Media Expert store (about 640), one city's stores, or one store's page with phone, events and alerts |
+| `get_mediaexpert_reviews` | One product's reviews by sku, id or link, up to 100 per page, 6 sorts, star range and verified-purchase filters; verified purchase and promotional-campaign flags |
+| `get_mediaexpert_category` | One category's products by path, with facet filters, sorts and paging |
+| `get_mediaexpert_categories` | The category tree (24 departments, about 5,000 categories) or one subtree, with product counts |
+| `get_mediaexpert_brands` | The brand directory (about 16,000 brands), by name or first letter |
+| `get_mediaexpert_brand` | One brand's products, optionally inside a category, with filters, sorts and paging |
+| `get_mediaexpert_promotions` | Promotion lists (Black Weeks included) or one list's products |
+| `get_mediaexpert_outlet` | The outlet's groups, subgroups or products (ex-display, returned and end-of-line items) |
+| `get_mediaexpert_seller` | A marketplace seller's profile, rating, categories and offers |
+| `get_mediaexpert_suggestions` | Search suggestions for a partial query, with Media Expert's search counts |
+
+Platform key `mediaexpert`. Billed on actual cost, 1 to 3 credits per call,
+and `credits_used` reports each one: product, stores, brands, outlet groups,
+promotion lists, reviews and suggestions cost 1; store stock and categories
+cost 2; search costs 3 (Media Expert loads search lists lazily, so the rest of
+the page takes one more lookup) or 1 when Media Expert answers the term with a
+full category page; category, brand, promotion-list, outlet and seller product
+lists cost 1 unsorted and 3 with a sort or a lazily loaded list. One store:
+mediaexpert.pl, prices in PLN, no `country` input. Names, specifications,
+labels and reviews come back in Polish, as Media Expert writes them.
+
+Prices are numbers in PLN: `price`, `old_price` (Media Expert's struck-through
+price), `omnibus_lowest_30d` (the lowest price of the last 30 days that Media
+Expert shows next to a promotion, under the EU Omnibus Directive),
+`code_price {price, code, valid_from, valid_to}` (the price with a discount
+code), `discount_shown` (Media Expert's own figure) and `discount_percent`
+(computed by Scavio). Store stock is Media Expert's stock indicator, a bucket
+(seen: 0, 2, 9, 20), not a unit count, with `collect_in_1h` (Odbierz za
+godzinę) and `order_to_store_day` when the item is not on the shelf. Send
+`product_id`, not `offer_id`; marketplace items (sold and shipped by a
+marketplace seller) are never stocked in stores (a charged 400). Lists stop
+counting at 5,000 (`total_capped`); price sorts are Media Expert's own order,
+which follows promotional and code prices, so re-sort a page for a strict
+order. There is no price filter. Reviews carry `verified_purchase` and
+`incentivized` (a review from a Media Expert promotional campaign); no
+reviewer identity is returned. Not available: Q&A (Media Expert has none),
+leaflets, price history (poll and store the answers), unit counts, checkout
+prices, other countries or languages. Failed calls are not charged; a
 not-found is charged.
 
 ### Carrefour
