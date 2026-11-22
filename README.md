@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 704 tools across 93 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 717 tools across 94 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 704 tools puts ~1317KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 717 tools puts ~1351KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 704 tools. Loading all of them costs ~1317KB of `tools/list` —
+Scavio exposes 717 tools. Loading all of them costs ~1351KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **704 tools, ~1317KB** |
+| `all` | every platform — **717 tools, ~1351KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -2046,6 +2046,45 @@ available: store stock, price history (poll and store the answers), leaflets,
 checkout, other countries. Failed calls and refused inputs are not charged; a
 not-found (an article the market does not sell, an unknown slug or EAN) is
 charged.
+
+### [HEMA](https://scavio.dev/docs/hema-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+HEMA API for HEMA (hema.com, the Dutch variety store): HEMA store stock, the sellable units HEMA's store service reports per store for up to 12 articles near a city or postcode, with the stock level (full, regular or limited), in the Netherlands, Belgium, France, Germany, Luxembourg and Austria; each article's dated price schedule with upcoming promotions as HEMA writes them (e.g. 2+1 gratis); the same article number priced per market; plus search, categories, new arrivals, sale, weekly offers, Christmas and Sinterklaas campaigns, suggestions, stores and HEMA's own product reviews.
+
+| Tool | Description |
+|------|-------------|
+| `search_hema` | Search HEMA, 24 products a page with total and total_pages: price, `was_price`, `price_from`, `discount_percent` (computed by Scavio), `promotion`, online stock flags; sorts relevance, price_asc, price_desc, newest, best_selling; `filters` from the facets, `new_only`, `price_min`, `price_max`; `redirected_to` when HEMA sends a word to a landing page |
+| `get_hema_product` | One article in full on one market by article number or link: EAN, colour / size variants with stock flags, `price_schedule` (dated prices, upcoming promotions included), `unit_price`, `online_stock`, `sellable_in_store`, `order_limit`, specifications |
+| `get_hema_category` | One category's products by path, with filters, sorts and paging |
+| `get_hema_categories` | The category menu on one market (13 to 18 departments, 3 levels) |
+| `get_hema_new_arrivals` | HEMA's new collection on one market (about 550 to 1,100 products) |
+| `get_hema_sale` | The sale page (nl) or outlet page (be, de); France has none |
+| `get_hema_offers` | The weekly offers page (nl, be): HEMA's validity label as shown, the ISO `valid_to`, the offer week and the promotion cards with their product-list paths (no products on that page) |
+| `get_hema_campaign` | A campaign page with its products and promotion texts: `christmas` (all markets), `sinterklaas` (nl, be) or a campaign slug |
+| `get_hema_suggestions` | Search suggestions, categories and up to 5 products for a partial query |
+| `get_hema_store_stock` | Up to 12 articles in the stores near a city, postcode or point (or across a country): per store `sellable_units`, `stock_level`, shelf locations, address, hours and distance; NL, BE, FR, DE, LU, AT |
+| `get_hema_stores` | Every store of one country (about 570 nl, 111 be, 69 fr, 17 de, 5 at, 4 lu) or the ones near a place, with hours, special hours and services |
+| `get_hema_store` | One store by id: address, hours, services, status, and one article's stock with `sku` |
+| `get_hema_reviews` | One article's HEMA reviews, pages 1 to 5 (8, then 30 more a page), sorts newest or highest, star ratings vs text reviews; nl, fr and de read the Dutch pool, be its own; no reviewer identity |
+
+Platform key `hema`. 1 credit per call on every tool. Markets: `country` nl
+(default, www.hema.nl), be (plus `language` nl or fr), fr, de; lu and at only
+on `get_hema_stores`, `get_hema_store` and `get_hema_store_stock` (elsewhere a
+400, not charged). All prices are numbers in EUR; names, labels and promotion
+texts come back in the market's language, as HEMA writes them (Dutch on the
+default nl market). Article numbers are the same in every market and prices
+are set per market: call once per country to compare one article. HEMA notes
+that online prices can differ from store prices.
+
+Store stock is the sellable units HEMA's store service reports per store and
+its stock level, not a promise that the shelf has it. Promotions come as HEMA
+writes them (2+1 gratis, 2+2 gratis) with their dated validity;
+`discount_percent` is computed by Scavio from the was price. HEMA sells its
+own brand: there is no brands tool. Not available: price history (poll and
+store the answers), checkout or ordering, the photo service and cake ordering,
+other countries (no UK or Spain). Failed calls and refused inputs are not
+charged; a not-found (an article number HEMA does not have, an unknown store
+id, a place the store finder cannot find) is charged.
 
 ### Carrefour
 
