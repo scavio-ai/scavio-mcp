@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 688 tools across 92 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 704 tools across 93 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 688 tools puts ~1270KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 704 tools puts ~1317KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 688 tools. Loading all of them costs ~1270KB of `tools/list` —
+Scavio exposes 704 tools. Loading all of them costs ~1317KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **688 tools, ~1270KB** |
+| `all` | every platform — **704 tools, ~1317KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -2001,6 +2001,51 @@ reviewer identity is returned. Not available: Q&A (Media Expert has none),
 leaflets, price history (poll and store the answers), unit counts, checkout
 prices, other countries or languages. Failed calls are not charged; a
 not-found is charged.
+
+### [Action](https://scavio.dev/docs/action-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Action API for Action (action.com), the European non-food discount store: this week's Action deals with their validity dates and week id, the same article's price on each of the 19 Action storefronts (one article number everywhere, priced per market), and the stores near a city or postcode with opening hours; plus search, products, categories, own brands, new arrivals, seasonal collections, suggestions, reviews and the shop.action.com webshop.
+
+| Tool | Description |
+|------|-------------|
+| `search_action` | Search Action, 24 products a page with total and total_pages: price, `regular_price`, unit price, deal with validity dates, labels, rating; sorts relevance, price_asc, price_desc, newest; filters `category_filter`, `price_range`, `brand_filter`, `new_only` from the facets |
+| `get_action_product` | One article in full on one market by article number or link: images, brand, long description, highlights, specifications, aisle, category, sustainability, hazards, related products |
+| `get_action_products` | Up to 60 article numbers priced on one market in one call; codes the market does not sell come back in `not_sold` |
+| `get_action_weekly_deals` | This week's deals on one market: `week_id` (e.g. Promo2026Week47), `valid_from` / `valid_to` (Wednesday to Tuesday), the regular price; Belgium adds Action Plus `loyalty_deals` |
+| `get_action_category` | One category's products by path, with filters, sorts and paging |
+| `get_action_categories` | The category tree on one market (15 departments, about 300 categories in 3 levels) |
+| `get_action_brand` | One brand's products, with filters, sorts and paging |
+| `get_action_brands` | Action's own brands (about 54 private labels, e.g. Max & More) |
+| `get_action_new_arrivals` | New products on one market (about 200) |
+| `get_action_collection` | One seasonal moment page (black-friday, kerst, sinterklaas, basics) |
+| `get_action_suggestions` | Search suggestions, a category suggestion and up to 5 products for a partial query |
+| `get_action_stores` | The 20 stores nearest a city, postcode or lat / lng (may cross borders: `country_code` per store), with address and 7 dated days of opening hours |
+| `get_action_store` | One store by reference, link, slug or `store_id`: address, coordinates, 7 dated days of opening hours |
+| `get_action_reviews` | One article's reviews on nl, de, fr or pl, up to 100 per call: scope `local` (that storefront's language), `international` or `all`; 5 sorts, star and text filters; no reviewer identity |
+| `search_action_webshop` | Search the Action webshop (shop.action.com, nl-nl, nl-be, fr-be) or one webshop category: EAN, article number, online `stock_level`, `order_limit`, `shipping_cost` |
+| `get_action_webshop_product` | One webshop product by EAN or link: online stock, order limits, shipping cost, release and end dates, supplier, the other webshop markets |
+
+Platform key `action`. 1 credit per call on every tool (`get_action_store` by
+`store_id` and `get_action_reviews` with scope `all` read two sources, still 1
+credit). Markets: `country` nl (default), be, fr, lu, de, at, ch, it, es, pt,
+pl, cz, sk, ro, hr, si, plus `language` for be (nl or fr) and ch (de, fr or
+it). Prices are numbers in the market's currency (EUR; CHF, PLN, CZK, RON),
+never converted, and titles and labels come back in the storefront's
+language, as Action writes them (Dutch on the default nl storefront). Article
+numbers are the same in every market and prices are set per market: price one
+article on each market you report with one `get_action_products` call per
+country.
+
+Weekly deals run Wednesday to Tuesday with Action's validity label, ISO
+`valid_from` / `valid_to` dates and the week id; the assortment changes every
+week. Action does not publish store stock: the stores tools give the nearest
+stores and their hours, no stock, and the webshop's `stock_level` is online
+stock, not store stock. EANs come only from the webshop tools. Reviews exist on
+nl, de, fr and pl only (other countries answer 400, not charged). Not
+available: store stock, price history (poll and store the answers), leaflets,
+checkout, other countries. Failed calls and refused inputs are not charged; a
+not-found (an article the market does not sell, an unknown slug or EAN) is
+charged.
 
 ### Carrefour
 
