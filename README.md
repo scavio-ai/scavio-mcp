@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 717 tools across 94 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 729 tools across 95 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 717 tools puts ~1351KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 729 tools puts ~1377KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 717 tools. Loading all of them costs ~1351KB of `tools/list` —
+Scavio exposes 729 tools. Loading all of them costs ~1377KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **717 tools, ~1351KB** |
+| `all` | every platform — **729 tools, ~1377KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -949,6 +949,54 @@ or per-store unit stock.
 
 1 credit per call. Prices are national. Store stock is a status from a daily
 snapshot (`inventory_updated_at`), not a unit count.
+
+### [AutoZone](https://scavio.dev/docs/autozone-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+AutoZone API for AutoZone (autozone.com, the US auto parts retailer): AutoZone parts prices by vehicle, the parts that fit a year / make / model in a part type, with price, was price, deal price, core charge, warranty and pickup availability for the store AutoZone prices the request for; part-number cross-reference; full product detail with ratings; every review; the store directory; clearance and mail-in rebates; plus search, product and store stock at a chosen store on AutoZone Brazil.
+
+| Tool | Description |
+|------|-------------|
+| `search_autozone` | Search by keywords, an AutoZone part number or another brand's part number (cross-reference: PH3614 finds the parts AutoZone matches to it): the first 24 results with AutoZone's total, price, `was_price`, `deal_price`, `core_charge`, warranty, fitment, availability per fulfilment option, facets; sorts relevance, price_asc, price_desc; one facet filter, `brand`, `min_price`, `max_price`; us and br |
+| `get_autozone_product` | One product by item id or link: specifications, features, safety data sheets, fitment type, price, was price, deal price and label, core charge, warranty, availability per fulfilment option, rating distribution; us and br |
+| `get_autozone_category` | One part type's products by path, optionally only the parts that fit a `vehicle` {year, make, model}, with sorts, one facet filter and a price range |
+| `get_autozone_brand` | One brand's products (duralast, mobil-1), optionally within one part type |
+| `get_autozone_vehicles` | The vehicle selector one level at a time: years, makes, models, submodels and engines (submodels and engines us only) |
+| `get_autozone_reviews` | One product's reviews, 10 a page, full depth, sorts default, most_recent, most_helpful, a star filter, the rating distribution, AutoZone's review summary on page 1, the reviewer's vehicle as written and review photos; no reviewer identity; us only |
+| `get_autozone_stores` | The store directory one level at a time: states, then cities, then a city's stores with address and hours; us, br, mx |
+| `get_autozone_store` | One store by slug or link: address, phone, coordinates, hours and holiday hours; us, br, mx |
+| `get_autozone_categories` | The category menu (about 23 departments) with the part type paths for `get_autozone_category`; us, br, mx |
+| `get_autozone_clearance` | AutoZone's clearance list (us) |
+| `get_autozone_rebates` | AutoZone's current mail-in rebates (us) with end date, postmark date and the form link |
+| `get_autozone_store_stock` | Brazil only: one product at a Brazilian store you choose, with that store's price and in-store quantity |
+
+Platform key `autozone`. 1 credit per call; 2 on br `search_autozone`,
+br `get_autozone_product` and `get_autozone_store_stock`. Markets (`country`,
+default us): us (autozone.com, USD) on every tool; br (autozone.com.br,
+Portuguese text, BRL) on search, product, store stock, vehicles, stores, store
+and categories; mx (autozone.com.mx) on vehicles, stores, store and categories
+only (Mexico search and product are a 400, not charged: AutoZone Mexico prices
+only for a Mexican store it does not reliably assign).
+
+Every price is AutoZone's price for the store AutoZone assigns to the request,
+named in `priced_for` (store number, address, city, state, ZIP). AutoZone
+prices differ by store, core charges too, so the same part can cost more or
+less elsewhere and two calls can be priced for different stores; there is no
+store or ZIP input on us. `core_charge` is the refundable deposit AutoZone adds
+on parts like batteries until the old part is returned (0 when none). Lists
+(search, category, brand, clearance) return the first 24 results with
+AutoZone's `total`, with no paging: narrow with one facet filter, a price range
+or a sort. List items carry no rating (`get_autozone_product` does). Vehicle
+fit is at year / make / model level: items AutoZone ties to an engine read
+`fitment.vehicle_fit` NEEDS_BASE_VEHICLE. AutoZone runs search ranking tests
+(`ranking_variant`), so totals and order can differ between two identical
+calls. Brazil search and product are priced for store 7602 Sao Paulo
+(Interlagos); `get_autozone_store_stock` prices for the Brazilian store you
+name. Not available: results past the first 24, stores near a ZIP, stock at a
+chosen US or Mexican store, search suggestions, VIN lookup, engine-level
+fitment, repair guides, AutoZonePro / commercial pricing, Mexico prices, price
+history (poll and store the answers), checkout. Failed calls and refused inputs
+are not charged; a not-found (an unknown item id, vehicle, brand, state, city
+or store) is charged.
 
 ### PetSmart
 
