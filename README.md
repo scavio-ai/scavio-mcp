@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 729 tools across 95 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 740 tools across 96 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 729 tools puts ~1377KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 740 tools puts ~1405KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 729 tools. Loading all of them costs ~1377KB of `tools/list` —
+Scavio exposes 740 tools. Loading all of them costs ~1405KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **729 tools, ~1377KB** |
+| `all` | every platform — **740 tools, ~1405KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -879,6 +879,49 @@ plus a ZIP. Ulta publishes in stock / out of stock per store, not unit counts.
 shelf price, default), `pickup` or `delivery` (online prices, often higher).
 Pass `store_id` (from `get_aldi_stores`, e.g. `"151248"`) or a `zip` to use the
 nearest store. ALDI has no product ratings.
+
+### [Instacart](https://scavio.dev/docs/instacart-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Instacart API for Instacart (instacart.com, the US and Canada grocery delivery and pickup marketplace): Instacart prices by store at a ZIP. Every store delivering to a ZIP with its pricing label, one product priced at every one of those stores, one query across up to 10 stores, a store's search, aisles, deals and pickup locations, and delivery, pickup or in-store prices side by side.
+
+| Tool | Description |
+|------|-------------|
+| `get_instacart_retailers` | Every store serving a ZIP or Canadian postal code: slug (the `retailer` input of the other tools), delivery and pickup ETA text, `no_markups` (Instacart's "No markups" label), EBT, pickup / delivery availability |
+| `search_instacart` | Search one store at a ZIP: price, was price, deal badge, unit price, loyalty price, stock, dietary labels, brand filters; sorts best_match, price_asc, price_desc; `on_sale`, `brand_id`, paging; `service_type` delivery, pickup or instore |
+| `get_instacart_cross_search` | One query across up to 10 stores delivering to a US ZIP, each store's first matching products priced (up to 20 per store); us only |
+| `get_instacart_product` | One product at one store: ingredients, warnings / allergens, key nutrients as given, images, size, the store's price block, rating summary |
+| `get_instacart_price_compare` | The same product priced at every store delivering to the ZIP, Instacart delivery prices sorted low to high |
+| `get_instacart_categories` | One store's department and aisle tree, with the slugs for `get_instacart_category` |
+| `get_instacart_category` | The products of one department, aisle or collection, paged |
+| `get_instacart_deals` | One store's Sales collection: sale price with the regular price, multi-buy offers; no coupons |
+| `get_instacart_stores` | A retailer's pickup locations near the ZIP, nearest first, with 7 days of hours for the 5 nearest |
+| `get_instacart_suggestions` | Search suggestions for a partial query, for one store or every store at the ZIP; English only |
+| `get_instacart_reviews` | One product's customer reviews, 15 a page, rating summary, syndication source and incentivized flag; no reviewer identity; us only |
+
+Platform key `instacart`. 1 credit per call; `search_instacart` 3 (2 when the
+page fits in Instacart's first answer); `get_instacart_cross_search` 3 for up
+to 5 stores, 4 for 6 to 10. Markets (`country`, default us): us
+(instacart.com, USD) on every tool; ca (instacart.ca, CAD) on every tool
+except cross-search and reviews (a 400, not charged). `language` fr (Canada
+only) returns French names, aisles and price text as Instacart shows them in
+Quebec; suggestions are English only. `zip` is required: a US ZIP, or a
+Canadian postal code with country ca. A ZIP with no Instacart service area
+answers an empty list and a note.
+
+Every price is Instacart's price for that store, ZIP and service type, named
+in `priced_for` with the retailer's pricing label as Instacart shows it (e.g.
+Costco "Prices are higher than your local warehouse."). Retailers set their
+Instacart prices, which can be above their in-store prices, so an Instacart
+delivery price is not the store's shelf price; `service_type` instore returns
+Instacart's in-store prices where it shows them. Product ids are the same at
+every store. `get_instacart_price_compare` carries no unit price or stock
+(`get_instacart_product` gives them per store). For direct shelf prices see
+the Kroger, Costco, ALDI, Publix and Whole Foods tools. Not available:
+delivery and service fees or order minimums as numbers (Instacart shows them
+at checkout), coupons, Instacart+ member prices, account, order or cart data,
+price history (poll and store the answers). Failed calls and refused inputs
+are not charged; a not-found (an unknown ZIP, product id or category, or a
+store that does not serve the ZIP) is charged.
 
 ### Micro Center
 
