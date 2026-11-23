@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 754 tools across 97 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 765 tools across 98 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 754 tools puts ~1437KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 765 tools puts ~1464KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 754 tools. Loading all of them costs ~1437KB of `tools/list` —
+Scavio exposes 765 tools. Loading all of them costs ~1464KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **754 tools, ~1437KB** |
+| `all` | every platform — **765 tools, ~1464KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -794,6 +794,53 @@ at the top.
 `store_id` and that store's own `zip` (both from `get_lowes_stores`, e.g. `"0595"`
 and `"28117"`) are required on search and product. Deals are `search_lowes` with
 `on_sale: true`; there is no clearance tool.
+
+### [Ace Hardware](https://scavio.dev/docs/acehardware-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Ace Hardware API for Ace Hardware (acehardware.com, the US hardware cooperative): Ace Hardware prices by store (an item's price at the Ace store you pick, named in `priced_for`), exact units on hand at that store and its 25 nearest, and that store's weekly ad; plus search, categories, brands, deals with promo codes, store details and Ace's paint colours. Pair it with [Home Depot](https://scavio.dev/homedepot-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Lowe's](https://scavio.dev/lowes-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a local hardware price check on the same item (brand + model).
+
+| Tool | Description |
+|------|-------------|
+| `search_acehardware` | Search by keywords, an Ace item number or a UPC: 15-200 a page, with total, price, list price, sale price, msrp, `price_list`, rating, review count, Special Offers, fulfilment, facets; sorts relevance, price, name, newest, oldest; `brand`, `offer` (sale, ace_rewards, buy_and_get, buy_more_save), `on_sale` and facet filters; `redirected_to` when Ace sends the search to a category or product |
+| `get_acehardware_product` | One product by item number or link, priced for an Ace store with `store`: `priced_for` {store_id, price_list}, price, list and sale price, msrp, promotions, UPC, specifications, measurements, images, assembly options, fulfilment, rating and review count |
+| `get_acehardware_store_stock` | Exact units on hand (`units_in_stock`, `soft_units`, shelf `location_code`, regional distribution centre units) for one product at 1-25 stores, or at one store and its 25 nearest (`nearby`) |
+| `get_acehardware_store` | One store by store number: address, phone, coordinates, hours, services, departments, brands, programs, features (pickup, curbside, delivery, assembly, propane, Benjamin Moore, Ace Rewards), price zones, nearest stores, same-owner stores |
+| `get_acehardware_stores` | The 25 stores Ace lists as nearest an Ace store; with `details` each one's name, address, phone, coordinates, `distance_miles`, hours, services |
+| `get_acehardware_category` | One category's products by link, path or id, with the list sorts, filters and paging |
+| `get_acehardware_categories` | Ace's departments and their categories (two levels), or one department's |
+| `get_acehardware_brand` | One brand's products by slug or link, or without one Ace's brand index (about 5,700 brands, filtered by `query`) |
+| `get_acehardware_deals` | Ace's sales and specials list plus its site-wide promotions with codes and start / end dates |
+| `get_acehardware_weekly_ad` | One store's weekly ad, page by page: title, `valid_from`, `valid_to`, items with price text and the Ace item numbers each tile names |
+| `get_acehardware_paint_colors` | Ace's paint colours (about 5,300: Benjamin Moore, Clark+Kensington, Magnolia Home) with hex, RGB, families and collections, filtered by name or code, family, brand or collection |
+
+Platform key `acehardware`. 1 credit per call, with these exceptions:
+`search_acehardware` 2 (3 when Ace redirects the search to a category and the
+list options are applied to it); `get_acehardware_product` 2 (with or without
+`store`); `get_acehardware_store_stock` 1 per 5 stores (1 store 1, 5 stores 1,
+25 stores 5; `nearby` 6); `get_acehardware_stores` with `details` 1 lookup per
+store (25 stores 6). An occasional call costs 2 instead of 1; `credits_used` in
+the response is what was charged. US only (acehardware.com, USD), so no tool
+takes `country`.
+
+Ace stores are independently owned and operated, and the same item can be
+priced differently at different stores (Ace's terms: pricing varies by
+location). `get_acehardware_product` with `store` (a 5-digit Ace store number,
+sent as a string to keep leading zeros, e.g. `"03085"`) returns the price as
+Ace shows it for that store, with `priced_for` {store_id, price_list}; without
+a store, `priced_for` names the price list Ace used (`CORP` is Ace's online
+price). `msrp` is reported as Ace gives it and can be below a store's price.
+Listing prices (`search_acehardware`, category, brand and deals) are the price
+Ace shows in its listing (`price_list` per item), not a store's price. Store
+stock is exact units as Ace reports them; Ace answers 0 for a store number or
+product it does not know, exactly as for one out of stock. There is no store
+search by ZIP or city: every store tool takes an Ace store number, shown in
+each Ace store page link (acehardware.com/store-details/<number>), and
+`get_acehardware_stores` lists the 25 nearest to one. Not available: review or
+Q&A text (rating and count only), search suggestions, ZIP or city store
+search, pickup or delivery dates, price history (poll and store the answers),
+Ace Rewards member prices, Ace Handyman, rentals, Ace-licensed stores outside
+the US, checkout. Failed calls and refused inputs are not charged; a not-found
+(an unknown product, category, brand or store) is charged.
 
 ### Sam's Club
 
