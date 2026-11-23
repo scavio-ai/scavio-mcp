@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 740 tools across 96 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 754 tools across 97 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 740 tools puts ~1405KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 754 tools puts ~1437KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 740 tools. Loading all of them costs ~1405KB of `tools/list` —
+Scavio exposes 754 tools. Loading all of them costs ~1437KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **740 tools, ~1405KB** |
+| `all` | every platform — **754 tools, ~1437KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1040,6 +1040,59 @@ fitment, repair guides, AutoZonePro / commercial pricing, Mexico prices, price
 history (poll and store the answers), checkout. Failed calls and refused inputs
 are not charged; a not-found (an unknown item id, vehicle, brand, state, city
 or store) is charged.
+
+### [O'Reilly Auto Parts](https://scavio.dev/docs/oreilly-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+O'Reilly Auto Parts API for O'Reilly Auto Parts (oreillyauto.com, the US auto parts retailer): O'Reilly part-number cross-reference with prices (another brand's, AutoZone's or an OE part number in, O'Reilly's matching parts out), the parts that fit a vehicle, with price, sale price, core charge, rebates and pickup availability for the store O'Reilly prices the request for; store stock near a ZIP; full product detail with the rating and the 10 most recent reviews; VIN decode; the store directory (US and Mexico); rebates and deals. Pair it with [AutoZone](https://scavio.dev/autozone-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a two-store parts price check on the same part.
+
+| Tool | Description |
+|------|-------------|
+| `search_oreilly` | Search by keywords or an O'Reilly part number: 24 a page, pages 1-20, with O'Reilly's total, price, `regular_price`, `sale_price`, `core_charge`, warranty, fit notes, availability per fulfilment option, deals, facets; sorts relevance, price_desc, price_asc, best_selling, brand; `brand`, `availability` (store_pickup, home_delivery) and attribute facet filters; optionally only parts for a `vehicle` {base_vehicle_id} |
+| `get_oreilly_cross_reference` | O'Reilly's parts that replace another brand's or an OE part number (FRAM PH3614, Motorcraft FL820S), in the search item shape; with several manufacturers on one number it answers the lists to choose from first |
+| `get_oreilly_product` | One product by link or by `line_code` + `part_number`: UPC, specifications, description, images, documents, breadcrumbs, price, core charge, deals, rebates, availability, rating and the 10 most recent reviews; with `vehicle`, `vehicle_fit` (fits true or null, never false) |
+| `get_oreilly_vehicles` | The vehicle selector one level at a time: types, years, makes, models, submodels, engines; `resolve` for the `base_vehicle_id` the vehicle inputs take; `vin` decodes a 17-character VIN |
+| `get_oreilly_compatibility` | The makes one part fits; with `make`, the models, engines and years |
+| `get_oreilly_category` | One category's products by link or path, with the list sorts, filters, paging and `vehicle` |
+| `get_oreilly_categories` | The category tree (about 34 departments, 1,300 nodes) with the links for `get_oreilly_category` |
+| `get_oreilly_brand` | One brand's products by brand link, or without one the brand index |
+| `get_oreilly_store_stock` | Which stores within 50 miles of a ZIP or a point can hand over one part: in store now, store pickup, pickup time and distance; availability states, not unit counts |
+| `get_oreilly_stores` | The 25 nearest stores within 50 miles of a ZIP or a point, with hours, holiday adjustments and services; or the store directory by state (+ city), us and mx |
+| `get_oreilly_store` | One store: us by store id; us or mx by directory link; mx by store number + state + city |
+| `get_oreilly_suggestions` | Part-type search suggestions for typed text, with the category each opens |
+| `get_oreilly_rebates` | O'Reilly's current rebates with valid dates, postmark-by date, terms and the form (PDF) |
+| `get_oreilly_deals` | O'Reilly's coupons, offers and promotions (O'Reilly's own text) plus its deals menu |
+
+Platform key `oreilly`. 2 credits per call, with these exceptions:
+`get_oreilly_product` by `line_code` + `part_number` 4 (by link 2);
+`get_oreilly_cross_reference` 2 with `part_type_id` + `manufacturer`, 4 with
+one of them or when several manufacturers use the number, 6 with neither when
+one manufacturer matches; `get_oreilly_brand` index (no brand) 4;
+`get_oreilly_store_stock` and `get_oreilly_stores` by ZIP 4 (by latitude +
+longitude, or the directory, 2); `get_oreilly_deals` 4. Markets (`country`,
+default us): us (oreillyauto.com, USD) on every tool; mx on
+`get_oreilly_stores` and `get_oreilly_store` only (O'Reilly's Mexican store
+directory, in Spanish; Mexico shows no prices, so mx elsewhere is a 400, not
+charged).
+
+Every price is O'Reilly's price for the store O'Reilly assigns to the request,
+named in `priced_for` (store id, address, city, state, ZIP). O'Reilly prices
+differ by store, so two calls can be priced for different stores; there is no
+store or ZIP input for prices. `core_charge` is the refundable deposit O'Reilly
+adds on parts like batteries until the old part is returned (0 when none).
+Lists (search, category, brand, cross-reference) return 24 a page and O'Reilly
+serves 20 pages (a page above 20 is a 400, not charged). List items carry no
+rating (`get_oreilly_product` does). Vehicle fit is at year / make / model
+level (submodel and engine show in `fit_notes`); `vehicle_fit.fits` on a
+product is true or null, never false, so check fit with a vehicle search,
+category or `get_oreilly_compatibility`. A cross-reference can return 0
+matches. Store stock is availability states, not unit counts. Not available:
+unit counts in store stock, a chosen store for prices, reviews past the 10 most
+recent (no paging, sort or star filter), Q&A, Mexico prices or catalog, Canada,
+license-plate lookup, the weekly ad, repair guides or trouble codes, O'Reilly
+Pro / First Call Online commercial pricing, price history (poll and store the
+answers), checkout. Failed calls and refused inputs are not charged; a
+not-found (an unknown product, VIN, category, brand, state, city or store) is
+charged.
 
 ### PetSmart
 
