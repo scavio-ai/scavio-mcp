@@ -41,7 +41,7 @@ const sortByField = z.enum(["best_match", "price_low", "price_high", "best_selle
 export function registerWalmartTools(server: McpServer, getClient: () => ScavioClient) {
   server.tool(
     "search_walmart",
-    `Search Walmart products. Returns the first 20 products by default (limit to change; a page holds up to ~70). Paginate with page while has_more_pages. 1 credit (US/CA), 2 credits (Mexico). Optional store targeting: pass delivery_zip + store_id together (store_id from get_walmart_stores, same domain) for one store's assortment and availability - walmart.com and walmart.ca only, 2 credits, takes 10-60s, store echoed in data.location.`,
+    `Search Walmart products. Returns the first 20 products by default (limit to change; a page holds up to ~70). Paginate with page while has_more_pages; the last page can come back empty, stop there. 1 credit (US/CA), 2 credits (Mexico). Optional store targeting: pass delivery_zip + store_id together (store_id from get_walmart_stores, same domain) for one store's assortment and availability - walmart.com and walmart.ca only, 2 credits, takes 10-60s, store echoed in data.location.`,
     {
       query: z.string().min(1).max(500)
         .describe("Product search query."),
@@ -134,7 +134,7 @@ export function registerWalmartTools(server: McpServer, getClient: () => ScavioC
 
   server.tool(
     "get_walmart_category",
-    `Browse Walmart category products (no query). Same shape as search_walmart. Paginate with page while has_more_pages. limit trims locally (doesn't reduce cost). 1 credit (US/CA), 2 credits (Mexico).`,
+    `Browse Walmart category products (no query). Same shape as search_walmart. Paginate with page while has_more_pages; the last page can come back empty, stop there. limit trims locally (doesn't reduce cost). 1 credit (US/CA), 2 credits (Mexico).`,
     {
       category_id: z.string().min(1)
         .describe("Category id, e.g. '1095191' or '3944_133251_1095191'."),
