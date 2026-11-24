@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 765 tools across 98 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 777 tools across 99 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 765 tools puts ~1464KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 777 tools puts ~1493KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 765 tools. Loading all of them costs ~1464KB of `tools/list` —
+Scavio exposes 777 tools. Loading all of them costs ~1493KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **765 tools, ~1464KB** |
+| `all` | every platform — **777 tools, ~1493KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -841,6 +841,50 @@ search, pickup or delivery dates, price history (poll and store the answers),
 Ace Rewards member prices, Ace Handyman, rentals, Ace-licensed stores outside
 the US, checkout. Failed calls and refused inputs are not charged; a not-found
 (an unknown product, category, brand or store) is charged.
+
+### [Tractor Supply](https://scavio.dev/docs/tractorsupply-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Tractor Supply API for Tractor Supply (tractorsupply.com, the US rural lifestyle retailer): an item's price at the store you pick (named in `priced_for` with the store's price zone), one item's price at up to 25 stores in one call, exact units on hand per store with stock in transit and its pickup date, and pickup and delivery options for a ZIP; plus search, categories, brands, deals, promotions with dates and store details. Pair it with [Ace Hardware](https://scavio.dev/acehardware-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Chewy](https://scavio.dev/chewy-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a price check on the same item.
+
+| Tool | Description |
+|------|-------------|
+| `search_tractorsupply` | Search by keywords, an item number or a UPC, priced for one store (`store` or `zip`): 24-200 a page, with total, price, was price, unit price, rating, review count, availability, pickup and delivery flags, facets; sorts popular, rating, name, price, recent, new arrivals; `brand`, `on_sale`, `new`, `pickup`, `rating` and facet filters; `redirected_to` when Tractor Supply sends the search to a category |
+| `get_tractorsupply_product` | One product or size by item number or link, priced for one store: `priced_for` {store_id, zone, city, state, from, zip}, price, was price, pickup price, `mapp`, UPC, specifications, variants, fulfilment, promotions, rating and review count |
+| `get_tractorsupply_store_prices` | One item's price at up to 25 stores, or at the stores nearest a ZIP: price, was price, pickup price and zone per store, plus `price_range` {min, max} |
+| `get_tractorsupply_store_stock` | Exact units per store as Tractor Supply reports them, status, and in-transit units with their pickup date, at up to 25 stores or near a ZIP |
+| `get_tractorsupply_fulfillment` | Pickup units and delivery options (standard, same day, ship to store) with dates and order cut-offs, for one item at one store and a ZIP |
+| `get_tractorsupply_stores` | The stores nearest a US ZIP: address, phone, coordinates, distance, price zone, hours, services (propane, trailer rental, PetVet, pet wash, ...), dated store events |
+| `get_tractorsupply_store` | One store by store number: address, phone, zone, hours, services, events |
+| `get_tractorsupply_category` | One category's products by link, path, slug or id, priced for one store, with the list sorts, filters and paging |
+| `get_tractorsupply_categories` | Tractor Supply's departments, or one department's categories (two levels) |
+| `get_tractorsupply_brand` | One brand's products, priced for one store, optionally matching keywords |
+| `get_tractorsupply_deals` | Products on sale (`type: sale`) or new arrivals (`type: new`), priced for one store |
+| `get_tractorsupply_promotions` | The promotions Tractor Supply lists for one item, with start and end dates |
+
+Platform key `tractorsupply`. 1 credit per call, with these exceptions:
+`get_tractorsupply_product` 2 on the first call for a store not yet looked up;
+`get_tractorsupply_store_prices` 1 per 5 lookups (each store's price, a store's
+details when not yet known, the item: 25 new stores cost 11). `credits_used` in
+the response is what was charged. US only (tractorsupply.com, USD), so no tool
+takes `country`.
+
+Tractor Supply prices by store, so search, product, category, brand and deals
+need `store` (a Tractor Supply store number, e.g. `"1933"`) or `zip` (the
+nearest store Tractor Supply lists for it is used); there is no default store.
+Every price answer carries `priced_for` {store_id, zone, city, state, from,
+zip}. Tractor Supply's terms note that prices may vary in different geographic
+markets, and the same item can be priced differently at different stores: the
+same 50 lb bag of Producer's Pride 16% Layer Pellets (item 2340147) was $14.49
+at store 1933 Glendive MT (zone 81) and $20.19 at store 1923 Port Orchard WA
+(zone 92). Some items carry a manufacturer's minimum advertised price (`mapp`)
+and show one price everywhere. Item numbers are 7 digits (`items[].item_number`)
+and are the input of product, store prices, store stock, fulfilment and
+promotions. Store stock is units as Tractor Supply reports them, not a promise.
+Not available: review or Q&A text (rating and count only), search suggestions,
+the weekly ad, a clearance list, price history (poll and store the answers),
+Neighbor's Club member prices, live chick availability, Petsense, checkout.
+Failed calls and refused inputs are not charged; a not-found (an unknown item,
+category, brand, store or a ZIP with no store) is charged.
 
 ### Sam's Club
 
