@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 788 tools across 100 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 796 tools across 101 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 788 tools puts ~1524KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 796 tools puts ~1549KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 788 tools. Loading all of them costs ~1524KB of `tools/list` —
+Scavio exposes 796 tools. Loading all of them costs ~1549KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **788 tools, ~1524KB** |
+| `all` | every platform — **796 tools, ~1549KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -927,6 +927,44 @@ text (rating and count only), the weekly ad, coupons, classes and events, aisle
 locations, Marketplace seller names, custom framing, price history (poll and
 store the answers), checkout. Failed calls and refused inputs are not charged;
 a not-found (an unknown product, category, brand or store) is charged.
+
+### [Nike](https://scavio.dev/docs/nike-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Nike API for Nike (nike.com, including Jordan Brand): Nike's sale price next to its own full price and discount percent as Nike gives them, every size with its GTIN, and Nike's launch calendar with price, release start, method and a per-size level for each launch item; the same style code priced on 62 storefronts in 42 countries, each in its own currency. Plus search, listings, Jordan / ACG / SB, the Sale listing and review summaries. Nike has no public API for catalog, prices or launches. Pair it with [Foot Locker](https://scavio.dev/footlocker-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Dick's](https://scavio.dev/dicks-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Amazon](https://scavio.dev/amazon-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [eBay](https://scavio.dev/ebay-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a price check on the same style code.
+
+| Tool | Description |
+|------|-------------|
+| `search_nike` | Search by keywords or a style color: the first 24 product groups with price, full price, discount percent, promotions with dates, colorways, facets; sorts featured, newest, price high or low; one facet token narrows step by step |
+| `get_nike_product` | One product by link or style color: every size with its GTIN and Nike's status (sizes, not stock levels), colorways with prices, launch dates, member product and Nike By You flags, features and details |
+| `get_nike_category` | One listing by path token or link (men's shoes, running, a collection), sorted and filtered by up to 6 facet tokens |
+| `get_nike_brand` | Jordan Brand, ACG or Nike SB products, sorted and filtered |
+| `get_nike_deals` | Nike's Sale listing, optionally for one gender or one category, sorted and filtered (e.g. by discount band) |
+| `get_nike_releases` | Nike's launch calendar (upcoming, feed or in stock): price, release start, method (LINE or DRAW as Nike labels it) and per-size level HIGH / MEDIUM / LOW / OOS with GTIN |
+| `get_nike_release` | One launch by link, thread slug or style color, past launches too (back to 2022) |
+| `get_nike_reviews` | One product's review summary: total, average rating, size and comfort ratings, Nike's own summary where Nike shows one, and the 3 newest reviews |
+
+Platform key `nike`. 1 credit per call; `credits_used` in the response is what
+was charged.
+
+`country` is a two-letter storefront code (default `us`, www.nike.com; `cn` is
+www.nike.com.cn) and `language` picks the storefront language where a country
+has several (`ch`: de, en, fr, it; `be`: nl, de, en, fr; `ca`: en, fr; `us`:
+en, es; `jp`: ja, en). `get_nike_releases` and `get_nike_release` are not
+offered on `vn`, `cn` or `jp` in English (Nike's launch calendar lists no
+launches there); `get_nike_reviews` is not offered on `cn`. Prices are per
+storefront and differ between markets, also inside the euro zone: the same
+Nike Dunk Low (style color DD1503-103) was $78.97 next to a $120 full price
+(34%) on www.nike.com, £54.99 next to £109.99 (50%) on nike.com/gb, €59.99 next
+to €119.99 (50%) on nike.com/fr and ¥17,050 on nike.com/jp. Search and the list
+tools return Nike's first page only (24 product groups; total and total_pages
+as Nike gives them). Product sizes carry a GTIN and Nike's status, not a stock
+level; launch items carry a per-size level as Nike gives it, and before a
+launch Nike can show LOW on every size. Read-only data: no entry or purchase.
+Not available: store locator, in-store or pickup stock, stock levels for
+regular products, review paging or Q&A, search suggestions, pages past the
+first, member prices, gift cards, Nike Factory store prices, Converse,
+checkout. Failed calls and refused inputs are not charged; a not-found (an
+unknown product, listing or launch) is charged.
 
 ### Sam's Club
 
