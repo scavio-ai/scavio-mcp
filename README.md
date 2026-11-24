@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 796 tools across 101 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 808 tools across 102 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 796 tools puts ~1549KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 808 tools puts ~1575KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 796 tools. Loading all of them costs ~1549KB of `tools/list` —
+Scavio exposes 808 tools. Loading all of them costs ~1575KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **796 tools, ~1549KB** |
+| `all` | every platform — **808 tools, ~1575KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -965,6 +965,48 @@ regular products, review paging or Q&A, search suggestions, pages past the
 first, member prices, gift cards, Nike Factory store prices, Converse,
 checkout. Failed calls and refused inputs are not charged; a not-found (an
 unknown product, listing or launch) is charged.
+
+### [Staples](https://scavio.dev/docs/staples-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Staples API for Staples (staples.com, the US office supply retailer; Staples Canada at staples.ca): an ink cartridge's price next to Staples' own cost per page and the stated page yield, copy paper per ream, and the units of one item at the Staples stores near a ZIP exactly as Staples reports them; plus search, categories, On Promotion and Clearance deals, coupons with Staples' own end dates, stores, reviews with full paging, customer Q&A and trending searches. Staples has no public API for its catalog, prices or store stock (Staples Business Advantage connects contract buyers' purchasing systems). Pair it with [Amazon](https://scavio.dev/amazon-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/target-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Best Buy](https://scavio.dev/bestbuy-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a price check on the same item.
+
+| Tool | Description |
+|------|-------------|
+| `search_staples` | Search by keywords, a model number or an item number: 40 a page to page 250, with total, price, was price, Staples' own price per unit (`$5.00/Ream`, `$0.10 Cost Per Page`), rating, delivery and pickup flags, facets; sorts best match, price low or high, top rated, newest; brand, facet, price, On Promotion and Clearance filters. Canada: Staples Canada's top matches in English or French |
+| `get_staples_product` | One product by item number or link: price, was price, price per unit, pack size, page yield, sheets per ream, Staples' promotion texts with their expiry, coupon codes, specifications, rating breakdown, ream / carton variants, delivery dates for a ZIP and pickup units at a store. Canada: CAD price, barcode, variants |
+| `get_staples_category` | One class listing by CL id or link, with the list sorts, filters and paging |
+| `get_staples_categories` | Staples' departments, or one department's sub-departments and classes |
+| `get_staples_deals` | Staples' On Promotion or Clearance products for keywords or a class |
+| `get_staples_coupons` | The coupons on Staples' coupons page: code, headline, details, end date, channel |
+| `get_staples_store_stock` | Units of one item at the stores near a US ZIP that have it for pickup, as Staples reports them, with the pickup text (Ready in 30 mins), distance and hours |
+| `get_staples_stores` | The stores near a US ZIP or city: address, phone, coordinates, distance, this week's hours, services |
+| `get_staples_store` | One store by store number |
+| `get_staples_reviews` | One item's reviews, up to 100 a page, 6 sorts, star and photo filters, verified and incentivized flags, Staples' own review summary |
+| `get_staples_questions` | One item's customer questions with their answers, 10 a page |
+| `get_staples_trending` | The trending searches Staples shows in its search box |
+
+Platform key `staples`. 1 credit per call; `credits_used` in the response is
+what was charged.
+
+`country` is `us` (default, www.staples.com, USD) or `ca` (www.staples.ca,
+Staples Canada, CAD) on `search_staples` and `get_staples_product`; `language`
+is `en` (default) or `fr` (with `ca` only). Every other tool is US only. Prices
+are national: the ZIP changes delivery availability and dates, the store
+changes pickup units, neither changes the price. The HP 64XL Black High Yield
+cartridge (item 2724258, "Prints Up to 600 Pages") carried Staples' own "$0.10
+Cost Per Page"; Hammermill Copy Plus (item 122374, 10 reams) was $49.99 at
+"$5.00/Ream". Store stock lists only the stores that have the item: the same
+HP 64XL showed 7 stores near ZIP 60540 with 63 units in all (12 at store 1633,
+Naperville). An empty list means no nearby store has it or it is not offered
+for store pickup. Staples returns a `threshold` value beside the units; it is
+passed through as given. staples.com publishes no UPC (the model number is the
+manufacturer part number); Staples Canada products carry a barcode. Canada
+answers search with Staples Canada's top matches (about 5, no paging) and
+offers product only. Not available: the weekly ad, search suggestions, print
+and tech service prices, ink recycling rewards, Rewards member prices, price
+match requests, Staples Business Advantage contract prices, price history
+(poll and store the answers), checkout. Failed calls and refused inputs are not
+charged; a not-found (an unknown item, class, department or store) is charged.
 
 ### Sam's Club
 
