@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 777 tools across 99 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 788 tools across 100 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 777 tools puts ~1493KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 788 tools puts ~1524KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 777 tools. Loading all of them costs ~1493KB of `tools/list` —
+Scavio exposes 788 tools. Loading all of them costs ~1524KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **777 tools, ~1493KB** |
+| `all` | every platform — **788 tools, ~1524KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -885,6 +885,48 @@ the weekly ad, a clearance list, price history (poll and store the answers),
 Neighbor's Club member prices, live chick availability, Petsense, checkout.
 Failed calls and refused inputs are not charged; a not-found (an unknown item,
 category, brand, store or a ZIP with no store) is charged.
+
+### [Michaels](https://scavio.dev/docs/michaels-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Michaels API for Michaels (michaels.com, the US and Canada arts and crafts retailer): units of one SKU at the Michaels stores near a ZIP or postal code exactly as Michaels reports them, units of up to 30 SKUs at one store, a product with every colour and size, its price next to Michaels' own "Reg." label and its promotions with Michaels' own start and end dates; plus search, categories, brands, deals (Sale, New, Clearance, Great Buy), stores and search suggestions, for www.michaels.com (USD) and canada.michaels.com (CAD, English or French). Pair it with [Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Amazon](https://scavio.dev/amazon-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Etsy](https://scavio.dev/etsy-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a price check on the same item.
+
+| Tool | Description |
+|------|-------------|
+| `search_michaels` | Search by keywords, an item number or a UPC: up to 100 a page, with total, price, was price, `was_price_text` (Michaels' own label), unit price, rating, review count, seller type, pickup and delivery flags, promotions, facets; sorts best match, best sellers, new arrivals, price, rating; brand, price, rating, store pickup, sale, new, clearance, great buy, seller and facet filters |
+| `get_michaels_product` | One product by SKU or link: variants (colours, sizes) with price, sale price and UPC, promotions with start and end, online stock (not store stock), Pro-pack unit price, specifications, rating and review count |
+| `get_michaels_store_stock` | Units of one SKU at the stores near a US ZIP or Canadian postal code, as Michaels reports them, with pickup message, distance, hours and a `virtual` flag for pop-up stores |
+| `get_michaels_store_inventory` | Units of up to 30 SKUs at one store |
+| `get_michaels_stores` | The stores near a US ZIP, a city or a point: address, phone, coordinates, distance, hours, services (custom framing, curbside pickup, same-day delivery, ...) |
+| `get_michaels_store` | One store by store number (US or Canada): address, phone, hours, services, opening and closing dates |
+| `get_michaels_category` | One category's products by `/shop/` link or path or by code path, with the list sorts, filters and paging |
+| `get_michaels_categories` | Michaels' departments, or one category's subcategories, with the code paths the list tools take |
+| `get_michaels_brand` | One brand's products, optionally matching keywords or within a category |
+| `get_michaels_deals` | Michaels' Sale, New, Clearance or Great Buy (US) products matching keywords or within a category |
+| `get_michaels_suggestions` | The search suggestions Michaels shows as you type, with suggested categories and brands |
+
+Platform key `michaels`. 2 credits per call; `get_michaels_category` and
+`get_michaels_deals` cost 4 when the category is a `/shop/` link or path (one
+more call finds its code path; a code path costs 2). `credits_used` in the
+response is what was charged.
+
+`country` is `us` (default, www.michaels.com, USD) or `ca`
+(canada.michaels.com, CAD); `language` is `en` (default) or `fr` (with `ca`
+only). `get_michaels_stores`, `get_michaels_categories` and
+`get_michaels_suggestions` are US only; with `ca`, list tools take a category
+code path (search facets list them), not a `/shop/` path. Prices are national
+per country: the store does not change them, it matters for stock. The same
+Cricut Explore 5 bundle (SKU 10816737) was $199.00 next to Michaels' "Reg.$249.00"
+on www.michaels.com and CAD 269.99 next to "Reg.$349.99" on canada.michaels.com.
+Store stock is units as Michaels reports them, not a promise: Soft Classic Solid
+Yarn by Loops & Threads (SKU 10228177) showed 85 units at store 1191 (New York,
+Chelsea). `online_stock` on a product is Michaels' online stock, not a store's.
+Search and the list tools mix Michaels items and Marketplace items
+(`seller_type`); Marketplace items carry a seller id, no seller name. A UPC
+search answers with the product group's lead SKU. Not available: review or Q&A
+text (rating and count only), the weekly ad, coupons, classes and events, aisle
+locations, Marketplace seller names, custom framing, price history (poll and
+store the answers), checkout. Failed calls and refused inputs are not charged;
+a not-found (an unknown product, category, brand or store) is charged.
 
 ### Sam's Club
 
