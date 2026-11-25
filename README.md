@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 808 tools across 102 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 818 tools across 103 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 808 tools puts ~1575KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 818 tools puts ~1604KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 808 tools. Loading all of them costs ~1575KB of `tools/list` —
+Scavio exposes 818 tools. Loading all of them costs ~1604KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **808 tools, ~1575KB** |
+| `all` | every platform — **818 tools, ~1604KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1054,6 +1054,47 @@ review text.
 1 credit per call. `store_id` (from `get_dollar_general_stores`, e.g. `"14838"`) is
 required on search, product and deals. Clearance items carry the current price
 only, with no was-price. Rating and review count only, no review text.
+
+### [Dollar Tree](https://scavio.dev/docs/dollartree-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Dollar Tree API for Dollar Tree (dollartree.com, the US and Canada discount variety store chain): an item's online case price next to its unit price, case pack, minimum order and split-case rules exactly as Dollar Tree gives them, and the units of one item at a Dollar Tree store plus the nearby stores; plus search, categories, brands, sale, clearance, New Arrivals and More Choices listings, stores with hours and services, and reviews. Dollar Tree has no public API for its catalog, prices or store stock (suppliers work through its vendor portal and EDI). Pair it with [Dollar General](https://scavio.dev/dollargeneral-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/target-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Instacart](https://scavio.dev/instacart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a price check on the same item.
+
+| Tool | Description |
+|------|-------------|
+| `search_dollartree` | Search by keywords or an item number: 48 a page (up to 250) to page 200, with total, unit price, list price, case price, case pack, minimum quantity, split-case flags, rating, in-store-only and clearance flags, facets; sorts relevance, price low or high, newest, rating; category, brand, price point, rating, in-store-only, price and facet filters |
+| `get_dollartree_product` | One item by item number or link: unit price, case price, case pack, minimum quantity, split case, UPCs as given, online stock units, specifications, categories, SKU variants |
+| `get_dollartree_category` | One category listing by dimension id or link, with the list sorts, filters and paging |
+| `get_dollartree_categories` | Dollar Tree's departments with every sub-category, or one category's sub-categories |
+| `get_dollartree_brand` | One brand's items, with the other spellings Dollar Tree lists the same brand under |
+| `get_dollartree_deals` | Sale, clearance, New Arrivals or More Choices (Dollar Tree's multi-price assortment) items |
+| `get_dollartree_store_stock` | Units of one item at a Dollar Tree store (store number required) plus up to about 63 nearby stores, ship-to-home units with an ETA and the ship-to-store ETA |
+| `get_dollartree_stores` | The stores near a US ZIP or city (20 per answer): address, phone, coordinates, distance, hours, holiday hours, EBT, frozen foods, More Choices |
+| `get_dollartree_store` | One store page by link or slug; Canada store pages with `country: "ca"` |
+| `get_dollartree_reviews` | One item's newest English reviews (up to about 98 per call) with rating breakdown and syndication flags |
+
+Platform key `dollartree`. 1 credit per call, `get_dollartree_stores` 5;
+`credits_used` in the response is what was charged.
+
+`country` is `us` (www.dollartree.com, USD) on every tool; `ca` (Dollar Tree
+Canada store pages, English, no prices) is taken by `get_dollartree_store` only,
+because Dollar Tree Canada has no shopping site. Prices are Dollar Tree's online
+unit prices from one national online price list (the same at every store and ZIP
+measured); Dollar Tree notes that prices and availability may vary between stores
+and online, and in-store shelf prices are not published online. Online orders are
+by the case: item 221159 (9-in. White Paper Plates, 40-ct. Packs) was $1.50 a
+unit with a case pack of 30 at a case price of $45.00 and a minimum quantity of 5;
+stores sell single units. A case pack or case price Dollar Tree gives as 0 is
+null, never computed. `get_dollartree_store_stock` needs a store number (from
+`get_dollartree_stores`; a ZIP alone does not pick a store): the same item showed
+116 units at store 5126 (New York) and 63 nearby stores, 59 of them with stock.
+Store stock, stores and reviews are slow (usually 10-35 s, up to about 2.5
+minutes). Search matches item numbers, not UPCs. Reviews are the newest only (no
+other sort, no star filter, no Q&A, no reviewer names); many are syndicated from
+brand sites and flagged. Not available: search suggestions, the weekly ad, deal
+validity dates, Quick Order / bulk ordering, gift cards, Canada products and
+prices, price history (poll and store the answers), checkout. Failed calls and
+refused inputs are not charged; a not-found (an unknown item, category, brand or
+store) is charged.
 
 ### Sephora
 
