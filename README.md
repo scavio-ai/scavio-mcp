@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 876 tools across 110 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 881 tools across 110 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 876 tools puts ~1763KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 881 tools puts ~1772KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 876 tools. Loading all of them costs ~1763KB of `tools/list` —
+Scavio exposes 881 tools. Loading all of them costs ~1772KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **876 tools, ~1763KB** |
+| `all` | every platform — **881 tools, ~1772KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -707,11 +707,22 @@ Kuaishou is priced per endpoint, not at a flat rate: `get_kuaishou_profile` and 
 
 | Tool | Description |
 |------|-------------|
-| `search_home_depot` | Search Home Depot: price, brand and model, ratings, per-store pickup/delivery |
-| `get_home_depot_product` | Full item detail: pricing, media, spec table, dimensions, documents, return policy |
-| `get_home_depot_reviews` | Full review bodies, rating distribution, per-attribute ratings, seller responses |
+| `search_home_depot` | Search Home Depot: price, brand and model, ratings, per-store pickup/delivery; `country: "ca"` for Home Depot Canada |
+| `get_home_depot_product` | Full item detail: pricing, media, spec table, dimensions, documents, return policy; for Canada a store's price next to the online price |
+| `get_home_depot_reviews` | Full review bodies, rating distribution, per-attribute ratings, seller responses; for Canada the first 8 reviews and the first page of questions |
+| `get_home_depot_category` | Home Depot Canada only: one category or collection page by `category_id`, priced at a store |
+| `get_home_depot_categories` | Home Depot Canada only: the department tree and the current event and collection pages |
+| `get_home_depot_stock` | Home Depot Canada only: exact units of one item at every store near a postal code or city, no prices |
+| `get_home_depot_store` | Home Depot Canada only: one store with address, services, 7 dated days of hours and nearby stores |
+| `get_home_depot_suggestions` | Home Depot Canada only: search-box keyword suggestions |
 
-2 credits per call. Search page size is fixed at 12 and cannot be changed. Reviews return 30 per page; `total_pages` is the last page that exists and asking past it is a 404.
+US (homedepot.com, the default): 2 credits per call. Search page size is fixed at 12 and cannot be changed. Reviews return 30 per page; `total_pages` is the last page that exists and asking past it is a 404.
+
+**Home Depot Canada** (homedepot.ca, The Home Depot's Canadian store: 182 stores in 10 provinces): pass `country: "ca"` to `search_home_depot`, `get_home_depot_product` and `get_home_depot_reviews`; the five Canada-only tools need no country. 1 credit per call on every Canada tool. Prices in CAD as Home Depot Canada gives them; `language: "fr"` returns French names and links (same ids and prices). Search and category take `store_id` (default store 7274; `data.store` says which), 1-40 products a page, the sorts `best_match`, `price_low`, `price_high` and `top_rated` (`top_sellers` is a 400 for Canada), facet `filters` (from `include_facets`) and `deals` (`special_buy`, `new_lower_price`, `savings`). Every product carries `store_units` (exact units at that store) and aisle / bay.
+
+Prices can differ by store (lumber does; the tools, Christmas tree and fridge sampled had one price everywhere), and the online price can differ from a store's price. `get_home_depot_product` with `store_id` returns `price` as that store's price (`price_source: "store"`) and `online_price` beside it. Captured 2026-11-25: the 2-inch x 4-inch x 8-ft SPF Premium Stud (1000112108) at store 7128 (ST-HENRI, QC) at 4.14 CAD with 2858 units in aisle 19, bay 001, and an `online_price` of 6.58. When Home Depot Canada has no store record for an item that exists, `get_home_depot_product` returns the online price with `store_price_returned: false`, and `get_home_depot_stock` answers an unbilled 502.
+
+Not available for Canada: UPC or barcodes (Home Depot Canada shows none), structured sale end dates (the price badge and Home Depot's promotion text only), reviews past the first 8 per language, delivery quotes, the flyer, cart or checkout, price history (poll and store the answers). Home Depot Canada has no public API. For the same item at other Canadian retailers use the [Canadian Tire](https://scavio.dev/canadiantire-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (`domain: "ca"`) and Amazon (`country: "ca"`) tools; match on brand and model. See the [Home Depot API page](https://scavio.dev/homedepot-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 ### [Costco](https://scavio.dev/docs/costco-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
