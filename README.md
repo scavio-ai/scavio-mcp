@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 833 tools across 104 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 844 tools across 105 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 833 tools puts ~1651KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 844 tools puts ~1680KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 833 tools. Loading all of them costs ~1651KB of `tools/list` —
+Scavio exposes 844 tools. Loading all of them costs ~1680KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **833 tools, ~1651KB** |
+| `all` | every platform — **844 tools, ~1680KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1161,6 +1161,54 @@ prices, financing, installation and fee amounts, the Treadwell chat, fleet
 accounts, Tire Rack, price history (poll and store the answers), checkout and
 booking. Failed calls and refused inputs are not charged; a not-found (an unknown
 item, model, category, brand or store) is charged.
+
+### [Vevor](https://scavio.dev/docs/vevor-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Vevor API for VEVOR (vevor.com, the tools and equipment seller with storefronts in 13 countries): VEVOR's price on each storefront in its own currency, the was price only while a VEVOR deal is active (with VEVOR's deal start and end), every variant with its own price and stock, shipping fee and delivery date by US state or Canadian province, and the same SKU on all 13 storefronts in one call. See the [Vevor API page](https://scavio.dev/vevor-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_vevor` | Search by keywords in the storefront language or a SKU: 60 items a page with price, was price, deal end, stock units, labels, rating; sorts popular, price low or high, hot, new; in stock, on sale, Black Friday, bulk savings, pickup (US), price range, rating and category filters |
+| `get_vevor_product` | One product by SKU or link: price, deal window, stock units, variants with their own price and stock, specs, images, protection plans, return policy, rating breakdown, VEVOR's own AI review summary |
+| `get_vevor_shipping` | Shipping fee, free shipping flag and delivery dates for one SKU to a US state, Canadian province or postcode |
+| `get_vevor_reviews` | Reviews up to 100 a page, sorted recommended, newest or helpful, filtered by stars, photos or this exact SKU; language and country per review, VEVOR's replies |
+| `get_vevor_questions` | Customer questions with their answers, 5 a page, VEVOR's own answers flagged |
+| `get_vevor_suggestions` | What VEVOR's search box suggests for typed text |
+| `get_vevor_categories` | VEVOR's category tree (departments, categories, sub-categories) or one branch, with ids |
+| `get_vevor_category` | One category listing, sorted, filtered and paged like search |
+| `get_vevor_collections` | Best Sellers (optionally one category), New Arrivals with first-listed dates, or one promotion page |
+| `get_vevor_deals` | Daily Deals, Clearance or the Deals page, optionally one category |
+| `get_vevor_prices` | The same SKU on all 13 storefronts: status, price, was price, deal end and stock units per storefront, each in its own currency (3 credits) |
+
+Platform key `vevor`. 1 credit per call, `get_vevor_prices` 3; `credits_used` in
+the response is what was charged.
+
+Storefronts (`country`, default `us`, and `language`, default the first listed):
+`us` (www.vevor.com, USD; en, es), `ca` (www.vevor.ca, CAD; en, fr), `gb`
+(www.vevor.co.uk, GBP), `au` (www.vevor.com.au, AUD), `de`, `fr`, `es`, `it`,
+`nl` (EUR, each in its own language), `pl` (PLN), `mx` (MXN, es), `no`
+(www.vevor.co.no, EUR) and `eu` (eur.vevor.com, VEVOR's storefront for the other
+European countries, EUR; en, sv, da, fi, no, pt, cs, el, sk, hu, ro). Each
+storefront language has its own search index, so send the search term in that
+language. The same SKU has its own price on each storefront: measured 2026-11-25,
+one SKU (GYQXJBMQJQYPKEO1LV0) was 195.01 USD on www.vevor.com, 233.90 CAD on
+www.vevor.ca, 175.90 GBP on www.vevor.co.uk, 170.90 EUR on www.vevor.de, 261.99
+EUR on www.vevor.co.no and 721.90 PLN on www.vevor.pl. Price and stock do not
+change by ZIP; the shipping fee and delivery date change by US state (required
+for `us`) or Canadian province (required for `ca`): a welder to Alaska (AK 99501)
+had a $130 fee, contiguous states were measured free. `was_price` is given only
+while a VEVOR deal is active (deal `starts` / `ends` as VEVOR gives them) or when
+VEVOR's page shows its own strikethrough price, otherwise null: never compute a
+discount from it. Search and listing totals are exact up to 100 and then read
+"100+" (`total_is_lower_bound`). Reviews are one pool shared across storefronts
+and a product's variants, so they come in many languages (`language`, `country`
+per review), fully paged up to 100 a page, with no reviewer names. Not available:
+coupon codes (VEVOR shows them only after a claim), the pickup store, Pro or bulk
+prices, financing, the ships-from warehouse, VEVOR's listings on other
+marketplaces (use the Amazon, Walmart, Home Depot, Tractor Supply, TikTok Shop or
+eBay tools), price history (poll and store the answers), checkout. Failed calls
+and refused inputs are not charged; a not-found (an unknown SKU or category, or a
+SKU the storefront does not sell) is charged.
 
 ### Sephora
 
