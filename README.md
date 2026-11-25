@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 884 tools across 110 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 885 tools across 110 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 884 tools puts ~1776KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 885 tools puts ~1791KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 884 tools. Loading all of them costs ~1776KB of `tools/list` —
+Scavio exposes 885 tools. Loading all of them costs ~1791KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **884 tools, ~1776KB** |
+| `all` | every platform — **885 tools, ~1791KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -1722,26 +1722,66 @@ the site only says whether pickup is available, not how many units.
 
 | Tool | Description |
 |------|-------------|
-| `search_bestbuy` | Search bestbuy.com (US), 18 organic products per page: SKU, model, price, regular price, savings, on-sale flag, deal badge, condition, rating, review count, seller type; filter by brand, on sale, clearance, open box or a price range; sort by best match, best selling, best discount, price, rating or newest; plus the filter sidebar with counts |
-| `get_bestbuy_product` | One product by SKU or URL: UPC, model, every open-box offer by condition (fair, good, excellent) with its price and savings against new and against the regular price, financing, the full specification table, the AI review summary, features, images and manuals |
-| `get_bestbuy_reviews` | First-party Best Buy reviews, 20 per page, sorted or filtered to one star rating, with the star histogram, recommended percent and the most mentioned pros and cons with mention counts |
-| `get_bestbuy_category` | Browse a category (`abcat...`) or merchandised deals page (`pcmcat...`) by id or URL, 18 per page, with the same filters and sorts as search |
-| `get_bestbuy_deals` | Today's Deal of the Day and the more-deals row, up to 15 products with live prices |
-| `get_bestbuy_stores` | Best Buy stores near a US ZIP, up to 15, with dated opening hours for the next 35 days |
-| `get_bestbuy_availability` | Store pickup status of one SKU at up to 8 stores (nearest a ZIP or given store ids): in_stock, limited, ship_to_store, out_of_stock, not_available_for_pickup or unknown, with the pickup date |
-| `get_bestbuy_suggestions` | The bestbuy.com search-box autocomplete, each term with its categories and SKUs |
-| `get_bestbuy_prices` | Current price, regular price, savings, deal badge and deal end for up to 15 SKUs in one call |
+| `search_bestbuy` | Search bestbuy.com (US), 18 organic products per page: SKU, model, price, regular price, savings, on-sale flag, deal badge, condition, rating, review count, seller type; filter by brand, on sale, clearance, open box or a price range; sort by best match, best selling, best discount, price, rating or newest; plus the filter sidebar with counts; `country: "ca"` for Best Buy Canada |
+| `get_bestbuy_product` | One product by SKU or URL: UPC, model, every open-box offer by condition (fair, good, excellent) with its price and savings against new and against the regular price, financing, the full specification table, the AI review summary, features, images and manuals; for Canada sale start / end, EHF by province and open-box / refurbished SKUs with their own prices |
+| `get_bestbuy_reviews` | First-party Best Buy reviews, 20 per page, sorted or filtered to one star rating, with the star histogram, recommended percent and the most mentioned pros and cons with mention counts; for Canada verified-only, with-photos and French-only filters |
+| `get_bestbuy_category` | Browse a category (`abcat...`) or merchandised deals page (`pcmcat...`) by id or URL, 18 per page, with the same filters and sorts as search; for Canada a numeric id (e.g. `21344` Televisions) or `departments`, with the category tree |
+| `get_bestbuy_deals` | Today's Deal of the Day and the more-deals row, up to 15 products with live prices; for Canada one deal collection (`black_friday`, `top_deals`, `clearance`, `open_box`, `refurbished`) |
+| `get_bestbuy_stores` | Best Buy stores near a US ZIP, up to 15, with dated opening hours for the next 35 days; for Canada near a postal code, a city or latitude / longitude |
+| `get_bestbuy_availability` | Store pickup status of one SKU at up to 8 stores (nearest a ZIP or given store ids): in_stock, limited, ship_to_store, out_of_stock, not_available_for_pickup or unknown, with the pickup date; for Canada exact units per store for up to 20 SKUs at up to 50 stores |
+| `get_bestbuy_suggestions` | The bestbuy.com search-box autocomplete, each term with its categories and SKUs; for Canada search terms only |
+| `get_bestbuy_prices` | Current price, regular price, savings, deal badge and deal end for up to 15 SKUs in one call; for Canada up to 20 SKUs with the sale end and EHF |
+| `get_bestbuy_questions` | Best Buy Canada only: customer questions about one product, each with its answer count and top answer |
 
-Platform key `bestbuy`. 2 credits per call; `get_bestbuy_category` is 3 on a
-`pcmcat` page, `get_bestbuy_deals` 3, `get_bestbuy_stores` and
-`get_bestbuy_suggestions` 1, and `get_bestbuy_availability` 2 flat for up to 8
-stores. `get_bestbuy_prices` is 2 per call whatever the number of SKUs (up to
-15). US site only. Product, reviews and availability take `sku` or `url`;
-availability takes exactly one of `zip` or `store_ids`, and `min_price` and
-`max_price` go together. Availability is store pickup status, not unit counts:
-Best Buy publishes a quantity only when it shows "only N left" (`limited`), so
-`quantity` is null for `in_stock`. Availability takes 5-20s. An unknown SKU is
-a 404 and is not billed.
+Platform key `bestbuy`. US (bestbuy.com, the default): 2 credits per call;
+`get_bestbuy_category` is 3 on a `pcmcat` page, `get_bestbuy_deals` 3,
+`get_bestbuy_stores` and `get_bestbuy_suggestions` 1, and
+`get_bestbuy_availability` 2 flat for up to 8 stores. `get_bestbuy_prices` is 2
+per call whatever the number of SKUs (up to 15). Product, reviews and
+availability take `sku` or `url`; availability takes exactly one of `zip` or
+`store_ids`, and `min_price` and `max_price` go together. Availability is store
+pickup status, not unit counts: Best Buy publishes a quantity only when it shows
+"only N left" (`limited`), so `quantity` is null for `in_stock`. Availability
+takes 5-20s. An unknown SKU is a 404 and is not billed.
+
+**Best Buy Canada** (bestbuy.ca, Best Buy's Canadian store: 142 stores across
+Canada per Best Buy's FY2026 10-K, plus a marketplace of third-party sellers):
+pass `country: "ca"` to any of the nine tools; `get_bestbuy_questions` is
+Best Buy Canada only and needs no country. 1 credit per call on every Canada
+call. Prices in CAD as Best Buy Canada gives them. The price is national (the
+same in every province and store); only the environmental handling fee varies
+by province: `province` (default `ON`) sets `ehf`, and product and prices also
+return `ehf_by_province`. `language: "fr"` returns French names, specs and
+links (same SKUs and prices). Listings take `page_size` 1-100 (default 24), the
+sorts `best_match`, `price_low`, `price_high` and `rating` (`best_selling`,
+`best_discount` and `newest` are a 400 for Canada), and the extra filters
+`rating`, `sold_by`, `seller`, `in_stock_online` and `facets`; results are
+capped at the first 2,000 of a query (`results_capped`). Marketplace sellers
+come back named as Best Buy Canada lists them. Product carries the UPC,
+`sale_starts_at` / `sale_ends_at` (UTC) and the Geek Squad open-box, open-box
+and refurbished SKUs with their own prices; its `rating` and `review_count`
+are null (read them from `get_bestbuy_reviews` or `get_bestbuy_prices`).
+
+Availability for Canada returns exact units per store: captured 2026-11-25,
+the Apple MacBook Air 13.6" (2026, M5, 16GB / 512GB, SKU 19791103) at 35 units
+in the Centreville store in Montreal (store 651), at 1589.99 CAD (regular
+1789.99, sale ending 2026-12-03 07:00 UTC). A store with no stock record for
+the SKU comes back `status: "unknown"` with `units: null`, never out of stock.
+Stores take a `postal_code` (`radius_km` 1-100), a `city` or `latitude` +
+`longitude`. Deals for Canada are a collection, not a Deal of the Day (Best Buy
+Canada has none); `dates_text` carries the collection's own dates when its page
+states them ("Sale kicking off November 19 and running until December 3" on
+the Black Friday collection, captured 2026-11-25).
+
+Not available for Canada: per-store prices (the price is national), a Deal of
+the Day, results past 2,000 per query, review photos hosted off Best Buy, cart
+or checkout, price history (poll and store the answers). Best Buy's developer
+API (developer.bestbuy.com) covers bestbuy.com only. For the same model at
+other Canadian retailers use the [Amazon](https://scavio.dev/amazon-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (`country: "ca"`),
+[Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (`domain: "ca"`), [Costco](https://scavio.dev/costco-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+(`country: "ca"`) and [Canadian Tire](https://scavio.dev/canadiantire-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+tools; match on brand and model. See the
+[Best Buy API page](https://scavio.dev/bestbuy-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 ### TCGplayer
 

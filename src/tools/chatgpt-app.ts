@@ -59,11 +59,13 @@ const CORE_EXCLUDED = new Set(["google_custom_search"]);
 /**
  * Broad tools left out: follower, liker and retweeter lists and individuals'
  * stories, profiles and account region (bulk data about private people), raw
- * media stream URLs, a deprecated alias, and the Home Depot tools added in
- * 0.91.0 (stores, availability, shipping and the Home Depot Canada only tools),
- * kept out so the reviewed tool set does not change.
+ * media stream URLs, a deprecated alias, the Home Depot tools added in
+ * 0.91.0 (stores, availability, shipping and the Home Depot Canada only tools)
+ * and the Best Buy Canada only tool added in 0.92.0, kept out so the reviewed
+ * tool set does not change.
  */
 const BROAD_EXCLUDED = new Set([
+  "get_bestbuy_questions",
   "get_home_depot_stores",
   "get_home_depot_availability",
   "get_home_depot_shipping",
