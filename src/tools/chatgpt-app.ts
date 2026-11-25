@@ -59,11 +59,14 @@ const CORE_EXCLUDED = new Set(["google_custom_search"]);
 /**
  * Broad tools left out: follower, liker and retweeter lists and individuals'
  * stories, profiles and account region (bulk data about private people), raw
- * media stream URLs, a deprecated alias, and the Home Depot Canada only tools
- * (the profile's retail set is US retailers; added 0.91.0, kept out so the
- * reviewed tool set does not change).
+ * media stream URLs, a deprecated alias, and the Home Depot tools added in
+ * 0.91.0 (stores, availability, shipping and the Home Depot Canada only tools),
+ * kept out so the reviewed tool set does not change.
  */
 const BROAD_EXCLUDED = new Set([
+  "get_home_depot_stores",
+  "get_home_depot_availability",
+  "get_home_depot_shipping",
   "get_home_depot_category",
   "get_home_depot_categories",
   "get_home_depot_stock",

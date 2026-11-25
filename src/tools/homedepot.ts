@@ -109,6 +109,58 @@ export function registerHomeDepotTools(server: McpServer, getClient: () => Scavi
   );
 
   server.tool(
+    "get_home_depot_stores",
+    `Find Home Depot stores. us: near a ZIP, city or address: store number, address, coordinates, distance, phones, hours, services; use the store number with get_home_depot_availability and get_home_depot_shipping. ca (Home Depot Canada): near a postal code or city (query) or latitude + longitude, with 7 dated days of hours. 2 credits us, 1 ca.`,
+    {
+      query: z.string().min(1).max(200).optional()
+        .describe("ZIP, city or address, e.g. '98101'. Required for us; for ca a postal code or city, e.g. 'M5V 2T6', or pass latitude + longitude."),
+      limit: z.number().int().min(1).max(50).optional()
+        .describe("Stores to return, nearest first. us 1-20 (default 20); ca 1-50 (default 10)."),
+      country: country(),
+      latitude: z.number().optional()
+        .describe("ca only: with longitude, instead of query."),
+      longitude: z.number().optional()
+        .describe("ca only: with latitude, instead of query."),
+      page: z.number().int().min(1).max(100).optional()
+        .describe("ca only: page, 1-based."),
+      language: language(),
+    },
+    post("stores"),
+  );
+
+  server.tool(
+    "get_home_depot_availability",
+    `One Home Depot item at a store. us: price, promotions and pickup stock at store_id, and/or delivery options, dates and charges to zip (pass either or both). ca (Home Depot Canada): store_id required; the store's price, exact store_units, aisle, bay, online units (zip is a 400: no delivery quotes for Canada). When Home Depot Canada has no store record for an existing item: unbilled 502. 2 credits us, 1 ca.`,
+    {
+      item_id: z.string().min(1)
+        .describe("Item id, e.g. '206566893', or homedepot.com URL; for ca a 10-digit id, e.g. '1001769719', or homedepot.ca link."),
+      store_id: z.string().min(1).max(10).optional()
+        .describe("Store number from get_home_depot_stores, e.g. '4702' (us) or '7076' (ca). Required for ca."),
+      zip: z.string().optional()
+        .describe("us only: 5-digit ZIP to quote delivery to, e.g. '98101'."),
+      country: country(),
+      language: language(),
+    },
+    post("availability"),
+  );
+
+  server.tool(
+    "get_home_depot_shipping",
+    `US only (homedepot.com): every delivery option Home Depot quotes for an item to a ZIP for a quantity: charge, free-shipping status, delivery dates, delivery level on bulky items, states it will not ship to. Not available for Home Depot Canada (country 'ca' is a 400, not charged). 4 credits.`,
+    {
+      item_id: z.string().min(1)
+        .describe("Item id, e.g. '206566893', or homedepot.com URL."),
+      zip: z.string()
+        .describe("5-digit US ZIP, e.g. '98101'."),
+      quantity: z.number().int().min(1).max(999).optional()
+        .describe("Units to quote delivery for. Default 1."),
+      store_id: z.string().optional()
+        .describe("Optional store number from get_home_depot_stores."),
+    },
+    post("shipping"),
+  );
+
+  server.tool(
     "get_home_depot_category",
     `Home Depot Canada only (homedepot.ca): one category or collection page by category_id from get_home_depot_categories (e.g. 'l4-drill-drivers', '661103' Christmas Trees), priced at store_id, with search_home_depot's ca filters and sorts. CAD. Unknown category or store is a charged 404. 1 credit.`,
     {
