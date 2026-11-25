@@ -1057,17 +1057,17 @@ only, with no was-price. Rating and review count only, no review text.
 
 ### [Dollar Tree](https://scavio.dev/docs/dollartree-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-Dollar Tree API for Dollar Tree (dollartree.com, the US and Canada discount variety store chain): an item's online case price next to its unit price, case pack, minimum order and split-case rules exactly as Dollar Tree gives them, and the units of one item at a Dollar Tree store plus the nearby stores; plus search, categories, brands, sale, clearance, New Arrivals and More Choices listings, stores with hours and services, and reviews. Dollar Tree has no public API for its catalog, prices or store stock (suppliers work through its vendor portal and EDI). Pair it with [Dollar General](https://scavio.dev/dollargeneral-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/target-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Instacart](https://scavio.dev/instacart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a price check on the same item.
+Dollar Tree API for Dollar Tree (dollartree.com, the US and Canada discount variety store chain): an item's online case price next to its unit price, case pack, minimum order and split-case multiple as Dollar Tree gives them, and the units of one item at a Dollar Tree store plus the nearby stores; plus search, categories, brands, sale, clearance, New Arrivals and More Choices listings, stores with hours and services, and reviews. Dollar Tree has no public API for its catalog, prices or store stock (suppliers work through its vendor portal and EDI). Pair it with [Dollar General](https://scavio.dev/dollargeneral-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Target](https://scavio.dev/target-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Instacart](https://scavio.dev/instacart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for a price check on the same item.
 
 | Tool | Description |
 |------|-------------|
 | `search_dollartree` | Search by keywords or an item number: 48 a page (up to 250) to page 200, with total, unit price, list price, case price, case pack, minimum quantity, split-case flags, rating, in-store-only and clearance flags, facets; sorts relevance, price low or high, newest, rating; category, brand, price point, rating, in-store-only, price and facet filters |
-| `get_dollartree_product` | One item by item number or link: unit price, case price, case pack, minimum quantity, split case, UPCs as given, online stock units, specifications, categories, SKU variants |
+| `get_dollartree_product` | One item by item number or link: unit price, case price, case pack, minimum quantity, split case, banner code (DT or FD), UPCs as given, online stock units, specifications, categories, SKU variants |
 | `get_dollartree_category` | One category listing by dimension id or link, with the list sorts, filters and paging |
 | `get_dollartree_categories` | Dollar Tree's departments with every sub-category, or one category's sub-categories |
 | `get_dollartree_brand` | One brand's items, with the other spellings Dollar Tree lists the same brand under |
 | `get_dollartree_deals` | Sale, clearance, New Arrivals or More Choices (Dollar Tree's multi-price assortment) items |
-| `get_dollartree_store_stock` | Units of one item at a Dollar Tree store (store number required) plus up to about 63 nearby stores, ship-to-home units with an ETA and the ship-to-store ETA |
+| `get_dollartree_store_stock` | Units of one item at a Dollar Tree store (store number required) plus up to about 63 nearby stores (none at some rural stores), ship-to-home cases and the most units orderable for delivery with an ETA, and ship-to-store with its distribution centre and ETA |
 | `get_dollartree_stores` | The stores near a US ZIP or city (20 per answer): address, phone, coordinates, distance, hours, holiday hours, EBT, frozen foods, More Choices |
 | `get_dollartree_store` | One store page by link or slug; Canada store pages with `country: "ca"` |
 | `get_dollartree_reviews` | One item's newest English reviews (up to about 98 per call) with rating breakdown and syndication flags |
@@ -1084,9 +1084,20 @@ and online, and in-store shelf prices are not published online. Online orders ar
 by the case: item 221159 (9-in. White Paper Plates, 40-ct. Packs) was $1.50 a
 unit with a case pack of 30 at a case price of $45.00 and a minimum quantity of 5;
 stores sell single units. A case pack or case price Dollar Tree gives as 0 is
-null, never computed. `get_dollartree_store_stock` needs a store number (from
+null, never computed. `split_case.available` is computed by Scavio as
+`minimum_quantity < case_pack` (Dollar Tree's own flag reads N on every item);
+on `get_dollartree_product`, `split_case_fee` is Dollar Tree's raw field as
+given: its meaning is not published, so it is not a fee. `banner_code` (product
+only) is Dollar Tree's banner code (DT or FD), not a store-brand flag. `get_dollartree_store_stock` needs a store number (from
 `get_dollartree_stores`; a ZIP alone does not pick a store): the same item showed
-116 units at store 5126 (New York) and 63 nearby stores, 59 of them with stock.
+116 units at store 5126 (New York) and 63 nearby stores, 59 of them with stock;
+`ship_to_home` came from distribution centre 99006 with 2,374 cases of 30 and
+`max_order_units` 75,570 (the most units orderable for delivery, the same at
+every store, not cases x case_size). `store.status` can be null, and some rural
+stores list no nearby stores. Changed in 0.84.1: `split_case.fee` and
+`store_brand` removed, `split_case_fee` and `banner_code` added on product,
+`ship_to_home.units` replaced by `max_order_units`, `dc_number` added to
+`ship_to_home` and `ship_to_store`.
 Store stock, stores and reviews are slow (usually 10-35 s, up to about 2.5
 minutes). Search matches item numbers, not UPCs. Reviews are the newest only (no
 other sort, no star filter, no Q&A, no reviewer names); many are syndicated from

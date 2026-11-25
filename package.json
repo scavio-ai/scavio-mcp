@@ -1,6 +1,6 @@
 {
   "name": "@scavio/mcp-server",
-  "version": "0.84.0",
+  "version": "0.84.1",
   "mcpName": "io.github.scavio-ai/scavio-mcp",
   "description": "MCP server connecting AI agents to Scavio: web search, page extraction, and structured e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing data. 818 tools across 103 platforms plus Extract, Company Enrich, site map, crawl and batch extraction, one API key.",
   "type": "module",
