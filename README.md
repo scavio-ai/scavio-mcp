@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 844 tools across 105 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 848 tools across 106 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 844 tools puts ~1680KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 848 tools puts ~1693KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 844 tools. Loading all of them costs ~1680KB of `tools/list` —
+Scavio exposes 848 tools. Loading all of them costs ~1693KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **844 tools, ~1680KB** |
+| `all` | every platform — **848 tools, ~1693KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1209,6 +1209,38 @@ marketplaces (use the Amazon, Walmart, Home Depot, Tractor Supply, TikTok Shop o
 eBay tools), price history (poll and store the answers), checkout. Failed calls
 and refused inputs are not charged; a not-found (an unknown SKU or category, or a
 SKU the storefront does not sell) is charged.
+
+### [Nellis Auction](https://scavio.dev/docs/nellis-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Nellis Auction API for Nellis Auction (nellisauction.com, the liquidation auction marketplace with pickup warehouses in Las Vegas, Phoenix, Houston, Philadelphia, Denver and Dallas): a lot's current bid and bid count, Nellis's own Estimated Retail Price as labelled, the buyer's premium percent, open and close times, Nellis's condition grade, the pickup warehouse, the bid history without bidder names, and a sold lot's final price by id. See the [Nellis Auction API page](https://scavio.dev/nellis-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_nellis` | Search the open auctions of one shopping location: 48, 120 or 240 lots a page with current bid, bid count, Estimated Retail Price, close time, condition and pickup warehouse; 9 sorts (featured, current bid, ending soon or last, estimated retail, bids); category, brand, pickup warehouse, condition stars, retail range, auction event, color and size filters with Nellis's counts |
+| `get_nellis_item` | One lot by id or link, open, closed or sold: current bid, final price of a sold lot (before premium and tax), market status, condition grade and notes, operator, pickup warehouse, bid history (amount, time, Winning or Outbid, no bidder names) |
+| `get_nellis_locations` | The 13 pickup warehouses with address, coordinates, operator and opening hours per day |
+| `get_nellis_categories` | Live counts of open lots per category, subcategory, brand, auction event and pickup warehouse in one shopping location |
+
+Platform key `nellis`. 1 credit per call; `credits_used` in the response is what
+was charged.
+
+Shopping locations (`location`, default `las-vegas`): `las-vegas`, `phoenix`,
+`houston`, `philadelphia` (pickup in Delran, NJ), `denver` and `dallas` (run by
+Lots Of Auctions), with 13 pickup warehouses in all. Search lists open auctions
+only, as Nellis's own search does; a closed or sold lot is read by id with
+`get_nellis_item`, and a sold lot's `final_price` is the winning bid before
+Nellis's buyer's premium and tax. `retail_price` is Nellis's own "Estimated Retail
+Price", as Nellis labels it, not an MSRP. The buyer's premium is, in Nellis's
+words, "typically 15% but may vary based on the auction event"
+(`buyer_premium_percent` per lot). Captured 2026-11-25: a sold lot (id 141100004,
+Estimated Retail Price 9.99) closed at a final price of 6 after 5 bids. Bids move
+live: `current_bid`, `bid_count` and `closes` are as of the fetch. Not available:
+closed or sold lots in search, search suggestions, shipping (pickup only), UPC or
+model numbers, buy-now, reserve prices, live bid updates, bidding, watchlists and
+checkout; for the same item's new price use the Amazon or Walmart tools, and the
+eBay tools for sold prices (match on title and brand). Failed calls and refused
+inputs are not charged; a not-found (an unknown id, or a category with no open
+lots) is charged.
 
 ### Sephora
 
