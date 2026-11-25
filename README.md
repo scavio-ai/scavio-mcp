@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 818 tools across 103 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 833 tools across 104 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 818 tools puts ~1604KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 833 tools puts ~1651KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 818 tools. Loading all of them costs ~1604KB of `tools/list` —
+Scavio exposes 833 tools. Loading all of them costs ~1651KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **818 tools, ~1604KB** |
+| `all` | every platform — **833 tools, ~1651KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1106,6 +1106,61 @@ validity dates, Quick Order / bulk ordering, gift cards, Canada products and
 prices, price history (poll and store the answers), checkout. Failed calls and
 refused inputs are not charged; a not-found (an unknown item, category, brand or
 store) is charged.
+
+### [Discount Tire](https://scavio.dev/docs/discounttire-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Discount Tire API for Discount Tire (discounttire.com, the US tire and wheel retailer, America's Tire in parts of CA, PA, NJ and NY): the price of a tire at a named store, the same tire at other Discount Tire and America's Tire stores, the tires that fit a vehicle (year, make, model, trim, size option) with the original-equipment tire flagged and staggered front / rear sets, and the exact units at the stores near a ZIP; plus tires by size, wheels, models with every size, promotions with their end dates, categories, search suggestions, stores, store hours, tire and store reviews, and the read-only appointment calendar. Discount Tire has no public product API (it runs an affiliate programme through CJ, and fleet customers use an account portal). See the [Discount Tire API page](https://scavio.dev/discounttire-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme). Pair it with [Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme), [Sam's Club](https://scavio.dev/samsclub-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [Amazon](https://scavio.dev/amazon-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for the same tire (match on manufacturer part number or GTIN), and with [AutoZone](https://scavio.dev/autozone-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and [O'Reilly](https://scavio.dev/oreilly-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) for parts.
+
+| Tool | Description |
+|------|-------------|
+| `search_discounttire` | Tires in one size (225/65R17, LT, flotation, or width + aspect ratio + diameter; optional rear size for staggered pairs) at one store: price per tire, promotions with end dates, exact units at the store, GTIN, manufacturer part number, Good / Better / Best tier, facets; sorts best seller, price, rating; brand, category, speed rating, load range, Three-Peak, run flat, rebates, instant savings, in stock and price filters |
+| `get_discounttire_vehicle` | The vehicle selector, one step per call: years, makes, models, trims, tire size options, then the fitment (front and rear size, staggered, wheel diameters, optional plus sizes) |
+| `get_discounttire_vehicle_tires` | The tires that fit a vehicle at one store, original-equipment tire flagged; staggered vehicles as front / rear sets; optional Treadwell ranking with Discount Tire's own estimates |
+| `get_discounttire_product` | One tire or wheel by item number at one store: price, promotions, units, load index, speed rating, UTQG, tread depth, sidewall, run flat, wheel specs, FAQs |
+| `get_discounttire_model` | Every size of one tire or wheel model at one store, with each size's price and the price range |
+| `get_discounttire_store_stock` | Exact units of 1-4 items at the stores near a ZIP (5 per page, 10-150 miles), with Discount Tire's availability text |
+| `get_discounttire_stores` | Discount Tire and America's Tire stores near a ZIP, city or point (10 per page), with rating and store code |
+| `get_discounttire_store` | One store: address, dated hours for the coming week, ratings, services, nearby stores |
+| `get_discounttire_reviews` | Discount Tire's own reviews of a tire model or one size, with category ratings; sorts, star filter, full paging |
+| `get_discounttire_store_reviews` | Discount Tire's own reviews of one store (5 per page), with cleanliness and knowledge ratings |
+| `get_discounttire_wheels` | Wheels by size and bolt pattern, or that fit a vehicle, at one store |
+| `get_discounttire_browse` | Tire models in a category, of a brand, or matching keywords, with the price range at one store |
+| `get_discounttire_categories` | Discount Tire's tire or wheel types (the category filter and the browse slug) |
+| `get_discounttire_suggestions` | What Discount Tire's search box suggests for a few letters (models and categories, no prices) |
+| `get_discounttire_appointments` | One store's appointment calendar for a month, read only: bookable days, hours and open slots (start and end in the store's local time) |
+
+Platform key `discounttire`. 1 credit per call; `credits_used` in the response is
+what was charged.
+
+`country` is `us` (www.discounttire.com, USD) on every tool: Discount Tire and
+America's Tire are one catalog sold in the United States only. Prices, stock and
+promotions are per store: the price tools (search, vehicle tires, product,
+model, wheels, browse) take `store` (a store code from `get_discounttire_stores`)
+or `zip` (the nearest store is used), and every answer names the store used in
+`store`. Price can differ between stores and is not different at every store:
+measured 2026-11-25, Michelin Defender 2 225/65R17 (item 108547) was $206 a tire
+at 9 stores in 8 states and $205 at an America's Tire store in New Jersey; across
+45 tires, the stores measured in Texas, Florida and Washington showed no
+differences, a California store 1, a Michigan store 3 and the New Jersey store
+13 of 32. `price` is
+per tire or wheel: Discount Tire publishes no set-of-four price, so 4 x price is
+arithmetic, not a Discount Tire price. Promotions are Discount Tire's own title
+and text with its end date (`ends`, ISO 8601 UTC, and `ends_text` as given); no
+start date. The vehicle chain for a 2022 Ford F-150 XLT Crew Cab 2WD is year
+2022, make Ford, `vehicle_id` 17361, `trim_id` 52455, `assembly_id` 0000E28B
+(245/70R17); a staggered vehicle such as the 2022 Corvette Stingray (245/35R19
+front, 305/30R20 rear) comes back as front / rear sets, each tire with its own
+per-tire price (a set is 2 front + 2 rear). Treadwell ranking fields (rank,
+mileage, miles per dollar, ride and stopping ratings) are Discount Tire's own
+estimates, as given. Store stock is the exact unit count per store; a store with
+0 units can still say "Available as soon as <date>". Reviews are Discount Tire's
+own, fully paged, with no reviewer names. Appointments are read only: Scavio
+never books; slot start and end times are the store's local time
+(YYYY-MM-DDTHH:MM, no time zone). Not available: the deals page text, road hazard and certificate
+prices, financing, installation and fee amounts, the Treadwell chat, fleet
+accounts, Tire Rack, price history (poll and store the answers), checkout and
+booking. Failed calls and refused inputs are not charged; a not-found (an unknown
+item, model, category, brand or store) is charged.
 
 ### Sephora
 
