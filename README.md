@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 848 tools across 106 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 855 tools across 107 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 848 tools puts ~1693KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 855 tools puts ~1714KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 848 tools. Loading all of them costs ~1693KB of `tools/list` —
+Scavio exposes 855 tools. Loading all of them costs ~1714KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **848 tools, ~1693KB** |
+| `all` | every platform — **855 tools, ~1714KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1266,6 +1266,39 @@ with no review text.
 
 1 credit per call. `get_ulta_stores` takes a result's `product_id` and `sku_id`
 plus a ZIP. Ulta publishes in stock / out of stock per store, not unit counts.
+
+### [Dermstore](https://scavio.dev/docs/dermstore-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Dermstore API for Dermstore (dermstore.com, the US skincare and beauty retailer, shipping to the US and Canada): price, RRP as Dermstore gives it and Dermstore's offer text per product and per brand, every shade, size or strength with its own price and stock, UPC, auto-replenish plans, the current offers with their end times, and US vs Canada prices for the same SKU. See the [Dermstore API page](https://scavio.dev/dermstore-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_dermstore` | Search by keywords or a Dermstore SKU: up to 200 a page, 7 sorts, filters (brand, skin type, concern, SPF band, key ingredient, preference, gender, price, rating, discount), facets on request; a mapped keyword (sunscreen, retinol, eltamd) returns the page Dermstore sends it to, reported in `resolved_from` |
+| `get_dermstore_list` | Any Dermstore list page by path or link: a category, brand, `/sale`, an offer page (`/shop/black-friday/30-off`), `/gift-sets` or an ingredient page, same filters and sorts as search |
+| `get_dermstore_product` | One product by SKU or link: price, RRP, `discount_percent`, UPC, variants with their own price and stock, ingredients, directions, auto-replenish discounts, loyalty points, the page's offer banner, rating, review count and the 10 latest reviews (no reviewer names) |
+| `get_dermstore_suggestions` | Search-box suggestions: suggested terms, corrections and up to 5 products |
+| `get_dermstore_offers` | Dermstore's current offers as its coupon-codes page lists them: code, gift, spend threshold, end time and the list page of the products |
+| `get_dermstore_brands` | The A-Z brand directory (about 235 brands), optionally one letter |
+| `get_dermstore_categories` | The category tree as the site navigation shows it |
+
+Platform key `dermstore`. 1 credit per call; `credits_used` in the response is what
+was charged.
+
+Markets (`country`, default `us`): `us` (USD, shipping to the US) and `ca`
+(Dermstore's own Canadian dollar prices, not converted). `rrp` is Dermstore's
+RRP as given; `discount_percent` is computed by Scavio from price and RRP, only
+when the RRP is above the price. `offer` is Dermstore's own promotion text, as
+given; code rates differ by brand. Captured 2026-11-25: EltaMD UV Clear SPF 46
+(1.7 fl. oz., SKU 11370303) at 46 USD and 65.78 CAD; Medik8 offered "30% Off
+With Code JOY + Gift", while SkinCeuticals offered "Earn 10% Back + $25 Gift"
+(double points, as Dermstore states it). Offers carry the end time Dermstore
+gives (`ends`); Dermstore gives no start date. Not available: a full review
+feed or review paging (only the 10 latest via `get_dermstore_product`), Q&A,
+member (VIP) prices, cart or checkout prices, price history (poll and store the
+answers), offer start dates. For the same product at Sephora, Ulta or Amazon,
+use those tools and match on UPC, or brand + name + size. Failed calls and
+refused inputs are not charged; a not-found (an unknown SKU or list path) is
+charged.
 
 ### ALDI
 
