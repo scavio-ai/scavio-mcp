@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 855 tools across 107 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 860 tools across 108 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 855 tools puts ~1714KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 860 tools puts ~1728KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 855 tools. Loading all of them costs ~1714KB of `tools/list` —
+Scavio exposes 860 tools. Loading all of them costs ~1728KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **855 tools, ~1714KB** |
+| `all` | every platform — **860 tools, ~1728KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -2220,6 +2220,42 @@ Not available: sold results beyond 480 per query and filter combination, Love
 Notes beyond the latest 100, Posh Shows, trending searches, the full brand
 directory (top 50; brand inputs take any name), offers, bundles, price
 history. Failed calls are not charged; a not-found is charged.
+
+### [OfferUp](https://scavio.dev/docs/offerup-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+OfferUp API for OfferUp (offerup.com, the US local marketplace for buying and selling used items, cars and trucks): asking prices around any US ZIP code, so the same item's asking prices in different US metros, with the area OfferUp resolved the ZIP to; cars and trucks filtered by dealer or private seller, make, model year and mileage; one listing in full with condition, posted date and vehicle details; the category tree; and a seller's public profile numbers. See the [OfferUp API page](https://scavio.dev/offerup-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_offerup` | Search by keywords around a US ZIP (required) with a radius: 5 sorts plus newest model year and lowest mileage for vehicles; filters by asking price, condition, category, and in Cars & Trucks seller type (dealer or private), make, year range and max mileage; about 48 a page up to page 50, `has_more`, no total count |
+| `get_offerup_listing` | One listing by id or link: asking price, original price, firm, status, condition, posted and updated dates, description, photos, category, attributes, vehicle details (no VIN), city and state, local pickup and the seller's public numbers |
+| `get_offerup_category` | One category by slug or id around a US ZIP, with the search filters, sorts (no best match) and paging |
+| `get_offerup_categories` | The category tree: 14 top-level categories, 151 in all, with the slugs and ids the other tools take |
+| `get_offerup_seller` | A seller's public profile: seller type, rating, rating count, items sold, joined, response time, last active, badges, the first 20 listings; dealers and businesses also name, website and opening hours |
+
+Platform key `offerup`. 1 credit per call; `get_offerup_listing` is 1, or 2
+when the listing needs a second, costlier fetch. `credits_used` in the
+response is what was charged.
+
+US only, prices in USD. `zip` is required on search and category: OfferUp
+lists local items, and `location.resolved` says which area OfferUp used for
+the ZIP (captured 2026-11-25: 98101 resolved to Seattle, 60601 to Chicago),
+`location.radius_miles` which radius it applied. `filters_not_applied` lists
+any filter OfferUp did not apply to the feed (vehicle filters on a
+non-vehicle search). `seller_type` applies in Cars & Trucks only: on search it
+limits the results to category 5.1. Promoted OfferUp listings are marked
+`sponsored`. Search tiles carry no posted date or condition (the listing
+does). Prices are asking prices, not sold prices. Private sellers: no seller
+names (a dealer or business account's name only), usernames, avatars, phone
+numbers, emails, street addresses, coordinates or VINs; phone numbers, emails
+and VIN-like codes in titles and descriptions read `[removed]`. Not
+available: sold listings or sold prices (OfferUp does not show them
+publicly), shipping (OfferUp ended nationwide shipping in 2025; listings are
+local pickup), search suggestions, a total result count, a seller's listings
+past the first 20, messaging or offers. For the same item's new price use the
+Amazon and Walmart tools, and Mercari's sold search for sold prices (match on
+model and title). Failed calls and refused inputs are not charged; a
+not-found (an unknown listing, category or seller) is charged.
 
 ### [thredUP](https://scavio.dev/docs/thredup-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
