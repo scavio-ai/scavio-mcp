@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 860 tools across 108 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 876 tools across 110 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 860 tools puts ~1728KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 876 tools puts ~1763KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 860 tools. Loading all of them costs ~1728KB of `tools/list` —
+Scavio exposes 876 tools. Loading all of them costs ~1763KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **860 tools, ~1728KB** |
+| `all` | every platform — **876 tools, ~1763KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1040,6 +1040,63 @@ the site, so 8 means 8 or more.
 required on search, product, availability, clearance and deals. Prices differ by
 store and province (Quebec prices differ). Rating and review count only, no
 review text.
+
+### [SportChek](https://scavio.dev/docs/sportchek-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+SportChek API for SportChek (sportchek.ca, Canada's sporting goods retailer, a Canadian Tire Corporation banner): SportChek prices in CAD with the was price, sale label and the sale's posted end date SportChek shows, filters from the site's own facets, one product's sizes and colours with online units and the units at the store SportChek assigns, customer reviews with a rating summary, search suggestions, one store's hours and nearby stores, and the brand and category lists. See the [SportChek API page](https://scavio.dev/sportchek-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_sportchek` | Search by keywords or a product code: price, was price, `sale_ends`, `price_message`, badges, rating, colours with online units; 4 sorts, brand, sale or clearance and any facet filter; 24 a page |
+| `get_sportchek_list` | A category or deals page (sale, clearance, Black Friday) by path or link, with the same sorts and filters |
+| `get_sportchek_product` | One product by code or link: variants (colour, size, width) with their own price, was price and `sale_ends`, `units_at_store`, `units_online`, ship to home and store pickup; specifications, features, images, `assigned_store` |
+| `get_sportchek_reviews` | Reviews with a summary (average, count, star distribution, recommended); page 1 the first 8, pages 2-4 the next 30 each; 5 sorts and a star filter |
+| `get_sportchek_suggestions` | Search-box suggestions for typed text |
+| `get_sportchek_store` | One store by number: address, phone, coordinates, hours, special hours, curbside, up to 49 nearby stores with distance |
+| `get_sportchek_brands` | SportChek's brand pages (164 captured 2026-11-25) |
+| `get_sportchek_categories` | The category tree; `path` is the input of `get_sportchek_list` |
+
+### [Mark's](https://scavio.dev/docs/marks-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Mark's API for Mark's (marks.com, the Canadian workwear, casual clothing and footwear retailer, a Canadian Tire Corporation banner; L'Equipeur in French): Mark's prices in CAD with the was price, sale label and the sale's posted end date Mark's shows, filters from the site's own facets, one product's sizes, widths and colours with online units and the units at the store Mark's assigns, customer questions and answers, search suggestions, one store's hours and nearby stores, and the brand and category lists. `language: "fr"` reads L'Equipeur (lequipeur.com): the same product codes and CAD prices, French titles. See the [Mark's API page](https://scavio.dev/marks-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_marks` | Search by keywords or a product code: price, was price, `sale_ends`, `price_message`, badges, rating, colours with online units; 4 sorts, brand, sale or clearance and any facet filter; 24 a page; `language` en or fr |
+| `get_marks_list` | A category or deals page (sale, clearance, Black Friday) by path or link, with the same sorts and filters; 12 a page on category pages; `language` en or fr |
+| `get_marks_product` | One product by code or link: variants (colour, size, width) with their own price, was price and `sale_ends`, `units_at_store`, `units_online`, ship to home and store pickup; specifications, features, images, `assigned_store`; `language` en or fr |
+| `get_marks_questions` | The newest 10 customer questions with their answers (`brand_answer` flag) |
+| `get_marks_suggestions` | Search-box suggestions for typed text |
+| `get_marks_store` | One store by number: address, phone, coordinates, hours, special hours, curbside, up to 49 nearby stores with distance |
+| `get_marks_brands` | Mark's brand pages (113 captured 2026-11-25); `language` en or fr |
+| `get_marks_categories` | The category tree; `path` is the input of `get_marks_list`; `language` en or fr |
+
+Platform keys `sportchek` and `marks`. 1 credit per call on every tool of both
+banners; `credits_used` in the response is what was charged. Calls take about
+10-90 seconds: allow up to 2 minutes. Canada only, prices in CAD.
+
+`was_price` is the site's was price as given, only where the site shows one;
+`footnote` carries the site's own sentence on it ("Was price reflects the last
+national regular price this product was sold for.", English pages). A percent
+off is not returned: compute it from `price` and `was_price` and label it
+computed. `sale_ends` is the sale end date the site shows, as given.
+`units_at_store` are the units at the store the site assigns to the request's
+region (`assigned_store`); a caller cannot choose a store. In our checks prices
+were the same at every store sampled. Filters come from `facets`
+(`include_facets: true`); list paths come from the categories tools; `deals` on
+a deals page is a 400 (the page already is one). Captured 2026-11-25:
+SportChek's Columbia Women's Amaze Puff Down Jacket (84166659F) at 206.24 CAD
+with the promotion "25% Off* - Discount Applied. See details." and `sale_ends`
+December 1, 2026; Mark's Dakota WorkPro Series 6114 work boots (75983776F) at
+124.99 CAD with a was price of 199.99, the same price on L'Equipeur.
+
+Reviews are SportChek only (no reviewer names); questions are Mark's only (no
+asker names); SportChek is English only. Not available: choosing a store for
+price or stock, stores near a postal code, the flyer, Triangle Rewards or CT
+Money prices, price history (poll and store the answers), UPC or barcodes (the
+site shows none), cart or checkout. For the same model at Amazon.ca and
+Walmart.ca use the Amazon and Walmart tools; match on brand, model, colour and
+size. Failed calls and refused inputs are not charged; a not-found is charged.
 
 ### Dollar General
 
