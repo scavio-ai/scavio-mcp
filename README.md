@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1021 tools across 126 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1071 tools across 134 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1021 tools puts ~2185KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1071 tools puts ~2310KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1021 tools. Loading all of them costs ~2185KB of `tools/list` —
+Scavio exposes 1071 tools. Loading all of them costs ~2310KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1021 tools, ~2185KB** |
+| `all` | every platform — **1071 tools, ~2310KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,8 +233,8 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
-`tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`,
+`tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
 ### Local (stdio)
@@ -2440,6 +2440,117 @@ an address, monthly payments, taxes and fees, price trends. Failed calls and
 refused inputs are not charged; a not-found (an unknown or sold vehicle) is
 charged.
 
+### [TrueCar](https://scavio.dev/docs/truecar-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+TrueCar API for TrueCar (truecar.com, the US car-buying marketplace): new and used dealer inventory around any US ZIP with the price, MSRP, TrueCar's own price label and rating as given, mileage, history counts and the dealer; one listing in full by VIN or link with TrueCar's price summary, dealer fees, specs, warranties and history flags; TrueCar's model overviews with trims, starting MSRP and the starting market average; owner reviews per generation; dealer profiles and one dealer's lot; makes, models and TrueCar's own suggestions. See the [TrueCar API page](https://scavio.dev/truecar-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_truecar` | New or used dealer inventory around a US ZIP (required) by make and model, 30 a page, TrueCar's ten sorts, radius, year, price, maximum mileage, trim, body style, drivetrains, colors, fuel types, accident-free and certified pre-owned; `total` (capped at 10,000), `has_more`, TrueCar's national price range and per-trim averages |
+| `get_truecar_listing` | One listing by VIN or truecar.com listing link (input only; never returned): price, MSRP, TrueCar's price label and rating, price summary with dealer fees and dealer asking price, specs and features, warranties, CPO program, history flags as TrueCar shows them, seller notes, the dealer with phone and hours |
+| `get_truecar_model` | TrueCar's overview of a model (optionally a model year): generation, owner rating with star counts, sub-ratings, trims with starting MSRP and starting market average, specs ranges, warranty, segment ranking, model years, national new and used data |
+| `get_truecar_reviews` | Owner reviews of a model by generation, star and text filters, up to 100 a page in TrueCar's own order; pros, cons, sub-ratings and dates, no reviewer names, initials or states |
+| `get_truecar_dealer` | One dealer by id or dealership link: address, phone, hours, description, links, services and images (no employees; TrueCar shows no dealer reviews) |
+| `get_truecar_dealer_inventory` | One dealer's new or used vehicles, 30 a page |
+| `get_truecar_suggestions` | TrueCar's suggestions for a text: makes, models, trims and body styles with the slugs search takes |
+| `get_truecar_makes` | Every make with used inventory (63, captured 2026-11-26) and the national new and used counts |
+| `get_truecar_models` | One make's models with slugs, body styles, engine types and new / used inventory flags |
+
+Platform key `truecar`. Credits: 1 per call on every tool; `credits_used` in
+the response is what was charged. Answers usually arrive within about 15
+seconds: allow up to 4 minutes.
+
+US only, prices in USD. `zip` is required on search (captured 2026-11-26: a
+used Toyota RAV4 around 10001 gave 2440 vehicles, the first a 2017 RAV4 Hybrid
+XLE at 16485 USD with 125334 miles, 5.8 miles away; a new Ford F-150 around
+75201 by lowest price gave 1705, the first a 2026 F-150 XL at 39063 USD, MSRP
+40085). TrueCar also lists vehicles from far-away dealers offered with delivery:
+read `distance_miles`. `price_label` and `price_rating` are TrueCar's own labels
+as given (TrueCar shows no basis). The VIN is an input of `get_truecar_listing`
+only and is never returned: search and dealer inventory carry no VIN, stock
+number, listing link or dealer photo, so a search result cannot be passed to
+`get_truecar_listing`. Not available: keyword search (use make and model or
+`get_truecar_suggestions`), a mileage minimum, private sellers, a review sort,
+dealer reviews, delivery quotes and payment estimates, price history (poll and
+store the answers). Failed calls and refused inputs are not charged; a
+not-found (an unknown VIN, make, model, year or dealer) is charged.
+
+### [Edmunds](https://scavio.dev/docs/edmunds-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Edmunds API for Edmunds (edmunds.com, the US car research and shopping site owned by CarMax): new and used car listings around any US city with the price, price change, MSRP and Edmunds' own local and national deal rating as given; one listing in full with dealer fees and price history; owner reviews per model year; dealer pages with sales and service ratings and reviews; a model year's research page with Edmunds' expert review; MSRP, invoice and Edmunds Suggested Price per trim; and Edmunds' used-car values per condition (dealer retail, private party, trade-in, auction). See the [Edmunds API page](https://scavio.dev/edmunds-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_edmunds` | Used (with certified) or new listings around a US city + state (required; a ZIP is refused), by make and model or every make (used), radius 10-500 miles, 5 sorts, year / price / mileage ranges, trim, drivetrain, exterior colour, body type, deal rating and no accidents; 21 a page |
+| `get_edmunds_listing` | One listing by VIN with make, model and year, or by link (VIN input only; never returned): price, advertised price, MSRP, destination and dealer fees, monthly payment estimate, price history, deal rating, days on Edmunds, history flags as given, seller comments, the dealer with hours |
+| `get_edmunds_reviews` | Owner reviews of one model year, 5 a page, 4 sorts and a star filter, with Edmunds' seven category ratings; no reviewer names |
+| `get_edmunds_dealer` | One dealer by id or link: address, phones, hours, websites, sales and service ratings, inventory counts per model, and reviews 21 a page with dealer replies (reviewer names taken out) |
+| `get_edmunds_model` | A model year's research page: MSRP range, styles with specs, Edmunds' expert review (rating, verdict, pros, cons, recommended trim), the owners' rating and listing counts |
+| `get_edmunds_price` | MSRP, invoice and Edmunds Suggested Price per trim, with the place Edmunds computes the suggested price for |
+| `get_edmunds_appraisal` | Used-car values per style and condition (outstanding, clean, average, rough): dealer retail, private party, trade-in, auction, the assumed mileage and the place Edmunds computes values for |
+| `get_edmunds_makes` | Every make Edmunds lists (69) and one make's models with the slugs the other tools take |
+
+Platform key `edmunds`. Credits: 2 per call on every tool; `credits_used` in
+the response is what was charged. Allow up to 4 minutes per answer.
+
+US only, prices in USD. Search takes a US city and state, not a ZIP: Edmunds
+places a search by its own city pages, and `location` says the city it searched
+around (captured 2026-11-26: a used Toyota RAV4 around New York, NY, 25 miles,
+gave 3124 listings, among them a 2015 RAV4 Limited at 7995 USD with 157526
+miles, rated Great against Edmunds' local estimate of 13201 USD, at a dealer in
+Carlstadt, NJ, 8.6 miles away). `deal_rating` is Edmunds' own rating as Edmunds
+gives it. Edmunds computes its Suggested Price and its used-car values for a
+place of its own and states it: read `suggested_price_near` and `values_near`
+with the figures (captured 2026-11-26: the 2025 Toyota RAV4 XLE at 32760 USD
+MSRP, 30725 invoice, Edmunds Suggested Price 30140 near Paramus, NJ 07652; a
+2020 RAV4 LE AWD in clean condition at an assumed 72000 miles near Paramus, NJ:
+dealer retail 23946, private party 21638, trade-in 19036 USD). Appraisal values
+are Edmunds' estimates, not an offer. VINs are input only and never returned
+(listing photos are not returned, since every Edmunds photo link carries the
+VIN); no stock numbers; private sellers city and state only; reviewer names are
+never returned. Not available: ZIP-based search, a VIN-specific appraisal,
+price history beyond a listing's own entries. Failed calls and refused inputs
+are not charged; a not-found (an unknown city, model, year, listing, dealer or
+trim) is charged.
+
+### [Kelley Blue Book](https://scavio.dev/docs/kbb-car-value?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Kelley Blue Book API for Kelley Blue Book (kbb.com, Cox Automotive's car value and research site): a car's Kelley Blue Book values by make, model, year, trim, condition and mileage, every price type KBB gives (17 for a used car: trade-in, private party and auction values from Fair to Excellent, typical listing price, lending value, CPO and Fair Purchase Price) with KBB's region, mileage and option adjustments, optionally for a US ZIP code; one model year's trims, depreciation, specs and rankings; cars for sale around a ZIP with KBB's deal rating against the Fair Purchase Price range; one listing in full; owner reviews; dealers near a ZIP and one dealer's inventory; and KBB's make and model directory. KBB's own data feed is a business contract, not a self-serve API. See the [Kelley Blue Book API page](https://scavio.dev/kbb-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `get_kbb_car_value` | A car's values by make, model, year and `trim` (trim slug, vehicle id or a unique trim name), intent (`buy_used`, `buy_new`, `trade_in_sell`), condition and mileage, optionally for a `zip`: the headline values and every KBB price type with base value, adjustments and range |
+| `get_kbb_model` | One model year: trims with their slugs and values, new-car pricing, depreciation history and forecast, specs, rankings, Best Cars rank, years and other models |
+| `search_kbb` | Cars for sale around a US ZIP (required) with a radius or nationwide: used, new or all, make and model (never widened to the whole make), 4 sorts, year / price / mileage ranges, drivetrain, exterior colour, dealer or private seller; 25 or 100 a page; KBB's deal rating, Fair Purchase Price range, dealer fees, price history; spotlights and price / mileage / year stats |
+| `get_kbb_listing` | One car for sale by listing id or link: the search fields plus description, images, features, specifications, warranties, open recalls as KBB shows them, KBB's consumer rating and the dealer's public business details |
+| `get_kbb_reviews` | Owner reviews of a model year, 8 a page (pages 1-10), 3 sorts and a star filter: text, ratings by category, pros, cons, helpful votes; KBB's averages and distribution; no reviewer names |
+| `get_kbb_dealers` | Dealers near a US ZIP, optionally of one make and within a radius: up to 50, nearest first, with rating, distance, address, phone and website |
+| `get_kbb_dealer` | One dealer by id or link: hours, home services, rating, inventory count, price stats, makes and the first page of inventory |
+| `get_kbb_makes_models` | KBB's make and model directory, used or new, with the slugs the value, model and review tools take |
+
+Platform key `kbb`. Credits: 1 per call; `get_kbb_car_value` with a `zip` 2 (up
+to 6 when KBB's ZIP form needs a second, costlier attempt); `get_kbb_reviews`
+past page 1, with another sort or a star filter 1 or 5. `credits_used` in the
+response is what was charged. Answers can take up to 4 minutes: allow a client
+timeout of at least 240 s.
+
+US only, USD. Values are exactly as Kelley Blue Book gives them; without `zip`
+they are for KBB's default location (`location.zip` and `location.valid_text`
+say which). `zip` on a car value takes `mileage` and works for `buy_used` and
+`trade_in_sell`, not `buy_new`. Captured 2026-11-26: a 2021 Toyota RAV4 LE Sport
+Utility 4D at 40000 miles in good condition had a Fair Purchase Price of 25950
+USD (range 23750 to 28150) and a Private Party Value Good of 24350 USD at KBB's
+default ZIP 92620, and a Fair Purchase Price of 25410 USD at ZIP 10001; used
+Toyota RAV4 around 10001 gave 574 listings, the first a 2020 RAV4 LE with 4709
+miles at 27665 USD, rated a Great deal against a Fair Purchase Price of 31443
+USD. No VIN or stock number is returned; private sellers carry city, state and
+distance only, and reviews carry no reviewer name, nickname or location.
+Dealer name, address, phone, website and rating are the dealer's public business
+details. Not available: dealer reviews (rating and count only), a VIN lookup,
+review pages past 10, Kelley Blue Book Canada or Brazil. Failed calls and refused
+inputs are not charged; a not-found (an unknown model, trim, listing or dealer)
+is charged.
+
 ### [Nintendo](https://scavio.dev/docs/nintendo-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 Nintendo eShop API: one game's regular price, sale price and sale end date in each eShop country, in that country's currency, plus catalog search, product detail, deals, new and upcoming releases and a game's DLC, across 46 countries.
@@ -3892,6 +4003,41 @@ says so.
 
 1 credit per call. `search_airbnb` takes `page` XOR `cursor` - sending both is rejected, and `cursor` wins. 18 listings per page. `get_airbnb_reviews` pages with `limit` + `offset`.
 
+### [Vrbo](https://scavio.dev/docs/vrbo-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Vrbo API for Vrbo (vrbo.com, Expedia Group's vacation rental site) in 20 vrbo.com market-languages: vacation-rental search by place or region id for your dates and guests, with the nightly price, the total for the stay, the was price, Vrbo's fees line and refund deadline, the guest rating and Premier Host badges, sorted and filtered as on Vrbo; one property in full with every amenity group, house rules, highlights, photos and what is nearby; and Vrbo's destination suggestions with the region id search takes. Vrbo's own API (Expedia Group's partner program) is for approved partners, not self-serve. See the [Vrbo API page](https://scavio.dev/vrbo-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_vrbo` | Search by `destination` or `region_id` with `check_in` / `check_out` (required, at most 90 nights), adults and children's ages; 5 sorts and Vrbo's filters (property type, amenity, house rule, pets, location type, Premier Host, minimum bedrooms); the first 50 results with nightly and stay-total price, was price, fees line, rating, badges, sponsored flag and coordinates; `partial` and `attempts` |
+| `get_vrbo_property` | One property by id or link, read without dates: location, rating, highlights, space, every amenity group, house rules, important information, description, damage policy, host (Premier Host flag and languages only), photos, nearby places and the site's own default price |
+| `get_vrbo_suggestions` | Destination suggestions for a partial place name: type, `region_id` (the input of search), names, coordinates, country |
+
+Platform key `vrbo`. Credits: billed on what each call cost, `credits_used` in
+the response is what was charged: 2 per call on `get_vrbo_property` and
+`get_vrbo_suggestions`; `search_vrbo` 2 per attempt, 2 to 8 (usually 2 to 6).
+Vrbo sometimes answers a search with a 3-result page; Scavio asks again, up to
+4 attempts in all, and if 3 is all Vrbo gives it returns those 3 with
+`partial: true`. Answers can take up to about 3 minutes: allow up to 4 minutes.
+
+Markets (`market`, default `us`): `us` (USD), `en-gb` (GBP), `en-ca` and `fr-ca`
+(CAD), `es-mx` (MXN), `pt-br` (BRL), `es-es`, `it-it`, `pt-pt`, `nl-nl`, `de-at`,
+`el-gr`, `fi-fi` (EUR), `da-dk` (DKK), `sv-se` (SEK), `no-no` (NOK), `ja-jp` (JPY),
+`en-sg` (SGD), `en-au` (AUD), `en-nz` (NZD), each in its own language and currency
+(host-written titles and descriptions can stay in the host's language).
+abritel.fr, fewo-direkt.de, stayz.com.au and bookabach.co.nz are separate sites
+and are not covered. Search returns the first 50 results only (Vrbo's results
+pages carry no further page): narrow with sort and filters. Prices are exactly
+as Vrbo shows them for the requested dates; the property's `default_price` is
+the site's own default stay, not a quote. Captured 2026-11-26: Destin, Florida
+for 2027-01-15 to 2027-01-18 with 2 adults gave 50 of 394 matched properties,
+the first at 264 USD a night (792 USD for 3 nights, all fees included) rated
+9.6 from 89 reviews; property 1046285, a 1-bedroom beachfront condo in Destin,
+rated 9.8 from 221 reviews with 85 photos. No host name, biography or photo is
+returned. Not available: reviews, the availability calendar, dated prices on a
+property (use search), results past the first 50, booking. Failed calls and
+refused inputs are not charged; a not-found (an unknown property) is charged.
+
 ### [Tripadvisor](https://scavio.dev/docs/tripadvisor-locations?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
@@ -3968,6 +4114,136 @@ and `key_features` instead. Paging caps per search: 42 pages for `search_rightmo
 narrow by price band, type or a smaller area to reach more. Sold prices cover England and
 Wales only (not Scotland or Northern Ireland). Live listings carry no price history, so use `get_rightmove_sold_property` for an
 address's past sales. A removed listing or an unknown id is a billed 404.
+
+### [Rent.com](https://scavio.dev/docs/rentcom-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Rent.com API for Rent.com (rent.com) and Apartment Guide (apartmentguide.com, the same rentals), the US rental listing sites run by Redfin: rentals by city and state, ZIP or neighborhood with the listed rent, rent by bed count, units available, rent specials and price drops; one rental in full with floor plans and their units, fees, pet policies, parking, amenities, office hours, lease terms, schools and walk score; the unit listings in one building; Rent.com's average rent per bed count with its year-on-year change and the monthly series it publishes; search-box suggestions; and the cities of a state.
+
+| Tool | Description |
+|------|-------------|
+| `search_rentcom` | Search by city and state, ZIP or neighborhood: property type, beds, baths, monthly rent range, minimum square feet, pets, cheap / luxury, rent specials and up to 8 amenities; 6 sorts; 30 a page on rent.com, 50 on Apartment Guide (`site`); `total`, `available_units`, `pages`, `has_more` and the city's `average_rent` per bed count |
+| `get_rentcom_listing` | One rental by id or link: floor plans with their units (rent, square feet, available date, deposit, floor), fees, pet policies, parking, amenities, office hours, rent specials, price drops, lease terms, income restrictions, schools, nearby places, walk score, photos and similar listings |
+| `get_rentcom_building` | One building by building id or link: the separate unit listings at one address with their rents, photos and schools |
+| `get_rentcom_rent_trends` | One city's current average rent per bed count (studio to 3 bedrooms) with its year-on-year change, listing count, the monthly series as Rent.com publishes it (`series_range`), the rent distribution and nearby cities and neighborhoods |
+| `get_rentcom_suggestions` | Search-box suggestions for the start of a place or property name: places and listings with the ids the other tools take |
+| `get_rentcom_cities` | The cities Rent.com links from a state page, A to Z, with the `city` value search and rent trends take |
+
+Platform key `rentcom`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. Answers can take up to about 10 seconds: allow up
+to 4 minutes.
+
+US only, rents in USD a month. `site` is `rent` (default) or `apartmentguide`:
+Apartment Guide takes city and state (with one beds value) or zip, and page, as
+its links do; every other search filter is Rent.com only (the same rentals).
+Building, rent trends and cities read Rent.com. Captured 2026-11-26: 2-bed
+apartments in Austin, TX by lowest price gave 1819 listings (20380 available
+units) over 61 pages, the first Karnes House in West Campus from 624 USD a
+month; Los Angeles, CA rent trends had 3275 listings and a series from 2024-04
+to 2025-05 (13 months). The series is the one Rent.com publishes on the page and
+can end well before today. No phone number, email or agent / landlord name is
+returned; `management_company` is given only for listings a property manager
+pays to list. Not available: rental applications or tours, price history
+beyond the listed price drops, sold or for-sale homes. Failed calls and refused
+inputs are not charged; a not-found (an unknown city, ZIP, neighborhood,
+listing or building) is charged, and a page past the last one is an empty page
+with a note (charged).
+
+### [Trulia](https://scavio.dev/docs/trulia-neighborhood?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Trulia API for Trulia (trulia.com, Zillow Group's home and neighborhood site): one neighborhood with Trulia's "What Locals Say" survey results and safety statements, resident reviews, homes for sale and for rent with their price ranges, the commute, amenities, schools with GreatSchools ratings and Trulia's market snapshot; homes for sale, for rent or recently sold in a ZIP, city or neighborhood; one home or rental building in full with Zestimate, price and tax history, payment estimate, floor plans and fees; one school with its ratings and parent reviews; and place suggestions.
+
+| Tool | Description |
+|------|-------------|
+| `get_trulia_neighborhood` | One neighborhood by location id or link: survey results and safety statements with percentages, resident reviews (up to 40 shown, totals cover all), facts, amenities, schools, outline, nearby neighborhoods, homes for sale and (default on) Trulia's market snapshot and median sale price history with their scope; `language` en or es |
+| `search_trulia` | Homes for sale, for rent or recently sold in a ZIP, "City, ST" or "Neighborhood, City, ST": beds, baths, price, sqft and year-built ranges, HOA max, property types, keyword, pets (rentals), 7 sorts, 40 a page up to page 50; es on rental searches |
+| `get_trulia_property` | One home by zpid or link, or one rental building by building_id or link: price, Zestimate and Rent Zestimate as Trulia shows them, home value and price history, taxes, features, payment estimate, the neighborhood's location id, and for buildings floor plans with units, fees, pet policy and special offers; es on buildings |
+| `get_trulia_school` | One school by link, or school id and state: GreatSchools ratings, ratios, parent rating and reviews (no names), nearby schools and assigned homes |
+| `get_trulia_suggestions` | Place and school suggestions with the `search_location`, location id and zpid the other tools take |
+
+Platform key `trulia`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. Answers can take up to about 15 seconds (a
+neighborhood with its market snapshot): allow up to 4 minutes.
+
+US only, prices in USD (monthly rent on rentals). Spanish (`language: es`) is
+where Trulia publishes it: rental searches, buildings and neighborhoods; school
+pages and suggestions are English. Survey results, safety statements and market
+figures are Trulia's, as Trulia gives them; the market snapshot's `scope` says
+whether it is the neighborhood's or the city's. Captured 2026-11-26: Upper East
+Side, New York (location_id 85381) had 1480 survey responses, 94% saying it is
+walkable to grocery stores, 277 resident reviews, 1885 homes for sale and an
+October 2026 average sale price of $1.47M with a 98.2% sale-to-list ratio; homes
+for sale in Austin, TX gave 2146 over 54 pages. No listing-agent names, phones,
+emails or license numbers and no reviewer names are returned; brokerage company
+names are. Not available: crime data (no longer on Trulia), agent profiles,
+more than 50 pages of one search. Failed calls and refused inputs are not
+charged; a not-found (an unknown zpid, building, neighborhood or school) is
+charged.
+
+### [StreetEasy](https://scavio.dev/docs/streeteasy-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+StreetEasy API for StreetEasy (streeteasy.com, Zillow Group's New York City real estate site, covering NYC's five boroughs and North New Jersey): homes for sale, rentals and past sales in any borough, neighborhood or North NJ city with StreetEasy's own filters and sorts, net effective rent and months free on rentals, one listing in full with its price changes, monthly charges, move-in fees and the unit's past listings, one building with its developer, policies, NYC building class and per-bedroom inventory, the building directory of an area, and the monthly market data StreetEasy publishes for New York City. StreetEasy publishes no public API for its listings. See the [StreetEasy API page](https://scavio.dev/streeteasy-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_streeteasy` | Homes for sale, rentals or past sales in an area (borough, neighborhood, NJ city or `nyc`): price, bedrooms, bathrooms, size, home type, sale type, year built, 24 amenity filters, pets, ZIP, by owner (rent), in contract (sale); 7 sorts, up to 100 pages; each card with its placement (organic, featured, sponsored), price, net effective rent, months free and the brokerage |
+| `get_streeteasy_listing` | One listing by link, or by id with `listing_type` (sale or rent): price changes, monthly maintenance, taxes and common charges, estimated monthly payment, net effective rent, move-in and monthly fees, days on market, the unit's past listings and events, open houses, floor plans and StreetEasy's recent-listing prices for that bedroom count in the area |
+| `get_streeteasy_building` | One building by slug or link: year built, floors, units, amenities, policies, developer, architect, manager, the deed owner when a business, NYC building class and districts, per-bedroom available and past listing counts with min / max price, its listed units, schools, transit and similar buildings |
+| `get_streeteasy_buildings` | The building directory of an area, about 11 a page, optionally condo, coop or rental only: active sales and rentals, units, floors, year built, with the slug `get_streeteasy_building` takes |
+| `get_streeteasy_market` | StreetEasy's published monthly NYC market data from 2010-01: sales (price index, inventory, sale-to-list ratio, recorded sales, median sale and asking price, days on market, share of price cuts) by home type, rentals (rental index, inventory, median asking rent, share of rent cuts) by bedrooms, for one area or every published area |
+
+Platform key `streeteasy`. Credits: 1 per call on every tool; `credits_used` in
+the response is what was charged. Answers can take up to about 40 seconds (a
+search page): allow up to 4 minutes.
+
+NYC's five boroughs and North New Jersey, prices in USD (rent per month on
+rentals). Featured and sponsored cards come ahead of the organic results; the
+sort orders the organic ones. `get_streeteasy_listing` by id needs
+`listing_type` (sale for for-sale and sold listings, rent for rentals).
+Captured 2026-11-26: rentals in Jersey City gave 2927 listings; a one-bedroom
+at 99 Provost Street, Jersey City, was 4730 USD a month with a net effective
+rent of 4336 USD (2 months free on a 24-month lease), where one-bedroom
+rentals in the area had a median of 3865 USD across 381 listings; the median
+sale price in Williamsburg was 1450000 USD in 2026-10. Market data covers New
+York City only (New Jersey areas have no published series and are refused).
+No agent or private landlord names, emails, phones or photos are returned; the
+brokerage is. Not available: agent profiles, reviews (StreetEasy has none),
+search suggestions, the Hamptons. Failed calls and refused inputs are not
+charged; a not-found (an unknown listing, building or an area without a
+published series) is charged.
+
+### [RentCafe](https://scavio.dev/docs/rentcafe-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+RentCafe API for RentCafe (rentcafe.com, Yardi's US and Canada rental listing site): rental search in any US or Canadian city, ZIP code, neighborhood or state with RentCafe's filters and sorts, rents in USD or CAD, English or French pages; one listing in full with every floor plan, its fees and pet policy, amenities, category ratings and RentCafe's own renters summary; every unit of a floor plan with its base rent and move-in date; resident reviews; location and property suggestions; and the rent trends RentCafe publishes for US cities. See the [RentCafe API page](https://scavio.dev/rentcafe-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_rentcafe` | Apartments, houses, condos or townhomes by location, city + state or ZIP + state; ONE of beds, rent specials, short-term, furnished, utilities included or one of 19 amenities per search, plus price range and pet-friendly; 5 sorts, 25 a page, `pages` and `has_more` |
+| `get_rentcafe_property` | One listing by link or slug: rent range, floor plans with their units and rents, policies (deposit, application and pet fees, pet policy), amenities, services, rating, category ratings, RentCafe's renters summary, reviews (no reviewer names), office hours, leasing office phone, management company |
+| `get_rentcafe_floorplan_units` | Every unit of one floor plan (the property page shows up to 2): base rent, availability (Now or a date), size, specials, photos; `selected_unit` with `unit_id` |
+| `get_rentcafe_reviews` | Resident reviews, 10 a page in RentCafe's order: rating, resident type, date, text; no reviewer names, no sort or star filter |
+| `get_rentcafe_suggestions` | Places (with the `location` search takes) and properties (with the `property_id` reviews and floor plan units take) for a city, neighborhood, ZIP or property name |
+| `get_rentcafe_rent_trends` | A US city's rent trends as RentCafe publishes them: average rent now and a year earlier, by bedroom type, budget shares, renter households, the most affordable and most expensive neighborhoods, compared cities |
+
+Platform key `rentcafe`. Credits: 1 per call on every tool; `credits_used` in
+the response is what was charged. Answers can take up to about 25 seconds:
+allow up to 4 minutes.
+
+Markets (`market`): `us` (USD) and `ca` (CAD), read from the location's state
+or province when left out; `language` `fr` returns RentCafe's French pages
+(French labels over the same listings, prices still in the market's currency).
+RentCafe filters one of beds, rent specials, short-term, furnished, utilities
+included or an amenity per search; a second one is refused with a 400, not
+charged (price range, pet-friendly and sort combine with any). RentCafe pages
+through about 15-20 pages of 25 at most: narrow with filters for more.
+Captured 2026-11-26: 2-bedroom apartments in austin-tx gave 4228 listings;
+toronto-on 8559 in CAD; Bridge At Indigo in Austin rents 1130 to 2880 USD
+across 9 floor plans, rated 4 from 39 reviews; Austin, TX averaged 1643 USD on
+the rent trends page (1664 a year earlier). Rent trends are US only (RentCafe
+has no Canada rent trends pages); a city without one is a 404, not charged.
+Reviews carry no reviewer names. Not available: tours, contact or application
+forms, price alerts, price history (poll and store the answers). Failed calls
+and refused inputs are not charged; a not-found (an unknown location, listing,
+property id or floor plan) is charged.
 
 ### [Indeed](https://scavio.dev/docs/indeed-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 

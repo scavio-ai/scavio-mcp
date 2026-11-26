@@ -72,6 +72,9 @@ import { registerAutotraderTools } from "./autotrader.js";
 import { registerCargurusTools } from "./cargurus.js";
 import { registerCarmaxTools } from "./carmax.js";
 import { registerCarvanaTools } from "./carvana.js";
+import { registerTruecarTools } from "./truecar.js";
+import { registerEdmundsTools } from "./edmunds.js";
+import { registerKbbTools } from "./kbb.js";
 import { registerPetsmartTools } from "./petsmart.js";
 import { registerPetcoTools } from "./petco.js";
 import { registerIherbTools } from "./iherb.js";
@@ -113,12 +116,17 @@ import { registerMercadoLibreTools } from "./mercadolibre.js";
 import { registerTiktokShopTools } from "./tiktok-shop.js";
 import { registerBookingTools } from "./booking.js";
 import { registerAirbnbTools } from "./airbnb.js";
+import { registerVrboTools } from "./vrbo.js";
 import { registerTripadvisorTools } from "./tripadvisor.js";
 import { registerYelpTools } from "./yelp.js";
 import { registerZillowTools } from "./zillow.js";
 import { registerRedfinTools } from "./redfin.js";
 import { registerRealtorTools } from "./realtor.js";
 import { registerRightmoveTools } from "./rightmove.js";
+import { registerRentcomTools } from "./rentcom.js";
+import { registerTruliaTools } from "./trulia.js";
+import { registerStreeteasyTools } from "./streeteasy.js";
+import { registerRentcafeTools } from "./rentcafe.js";
 import { registerIndeedTools } from "./indeed.js";
 import { registerGlassdoorTools } from "./glassdoor.js";
 import { registerAppStoreTools } from "./appstore.js";
@@ -226,6 +234,9 @@ const PLATFORMS: Record<string, RegisterFn> = {
   cargurus: registerCargurusTools,
   carmax: registerCarmaxTools,
   carvana: registerCarvanaTools,
+  truecar: registerTruecarTools,
+  edmunds: registerEdmundsTools,
+  kbb: registerKbbTools,
   petsmart: registerPetsmartTools,
   petco: registerPetcoTools,
   iherb: registerIherbTools,
@@ -268,6 +279,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   // Travel and local
   booking: registerBookingTools,
   airbnb: registerAirbnbTools,
+  vrbo: registerVrboTools,
   tripadvisor: registerTripadvisorTools,
   yelp: registerYelpTools,
   // Real estate
@@ -275,6 +287,10 @@ const PLATFORMS: Record<string, RegisterFn> = {
   redfin: registerRedfinTools,
   realtor: registerRealtorTools,
   rightmove: registerRightmoveTools,
+  rentcom: registerRentcomTools,
+  trulia: registerTruliaTools,
+  streeteasy: registerStreeteasyTools,
+  rentcafe: registerRentcafeTools,
   // Jobs and employer data
   indeed: registerIndeedTools,
   glassdoor: registerGlassdoorTools,
@@ -300,7 +316,7 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 2185KB of tools/list (measured with
+ * tools, which serialises to 2310KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 143
@@ -362,7 +378,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (1021 tools)
+ *   all      — every platform (1071 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -431,6 +447,11 @@ const TITLE_WORDS: Record<string, string> = {
   ai: "AI",
   url: "URL",
   chatgpt: "ChatGPT",
+  rentcom: "Rent.com",
+  streeteasy: "StreetEasy",
+  rentcafe: "RentCafe",
+  truecar: "TrueCar",
+  kbb: "KBB",
 };
 
 /** `get_tiktok_user_posts` -> `Get TikTok User Posts`. */
