@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 900 tools across 111 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 907 tools across 112 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 900 tools puts ~1827KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 907 tools puts ~1853KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 900 tools. Loading all of them costs ~1827KB of `tools/list` —
+Scavio exposes 907 tools. Loading all of them costs ~1853KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **900 tools, ~1827KB** |
+| `all` | every platform — **907 tools, ~1853KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1513,6 +1513,45 @@ at checkout), coupons, Instacart+ member prices, account, order or cart data,
 price history (poll and store the answers). Failed calls and refused inputs
 are not charged; a not-found (an unknown ZIP, product id or category, or a
 store that does not serve the ZIP) is charged.
+
+### [PC Express](https://scavio.dev/docs/pcexpress-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+PC Express API for PC Express (Loblaw's online grocery for Real Canadian Superstore, No Frills, Loblaws, Zehrs, Fortinos, Valu-mart, Your Independent Grocer, Wholesale Club, Provigo and Maxi; Loblaw operates 2,504 stores per its 2025 annual report): what each Loblaw banner charges for the same product code at its default store on one date, with the deal end date and the PC Optimum offer as shown. Keyword search, category and collection (deals centre, Black Friday) lists, one product with GTIN, ingredients, nutrition and comparison prices, a banner's pickup stores and one store's hours, and search suggestions. See the [PC Express API page](https://scavio.dev/pcexpress-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_pcexpress` | Search one banner by keywords or article number: price, was price, unit price, deal with expiry date, PC Optimum points, member-only price, badges, stock status; 48 a page, 5 sorts, filters (brand, deals, price band, Prepared in Canada, dietary, aisle, any facet); `redirected_to` when PC Express sends the term to a collection or category |
+| `get_pcexpress_category` | One category by id or link: a product list (paged, sorted, filtered) or a department's carousels and sub-categories |
+| `get_pcexpress_collection` | One collection page (deals-centre, black-friday, no-name, pc-value, new-arrivals ...): products with prices and deals, in sections |
+| `get_pcexpress_product` | One product by code or link: GTIN, ingredients, nutrition, comparison prices, unit price, deal, promotions, deposit, stock status as given |
+| `get_pcexpress_stores` | A banner's pickup stores by city, postal code start or province, or nearest a latitude and longitude, with today's hours |
+| `get_pcexpress_store` | One store by id: 7 dated days of store, pharmacy, clinic, optical and holiday hours, services |
+| `get_pcexpress_suggestions` | The search terms PC Express suggests for a partial query |
+
+Platform key `pcexpress`. Credits: `get_pcexpress_product` and
+`get_pcexpress_store` 5 (product 1 when it answers from the search listing,
+`source` search); every other tool 1. `credits_used` in the response is what
+was charged. Answers can take up to about a minute; product, store, stores
+and suggestions can take longer: allow up to 2 minutes.
+
+Canada only, prices in CAD. `banner` (default `superstore`): `superstore`,
+`nofrills`, `loblaw`, `zehrs`, `fortinos`, `valumart`, `independent`,
+`wholesaleclub`, `provigo`, `maxi`. `language` is `en`, or `fr` on `provigo`
+(French only) and `maxi` (French by default, English too). Prices are each
+banner's default online store's; choosing a store is not offered (a
+`store_id` on a priced tool is a 400, not charged), and every answer says which
+store priced it in `store` (`requested` false). The same product code is priced
+per banner: captured 2026-11-26, No Name Large Size Eggs 12 Pack
+(20812144001_EA) was 3.93 CAD at Real Canadian Superstore's default store 1033
+and 4.17 at Maxi's default store 8976. Deals carry the end date PC Express
+shows (`expiry_date`), no start date; PC Optimum points are as shown;
+`member_only_price` is the price the site shows publicly on the item. For
+national brands at Walmart.ca use the Walmart tools with domain `ca`. Not
+available: choosing a store, review text (rating and count only), the printed
+flyer, Shoppers Drug Mart, Atlantic Superstore, City Market and T&T, cart or
+checkout, PC Optimum prices behind a login, price history (poll and store the
+answers). Failed calls and refused inputs are not charged; a not-found (an
+unknown code, category, collection or store) is charged.
 
 ### Micro Center
 
