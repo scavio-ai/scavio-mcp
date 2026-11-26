@@ -42,7 +42,7 @@ export function registerCvsTools(server: McpServer, getClient: () => ScavioClien
 
   server.tool(
     "get_cvs_product",
-    `One CVS product by URL or id: regular and sale price, unit price, promotion and its end date, rating, review count, UPC, size, description, highlights, ingredients, directions, warnings, attributes, breadcrumbs, images and every variant (sku_id, UPC, size, price, rating). Can take 10-30+ seconds. An unknown product is a 404. 1 credit.`,
+    `One CVS product by URL or id: regular and sale price, unit price, promotion and its end date, rating, review count, UPC, size, description, highlights, ingredients, directions, warnings, attributes, breadcrumbs, images and every variant (sku_id, UPC, size, price, rating). Can take 10-30+ seconds. An unknown product is a 404. 2 credits.`,
     {
       url: z.string().max(500).optional()
         .describe("cvs.com product URL, https://www.cvs.com/shop/<name>-prodid-<id>. Pass this or product_id."),

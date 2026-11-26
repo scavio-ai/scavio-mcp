@@ -1586,7 +1586,8 @@ at every store. Store numbers (from `get_walgreens_stores`, e.g. `"9438"`) go to
 | `get_cvs_product` | One product by URL or id: price, promotion end date, UPC, ingredients, directions, warnings, every variant |
 | `get_cvs_stock` | Units at one store for up to 20 SKUs: in store, pickup, online |
 
-1 credit per call. There is no store locator: the store number is on every
+`search_cvs` and `get_cvs_stock` are 1 credit per call, `get_cvs_product` 2.
+There is no store locator: the store number is on every
 cvs.com store page (e.g. `"7019"`). Search stock defaults to store 7019 (New
 York). Prices are the same at every store. `get_cvs_product` can take 10-30+
 seconds.
