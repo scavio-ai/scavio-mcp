@@ -45,6 +45,7 @@ import { registerDollarTreeTools } from "./dollartree.js";
 import { registerDiscountTireTools } from "./discounttire.js";
 import { registerVevorTools } from "./vevor.js";
 import { registerNellisTools } from "./nellis.js";
+import { registerEstatesalesTools } from "./estatesales.js";
 import { registerBringatrailerTools } from "./bringatrailer.js";
 import { registerSephoraTools } from "./sephora.js";
 import { registerUltaTools } from "./ulta.js";
@@ -117,6 +118,7 @@ import { registerTiktokShopTools } from "./tiktok-shop.js";
 import { registerBookingTools } from "./booking.js";
 import { registerAirbnbTools } from "./airbnb.js";
 import { registerVrboTools } from "./vrbo.js";
+import { registerExpediaTools } from "./expedia.js";
 import { registerTripadvisorTools } from "./tripadvisor.js";
 import { registerYelpTools } from "./yelp.js";
 import { registerZillowTools } from "./zillow.js";
@@ -127,6 +129,14 @@ import { registerRentcomTools } from "./rentcom.js";
 import { registerTruliaTools } from "./trulia.js";
 import { registerStreeteasyTools } from "./streeteasy.js";
 import { registerRentcafeTools } from "./rentcafe.js";
+import { registerMovotoTools } from "./movoto.js";
+import { registerHotpadsTools } from "./hotpads.js";
+import { registerApartmentlistTools } from "./apartmentlist.js";
+import { registerCompassTools } from "./compass.js";
+import { registerAffordablehousingTools } from "./affordablehousing.js";
+import { registerLennarTools } from "./lennar.js";
+import { registerExtraspaceTools } from "./extraspace.js";
+import { registerPublicstorageTools } from "./publicstorage.js";
 import { registerIndeedTools } from "./indeed.js";
 import { registerGlassdoorTools } from "./glassdoor.js";
 import { registerAppStoreTools } from "./appstore.js";
@@ -134,6 +144,7 @@ import { registerGooglePlayTools } from "./googleplay.js";
 import { registerG2Tools } from "./g2.js";
 import { registerCapterraTools } from "./capterra.js";
 import { registerTrustpilotTools } from "./trustpilot.js";
+import { registerGoodreadsTools } from "./goodreads.js";
 import { registerGoogleAdsTools } from "./googleads.js";
 import { registerMetaAdsTools } from "./metaads.js";
 import { registerSecTools } from "./sec.js";
@@ -207,6 +218,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   discounttire: registerDiscountTireTools,
   vevor: registerVevorTools,
   nellis: registerNellisTools,
+  estatesales: registerEstatesalesTools,
   bringatrailer: registerBringatrailerTools,
   sephora: registerSephoraTools,
   ulta: registerUltaTools,
@@ -280,6 +292,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   booking: registerBookingTools,
   airbnb: registerAirbnbTools,
   vrbo: registerVrboTools,
+  expedia: registerExpediaTools,
   tripadvisor: registerTripadvisorTools,
   yelp: registerYelpTools,
   // Real estate
@@ -291,6 +304,14 @@ const PLATFORMS: Record<string, RegisterFn> = {
   trulia: registerTruliaTools,
   streeteasy: registerStreeteasyTools,
   rentcafe: registerRentcafeTools,
+  movoto: registerMovotoTools,
+  hotpads: registerHotpadsTools,
+  apartmentlist: registerApartmentlistTools,
+  compass: registerCompassTools,
+  affordablehousing: registerAffordablehousingTools,
+  lennar: registerLennarTools,
+  extraspace: registerExtraspaceTools,
+  publicstorage: registerPublicstorageTools,
   // Jobs and employer data
   indeed: registerIndeedTools,
   glassdoor: registerGlassdoorTools,
@@ -302,6 +323,8 @@ const PLATFORMS: Record<string, RegisterFn> = {
   capterra: registerCapterraTools,
   // Business reviews
   trustpilot: registerTrustpilotTools,
+  // Books
+  goodreads: registerGoodreadsTools,
   // Ad libraries
   googleads: registerGoogleAdsTools,
   metaads: registerMetaAdsTools,
@@ -316,7 +339,7 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 2310KB of tools/list (measured with
+ * tools, which serialises to 2459KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 143
@@ -378,7 +401,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (1071 tools)
+ *   all      — every platform (1139 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -452,6 +475,12 @@ const TITLE_WORDS: Record<string, string> = {
   rentcafe: "RentCafe",
   truecar: "TrueCar",
   kbb: "KBB",
+  hotpads: "HotPads",
+  apartmentlist: "Apartment List",
+  affordablehousing: "AffordableHousing.com",
+  extraspace: "Extra Space",
+  publicstorage: "Public Storage",
+  estatesales: "EstateSales.net",
 };
 
 /** `get_tiktok_user_posts` -> `Get TikTok User Posts`. */
