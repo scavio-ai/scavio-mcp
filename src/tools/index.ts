@@ -36,6 +36,7 @@ import { registerMichaelsTools } from "./michaels.js";
 import { registerNikeTools } from "./nike.js";
 import { registerStaplesTools } from "./staples.js";
 import { registerSamsClubTools } from "./samsclub.js";
+import { registerBjsTools } from "./bjs.js";
 import { registerCanadianTireTools } from "./canadiantire.js";
 import { registerSportchekTools } from "./sportchek.js";
 import { registerMarksTools } from "./marks.js";
@@ -50,6 +51,7 @@ import { registerBringatrailerTools } from "./bringatrailer.js";
 import { registerSephoraTools } from "./sephora.js";
 import { registerUltaTools } from "./ulta.js";
 import { registerDermstoreTools } from "./dermstore.js";
+import { registerBathandbodyworksTools } from "./bathandbodyworks.js";
 import { registerSpacenkTools } from "./spacenk.js";
 import { registerLookfantasticTools } from "./lookfantastic.js";
 import { registerCultbeautyTools } from "./cultbeauty.js";
@@ -84,6 +86,7 @@ import { registerMenardsTools } from "./menards.js";
 import { registerNordstromTools } from "./nordstrom.js";
 import { registerNordstromRackTools } from "./nordstromrack.js";
 import { registerBestBuyTools } from "./bestbuy.js";
+import { registerNeweggTools } from "./newegg.js";
 import { registerTcgplayerTools } from "./tcgplayer.js";
 import { registerNintendoTools } from "./nintendo.js";
 import { registerHmTools } from "./hm.js";
@@ -91,6 +94,8 @@ import { registerZaraTools } from "./zara.js";
 import { registerUniqloTools } from "./uniqlo.js";
 import { registerAsosTools } from "./asos.js";
 import { registerFashionnovaTools } from "./fashionnova.js";
+import { registerGapTools } from "./gap.js";
+import { registerZapposTools } from "./zappos.js";
 import { registerVintedTools } from "./vinted.js";
 import { registerMercariTools } from "./mercari.js";
 import { registerDepopTools } from "./depop.js";
@@ -104,6 +109,8 @@ import { registerJcpenneyTools } from "./jcpenney.js";
 import { registerDicksTools } from "./dicks.js";
 import { registerFootlockerTools } from "./footlocker.js";
 import { registerFanaticsTools } from "./fanatics.js";
+import { registerAcademyTools } from "./academy.js";
+import { registerReiTools } from "./rei.js";
 import { registerArgosTools } from "./argos.js";
 import { registerMediaExpertTools } from "./mediaexpert.js";
 import { registerActionTools } from "./action.js";
@@ -114,6 +121,7 @@ import { registerBolcomTools } from "./bolcom.js";
 import { registerOlxTools } from "./olx.js";
 import { registerTrendyolTools } from "./trendyol.js";
 import { registerMercadoLibreTools } from "./mercadolibre.js";
+import { registerRakutenTools } from "./rakuten.js";
 import { registerTiktokShopTools } from "./tiktok-shop.js";
 import { registerBookingTools } from "./booking.js";
 import { registerAirbnbTools } from "./airbnb.js";
@@ -209,6 +217,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   nike: registerNikeTools,
   staples: registerStaplesTools,
   samsclub: registerSamsClubTools,
+  bjs: registerBjsTools,
   canadiantire: registerCanadianTireTools,
   sportchek: registerSportchekTools,
   marks: registerMarksTools,
@@ -223,6 +232,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   sephora: registerSephoraTools,
   ulta: registerUltaTools,
   dermstore: registerDermstoreTools,
+  bathandbodyworks: registerBathandbodyworksTools,
   spacenk: registerSpacenkTools,
   lookfantastic: registerLookfantasticTools,
   cultbeauty: registerCultbeautyTools,
@@ -257,6 +267,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   nordstrom: registerNordstromTools,
   nordstromrack: registerNordstromRackTools,
   bestbuy: registerBestBuyTools,
+  newegg: registerNeweggTools,
   tcgplayer: registerTcgplayerTools,
   nintendo: registerNintendoTools,
   hm: registerHmTools,
@@ -264,6 +275,8 @@ const PLATFORMS: Record<string, RegisterFn> = {
   uniqlo: registerUniqloTools,
   asos: registerAsosTools,
   fashionnova: registerFashionnovaTools,
+  gap: registerGapTools,
+  zappos: registerZapposTools,
   vinted: registerVintedTools,
   mercari: registerMercariTools,
   depop: registerDepopTools,
@@ -277,6 +290,8 @@ const PLATFORMS: Record<string, RegisterFn> = {
   dicks: registerDicksTools,
   footlocker: registerFootlockerTools,
   fanatics: registerFanaticsTools,
+  academy: registerAcademyTools,
+  rei: registerReiTools,
   argos: registerArgosTools,
   mediaexpert: registerMediaExpertTools,
   action: registerActionTools,
@@ -287,6 +302,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   olx: registerOlxTools,
   trendyol: registerTrendyolTools,
   mercadolibre: registerMercadoLibreTools,
+  rakuten: registerRakutenTools,
   "tiktok-shop": registerTiktokShopTools,
   // Travel and local
   booking: registerBookingTools,
@@ -339,7 +355,7 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 2459KB of tools/list (measured with
+ * tools, which serialises to 2597KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 143
@@ -401,7 +417,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (1139 tools)
+ *   all      — every platform (1211 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -481,6 +497,9 @@ const TITLE_WORDS: Record<string, string> = {
   extraspace: "Extra Space",
   publicstorage: "Public Storage",
   estatesales: "EstateSales.net",
+  bathandbodyworks: "Bath & Body Works",
+  bjs: "BJ's",
+  rei: "REI",
 };
 
 /** `get_tiktok_user_posts` -> `Get TikTok User Posts`. */

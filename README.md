@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1139 tools across 145 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1211 tools across 153 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1139 tools puts ~2459KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1211 tools puts ~2597KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1139 tools. Loading all of them costs ~2459KB of `tools/list` —
+Scavio exposes 1211 tools. Loading all of them costs ~2597KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1139 tools, ~2459KB** |
+| `all` | every platform — **1211 tools, ~2597KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1039,6 +1039,44 @@ location (echoed in `club`); for one specific club, call `get_sams_club_product`
 with a `club_id` from `get_sams_club_clubs`. `available_quantity` is capped at 8 by
 the site, so 8 means 8 or more.
 
+### [BJ's Wholesale Club](https://scavio.dev/docs/bjs-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+BJ's Wholesale Club API for BJ's Wholesale Club (bjs.com, the US warehouse club), US only, prices in USD: keyword search and category listings with the online price, sale price and its dates, the price of the club BJ's assigned to the visit, availability, fulfillment and EBT flags, coupons and bought-last-month counts; one product in full with every variant, regular price, savings, offer dates and fulfillment per item number; the category tree; customer reviews with BJ's own review summary and questions with answers; the guest coupon book; and the club directory by state. See the [BJ's Wholesale Club API page](https://scavio.dev/bjs-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_bjs` | Keyword search: up to 40 results with total, departments, related searches, facets and priced_for (the club BJ's assigned, or null) |
+| `get_bjs_product` | One product by product id or link: online price, regular price, savings, offer dates, unit price, variants with GTIN, availability and fulfillment per item number |
+| `get_bjs_category` | The products of one category (ids from `get_bjs_categories`): up to 40 results with total, subcategories and facets |
+| `get_bjs_categories` | The full category tree (about 980 categories) or one category's subtree, with product counts |
+| `get_bjs_reviews` | Customer reviews, 10 a page newest first, with summary, BJ's own AI review summary and questions with answers (no names) |
+| `get_bjs_coupons` | The guest coupon book: manufacturer and BJ's coupons with value, limits, dates and qualifying UPCs |
+| `get_bjs_clubs` | The club directory (about 280 clubs in 22 states), all or one state |
+
+Platform key `bjs`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. `search_bjs`, `get_bjs_category`,
+`get_bjs_reviews` and `get_bjs_coupons` take 15 to 100 seconds: allow a client
+timeout of at least 240 s.
+
+US only, prices in USD. Search and category pages list up to 40 results: BJ's
+ignores its own page parameter, so there is no deeper paging; total is BJ's own
+count. price is the online price; club_price, club_sale and in-club stock are
+for the club BJ's assigned to the visit (priced_for), which cannot be chosen:
+there is no price, stock or availability for a club you pick and no club finder
+by ZIP code. Where BJ's shows "Member Only Price" to a visitor,
+member_only_price is true and the answer carries the list price only, never a
+member price, sale price or sale dates. A club-only item has price null and
+club_only true. Reviews carry no reviewer, asker or answerer names or locations.
+Captured 2026-11-26: coffee gave 125 results (40 listed), the first Folgers
+Classic Roast Ground Coffee 43.5 oz. at 24.79 USD with 8158 reviews; TVs held
+162 products priced for the Jersey City, NJ club, the first a Samsung 75" 4K TV
+at 599.99 USD with a 397.99 USD sale to 2026-11-30; Scotch-Brite 420-Sheet Lint
+Rollers, 4 pk. were 9.99 USD (regular 12.99); the coupon book loaded 268 of 567
+offers; New York had 50 clubs. Not available: a chosen club's price or stock,
+member prices, deeper search pages, clipping coupons, price history (poll and
+store the answers). Failed calls and refused inputs are not charged; a not-found
+(an unknown product or a category with no product list) is charged.
+
 ### Canadian Tire
 
 | Tool | Description |
@@ -1527,6 +1565,45 @@ answers), offer start dates. For the same product at Sephora, Ulta or Amazon,
 use those tools and match on UPC, or brand + name + size. Failed calls and
 refused inputs are not charged; a not-found (an unknown SKU or list path) is
 charged.
+
+### [Bath & Body Works](https://scavio.dev/docs/bathandbodyworks-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Bath & Body Works API for Bath & Body Works (bathandbodyworks.com, the US body care and home fragrance retailer, and bathandbodyworks.ca in English): keyword search and category pages with price, list price, promotion callouts, rating, fragrance name and family, sorted and filtered as on the site; the category tree; one product in full with fragrance notes, ingredients and UPC; the promotions attached to a product with their start and end times and terms; the current offers and Top Offers; whether a store takes a pickup order for a product and its pickup purchase limit; the store directory and one store's address and hours; and a product's review summary. See the [Bath & Body Works API page](https://scavio.dev/bathandbodyworks-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_bathandbodyworks` | Keyword search, sorted by relevance, price, top rated or new arrivals, filtered by fragrance name, fragrance family and product type; the 48 results the site shows, with its own total and facets |
+| `get_bathandbodyworks_category` | One category page by path or link (including deal pages such as /g/top-offers and /t/black-friday), with the same sorts and filters as search |
+| `get_bathandbodyworks_categories` | The category tree as the site's navigation menu lists it, with the path each category page takes |
+| `get_bathandbodyworks_product` | One product by id or link: price, list price, promotions, rating, fragrance name, family, classification and notes, description, ingredients, UPC, online purchase limit and low-stock flag, images |
+| `get_bathandbodyworks_promotions` | The promotions attached to one product with start and end times (UTC) and terms as given |
+| `get_bathandbodyworks_offers` | The current offers: the home page's offer cards and the Top Offers tiles, with validity and terms as given |
+| `get_bathandbodyworks_store_availability` | Whether one store takes a pickup order for one product, with its pickup purchase limit (0-24) and the national price |
+| `get_bathandbodyworks_store` | One store's public page by store id: address, phone, coordinates, hours, services, store types and nearby stores |
+| `get_bathandbodyworks_stores` | Every store id in the market's store directory |
+| `get_bathandbodyworks_reviews_summary` | One product's rating, review count and up to 4 newest reviews (no reviewer names) |
+
+Platform key `bathandbodyworks`. Credits: 1 per call on every tool; `credits_used`
+in the response is what was charged. `get_bathandbodyworks_promotions`,
+`get_bathandbodyworks_store_availability` and `get_bathandbodyworks_store` usually
+take 10 to 40 seconds: allow a client timeout of at least 90 s.
+
+`country` `us` (default, USD) or `ca` (bathandbodyworks.ca in English, CAD); a
+product link's site sets the market. Search and category pages give the 48 results
+the site shows with its own total, and no page 2: narrow with sort and the filters.
+Every size is its own product id. Prices are national, the same at every store.
+Store availability is the pickup purchase limit the store sets (0-24), not a count
+of what a store holds: the site publishes none. Captured 2026-11-26: a top-rated
+search for candle among 3-Wick Candles gave 48 of 123, the first the Vanilla Eggnog
+3-Wick Candle at 26.95 USD; the same search on `ca` counted 173; the Champagne
+Toast 3-Wick Candle (028029548) was 24.95 USD (26.95 CAD in Canada), rated 4.75 from
+3789 reviews, with store BBW00010 in San Antonio, TX taking pickup orders up to 24;
+the Into the Night Gift Set carried 3 promotions, one "$40 with any $40 purchase"
+from 2026-11-26 11:00 to 2026-11-27 11:00 UTC; the offers page listed 15 promotions;
+the Canada store directory listed 114 stores. Not available: unit counts, store
+search by ZIP, full review paging, Spanish or French pages, price history (poll and
+store the answers). Failed calls and refused inputs are not charged; a not-found
+(an unknown product, path or store) is charged.
 
 ### ALDI
 
@@ -2225,6 +2302,51 @@ other Canadian retailers use the [Amazon](https://scavio.dev/amazon-api?utm_sour
 (`country: "ca"`) and [Canadian Tire](https://scavio.dev/canadiantire-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 tools; match on brand and model. See the
 [Best Buy API page](https://scavio.dev/bestbuy-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+### [Newegg](https://scavio.dev/docs/newegg-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Newegg API for Newegg (newegg.com, the US computer and electronics store), newegg.ca and 9 Newegg Global storefronts: keyword search, category listings and the newegg.com category tree with Newegg's filters and sorts; one item in full with list price, price after instant rebate, promo code apart, Newegg's own 30-day lowest price, stock, seller, specs, warranty and variants; every seller's offer on an item, Newegg's own included, by condition; customer reviews with pros, cons and verified-owner marks; Shell Shocker daily deals and the Black Friday store; a marketplace seller's store details and listings; and search suggestions. See the [Newegg API page](https://scavio.dev/newegg-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_newegg` | Keyword search with named filters (sold by Newegg, in stock, condition, open box, 30-day lowest price, 40% off) or facet ids and 6 sorts; items, facets, this storefront's category ids and breadcrumbs |
+| `get_newegg_category` | The items of one category by `category_id` (ids differ per storefront), with keywords, filters and sorts as search |
+| `get_newegg_categories` | The newegg.com menu tree: departments and categories with the ids `get_newegg_category` takes (us only) |
+| `get_newegg_product` | One item by item number: prices, rebate, promo code, 30-day lowest price, badges with dates, stock, quantity limit, seller, specs, warranty, variants, review summary and questions; `buy_box_changed`, `requested_item` and `served_item` when the page serves a marketplace offer |
+| `get_newegg_offers` | Every seller's offer on one item, all, new or used, by price or seller rating, with each condition's offer count and lowest price (us, ca) |
+| `get_newegg_reviews` | Customer reviews of one item, 25 a page, by helpfulness, date or rating, star filter and verified owners only; takes the item's `review_params` |
+| `get_newegg_deals` | Shell Shocker daily deals (with the countdown end) or the Black Friday store, optionally one category (us, ca) |
+| `get_newegg_seller` | A marketplace seller's store: rating, review count, positive percent, about and return policy (us, ca) |
+| `get_newegg_seller_products` | The items one marketplace seller lists, with keywords, filters and sorts (us, ca) |
+| `get_newegg_suggestions` | The search box's suggestions and suggested products for what has been typed (us, ca) |
+
+Platform key `newegg`. Credits: 2 per call on every tool; `credits_used` in the
+response is what was charged. Answers usually take a few seconds; a retried
+call can take up to about 4 minutes: allow a client timeout of at least 240 s.
+
+Markets (`country`, default `us`): `us` (www.newegg.com, USD), `ca`
+(www.newegg.ca, CAD) and the Newegg Global storefronts `uk`, `au`, `nz`, `jp`,
+`ph`, `sg`, `kr`, `th`, `mx` (part of Newegg's catalog, in English, priced in
+the local currency). Search, category, product and reviews work on every
+storefront; offers, deals, seller, seller products and suggestions on `us` and
+`ca`; categories on `us`. Category ids differ per storefront (GPUs: 100007709
+on us, 100007708 on ca). `list_price` is the struck-through price and `price`
+the price after `instant_rebate`; a promo code's discount is given apart and
+never taken off `price`; `lowest_price_30_days` is Newegg's own figure. When
+Newegg's own unit is unavailable the product page serves a marketplace offer:
+`buy_box_changed` is true, `requested_item` is the item number asked for and
+`served_item` the offer's. Prices are as the page shows them on that request;
+there is no separate live price check. Reviews are one pool across Newegg's
+storefronts and carry no reviewer names; seller names are marketplace store
+names. Captured 2026-11-26: rtx 5070 gave 4556 results on newegg.com, 279 on
+newegg.ca and 43 on the UK storefront (in GBP); AMD Ryzen 7 9800X3D
+(19-113-877) was 439.99 USD on newegg.com (list 506.99, 67 instant rebate, a 70
+promo code given apart) and 549.99 CAD on newegg.ca, with 28 offers on
+newegg.com (26 new from 418.99 USD, 2 used from 449.99) and 316 reviews; Shell
+Shocker listed 38 deals; the newegg.com menu held 17 departments and 1055
+categories. Not available: cart, checkout, price history (poll and store the
+answers), other sellers on the Global storefronts. Failed calls and refused
+inputs are not charged; a not-found (an unknown item number) is charged.
 
 ### TCGplayer
 
@@ -2925,6 +3047,85 @@ brand directory (everything is Fashion Nova), price history (poll and store
 the answers), gift cards, new-arrival dates. Failed calls are not charged; a
 not-found is charged.
 
+### [Gap Inc.](https://scavio.dev/docs/gap-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Gap Inc. API for one API across Gap, Old Navy, Banana Republic, Athleta, Gap Factory and Banana Republic Factory (`brand`), in the US (USD) and Canada (CAD, English or French): keyword search and category pages with the list price, the price shown and its type (regular, promotion or markdown), filtered by department, sale type, color, price, rating, pickup store and any facet; the navigation tree; one product with every color and SKU, each with its price and online stock status; current prices for up to 100 colors in one call, banners mixed; stores near a ZIP or postal code with hours; one store's details; pickup stock at up to 10 stores as in stock, low stock or out of stock; search suggestions, trending searches and the banner's current promotions. See the [Gap Inc. API page](https://scavio.dev/gap-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_gap` | Keyword search on one banner, filtered by department, sale type, color, price, rating, pickup store and any facet, 5 sorts, up to 200 per page, with total, pages and facets |
+| `get_gap_category` | One category by cid (from `get_gap_categories`) or link, with each color's online unit count as given |
+| `get_gap_categories` | The banner's navigation tree with the cid and style each category page takes |
+| `get_gap_product` | One product by color id or link: review summary, details, every variant (Regular, Tall, Petite), color and SKU with list price, price shown, discount, stock status, backorder and ship dates, UPC |
+| `get_gap_prices` | Current prices for up to 100 colors in one call, banners may mix |
+| `get_gap_stores` | Stores of one banner near a US ZIP, a Canadian postal code or a point, with hours, dated holiday hours and pickup |
+| `get_gap_store` | One store's public details by store id: status, opening date, address, phone, coordinates, services |
+| `get_gap_store_stock` | Pickup stock at up to 10 stores for up to 20 SKUs or every SKU of one style: in_stock, low_stock or out_of_stock |
+| `get_gap_suggestions` | The search box's suggested queries with department filters, and suggested products with prices |
+| `get_gap_trending` | The trending searches the banner's search box shows |
+| `get_gap_deals` | The banner's current promotions as its promo drawer words them, and its menu's sale, deal and clearance links |
+
+Platform key `gap`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. Large search or category pages (200 items) can take
+about 25 s.
+
+`brand` `gap` (default), `old_navy`, `banana_republic`, `athleta`,
+`gap_factory` or `banana_republic_factory`; `country` `us` (default) or `ca`;
+`language` `en` (default) or `fr` on `ca`. Ids are per banner and market, and
+a product or category link sets both. `regular_price` is the list price and
+`effective_price` the price shown; a checkout code discount is never applied to a
+price (it shows as text in `flags`, and `get_gap_deals` words it as the site
+does, with no end dates). Store stock is the site's pickup bucket per SKU per store,
+with no unit counts and no per-store price. Captured 2026-11-26: a Gap search for
+jeans gave 713 results over 72 pages of 10, the first the Mid Rise UltraSoft Baggy
+Jeans (403540002) at 35 USD shown against a list price of 89.95 USD (promotion, 61%
+off); an Old Navy search for sweater gave 393; the Old Navy clearance category
+3033077 held 2481 colors; one prices call read 5 colors across Old Navy, Banana
+Republic, Athleta, Gap Factory and Banana Republic Factory; the Gap store nearest ZIP
+10001 was Times Square, 0.77 miles away; stock for 4 SKUs at 3 stores read in stock
+for one SKU at 2 of them and out of stock for the rest; a French Canadian search for
+chandail gave 278 results in CAD; the Gap menu had 10 divisions and 302 categories,
+and the deals drawer 5 offers. Not available: review texts, unit counts per store,
+in-store prices, promotion end dates, price history (poll and store the answers),
+checkout. Failed calls and refused inputs are not charged; a not-found (a page past
+the last, an unknown cid, product or store) is charged.
+
+### [Zappos](https://scavio.dev/docs/zappos-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Zappos API for Zappos (zappos.com, the US shoe and clothing store, an Amazon company) and 6pm (6pm.com, the Zappos outlet site): keyword search or the whole catalog, one value per facet (brand, gender, department, category, size, width, color, price band, on sale), sorted by relevance, price, percent off, rating, newest or best sellers, plus a sale mode; one product in full with every color and size, the exact units in stock per size, width and color, price and original price per style, UPC and ASIN; customer reviews with comfort, look and fit ratings; customer questions with Zappos staff answers; the lowest price of each color as Zappos gives it; the department and category tree with item counts; and search suggestions. See the [Zappos API page](https://scavio.dev/zappos-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_zappos` | Keywords or the whole catalog on zappos.com or 6pm.com (`site`), one value per facet (up to 12 facets), 7 sorts, `mode` sale, up to 100 items a page with total, total_pages, facets and per-color units on hand |
+| `get_zappos_product` | One product by `product_id`, `style_id`, `stock_id` or `asin`: every color with price, original price, percent off, badges and attributes, every size with exact units on hand, UPC and ASIN, the fit answers of reviewers and a review summary |
+| `get_zappos_reviews` | Customer reviews of one product, 25 a page, most helpful or latest: overall, comfort and look ratings, size, width and arch fit, text, date, upvotes, verified purchase and incentivized flags, media (zappos.com only) |
+| `get_zappos_questions` | Every customer question of one product with its answers, votes and the answers by Zappos staff (zappos.com only) |
+| `get_zappos_lowest_prices` | The lowest price of each color of one product as Zappos gives it for its product page (zappos.com only) |
+| `get_zappos_categories` | One level of the department > category > subcategory tree with item counts and the facets search takes |
+| `get_zappos_suggestions` | Up to 10 search-box completions for a partial query |
+
+Platform key `zappos`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged.
+
+US only, prices in USD. zappos.com and 6pm.com share product, style and stock
+ids, but prices and stock differ between them, so every answer names its site;
+reviews, questions and lowest prices exist on zappos.com only (`site` 6pm is
+refused, not charged). `on_hand` is the exact number of units in Zappos'
+warehouse stock (Zappos sells online and has no stores). A color or size that
+is out of stock has no price on the site: `price` is null with a `price_note`.
+The lowest prices are each color's lowest price as Zappos gives it; Zappos does
+not state the period they cover, so they are not a 30-day low. Captured
+2026-11-26: running shoes on zappos.com gave 7142 items over 715 pages; Brooks
+Adrenaline GTS 25 (10002909) had 22 colors and 512 sizes, 114 in stock with
+5995 units in all, color Black/Biscuit at 109.95 USD (was 155, 29% off) with
+76 units; HOKA Bondi 9 had 2558 reviews over 103 pages; product 9405856 had 33
+questions with 11 answers by Zappos staff; department Shoes held 63603 items in
+13 categories. Reviews and questions carry no reviewer, asker or answerer
+names. Not available: store stock (there are no stores), several values in one
+facet, price history (poll and store the answers). Failed calls and refused
+inputs are not charged; a not-found (an unknown product, department or
+category) is charged.
+
 ### Vinted
 
 | Tool | Description |
@@ -3403,6 +3604,73 @@ Failed calls are not charged; unknown products are a charged 404. No search
 suggestions, store locator or store stock, Q&A, FanCash, member pricing,
 unit counts, price history or checkout: to track jersey sale prices, poll
 and store your own.
+
+### [Academy Sports + Outdoors](https://scavio.dev/docs/academy-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Academy Sports + Outdoors API for academy.com (the US sporting goods retailer, stores in 21 states): keyword search, category and deal listings (Hot Deals, Clearance, Black Friday and its sub-shops, the Flash Sale) with price, was price, saving, cart-only pricing, promotions, rating, review count and Academy's deal badges, sorted and filtered by any facet and price; one product with every variant, its UPC, price and online units, and Academy's own notices and warnings as given; exact units of each variant at one store for pickup; stores near a ZIP code or point with hours and services; store details; the category navigation; and search suggestions. Academy has no public API. See the [Academy Sports + Outdoors API page](https://scavio.dev/academy-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_academy` | Keyword search, up to 29 organic results a page with sponsored placements apart, 6 sorts, any facet (brand, product type, color, deals, size) and a price range |
+| `get_academy_product` | One product by slug or link with every variant: UPC, price, was price, saving, unit price text, availability, pickup and ship-to-store eligibility, online units; is_firearm and is_ammo flags and Academy's notices as given |
+| `get_academy_store_availability` | Exact in-store units of every variant of one product at one store (part number, store id, state), plus ship-to-store units, the nearest store with stock and online status |
+| `get_academy_stores` | Stores near a US ZIP code or a point, nearest first, 50 miles by default (up to 250), with hours by day, services and fulfilment flags |
+| `get_academy_store` | 1 to 20 stores by id with the same fields, unknown ids in not_found |
+| `get_academy_category` | One category by path or link, sorted and filtered like search |
+| `get_academy_categories` | The category navigation as the site's header shows it: departments, groups and links |
+| `get_academy_deals` | Hot Deals, Clearance, Black Friday (with sub-shops) or the Flash Sale, sorted and filtered like search, with the banner schedule as given |
+| `get_academy_suggestions` | Search-box keyword completions, suggested products and, optionally, popular searches |
+
+Platform key `academy`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. Calls usually take 2 to 20 seconds: allow a client
+timeout of at least 90 s.
+
+US only, prices in USD and national (the same at every store). Captured
+2026-11-26: a search for yeti tumbler gave 140 results over 5 pages, the first
+The YETI DuraCoat Rambler 20 oz Tumbler at 19.97 to 40 USD (was 35, 43% off),
+rated 4.7 from 29355 reviews, with 24 variants; at store 19 (Houston, TX) 14 of
+its 24 variants were in stock with 51 units in all; the Coolers category listed
+394 items over 14 pages; the Black Friday shop listed 1262 items with 9
+sub-shops; 24 stores were within 25 miles of ZIP 77098. Firearms and ammunition
+are returned exactly as Academy lists them, with its own flags and notices.
+Review text is not available (rating and count only). Not available: review
+text, price history (poll and store the answers), a weekly ad, per-item deal end
+dates, checkout. Failed calls and refused inputs are not charged; a not-found
+(an unknown product, part number, store or category) is charged.
+
+### [REI](https://scavio.dev/docs/rei-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+REI API for rei.com (REI, the US outdoor co-op): keyword search, category listings and the Deals and REI Outlet listings with price, compare-at price, percent off, sale, clearance and outlet flags, REI's badges and dated promo text, colors and sizes with their SKU ids, sorted 9 ways and filtered by any facet or one store; one product with every SKU, specs, the review summary with fit ratings and customer questions with answers; reviews 10 a page with star filters; store pickup status of one SKU at the nearest stores (in stock, ship to store or unavailable); stores near a ZIP code with special hours; one store with services, rentals and departments; and search suggestions. REI has no public API. See the [REI API page](https://scavio.dev/rei-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_rei` | Keyword search, 30 or 90 a page, 9 sorts, any facet (brand, price, rating, deals, features, color, size) and one store |
+| `get_rei_category` | One category by slug or link, sorted and filtered like search, with child categories and counts |
+| `get_rei_deals` | Deals (everything on sale or clearance) or REI Outlet, optionally in one category |
+| `get_rei_product` | One product by id or link: every SKU with price, compare-at, price type, savings, UPC and availability, specs, the review summary with fit ratings and questions with answers |
+| `get_rei_reviews` | Reviews 10 a page, 5 sorts, a star filter, with fit, reviewer context bands, syndication source and brand responses |
+| `get_rei_store_stock` | Pickup status of one SKU at the 4 to 10 stores nearest a ZIP code, city and state, or point: in stock, ship to store or unavailable, with estimated arrival |
+| `get_rei_stores` | Stores near a US ZIP code or a point, up to 10 within 100 miles by default, with upcoming special hours |
+| `get_rei_store` | One store by store number: services, rentals, departments, hours and closed dates |
+| `get_rei_suggestions` | Search-term suggestions for a partial query |
+
+Platform key `rei`. Credits: 2 per call on every tool; `credits_used` in the
+response is what was charged. Calls usually take 3 to 20 seconds: allow a client
+timeout of at least 90 s.
+
+US only, prices in USD as shown to a visitor who is not signed in. Store stock
+is REI's own pickup flags: REI publishes no unit counts. Captured 2026-11-26: a
+search for rain jacket gave 285 results over 10 pages, the first the REI Co-op
+Rainier Rain Jacket at 99.95 USD; the Tents category listed 522 items over 18
+pages; REI Outlet listed 3654 items; the Half Dome 2 Tent with Footprint
+(product 243702) was 329 USD with 3 SKUs and a review summary of 62 reviews
+averaging 4.23; its SKU 2437020001 was in stock at 8 of the 9 stores nearest
+ZIP 98101 and ship-to-store at the ninth; 8 stores were within 100 miles of ZIP
+80202, with the Thanksgiving and #OptOutside closures listed. Reviews carry no
+reviewer names or locations. Not available: unit counts, member prices (only
+REI's member reward estimate), used gear (REI does not sell it online), price
+history (poll and store the answers), checkout. Failed calls and refused inputs
+are not charged; a not-found (an unknown product, category or store) is charged.
 
 ### [Argos](https://scavio.dev/docs/argos-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
@@ -4018,6 +4286,44 @@ reviews and questions take no `country`: the id prefix (MLM, MLB, MLA, MCO) or U
 it. Chile is not supported. A zero-result search is an empty, billed page; an unknown
 product, item or seller nickname, or a listing with no questions, is a billed 404 that
 says so.
+
+### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Rakuten API for Rakuten (rakuten.com, the cashback site, formerly Ebates) in the US (rakuten.com, USD), the UK (rakuten.co.uk, GBP) and Canada (rakuten.ca, CAD, English or French): every store's current cash back rate as Rakuten writes it, with the was rate when Rakuten has raised it, the in-store rate, category rates and terms; a store's coupons and deals; up to 100 stores' rates in one call for rate-change checks; store, brand and product search with Rakuten's product prices; the search box suggestions; category store lists; the Black Friday, Cyber Monday and coupon hub pages; and the card-linked in-store offers. See the [Rakuten API page](https://scavio.dev/rakuten-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `get_rakuten_stores` | The store directory with every store's current rate, 36 a page: US by category and sort (cash back, recommended, A to Z, Z to A), UK, and Canada by department and flag (increased, top, new, Canadian, buy now pay later) |
+| `get_rakuten_store` | One store by slug, link or id: online and in-store rates, was rate, category rates, terms, posting time, free shipping, about, first coupons and review summary (no reviewer names); Canada adds special conditions and days to report |
+| `get_rakuten_store_coupons` | Every coupon and deal one store has, 18 a page, with code (null on a deal), restriction and Rakuten's own tag (US, UK) |
+| `get_rakuten_rates` | Current rates for up to 100 store ids in one call, in the order asked, with not_found (US, UK) |
+| `search_rakuten` | Stores, coupons and products for a store, brand or product: top store, store lists, coupons and products with price, was price and the store's rate |
+| `get_rakuten_suggestions` | The rakuten.com search box suggestions: stores with their rates, and product terms (US) |
+| `get_rakuten_category` | Every store with Cash Back in one rakuten.com category, 36 a page; page 1 adds subcategories and the category page's featured sections (US) |
+| `get_rakuten_deals` | The Black Friday, Cyber Monday or coupon hub page, or one store's own Black Friday page: stores, coupons and product deals by section (US) |
+| `get_rakuten_in_store` | Rakuten's card-linked in-store cash back offers, 21 a page, with their terms (US) |
+
+Platform key `rakuten`. Credits: 1 per call on every tool; `credits_used` in
+the response is what was charged. Answers usually take a few seconds; allow a
+client timeout of at least 240 s for a retried call.
+
+Markets (`country`, default `us`): `us`, `gb` and `ca` (with `language` `en` or
+`fr`) for stores, store and search; `us` and `gb` for store coupons and rates;
+`us` only for suggestions, category, deals and in-store offers. Rakuten Japan is
+not offered. Rates are as Rakuten writes them (rate_text) with the parsed amount,
+type (percentage or fixed), up_to and tiered flags; elevated is true when Rakuten
+shows a was rate. Rakuten publishes no end dates for cash back rates, and US and
+UK coupons carry none: poll and store the answers to track changes. Rakuten's
+shopping-trip links are never returned; page_path is the store's Rakuten page
+path as a plain identifier. Captured 2026-11-26: the US directory sorted by cash
+back held 3208 stores over 90 pages; Macy's was at 12% Cash Back (was 2%) online
+plus 10 USD in-store, with 100 coupons and deals over 6 pages; Argos on
+rakuten.co.uk was up to 0.82% Cashback; Best Buy on rakuten.ca in French was up to
+6% (was 1%) with 25 category rates; a search for nike gave Nike as the top store
+and 437925 products; Electronics held 258 stores; the in-store list held 84
+offers. Not available: Rakuten Japan, account balances, adding an offer to an
+account, rate history (poll and store the answers). Failed calls and refused
+inputs are not charged; a not-found (an unknown store or category) is charged.
 
 ### [Booking.com](https://scavio.dev/docs/booking-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
