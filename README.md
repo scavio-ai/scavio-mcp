@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 885 tools across 110 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 891 tools across 110 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 885 tools puts ~1791KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 891 tools puts ~1805KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 885 tools. Loading all of them costs ~1791KB of `tools/list` —
+Scavio exposes 891 tools. Loading all of them costs ~1805KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **885 tools, ~1791KB** |
+| `all` | every platform — **891 tools, ~1805KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -1317,14 +1317,58 @@ lots) is charged.
 
 | Tool | Description |
 |------|-------------|
-| `search_sephora` | Search sephora.com (US): price, list and sale price, rating, review count, bestseller/new/exclusive flags, category facets; `zip` for same-day eligibility |
-| `get_sephora_category` | Products in a category, same fields as search, with subcategories, parent category and breadcrumbs |
-| `get_sephora_product` | One product: every shade or size with price, stock, ingredients and pickup/same-day eligibility, plus a review summary with pro and con sentiment counts |
+| `search_sephora` | Search sephora.com (US): price, list and sale price, rating, review count, bestseller/new/exclusive flags, category facets; `zip` for same-day eligibility; `country: "ca"` for Sephora Canada with filters and facets |
+| `get_sephora_category` | Products in a category, same fields as search, with subcategories, parent category and breadcrumbs; for Canada also sorts, filters and facets |
+| `get_sephora_product` | One product: every shade or size with price, stock, ingredients and pickup/same-day eligibility, plus a review summary with pro and con sentiment counts; for Canada the 10 latest reviews (no reviewer names) and Sephora's AI review summary, labelled as Sephora's |
+| `get_sephora_brand` | Sephora Canada only: one brand's products (e.g. `the-ordinary`, `dior`) with the brand's categories, sorts, filters and facets |
+| `get_sephora_brands` | Sephora Canada only: every brand in the A-Z brand directory, with the `seo_name` to pass to `get_sephora_brand` |
+| `get_sephora_suggestions` | Sephora Canada only: the search-box suggestions (terms and products) for a partial query |
+| `get_sephora_offers` | Sephora Canada only: the current beauty offers with eligibility, promo code, threshold and end date as given (no start date), app-only offers flagged |
+| `get_sephora_stores` | Sephora Canada only: the Canadian stores on Sephora's store list, by province, with counts per province |
+| `get_sephora_store` | Sephora Canada only: one store's address, phone, coordinates, weekly and holiday hours and services |
 
-`search_sephora` and `get_sephora_category` are 1 credit per call, `get_sephora_product` 2.
-`get_sephora_product` takes a result's `url` (faster) or
-`product_id` (e.g. `"P510799"`). The review summary and sentiment counts come
-with no review text.
+US (sephora.com, the default): `search_sephora` and `get_sephora_category` are 1
+credit per call, `get_sephora_product` 2. `get_sephora_product` takes a result's
+`url` (faster) or `product_id` (e.g. `"P510799"`). The US review summary and
+sentiment counts come with no review text.
+
+**Sephora Canada** (sephora.com/ca, Sephora's Canadian store: 152 stores per its
+store list on Nov 25, 2026): pass `country: "ca"` to `search_sephora`,
+`get_sephora_category` and `get_sephora_product`; the six other tools are
+Sephora Canada only and need no country. Canadian beauty prices in CAD (The
+Ordinary, Dior, Rare Beauty, Supergoop and the rest of the catalogue) with sale
+prices and dated offers. Credits: search, category, brand, brands, suggestions,
+stores and store 1 each; product and offers 2. Product and SKU ids are the same
+as on sephora.com, with CAD prices as Sephora Canada gives them (French prices
+such as `33,00 $` are read as 33.00). `language: "fr"` returns French names,
+descriptions and facet values with the same ids and prices. Listings take
+`sort`, `filters` (`brand`, `on_sale`, `new`, `clean`, `rating` 1-4,
+`min_price`, `max_price`, `facets`) and `include_facets`; a brand keyword such
+as `the ordinary` answers that brand's products with a `redirect`. `zip` is US
+only (a 400 with `country: "ca"`).
+
+Captured 2026-11-26: Dior Sauvage Eau de Parfum (`P428500`) at 128 to 300 CAD,
+the 3.4 oz / 100 ml SKU 2038131 at 200 CAD, `in_stock: true`,
+`only_few_left: false`; the Sephora Collection Oil Infusion Hydrating Lip Oil
+(`P518068`) at a sale price of 10.50 CAD (list 15.00) in a `lip oil` search;
+26 offers, among them 30% off Sephora Collection with `end_date`
+2026-11-30T23:59:00.000-08:00; and 152 stores on the store list (ON 64, QC 26,
+AB 22, BC 22). Each SKU carries price, list and sale price, `in_stock` and
+`only_few_left`. `review_summary` is Sephora's own AI-generated summary of
+customer reviews and is labelled as Sephora's; read it as Sephora's summary,
+not as a fact. Store address and phone are public business data, returned as
+captured.
+
+Not available for Canada: stock per store, a store finder by postal code, the
+full review list with its sorts or a star filter, UPC (`upc` is always null:
+the pages show none), Beauty Insider prices, cart or checkout, price history
+(poll and store the answers). Sephora publishes no public product or store
+API. For the same product at other Canadian retailers use the
+[Dermstore](https://scavio.dev/dermstore-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (`country: "ca"`),
+[Amazon](https://scavio.dev/amazon-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (`country: "ca"`) and
+[Walmart](https://scavio.dev/walmart-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) (`domain: "ca"`) tools; match on
+brand, name and size. See the
+[Sephora API page](https://scavio.dev/sephora-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 ### Ulta Beauty
 
