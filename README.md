@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 891 tools across 110 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 900 tools across 111 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 891 tools puts ~1805KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 900 tools puts ~1827KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 891 tools. Loading all of them costs ~1805KB of `tools/list` —
+Scavio exposes 900 tools. Loading all of them costs ~1827KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **891 tools, ~1805KB** |
+| `all` | every platform — **900 tools, ~1827KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1111,6 +1111,49 @@ Money prices, price history (poll and store the answers), UPC or barcodes (the
 site shows none), cart or checkout. For the same model at Amazon.ca and
 Walmart.ca use the Amazon and Walmart tools; match on brand, model, colour and
 size. Failed calls and refused inputs are not charged; a not-found is charged.
+
+### [RONA](https://scavio.dev/docs/rona-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+RONA API for RONA (rona.ca, the Canadian home improvement retailer: RONA+ and RONA stores, about 425 corporate and affiliated dealer stores per RONA inc.): RONA store prices in CAD for up to 60 article numbers at one store in one call, with the regular price, rebate and exact store units, so the same lumber, panels or tools can be priced store by store and next to Home Depot Canada; keyword search, category and weekly deals lists priced at the store you choose; one product with the sale end RONA shows; the 403 stores on RONA's store locator by province, city, banner or nearest a point; one store's hours; and which stores near a store have an article. See the [RONA API page](https://scavio.dev/rona-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_rona` | Search by keywords: price, regular price, on sale, unit, rating, review count, store units; 6 sorts, RONA's filters (brand, price band, rating, on sale, clearance, Buy in Bulk, category); 24, 48 or 96 a page; `redirected_to` when RONA sends the term to a category |
+| `get_rona_product` | One product by article number or link: price, regular price, rebate, `sale_ends_text` as RONA shows it, `sale_ends` (ISO, when unambiguous), store units, aisle, DC and parcel units, nearby stores with units, specifications, UPC, model, rating and review count |
+| `get_rona_prices` | Up to 60 article numbers at one store (`store_id` required): price, regular price, rebate, on sale, exact store units, DC and parcel units, aisle, UPC, model |
+| `get_rona_category` | One category by path, with the search sorts, filters and paging; with `family_id` and `store_id`, the category's products at that store for 1 credit |
+| `get_rona_categories` | The department tree; `path` is the input of `get_rona_category` |
+| `get_rona_stores` | RONA's 403 stores (RONA+ and RONA; corporate and dealer) by province, city and banner, or nearest a latitude and longitude, with services |
+| `get_rona_store` | One store by number: address, phone, coordinates, hours, special hours, department hours |
+| `get_rona_stock` | Which stores near a store (or a point) have one article, with exact units, nearest first |
+| `get_rona_deals` | RONA's weekly deals or clearance listing: sale price and regular price, paged and filtered like search (RONA's own order, no sort) |
+
+Platform key `rona`. Credits: `get_rona_prices`, `get_rona_categories`,
+`get_rona_stores` and `get_rona_store` 1; `search_rona` and `get_rona_deals`
+2 (3 with `store_id`; 2 more when RONA redirects a search term);
+`get_rona_product` 3; `get_rona_stock` 3; `get_rona_category` 2 (3 with
+`store_id`), or 1 with `family_id` and `store_id`. `credits_used` in the
+response is what was charged. Answers can take up to about a minute: allow up
+to 2 minutes.
+
+Canada only, prices in CAD; `language` is `en` (default) or `fr` on every
+tool (article numbers and prices are the same in both). Without `store_id`,
+search, category and deals are priced at the store RONA's site picks for the
+visit (`store.requested` false); with `store_id` prices and units are that
+store's. RONA prices some goods per store: captured 2026-11-26, 2-in x 4-in x
+8-ft SPF Select Lumber (0971073) was 4.35 CAD at store 41460 (Quebec), 4.22 at
+55130 (Ontario) and 4.19 at 62860 (Alberta), while the DEWALT 20 V MAX
+Brushless Compact Drill/Driver Kit on sale (00277649) was 118 at all three.
+`units` are exact store units; `null` means RONA showed no count, not zero.
+Article numbers are strings (leading zeros count). `get_rona_stock`: RONA
+offers no nearby-store list for some articles (lumber), and the list can come
+back empty now and then (retry once). For the same item at Home Depot Canada
+use the Home Depot tools with `country: "ca"`, matching the same grade and
+length or the same model. Not available: review text (rating and review count
+only), search suggestions, postal-code store lookup (pass latitude and
+longitude, or a city or province), the printed flyer, cart or checkout, price
+history (poll and store the answers). Failed calls and refused inputs are not
+charged; a not-found (an unknown article, category or store) is charged.
 
 ### Dollar General
 
