@@ -45,9 +45,17 @@ import { registerDollarTreeTools } from "./dollartree.js";
 import { registerDiscountTireTools } from "./discounttire.js";
 import { registerVevorTools } from "./vevor.js";
 import { registerNellisTools } from "./nellis.js";
+import { registerBringatrailerTools } from "./bringatrailer.js";
 import { registerSephoraTools } from "./sephora.js";
 import { registerUltaTools } from "./ulta.js";
 import { registerDermstoreTools } from "./dermstore.js";
+import { registerSpacenkTools } from "./spacenk.js";
+import { registerLookfantasticTools } from "./lookfantastic.js";
+import { registerCultbeautyTools } from "./cultbeauty.js";
+import { registerYesstyleTools } from "./yesstyle.js";
+import { registerNotinoTools } from "./notino.js";
+import { registerDouglasTools } from "./douglas.js";
+import { registerBootsTools } from "./boots.js";
 import { registerAldiTools } from "./aldi.js";
 import { registerInstacartTools } from "./instacart.js";
 import { registerPcexpressTools } from "./pcexpress.js";
@@ -58,6 +66,12 @@ import { registerWholeFoodsTools } from "./wholefoods.js";
 import { registerHarborFreightTools } from "./harborfreight.js";
 import { registerAutozoneTools } from "./autozone.js";
 import { registerOreillyTools } from "./oreilly.js";
+import { registerRockautoTools } from "./rockauto.js";
+import { registerCarscomTools } from "./carscom.js";
+import { registerAutotraderTools } from "./autotrader.js";
+import { registerCargurusTools } from "./cargurus.js";
+import { registerCarmaxTools } from "./carmax.js";
+import { registerCarvanaTools } from "./carvana.js";
 import { registerPetsmartTools } from "./petsmart.js";
 import { registerPetcoTools } from "./petco.js";
 import { registerIherbTools } from "./iherb.js";
@@ -185,9 +199,17 @@ const PLATFORMS: Record<string, RegisterFn> = {
   discounttire: registerDiscountTireTools,
   vevor: registerVevorTools,
   nellis: registerNellisTools,
+  bringatrailer: registerBringatrailerTools,
   sephora: registerSephoraTools,
   ulta: registerUltaTools,
   dermstore: registerDermstoreTools,
+  spacenk: registerSpacenkTools,
+  lookfantastic: registerLookfantasticTools,
+  cultbeauty: registerCultbeautyTools,
+  yesstyle: registerYesstyleTools,
+  notino: registerNotinoTools,
+  douglas: registerDouglasTools,
+  boots: registerBootsTools,
   aldi: registerAldiTools,
   instacart: registerInstacartTools,
   pcexpress: registerPcexpressTools,
@@ -198,6 +220,12 @@ const PLATFORMS: Record<string, RegisterFn> = {
   harborfreight: registerHarborFreightTools,
   autozone: registerAutozoneTools,
   oreilly: registerOreillyTools,
+  rockauto: registerRockautoTools,
+  carscom: registerCarscomTools,
+  autotrader: registerAutotraderTools,
+  cargurus: registerCargurusTools,
+  carmax: registerCarmaxTools,
+  carvana: registerCarvanaTools,
   petsmart: registerPetsmartTools,
   petco: registerPetcoTools,
   iherb: registerIherbTools,
@@ -272,7 +300,7 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 1853KB of tools/list (measured with
+ * tools, which serialises to 2185KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 143
@@ -334,7 +362,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (907 tools)
+ *   all      — every platform (1021 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *

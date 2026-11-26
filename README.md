@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 907 tools across 112 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1021 tools across 126 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 907 tools puts ~1853KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1021 tools puts ~2185KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 907 tools. Loading all of them costs ~1853KB of `tools/list` —
+Scavio exposes 1021 tools. Loading all of them costs ~2185KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **907 tools, ~1853KB** |
+| `all` | every platform — **1021 tools, ~2185KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `sephora`, `ulta`, `dermstore`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `tiktok-shop`, `booking`, `airbnb`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -1425,6 +1425,40 @@ brand, name and size. See the
 1 credit per call. `get_ulta_stores` takes a result's `product_id` and `sku_id`
 plus a ZIP. Ulta publishes in stock / out of stock per store, not unit counts.
 
+### [Bring a Trailer](https://scavio.dev/docs/bringatrailer-results?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Bring a Trailer API for Bring a Trailer (bringatrailer.com, the online collector-car auction site owned by Hearst): completed auction results with the sale price or the high bid of a lot that ended under its reserve, a model's or make's full price history with sell-through rate and median sold price per currency, one auction in full with its bid history and comments, every live auction, and the make, model and location pages. See the [Bring a Trailer API page](https://scavio.dev/bringatrailer-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `get_bringatrailer_results` | Search completed auctions by keywords (or none): 4 sorts, sold or reserve not met, recency, model years, max bid, category, origin, era, no reserve or Premium, and one make, model id or location id; up to 60 a page through the first 10,000 results of a query |
+| `get_bringatrailer_price_history` | Every completed result of one model (or a model family's ids) or make in one call: sold and reserve-not-met counts, sell-through rate, min / max / median / average per currency, newest to oldest |
+| `get_bringatrailer_listing` | One auction by slug or link, live or ended: sold price or high bid, bid count, views, watchers, location (no ZIP), seller type, listing details, description, photos, earlier results of the same vehicle, the full bid history and paged comments, without usernames |
+| `get_bringatrailer_live` | Every live auction (about 1,000) filtered by keyword, make, country, ending within N hours, no reserve and Premium, sorted by ending time or current bid |
+| `get_bringatrailer_make` | One make page: its models with the ids results take, live auctions, completed total and recent results |
+| `get_bringatrailer_model` | One model page (or a family such as porsche/911): the model ids for results and price history, live auctions, completed total and recent results |
+| `get_bringatrailer_location` | The lots located in one country: the location id for results, live auctions, completed total and recent results |
+| `get_bringatrailer_suggestions` | Search-box suggestions for a partial make, model or place, with the page ids results takes |
+
+Platform key `bringatrailer`. Credits: 1 per call on every tool;
+`credits_used` in the response is what was charged. Answers can take up to
+about 200 seconds (`get_bringatrailer_live` reads every live lot in one call,
+20 seconds to 3 minutes; a make page up to a minute): allow up to 4 minutes.
+
+One site, no country input. Amounts are in each lot's own currency as the site
+shows it (USD, EUR, GBP and others): read `currency` on every lot (captured
+2026-11-26: a 1988 BMW M3 sold for 80000 USD after 29 bids; a Euro 1994 BMW
+850CSi sold for 109000 EUR). `amount` is the sale price of a sold lot and the
+high bid of a lot that ended under its reserve, before the site's buyer's fee.
+Results reach the first 10,000 of a query (page x page_size at most 10,000):
+narrow with filters or recency for older lots; price history is capped at
+10,000 results (`capped`). Captured 2026-11-26: the BMW E30 M3 (model_id
+1833018) over the last year had 70 results, 58 sold, median sold price 59250
+USD. `no_reserve` and `premium` are not combined on results. Bids and comments
+carry no usernames, and no member profile links, chassis numbers / VINs or
+seller ZIP codes are returned. Failed calls and refused inputs are not
+charged; a not-found (an unknown slug, make, model or country) is charged.
+
 ### [Dermstore](https://scavio.dev/docs/dermstore-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 Dermstore API for Dermstore (dermstore.com, the US skincare and beauty retailer, shipping to the US and Canada): price, RRP as Dermstore gives it and Dermstore's offer text per product and per brand, every shade, size or strength with its own price and stock, UPC, auto-replenish plans, the current offers with their end times, and US vs Canada prices for the same SKU. See the [Dermstore API page](https://scavio.dev/dermstore-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
@@ -1470,6 +1504,252 @@ charged.
 shelf price, default), `pickup` or `delivery` (online prices, often higher).
 Pass `store_id` (from `get_aldi_stores`, e.g. `"151248"`) or a `zip` to use the
 nearest store. ALDI has no product ratings.
+
+### [Space NK](https://scavio.dev/docs/spacenk-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Space NK API for Space NK (spacenk.com, the London-based luxury beauty retailer, owned by Ulta Beauty): product search, category and brand lists with Space NK's ten sorts, price next to the struck-through price and Space NK's badges, the online stock count of a shade or size, every shade or size of a product, customer reviews with star distribution and skin context (no reviewer names), the UK stores near a postcode with Space NK's in-store and Click & Collect flags for one product, and the gifts with purchase on the offers page. See the [Space NK API page](https://scavio.dev/spacenk-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_spacenk` | Search by keywords: 36 a page, 10 sorts, a brand filter; `full: true` fills all 36 products (else the first 12 in full and 24 ids) |
+| `get_spacenk_category` | One category by id (`black-friday` is the Black Friday list), same paging, sorts and brand filter |
+| `get_spacenk_brand` | One brand's products by brand id, same paging and sorts |
+| `get_spacenk_brands` | Every brand A-Z (245 on uk), optionally one letter |
+| `get_spacenk_product` | One product by product id or shade / size id: price, list price, EAN, online `stock_count`, size, ingredients, every shade or size with its stock, promotions and badges |
+| `get_spacenk_reviews` | Reviews of one product by its master id (starts with M): up to 100 a page, 4 sorts, star filter, text search, rating distribution, skin context; no reviewer names |
+| `get_spacenk_suggestions` | Search-box suggestions: brands, categories, articles and products |
+| `get_spacenk_stores` | Up to 20 UK stores nearest a postcode or point for one product: hours, distance, in-store and Click & Collect flags (not counts) |
+| `get_spacenk_offers` | The gifts with purchase on the offers page (uk or ie): brand, gift, condition, spend threshold, and the page's validity line |
+
+Platform key `spacenk`. Credits: 1 per call; `search_spacenk`, `get_spacenk_category`
+and `get_spacenk_brand` with `full: true` cost up to 5 (one extra call per product
+filled, billed on what was spent). `credits_used` in the response is what was
+charged. Answers can take up to about 30 seconds: allow up to 4 minutes.
+
+Markets (`market`, default `uk`): `uk` (GBP), `ie` (EUR), `nl` (EUR, Dutch copy)
+and `au` (AUD), each in its own currency as Space NK prices it; `us`, `de` and `ca`
+are refused with a 400 (Space NK's US path shows UK prices). Stores are UK only and
+take a product id; reviews take the product (master) id starting with M, not a shade
+or size id, and are one English pool shown on every market; offers take `uk` or
+`ie` only. Captured 2026-11-26: TAKAMI Vitamin B3+ Spot Serum at 43.5 GBP (list
+price 58) with an online stock count of 57; Charlotte Tilbury Airbrush Flawless
+Foundation at 59 AUD on `au`, 269 reviews. Not available: the US market, a price
+filter (the site ignores it; sort by price instead), store stock counts, price
+history (poll and store the answers), cart or checkout. Failed calls and refused
+inputs are not charged; a not-found (an unknown category or brand id) is charged.
+
+### [Lookfantastic](https://scavio.dev/docs/lookfantastic-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Lookfantastic API for Lookfantastic (lookfantastic.com, THG's beauty retailer with 10 country sites): price, RRP as Lookfantastic gives it and the site's offer text per product, every shade or size with its own price, stock and barcode (EAN), the 10 latest reviews (no reviewer names), the current offers with their end times, and the same SKU priced on each site and in each currency the site offers. See the [Lookfantastic API page](https://scavio.dev/lookfantastic-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_lookfantastic` | Search by keywords (in the site's language) or a SKU: up to 40 a page, 7 sorts, filters (brand, skin type, concern, SPF band, key ingredient, formulation, any other site filter, price, rating, discount), facets on request; a mapped keyword returns the page Lookfantastic sends it to, reported in `resolved_from` |
+| `get_lookfantastic_list` | Any list page by path or link: a category, brand (`/brands/cerave`) or offer page (`/black-friday`), up to 200 a page, same filters and sorts |
+| `get_lookfantastic_product` | One product by SKU or link: price, RRP, `discount_percent`, barcode, variants with their own price and stock, ingredients, directions, the page's offer banner, rating, review count and the 10 latest reviews |
+| `get_lookfantastic_suggestions` | Search-box suggestions: suggested terms, corrections and up to 5 products |
+| `get_lookfantastic_offers` | The current offers as the voucher-codes page lists them: code, gift, spend threshold, end time and the list page of the products |
+| `get_lookfantastic_brands` | The A-Z brand directory (415 brands on gb), optionally one letter |
+| `get_lookfantastic_categories` | The category tree as the site navigation shows it |
+
+Platform key `lookfantastic`. Credits: 1 per call; `credits_used` in the response is
+what was charged. Answers can take up to about 30 seconds: allow up to 4 minutes.
+
+Markets (`market`, default `gb`): `gb` (lookfantastic.com, the UK and international
+site, 22 currencies via `currency`: GBP default, USD, EUR, AUD, CAD, CHF, SEK, DKK,
+NOK, JPY, KRW, HKD, SGD, AED, SAR, ILS, NZD, CNY, MYR, TWD, THB, IDR), `de`, `fr`,
+`es`, `it`, `nl`, `at`, `ie` (EUR, each in its own language), `pl` (PLN default or
+EUR) and `eu` (eu.lookfantastic.com, English, euro prices of its own). A currency a
+site does not offer is a 400, not charged; nothing is converted. Captured 2026-11-26:
+PIXI Glow Tonic 250ml (SKU 11200055) at 12.6 GBP (RRP 18) on `gb` and 14.49 EUR (RRP
+20.7) on `fr`. Not available: full review paging (only the 10 latest via
+`get_lookfantastic_product`), cart or checkout prices (code discounts apply at the
+cart), price history (poll and store the answers), offer start dates. Failed calls
+and refused inputs are not charged; a not-found (an unknown SKU or list path) is
+charged.
+
+### [Cult Beauty](https://scavio.dev/docs/cultbeauty-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Cult Beauty API for Cult Beauty (cultbeauty.co.uk, THG's beauty retailer): price, RRP as Cult Beauty gives it and the site's offer text per product, every shade or size with its own price, stock and barcode, the 10 latest reviews (no reviewer names), the current offers with their end times, and the same SKU on the UK and international sites in 12 currencies. See the [Cult Beauty API page](https://scavio.dev/cultbeauty-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_cultbeauty` | Search by keywords or a SKU: up to 40 a page, 7 sorts, filters (brand, skin type, concern, SPF content, key ingredient, formulation, a brand's range, any other site filter, price, rating, discount), facets on request; a mapped keyword returns the page Cult Beauty sends it to, reported in `resolved_from` |
+| `get_cultbeauty_list` | Any list page by path or link: a category (`/skin-care`), brand (`/brands/cerave`) or offer page (`/black-friday-cyber-monday`), up to 200 a page, same filters and sorts |
+| `get_cultbeauty_product` | One product by SKU or link: price, RRP, `discount_percent`, barcode, variants with their own price and stock, ingredients, directions, the page's offer banner, rating, review count and the 10 latest reviews |
+| `get_cultbeauty_suggestions` | Search-box suggestions: suggested terms, corrections and up to 5 products |
+| `get_cultbeauty_offers` | The current offers as the voucher-codes page lists them (`gb` only): code, gift, spend threshold, end time and the list page of the products |
+| `get_cultbeauty_brands` | The A-Z brand directory (289 brands on gb), optionally one letter |
+| `get_cultbeauty_categories` | The category tree as the site navigation shows it |
+
+Platform key `cultbeauty`. Credits: 1 per call; `credits_used` in the response is
+what was charged. Answers can take up to about 30 seconds: allow up to 4 minutes.
+
+Markets (`market`, default `gb`): `gb` (cultbeauty.co.uk, GBP default) and `intl`
+(cultbeauty.com, EUR default), both in English and both with the same 12 currencies
+via `currency`: GBP, EUR, USD, AUD, CHF, AED, SAR, ILS, HKD, SGD, JPY, CNY. A currency
+outside that list is a 400, not charged; nothing is converted. `get_cultbeauty_offers`
+on `intl` is a 400, not charged (cultbeauty.com has no voucher-codes page). Captured
+2026-11-26: PIXI Glow Tonic 250ml (SKU 11200055) at 12.6 GBP (RRP 18) on `gb` and
+14.21 EUR (RRP 20.3) on `intl`. Not available: full review paging (only the 10
+latest via `get_cultbeauty_product`), cart or checkout prices (code discounts apply
+at the cart), price history (poll and store the answers), offer start dates. Failed
+calls and refused inputs are not charged; a not-found (an unknown SKU or list path)
+is charged.
+
+### [YesStyle](https://scavio.dev/docs/yesstyle-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+YesStyle API for YesStyle (yesstyle.com, the Hong Kong-based online store for Asian beauty and fashion, shipping to 150+ countries): YesStyle's own price, list price and discount for the shipping country in that country's currency (YesStyle keeps regional price lists), flash-sale and Black Friday labels, the site coupon with its tiers and expiry, a deal's end date and claimed share, every shade and size with its own price, ingredients, bestseller ranks, brand satisfaction, and customer reviews with skin type and photos (no reviewer names). Keyword search, category, brand and deal lists, 100 a page with seven sorts and YesStyle's Featured, price and facet filters. See the [YesStyle API page](https://scavio.dev/yesstyle-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_yesstyle` | Search by keywords or a brand name: 100 a page, 7 sorts, Featured filters (in stock, flash sales, Black Friday, clearance, Korean / Japanese brands, cruelty-free, vegan ...), price band, department and any facet; facets on request |
+| `get_yesstyle_category` | One category by id or link, same sorts and filters plus Type, Region (brand country) and Ingredients |
+| `get_yesstyle_brand` | One brand's products by id or link, plus the brand's region and customer satisfaction |
+| `get_yesstyle_brands` | Every YesStyle brand (about 4,300), filtered by name and paged |
+| `get_yesstyle_deals` | Black Friday, flash sales, clearance, rock-bottom prices, price drops, 24-hour sale, value & gift sets, twin packs, on a department (default Beauty) |
+| `get_yesstyle_product` | One product by id or link: price, list price, discount, sale end date, deal claimed share, availability, ingredients, bestseller ranks, packs, shipping and returns; `include_variants` adds every shade / size with its own price |
+| `get_yesstyle_reviews` | Customer reviews, 15 a page, 4 sorts, star / positive / negative / photo / video filters, summary with star counts and satisfaction (no reviewer names) |
+| `get_yesstyle_suggestions` | Suggested search terms and products for typed text, priced for the shipping country |
+| `get_yesstyle_markets` | The 153 shipping countries with currency and language, and which 39 the page tools serve |
+
+Platform key `yesstyle`. Credits: `search_yesstyle`, `get_yesstyle_category`,
+`get_yesstyle_brand`, `get_yesstyle_deals` and `get_yesstyle_product` 2
+(`get_yesstyle_product` with `include_variants` 3; when the variant list is
+unavailable, `variants_status` says so and that part is not charged);
+`get_yesstyle_brands`, `get_yesstyle_reviews`, `get_yesstyle_suggestions` and
+`get_yesstyle_markets` 1. Billed on what the request actually costs:
+`credits_used` in the response is what was charged. Answers usually take 2-30
+seconds and can take up to about 225 seconds: allow up to 4 minutes.
+
+Countries (`country`, ISO-2, default `us`; `uk` is read as `gb`): search,
+category, brand, deals and product serve 39 shipping countries (ae at au be ca
+ch cl cz de dk es fr gb gr hk hu ie il in it jp kr kz mx my nl no nz ph pl pt
+ro sa se sg th tw us za); Brazil is held back, and any other country is a 400
+before anything is charged. Reviews and suggestions take any of the 153
+countries YesStyle ships to. `language` is one of en fr de es it nl pl pt ru
+ar zh_TW (default: the country's own on YesStyle). Prices are YesStyle's own
+for the shipping country, in its currency; the currency follows the country.
+Every answer is checked for its country (`market`). Captured 2026-11-26: COSRX
+Advanced Snail 96 Mucin Power Essence was US$ 16.09 in the US (list price 25,
+FLASH SALE); the 100ml option (product id 1052684694) was GBP 10.96 in the
+United Kingdom and JPY 2,497 in Japan. The search tool does not take `type`,
+`region` or `ingredients` (YesStyle's search does not apply them); use the
+category, brand or deals tools. Not available: stores, a currency other than
+the country's, cart or checkout, price history (poll and store the answers),
+EAN / UPC (YesStyle shows none). Failed calls, a page that came back for
+another country, and refused inputs are not charged; a not-found (an unknown
+product) is charged.
+
+### [Notino](https://scavio.dev/docs/notino-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Notino API for Notino (notino.com, the Brno-based online perfume and cosmetics store with 27 country shops): every size and shade of a perfume or cosmetic with its own price, EAN, the lowest price of the last 30 days Notino shows under EU price rules, the recommended retail price where a storefront shows one, stock level and how many Notino stores hold it; the voucher code, discount and discounted price on every listed item; promo lists with their terms; customer reviews from every storefront (no reviewer names); the brand directory; and Notino's stores with opening hours in 8 countries. 27 storefronts, each in its own language and currency with its own prices. See the [Notino API page](https://scavio.dev/notino-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_notino` | Search by text: 24 a page, 6 sorts, facet filters; Notino's redirects to a brand or category page are reported in `redirected_to` |
+| `get_notino_product` | One product by link or order code: every variant with price, EAN, `lowest_price_30d`, RRP where shown, stock level, store count, ingredients; deliveries, gift campaigns and the same product on other storefronts |
+| `get_notino_reviews` | Customer reviews, 8 a page, 5 sorts and a star filter, with rating buckets, per-storefront counts and aspect ratings (no reviewer names) |
+| `get_notino_category` | One category's products by path or link, same sorts and filters |
+| `get_notino_brand` | One brand's products by slug or link |
+| `get_notino_promo` | A promo list (default Black Friday) with its terms and each item's deal |
+| `get_notino_brands` | A storefront's brand directory (about 1,800 on notino.de), by text, letter or featured |
+| `get_notino_suggestions` | Search suggestions: collections, brands and products |
+| `get_notino_stores` | Notino's stores and pickup points in one of 8 storefronts, by city |
+| `get_notino_store` | One store: services, 7 days of opening hours, address, map link and contact |
+
+Platform key `notino`. Credits: 1 per call, 2 on `gb` (notino.co.uk).
+`get_notino_category`, `get_notino_brand` and `get_notino_promo`: page 1
+unsorted and unfiltered 1 (2 on `gb`); any other page, sort or filter 3 (4 on
+`gb`). `search_notino` 1 (2 on `gb`) with any page, sort or filter; a search
+Notino answers with a brand or category page that does not keep the page,
+sort or filters 3 (4 on `gb`). `get_notino_reviews`: the newest 8 (page 1, no
+star filter) 1 (2 on `gb`; by `order_code` 1, or 4 on `gb`); any other page,
+sort or star filter 1 on every storefront. `get_notino_stores` and
+`get_notino_store` 1. Billed on what the request actually costs:
+`credits_used` in the response is what was charged. Answers can take up to
+about 240 seconds (deeper review views, typically 10-45 seconds): allow up to
+4 minutes, or 250 seconds on review views as the API asks.
+
+Storefronts (`market`, default `de`; a product or listing link picks its
+own): de at ch cz sk pl hu ro bg hr si ua fr be nl it es pt gr gb ie dk se fi
+lt lv ee, one language each (be is French, ch German), each with its own
+currency and prices. Stores exist on cz sk pl at hu ro bg hr (default `cz`),
+listed by city; there is no postcode search. Captured 2026-11-26: DIOR Sauvage
+Eau de Parfum 200 ml (order code CHD13588, EAN 3348901428545) was 180 EUR on
+notino.de with `lowest_price_30d` 170, and 805 PLN on notino.pl, held by 3
+Polish stores; Estée Lauder Advanced Night Repair 75 ml was 134 EUR on
+notino.es with an RRP of 179. Sorted by relevance, Notino stops a search near
+500 products (`total_capped`); any other sort lists the full set. Voucher
+codes show on listings (`items[].deal`), not on the product tool. Not
+available: per-store stock (`pickup_store_count` only), a postcode store
+search, cart or checkout prices, price history (poll and store the answers),
+reviewer names or identity. Failed calls and refused inputs are not charged;
+a not-found (a product the storefront does not sell) is charged.
+
+### [Douglas](https://scavio.dev/docs/douglas-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Douglas API for Douglas (douglas.de, the Dusseldorf-based beauty retailer with about 1,960 stores in Europe), on 15 storefronts in 13 countries: the price, Douglas' struck-through price, the discount, the 30-day lowest price Douglas shows beside a reduction and the RRP / UVP, per product and per variant, in each storefront's own currency and language; keyword search, category, brand and deal lists (the sale department and the Beauty / Black Friday list, with the offers page's promotions and their validity text); one product with EAN, ingredients, scent notes and every size or shade; the stores near a city or postcode with opening and holiday hours; Douglas' own review summary; search suggestions and the brand index. See the [Douglas API page](https://scavio.dev/douglas-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_douglas` | Search by keywords: 48 a page, 6 sorts, brand codes, the sale badge and any facet of the page; `redirected_to` when Douglas sends the keyword to a category or brand page |
+| `get_douglas_category` | One category by path, code or link, with the search sorts, filters and paging |
+| `get_douglas_brand` | One brand's products by brand code, path or link, with the search sorts, filters and paging |
+| `get_douglas_deals` | The sale department, the Beauty / Black Friday list or any category's sale-badged products, plus the storefront's promotions (de, at, ch-de, ch-fr, pl) with their legal text |
+| `get_douglas_product` | One product by base or variant code or link: price, was price, discount, 30-day low, RRP, unit price, EAN, ingredients, scent notes, stock level and every variant; `variants_ean` adds each variant's EAN |
+| `get_douglas_stores` | Stores near a city or postcode: address, phone, coordinates, distance, opening hours, dated holiday hours |
+| `get_douglas_store` | One store by id: every stores field plus parking, public transport, top brands, events and service booking |
+| `get_douglas_review_summary` | Douglas' own AI-generated summary of a product's reviews (base code) |
+| `get_douglas_suggestions` | Search-box suggestions: up to 10 products and the storefront's trending searches |
+| `get_douglas_brands` | Every brand on a storefront (about 1,890 on de), filtered by name or letter |
+
+Platform key `douglas`. Credits: 1 per call; 2 on `it` (Italy), where `get_douglas_stores`
+and `get_douglas_store` stay 1. `get_douglas_product` with `variants_ean` adds 1 credit
+per variant looked up (2 on `it`), up to 10. `credits_used` in the response is what
+was charged. Answers can take up to about 210 seconds (a listing page takes 5 to 210
+seconds; the brand index up to about 200): allow up to 4 minutes.
+
+Markets (`market`, default `de`): `de`, `at`, `ch-de`, `ch-fr` (CHF), `nl`, `be-nl`,
+`be-fr`, `es`, `it`, `pl` (PLN), `cz` (CZK), `sk`, `hu` (HUF), `ro` (RON), `lt`; the
+rest in EUR. Names and texts come in the storefront's language, and prices and
+assortment differ per storefront. Captured 2026-11-26: Yves Saint Laurent Libre Eau
+de Parfum 30 ml (5000005003) on `de` at 52.99 EUR, was 59.99, 30-day low 52.99, RRP
+87. `sale_only` is a 400 on `ch-de` / `ch-fr` (Douglas Switzerland shows no sale
+badge); `was_price` shows every reduction. Douglas Portugal, Croatia, Slovenia,
+Latvia, Estonia and Bulgaria (another shop platform) and France (Nocibe) are not
+offered. Not available: review texts, review paging or star filters, per-store
+stock, store reservation, price history (poll and store the answers), cart or
+checkout. Failed calls and refused inputs are not charged; a not-found (an unknown
+code, category, brand or store) is charged.
+
+### [Boots](https://scavio.dev/docs/boots-product?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Boots API for Boots (boots.com, the UK health and beauty retailer with over 1,800 stores, and boots.ie in Ireland): one product by link or product id with the price, Boots' was price and Save amount, unit price, every shade or size, the offers and promo codes on the page and the Advantage Card offers, in GBP on boots.com and EUR on boots.ie; whether the stores near a UK postcode or a point have one product, shade or size in stock; the stores near a postcode or town with their services; and one store's opening hours. Boots search is not available yet: start from a Boots product link or its 8-digit id. See the [Boots API page](https://scavio.dev/boots-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `get_boots_product` | One product by link or 8-digit id: price, was price, saving, size, unit price, `catentry_id`, shades or sizes with their `item_code`, online stock, offers with promo codes, Advantage Card offers, description, ingredients |
+| `get_boots_store_stock` | In stock or out of stock at the stores near a UK postcode or a latitude and longitude, nearest first, with each store's hours; no unit counts |
+| `get_boots_stores` | Stores near a UK postcode or a town (uk and ie): store number, address, coordinates, distance, services; the place's latitude and longitude for `get_boots_store_stock` on ie |
+| `get_boots_store` | One store by page slug or link, store number (boots.com) or exact name: address, phone, hours, pharmacy hours, services |
+
+Platform key `boots`. Credits: 1 per call; 2 when Boots answered only on a second
+attempt (3 for two-step lookups: a product by `product_id`, a store by
+`store_number` or `name`). `credits_used` in the response is what was charged.
+Answers usually take 2 to 60 seconds and can take up to about 200 seconds: allow up
+to 4 minutes.
+
+Markets (`market`, default `uk`): `uk` (boots.com, GBP) and `ie` (boots.ie, EUR: its
+own prices, and some UK products are not sold there). Captured 2026-11-26: CeraVe AM
+Facial Moisturising Lotion SPF30 52ml (10331199) at 11.62 GBP on `uk` (was 15.50) and
+13.50 EUR on `ie` (was 18); near SW11 1QN it was in stock at 79 of 85 stores.
+`get_boots_store_stock` takes `item_code` and `catentry_id` from `get_boots_product`;
+on `ie` it takes latitude and longitude (from `get_boots_stores` with a town). When no
+store near the place has the item, `stores` is empty and the answer is charged (an
+unknown item code answers the same way). Not available: search, category, brand and
+deal lists, reviews, ratings, type-ahead, stock counts, price history (poll and store
+the answers). Failed calls and refused inputs are not charged; a not-found is charged.
 
 ### [Instacart](https://scavio.dev/docs/instacart-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
@@ -1938,6 +2218,227 @@ returns only the 5 newest sales; for sold volume use
 `get_tcgplayer_price_history`, whose low and high sale prices are null in a
 bucket with no sales. Seller tools take the 8-character `seller.key` from a
 listing. No store locator, product reviews or buylist prices.
+
+### [RockAuto](https://scavio.dev/docs/rockauto-vehicles?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+RockAuto API for RockAuto (rockauto.com, the online auto parts catalog based in Madison, Wisconsin): every brand's listing for one part type on one vehicle with RockAuto's price, tier (Economy, Daily Driver, Premium), fitment notes, pack prices, core charge, closeout and stock flags; part number and OE / interchange search across brands; one brand's parts of a part type; one part's specifications, OE numbers and warranty; the vehicle chain (make, year, model, engine and carcode); the tools and universal parts catalog; and RockAuto's manufacturer rebates with their printed end dates. Prices in 15 display currencies, pages in English, Spanish, French or German. See the [RockAuto API page](https://scavio.dev/rockauto-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `get_rockauto_vehicles` | The vehicle catalog one level at a time: makes, a make's years, a year's models, a model's engines, each engine with its `carcode` |
+| `get_rockauto_categories` | One vehicle's part categories, or one category's part types (`part_type_id`) |
+| `get_rockauto_parts` | Every brand's listing for one part type on one vehicle: price, tier, fitment notes, pack options, core charge, closeout, out of stock, OE / alternate numbers |
+| `search_rockauto` | Part number and interchange search across brands (OE and interchange numbers included), with RockAuto's "Results may be limited" notice |
+| `get_rockauto_brand` | One brand's parts of one part type, not tied to a vehicle (at most 50 rows, as RockAuto lists them) |
+| `get_rockauto_brands` | The brand list (568 brands) and part groups; optionally about 5,500 part type ids and names |
+| `get_rockauto_part` | One part's detail page by its part keys: price, specifications, OE numbers, warranty, the manufacturer's text, images (English only) |
+| `get_rockauto_suggestions` | Search-box suggestions for typed text: vehicles with `carcode`, part types, tools, help |
+| `get_rockauto_resolve` | Free text ("2010 honda accord brake pads") to RockAuto vehicles, with the words RockAuto did not interpret |
+| `get_rockauto_tools` | The tools and universal parts catalog one level at a time, down to a part type's listing |
+| `get_rockauto_promotions` | RockAuto's promotions and manufacturer rebates: offer, printed expiry and its date, rebate form link, recently expired |
+
+Platform key `rockauto`. Credits: 1 per call on every tool; `credits_used` in
+the response is what was charged. Answers can take up to about 100 seconds
+(large part types such as brake pads): allow up to 4 minutes.
+
+One US catalog (no `country`): `currency` is `USD` (default), `AUD`, `BRL`,
+`GBP`, `CAD`, `CLP`, `EUR`, `HUF`, `JPY`, `MXN`, `NZD`, `NOK`, `PLN`, `SEK` or
+`CHF`, as RockAuto converts its prices for display; `language` is `en`
+(default), `es`, `fr` or `de` (names, notes, tiers and labels; part numbers and
+prices do not change). `get_rockauto_part` is English in every language. The
+`carcode` comes from the vehicle chain: send `make`, `year`, `model`, `engine`
+and `carcode` together exactly as `get_rockauto_vehicles` answers them for an
+engine (or take a vehicle's `carcode` from `get_rockauto_suggestions` /
+`get_rockauto_resolve`); RockAuto picks the vehicle by carcode, and one that
+answers another vehicle is a 400, not charged. Captured 2026-11-26: brake pads
+(1684) for the 2010 HONDA ACCORD 2.4L L4 (carcode 1444945) listed 114 items,
+from 10.23 USD; BOSCH BP1084 was 29.79 USD, or 583.71 MXN in Spanish. Lists
+have no sort or paging (RockAuto's own order). Not available: shipping costs
+(RockAuto prices them per warehouse in its cart), checkout, coupon codes
+(RockAuto publishes none), price history (poll and store the answers). Failed
+calls and refused inputs are not charged; a not-found is charged.
+
+### [Cars.com](https://scavio.dev/docs/carscom-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Cars.com API for Cars.com (cars.com, the US car marketplace run by Cars Commerce): new, used and certified car listings around a US ZIP with Cars.com's 11 sorts and its filters (year, price, mileage, trims, drivetrain, color, deal rating, body style, seller type, keyword); one listing with the price breakdown and all-in price, Cars.com's deal rating and good deal range, the price history and vehicle history; dealer profiles, inventories and customer reviews; owner reviews of a model year; a dealer locator; and Cars.com's research pages (make, model, model year, trims). See the [Cars.com API page](https://scavio.dev/carscom-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_carscom` | Listings around a ZIP and radius: 24 a page up to page 417, 11 sorts, filters (make, model, year, price, mileage, trims, drivetrain, color, deal rating, body style, seller type, keyword), facets on request; `total` capped at 10,000 |
+| `get_carscom_listing` | One listing by id or link: price, MSRP (new), mileage, specs, price breakdown with fees and all-in price, deal rating and good deal range, price history, features, vehicle history, CPO terms, dealer |
+| `get_carscom_dealer` | A dealer's public profile: rating, review count, phone, website, address, hours, service department, inventory count, awards |
+| `get_carscom_dealer_inventory` | A dealer's vehicles for sale, 24 a page, with price, mileage and deal badge |
+| `get_carscom_dealer_reviews` | A dealer's customer reviews, 10-40 a page, 4 sorts (no reviewer names) |
+| `get_carscom_model_reviews` | Owner reviews of one model year, 10-200 a page, 4 sorts, with rating, recommend percent and category ratings (no reviewer names) |
+| `get_carscom_dealers` | Dealers around a ZIP by make, minimum rating and name, sorted by rating, name or distance |
+| `get_carscom_research` | Research pages: make lineup, model generations, model year (average listing or starting price, MPG, ratings, NHTSA score, trims) or trims |
+
+Platform key `carscom`. Credits: 1 per call on every tool; `credits_used` in
+the response is what was charged. Answers can take up to about 80 seconds
+(search pages): allow up to 4 minutes.
+
+US only (no `country`), prices in USD as the seller lists them. Cars.com has no
+public API for reading listings. `zip` (a 5-digit US ZIP) is required on
+`search_carscom` and `get_carscom_dealers`; an unknown ZIP is a 400, not
+charged. `radius`, `mileage_max`, `page_size` and `min_rating` take Cars.com's
+own steps; `model` needs `make`, `trims` need `make` and `model`;
+`filters_not_applied` lists values Cars.com ignored. Captured 2026-11-26: used
+Toyota RAV4 around 10001 gave 700 listings; Ford F-150 around 75201 (Dallas)
+sorted `price_low` gave 4401, the first a 2005 F-150 XL at 3900 USD; the 2019
+Toyota RAV4 rated 4.4 from 458 owner reviews. No VINs, stock numbers,
+private-seller names or contact details, reviewer names or towns, or dealer
+employee names are returned; the dealer's business name, address, phone,
+website and hours are kept. Not available: a star filter on reviews (the site
+has none), sold prices, messaging or checkout. Failed calls and refused inputs
+are not charged; a not-found (a listing no longer available, an unknown dealer
+or model year) is charged.
+
+### [Autotrader](https://scavio.dev/docs/autotrader-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Autotrader API for Autotrader (autotrader.com, the US car marketplace run by Cox Automotive): new, used and certified cars for sale around any US ZIP code with Autotrader's own deal label next to the Kelley Blue Book Fair Purchase Price range as given, dealer fees and price history per listing, dealer and private-seller listings, dealers near a ZIP with their inventory, and each make's models with the price range per model year. See the [Autotrader API page](https://scavio.dev/autotrader-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_autotrader` | Search around a US ZIP (required) with a radius, by make, model and trim code: 5 sorts, filters (model year, price, mileage, body style, drivetrain, colours, dealer or private seller, new / used / certified, fuel, transmission, vehicle history, Good or Great deal, a feature, doors, seats), 25 or 100 a page up to page 100, Spotlight placements flagged, price / mileage / year stats for the whole result set |
+| `get_autotrader_listing` | One listing by id or link: description, images, features, specifications, warranties with what remains, Kelley Blue Book owner rating, price history, deal label with the KBB Fair Purchase Price range, dealer fees, and the dealer's address, phone, website and hours (null for a private seller) |
+| `get_autotrader_dealers` | Dealers near a US ZIP, optionally of one make or with cars in a price or model-year range: the first 50, nearest first, with rating, address, phone and website |
+| `get_autotrader_dealer` | One dealer by id or link: rating, address, phone, website, hours, home services, listing count, makes in stock and the first page of the inventory |
+| `get_autotrader_makes` | One make's models: model years, popular models, price range and MPG labels per model year, and the model name `search_autotrader` takes |
+
+Platform key `autotrader`. 2 credits per call on every tool; `credits_used` in the
+response is what was charged. Answers can take up to about 225 seconds: allow up
+to 4 minutes.
+
+US only, prices in USD. `zip` is required on search and dealers; an unknown ZIP is
+a 400 and not charged. `deal_label` is Autotrader's own label (Great, Good), based
+on the Kelley Blue Book Fair Purchase Price range, returned as given in
+`kbb_fair_purchase_price` {amount, low, high, delta}. Captured 2026-11-26: Honda
+Civic around 90012 resolved to Los Angeles (25 miles) with 1882 listings; a used
+2018 Civic LX at 18881 USD was labelled Great against a KBB Fair Purchase Price of
+19440 (range 18690-20140). A model spelled differently (F-150) is matched to
+Autotrader's name (F150); a model Autotrader does not list for the make is a
+charged 404 that lists the make's models. Private sellers: `seller` is type,
+city, state and distance only (no name, phone or street address). VINs and stock
+numbers are never returned; phone numbers, emails and VIN-like codes inside
+descriptions read `[removed]`. The dealer finder does not page (the first 50,
+nearest first): narrow with radius or make. Not available: dealer reviews
+(rating and rating count only), autotrader.co.uk or autotrader.ca (separate
+sites), more than 100 pages of a search. Failed calls and refused inputs are not
+charged; a not-found (a sold or removed listing, an unknown dealer) is charged.
+
+### [CarGurus](https://scavio.dev/docs/cargurus-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+CarGurus API for CarGurus (cargurus.com, the car marketplace run by CarGurus, Inc., in the US, Canada and the UK): car listings around a ZIP, postal code or postcode with CarGurus' own deal rating and expected price next to the asking price, dealers with their reviews and inventory, CarGurus' price trends (the CarGurus Index, makes, models, model years), model-year research pages and CarGurus' expert reviews, in English, Spanish (US) and French (Canada). See the [CarGurus API page](https://scavio.dev/cargurus-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_cargurus` | Search around a ZIP / postal code / postcode (required) with a radius, by make, model and trim: 11 sorts, filters (year, price, mileage, drivetrain, colour, body type, condition, seller type, deal rating, fuel, transmission, single owner, no accidents, price drops, other CarGurus filter keys), 24 tiles a page up to page 500; each listing carries price, price with fees, expected price, deal rating, price drop and specs; facets on request |
+| `get_cargurus_dealer` | One dealer by id or link: address, phones, website, hours, rating, the reviews the page embeds (no reviewer names), the dealer's inventory paged, sorted and filtered like search, nearby dealers |
+| `get_cargurus_dealers` | Dealers with listings around a US ZIP (US site only), optionally for one make / model: up to 150, with rating, distance and listing count |
+| `get_cargurus_price_trends` | CarGurus' price trends for the market, a make or a model: average prices with and without fees, change against 30, 90 and 365 days ago, daily series, market movers |
+| `get_cargurus_research` | A model-year research page (US site) by id, link, or year + make + model: trims with MSRP and specs, pricing today vs a month and a year ago, the CarGurus test-drive review, owner reviews (no reviewer names) |
+| `get_cargurus_expert_reviews` | CarGurus' editorial car reviews, 24 a page |
+| `get_cargurus_makes` | Every make the market's site lists, with the per-site make id |
+| `get_cargurus_models` | One make's models with CarGurus' listing counts nationwide or around a ZIP / postal code |
+
+Platform key `cargurus`. 1 credit per call, also when a make or model name is
+resolved with a first page; `credits_used` in the response is what was charged.
+Answers can take up to about 120 seconds: allow up to 4 minutes.
+
+Markets (`market`, default `us`): `us` (cargurus.com, USD, miles), `us-es` (its
+Spanish pages), `ca` (cargurus.ca, CAD, km), `ca-fr` (its French pages), `uk`
+(cargurus.co.uk, GBP, miles); data comes in the market's language and currency.
+Dealers near a ZIP: `us` and `us-es` only (the Canadian and UK search pages
+carry no dealer list); price trends and expert reviews: `us`, `ca`, `uk`;
+research: the US site. `zip` must match the market, and `distance` takes the
+site's radii (us / uk 10-500 miles, ca 25-500 km) or `nationwide`. Make and
+model ids differ per site (Ford is m2 in the US and Canada, m273 in the UK):
+names resolve to the market's id. `deal_rating`, `deal_rating_label`,
+`deal_score` and `expected_price` are CarGurus' own price analysis, as CarGurus
+labels it. Captured 2026-11-26: Toyota RAV4 around 10001 resolved to New York
+(50 miles) with 1107 listings; a 2024 RAV4 LE AWD at 27000 USD against an
+expected 27763 was rated Good Deal; the US CarGurus Index stood at 28289 USD.
+Sponsored placements are inserted by CarGurus out of the requested order and
+flagged. There is no listing detail tool: each listing already carries the
+price, expected price, deal rating, mileage, options and specs. No VINs, stock
+numbers or private-seller details are returned. Not available: review paging,
+sort or star filters on dealer reviews, finance and delivery filters. Failed
+calls and refused inputs are not charged; a not-found (an unknown dealer,
+research id or make) is charged.
+
+### [CarMax](https://scavio.dev/docs/carmax-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+CarMax API for CarMax (carmax.com, the largest US used-car retailer, with 263 stores in 42 states and no-haggle prices): used-car inventory within a radius of any US ZIP or nationwide, with the price, CarMax's price drops, mileage, features, the store holding the car and the shipping fee and dates to that ZIP; one car in full with CarMax's history callouts and warranties; every photo; the stores and one store's lot; owner reviews per model-year; and the recent CarMax instant offers for a model-year as CarMax shows them. See the [CarMax API page](https://scavio.dev/carmax-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_carmax` | Search by make and model (F-150 and F150 both work), body type, keyword, up to 8 facet filters, year / price / mileage ranges and max shipping fee, around a US ZIP (required) within 5-500 miles or nationwide; 8 sorts, up to 100 cars a page, `total`, `has_more`, facets on request |
+| `get_carmax_listing` | One car by stock number or link: price, previous price and price-drop text as CarMax words it, mileage, engine, MPG, accident and owner counts and CarMax's callouts as given, warranties, features, specifications, reconditioning, the store and the model review summary |
+| `get_carmax_photos` | Every photo of a car (images and 360 exterior), thumbnail, 1600x1200 and 16x9 links |
+| `get_carmax_stores` | Stores nearest a US ZIP (with distance) or in a state or city: id, address, phones, coordinates, hours, service and holiday hours |
+| `get_carmax_store` | One store by id: address, phones, hours, is open now, alert, and CarMax's price and fee terms for that store's state |
+| `get_carmax_store_inventory` | The cars on one store's lot, with the search filters, sorts and paging (no keyword, no radius) |
+| `get_carmax_reviews` | Owner reviews of one model-year, 10 a page, full depth, 5 sorts and an exact star filter; title, pros and cons, the owner's mileage and time owned, no reviewer identity |
+| `get_carmax_review_summary` | The owner-review summary of a model-year: count, average, star distribution, top likes and dislikes |
+| `get_carmax_suggestions` | Make and model suggestions for the start of a name, with the slugs search takes |
+| `get_carmax_makes` | Every make CarMax lists (60, captured 2026-11-26) |
+| `get_carmax_models` | One make's models with the slugs search and car value take |
+| `get_carmax_car_value` | Recent CarMax instant offers for one model-year as CarMax shows them: offer range, the page headline range, each recent offer with mileage, date and trim, trim ranges and the median offer by year |
+
+Platform key `carmax`. Credits: 1 per call on every tool; `credits_used` in
+the response is what was charged. Answers can take up to about 80 seconds (a
+100-car page): allow up to 4 minutes.
+
+US only, prices in USD. `zip` is required on search and store inventory:
+CarMax prices each car's shipping fee and dates to it (captured 2026-11-26:
+Ford F-150 within 100 miles of 75201 gave 49 cars, the nearest store Texas
+Stadium (Irving) at 7 miles, a 2026 F150 STX at 44998 USD with 1971 miles and a
+49 USD shipping fee). `get_carmax_listing` carries no shipping: use
+`search_carmax` with a zip. `get_carmax_car_value` is what CarMax offered for
+cars of that model-year, not an appraisal of any one car; `offer_range` and the
+page's `headline_range` can differ (captured 2026-11-26: 2019 Ford F150, 10
+recent offers from 11000 to 20000 USD, headline $16,400-$25,400). Accident and
+owner counts are as CarMax shows them. No VIN is returned, and reviews carry no
+reviewer name or identity. Not available: a deal rating or price analysis
+(CarMax prices are no-haggle), private sellers (every car is CarMax's), store
+reviews, price history beyond the previous price and drop date, a trim filter.
+Failed calls and refused inputs are not charged; a not-found (an unknown or
+sold stock number, store, make, model-year without reviews or value page) is
+charged.
+
+### [Carvana](https://scavio.dev/docs/carvana-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Carvana API for Carvana (carvana.com, the US online used-car retailer): its national used-car inventory by make and model with Carvana's price, previous price and the Kelley Blue Book value it shows next to the price, Carvana's own tags (Great Deal, New Price, No Reported Accidents), shipping cost to a Carvana city page, one vehicle in full with its inspection checklist, imperfections and warranty, and Carvana's model-year guides, trim guides and model lineups. See the [Carvana API page](https://scavio.dev/carvana-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_carvana` | Search by make and model, 24 a page: 6 sorts, filters (model year, price, maximum mileage, trims, drive types, colours, body styles, fuel types, Carvana's tags, free shipping), a Carvana city page for shipping and delivery, facets on request |
+| `get_carvana_vehicle` | One vehicle by id or link: price, previous price, KBB value, MSRP, powertrain, dimensions, warranty and what remains, prior use, recalls, highlights, the inspection checklist, imperfections with photos, features, packages, the hub it ships from |
+| `get_carvana_model_guide` | Carvana's research page for one model year: what changed, specs by trim, trims in stock, owner rating and the owner reviews the page shows (no names), FAQ |
+| `get_carvana_trims` | Carvana's trim guide for one model: trim groups with what each adds, who it suits, attributes and stock |
+| `get_carvana_make` | One make's model lineup with the model names search takes and stock per model |
+| `get_carvana_makes` | Every make in Carvana's inventory with its in-stock count |
+
+Platform key `carvana`. 1 credit per call; `credits_used` in the response is what
+was charged. Answers usually take about 10 seconds and can take up to about 235
+seconds with a retry: allow up to 4 minutes.
+
+US only, prices in USD before taxes, title, registration and fees. Inventory is
+national: the location changes shipping costs and delivery flags, not which
+vehicles exist. There is no ZIP targeting: pass `city` (one of Carvana's own
+city pages, e.g. `new-york-ny`), else the location is the one Carvana sets for
+the visit (`location.source` says which). `city` works only with make, model and
+page: a filter or a sort with `city` is a 400. The most popular order is
+recomputed per visit and not stable between pages: page with a fixed sort.
+Captured 2026-11-26: Ford F-150 from 2019 tagged Great Deal, lowest price
+first: 578 vehicles; a 2019 F-150 XLT at 21990 USD (previously 22590) with 93232
+miles next to a KBB value of 23600. Makes and models go by the names Carvana
+writes (hyphens count: F-150, CR-V); an unknown make or model is a charged 404
+that lists Carvana's names. No VINs. Not available: ZIP targeting, keyword
+search, a minimum-mileage filter, new vehicles, delivery or shipping quotes for
+an address, monthly payments, taxes and fees, price trends. Failed calls and
+refused inputs are not charged; a not-found (an unknown or sold vehicle) is
+charged.
 
 ### [Nintendo](https://scavio.dev/docs/nintendo-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
