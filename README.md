@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1211 tools across 153 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1259 tools across 158 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1211 tools puts ~2597KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1259 tools puts ~2703KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1211 tools. Loading all of them costs ~2597KB of `tools/list` —
+Scavio exposes 1259 tools. Loading all of them costs ~2703KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1211 tools, ~2597KB** |
+| `all` | every platform — **1259 tools, ~2703KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,8 +233,8 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
-`tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `indeed`, `glassdoor`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
 ### Local (stdio)
@@ -3672,6 +3672,84 @@ REI's member reward estimate), used gear (REI does not sell it online), price
 history (poll and store the answers), checkout. Failed calls and refused inputs
 are not charged; a not-found (an unknown product, category or store) is charged.
 
+### [QVC + HSN](https://scavio.dev/docs/qvc-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+QVC + HSN API for QVC (qvc.com) and HSN (hsn.com), the video shopping networks of QVC Group: keyword search on QVC US, UK, Germany, Italy and Japan and on HSN, with the current price, QVC's everyday price, the special price code and window (Today's Special Value, Black Friday Sale), Easy Pay or FlexPay instalments, rating and stock flags; one product in full with every color and size; up to 20 QVC products in one call; today's special on QVC and HSN; what is on air now on each QVC channel; the TV program guide; the items HSN presented in one show hour; QVC category and collection grids; QVC search suggestions; and the first page of a product's reviews. See the [QVC + HSN API page](https://scavio.dev/qvc-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_qvc` | Keyword search: QVC 7 sorts, 1 to 96 a page and facet filters (us, uk, de); HSN 6 sorts, 60 a page and a department filter |
+| `get_qvc_product` | One product by item number or link: price, QVC price, special price window, instalments, description, variants with stock flags (HSN: low-inventory units when shown) |
+| `get_qvc_products` | Up to 20 QVC products in one call (us or it), in the order asked, with not_found |
+| `get_qvc_todays_special` | QVC's Today's Special Value with its window, or HSN's Today's Special and the Today's Specials list |
+| `get_qvc_on_air` | The item on air now on each QVC channel (QVC, QVC2, QVC3, QVC Home) with its price summary |
+| `get_qvc_program_guide` | One day of the QVC guide (every channel or one, 4 US time zones) or the hourly HSN / HSN2 guide; no host or guest names |
+| `get_qvc_recently_aired` | The items HSN presented in one show hour of HSN or HSN2 |
+| `get_qvc_category` | One QVC category or collection grid, 96 a page, 7 sorts |
+| `get_qvc_suggestions` | QVC search-box suggestions and suggested items (us, uk, de) |
+| `get_qvc_reviews` | The first page of a product's reviews (QVC 8 newest, HSN 12 highest rated) with the rating summary and questions; no reviewer names |
+
+Platform key `qvc`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. Most calls take 2 to 20 seconds; `get_qvc_reviews`
+takes 20 to 60 s: allow a client timeout of at least 120 s.
+
+`site` is `qvc` (default) or `hsn`; `market` picks the QVC storefront: `us`
+(qvc.com, USD), `uk` (qvcuk.com, GBP), `de` (qvc.de, EUR), `it` (qvc.it, EUR) or
+`jp` (qvc.jp, JPY). HSN is US only. Search and product cover every QVC market and
+HSN; the batch covers us and it; suggestions us, uk and de; today's special,
+program guide and reviews QVC US and HSN; on air and category QVC US; recently
+aired HSN. HSN categories are not offered yet (search with a department covers
+HSN's departments). Reviews are the first page only, as the product page shows
+it: no paging, sort or star filter. Stock is the site's flag; QVC publishes no
+unit counts. Show names are kept as the guide lists them; on-air host and guest
+names are not included. Captured 2026-11-27: blender on QVC US gave 102 results,
+the first the Ninja Professional Plus Duo Blender with Auto IQ at 99.98 USD
+against a QVC price of 159.99; ring on HSN gave 687 results; the GE Profile Opal
+Mini Pro Nugget Ice Maker w/ Side Tank was 279.98 USD (QVC price 379) as a Today's
+Special Value from 2026-11-23 to 2026-12-01; QVC's Today's Special Value was the
+Diamonique Set of 5 Boxed Jewelry Gifts at 49.98 USD; the QVC Clearance Sale
+collection held 8551 items; the Ninja blender showed its 8 newest of 918 written
+reviews, 950 ratings averaging 4.67. Not available: review paging, HSN categories
+and suggestions, unit counts, price history (poll and store the answers). Failed
+calls and refused inputs are not charged; a not-found (an unknown item or link)
+is charged.
+
+### [Barnes & Noble](https://scavio.dev/docs/barnesandnoble-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Barnes & Noble API for Barnes & Noble (barnesandnoble.com, the US bookseller), US only, prices in USD: keyword search and collection pages with the site's sorts and filters (format, availability, price band, subject, age, language); one title by EAN or ISBN with publisher, pages, online stock flags, the member offer text as given, a short overview excerpt and one EAN per format; store pickup flags at the stores near a ZIP code, city or store number; stores near a place and one store's hours, holiday hours and services; search suggestions; the bestseller lists (Bestsellers, Bestselling Books, The New York Times Best Sellers, B&N Stores Bestsellers); the header navigation; and the deals pages. See the [Barnes & Noble API page](https://scavio.dev/barnesandnoble-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_barnesandnoble` | Keyword search (title, author, series, ISBN), 7 sorts and 6 filters: the 24 results the site shows with its own total and facets |
+| `get_barnesandnoble_product` | One title by EAN / ISBN-13 or ISBN-10: price, original price, format, publisher, pages, online stock flags, rating, member offer text as given, a short overview excerpt (at most 300 characters) and one EAN per format |
+| `get_barnesandnoble_store_availability` | Store pickup flags (eligible, available) for one title at the stores near a ZIP code, city or store number; no unit counts |
+| `get_barnesandnoble_stores` | Stores near a ZIP code, a city and state or a point, with hours by day, holiday hours and services |
+| `get_barnesandnoble_store` | One store by id, with its holiday hours line |
+| `get_barnesandnoble_suggestions` | Search-box suggestions: up to 10 titles and subject topics with their collection path |
+| `get_barnesandnoble_bestsellers` | A bestseller list: Bestsellers, Bestselling Books, The New York Times Best Sellers or B&N Stores Bestsellers |
+| `get_barnesandnoble_category` | One collection by path or link, sorted and filtered like search (shelves for a page with no product list) |
+| `get_barnesandnoble_categories` | The header navigation: departments, groups and links with the collection path each takes |
+| `get_barnesandnoble_deals` | A deals page (Black Friday and Cyber Monday, Coupons & Deals, kids, eBooks, audiobooks) as its deal shelves |
+
+Platform key `barnesandnoble`. Credits: 1 per call on every tool; `credits_used`
+in the response is what was charged. Collection, bestseller, deal and navigation
+pages take 8 to 35 seconds: allow a client timeout of at least 90 s.
+
+US only, prices in USD. Search and collection pages give the 24 results the site
+shows with its own total, and no page 2: narrow with sort and filters. price is
+what Barnes & Noble charges a visitor now; member prices are not shown to visitors
+and are not returned (member_offers carries the offer text only). overview is a
+short excerpt of the publisher's copy, never book text. Store availability is the
+site's own pickup flags, not unit counts; prices are national. Captured
+2026-11-27: project hail mary gave 3101 results, the first the Deluxe Edition at
+37 USD (on sale from 40); Project Hail Mary in hardcover was 32 USD, rated 4.6
+from 287 ratings, with 6 formats; EAN 9780439023528 was available for pickup at
+28 of 28 stores near ZIP 60611; ZIP 10001 had 44 stores nearby; the Black Friday
+and Cyber Monday page held 21 shelves with 165 titles. Not available: review
+text, member prices, unit counts, deeper result pages, price history (poll and
+store the answers). Failed calls and refused inputs are not charged; a not-found
+(an unknown EAN, collection or store) is charged.
+
 ### [Argos](https://scavio.dev/docs/argos-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 Argos API for Argos store stock, prices and reviews (argos.co.uk, UK, GBP): which Argos stores near a UK postcode can hand over one or more products (collect now, today, tomorrow, out of stock) and whether they can be delivered to a postcode, next to price, was price, offers and badges, plus search, categories, deal collections, product detail, reviews, Q&A and stores.
@@ -4260,6 +4338,48 @@ not marketplace items). Search tiles carry `sold_by` but not the seller name
 (the product has it). The German site does not sort keyword results, so a
 sorted search on de comes back in relevance order with a note. No search
 suggestions. Failed calls are not charged; a not-found is charged.
+
+### [Williams-Sonoma](https://scavio.dev/docs/williamssonoma-product?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Williams-Sonoma API for the Williams-Sonoma, Inc. brands (Williams Sonoma, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, West Elm, Rejuvenation, Mark and Graham), chosen with `brand`: one product in full with every SKU's price, regular price, online stock state, delivery services and dimensions (US in USD; Williams Sonoma, Pottery Barn and West Elm in Canada in CAD); the fabric configurator of a made-to-order Pottery Barn piece; standard-delivery dates to a US ZIP code; online stock ranges per SKU; store pickup per SKU per store; stores near a ZIP code across every brand; the stores showing a furniture piece on their floor; each brand's category tree; Pottery Barn category listings; Williams Sonoma and Pottery Barn keyword search; the day's most searched terms; and Williams Sonoma customer reviews. See the [Williams-Sonoma API page](https://scavio.dev/williamssonoma-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `get_williamssonoma_product` | One product by brand + product id or link, us or ca: price range, regular price, on_sale, rating (Williams Sonoma), promotion messages, dimensions, materials, configurator base SKUs and up to 500 SKUs with price, stock state, delivery and pickup services |
+| `get_williamssonoma_configurator` | The fabric configurator of a made-to-order Pottery Barn piece: price range across fabrics, production lead time, dimensions and every fabric with content, rub count and price tier |
+| `get_williamssonoma_delivery_estimate` | Standard-delivery dates to a US ZIP code per SKU (a product, or up to 20 SKUs), with availability and the holiday order cutoff when published |
+| `get_williamssonoma_stock` | Online stock ranges per SKU (available now, within 2 weeks; national) and the ZIP's regional in-stock states |
+| `get_williamssonoma_store_pickup` | Pickup true or false per SKU at up to 10 stores, with the ship-to-store window (no unit counts) |
+| `get_williamssonoma_stores` | Stores near a ZIP code or point across every brand with stores, with pickup codes, phone and this week's hours |
+| `get_williamssonoma_floor_samples` | The stores showing one furniture piece on their floor, by distance |
+| `get_williamssonoma_categories` | One brand's category tree (Sale and Black Friday included), top level or one subtree |
+| `get_williamssonoma_category` | One Pottery Barn category listing in the site's 5 sorts: 20 products with price ranges, price type, facets |
+| `search_williamssonoma` | Williams Sonoma or Pottery Barn keyword search: 20 products with total, facets and related searches |
+| `get_williamssonoma_popular_searches` | The day's most searched terms on one brand, with counts as given |
+| `get_williamssonoma_reviews` | Williams Sonoma customer reviews, newest first (8 on page 1, 30 on pages 2 to 5), with rating statistics (no reviewer names) |
+
+Platform key `williamssonoma`. Credits: 1 per call, 5 on `search_williamssonoma` and
+`get_williamssonoma_category`; `credits_used` in the response is what was charged.
+Product pages take up to 50 s and search, category and reviews 15 to 60 s: allow a
+client timeout of at least 150 s.
+
+US in USD; `market` `ca` (CAD, English) serves product only, for Williams Sonoma,
+Pottery Barn and West Elm. Each tool takes only the brands served on it: search
+covers Williams Sonoma and Pottery Barn (West Elm search is not served), category
+and the configurator Pottery Barn, reviews Williams Sonoma, and stores, store
+pickup and floor samples every brand with stores (Mark and Graham has none). Prices
+are the brand's online prices, the same at every ZIP code and store. Stock is a
+national unit range, store pickup a yes or no per store. Search and category give
+page 1 (20 products). Captured 2026-11-27: the WÜSTHOF Classic Chef's Knife had 19
+SKUs from 99 to 200 USD (regular 135 to 200), rated 4.81 from 564 reviews; the
+Pottery Barn Gabrielle Bergere Sofa (63") was 2319 USD (regular 2899) and its
+configurator offered 50 fabrics from 1999 to 2899 USD; that sofa to ZIP 94103 was a
+special order delivered 2027-02-26 to 2027-03-12 and on the floor at 9 stores; ZIP
+60611 gave 10 stores across 6 brands within 25 miles; a West Elm rug on westelm.ca
+ran 524 to 1274 CAD. Not available: unit counts per store, deeper search pages,
+review sort or star filters, UPCs, price history (poll and store the answers).
+Failed calls and refused inputs are not charged; a not-found (an unknown product or
+category) is charged.
 
 ### [Mercado Libre](https://scavio.dev/docs/mercadolibre-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
@@ -4890,6 +5010,45 @@ returned. Not available: reviews for Canadian facilities (their pages show
 none), a review sort, reservations or move-in. Failed calls and refused inputs
 are not charged; a not-found (an unknown place or store id) is charged.
 
+### [U-Haul](https://scavio.dev/docs/uhaul-truck-quote?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+U-Haul API for U-Haul (uhaul.com, the US and Canada truck rental and self-storage company), US (USD, miles) and Canada (CAD, km), in English, Spanish (es.uhaul.com) or French (fr.uhaul.com): U-Haul's own truck rental rates for a one-way or in-town move on a given day, read from its public quote form, with availability, the days and distance a one-way rate includes, per-mile or per-km rates and the truck + labor estimate; locations near a place for truck rentals, trailer rentals, moving supplies or self-storage; one location with hours, payment and, in Canada, its own rate card; self-storage facilities near a place with starting rates and features, and one facility with every unit type, monthly rate and vacant units; U-Haul's own customer reviews of a location; place suggestions; and moving supplies prices by category or product. See the [U-Haul API page](https://scavio.dev/uhaul-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `get_uhaul_truck_quote` | Truck rates for one move (pickup, optional drop-off, date up to 330 days ahead): every truck with rate, availability, per-distance rate and dimensions, plus the truck + labor estimate. A price quote, never a reservation |
+| `search_uhaul_locations` | Locations near a city, ZIP or postal code for truck rentals, trailer rentals, moving supplies or self-storage, 6 a page where U-Haul pages, with hours, services and distance |
+| `get_uhaul_location` | One location by id or link: address, phone, hours, payment accepted, rating, and the Canadian rate card (day and per-km rates, daily / weekly / monthly plans) |
+| `search_uhaul_storage` | Up to 18 self-storage facilities near a place, sorted by distance, starting rate or rating and filtered by features (climate control, indoor, drive up, portable, Rent Now, vehicle) |
+| `get_uhaul_storage_facility` | One storage facility in full: every unit type with size, monthly rate, Rent Now or reserve, vacant units, promotions and hours |
+| `get_uhaul_reviews` | U-Haul's own customer reviews of a location or facility, filtered by service (trucks, storage, U-Box) and stars, sorted and paged (no reviewer names) |
+| `get_uhaul_suggestions` | U-Haul's place suggestions for the start of a city, ZIP or postal code: the values pickup, dropoff and near take |
+| `get_uhaul_supplies` | Moving supplies prices by category or product link, USD or CAD: as-low-as bundle prices, single-item price and bundle detail |
+
+Platform key `uhaul`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. `get_uhaul_truck_quote` takes about 25 seconds:
+allow a client timeout of at least 120 s.
+
+The market follows the place: a US place answers in USD and miles, a Canadian
+one in CAD and km (Canadian quotes also carry rate_with_fees as U-Haul shows
+it). One-way rates are U-Haul's total for the truck on that route and date;
+in-town rates are a base rate plus the per-mile or per-km rate. A quote is a
+price, never a reservation: nothing is reserved and no pickup location is
+returned, because U-Haul chooses it in its reservation step after a truck is
+picked. Trailer, towing and U-Box quotes are not covered. US dealer pages list
+'from' prices (listed_from_prices) that are not quotes. Captured 2026-11-27:
+Dallas, TX to Austin, TX on 2026-12-11 included 2 days and 229 miles, 4 of 6
+trucks available, the 10' Truck at 212 USD; an in-town Chicago quote listed the
+8' Pickup Truck at 19.95 USD plus 1.59 USD a mile; Montreal, QC to Quebec City,
+QC on fr.uhaul.com included 2 days and 306 km, the 10-foot truck at 395 CAD;
+storage near Phoenix, AZ 85004 listed 18 facilities from 50 USD a month;
+facility 741065 in Dallas held 43 unit types with 139 vacant units; the Medium
+Moving Box was as low as 1.99 USD (3.21 CAD in Canada). Not available: trailer
+and U-Box quotes, reservations, pickup locations on quotes, price history (poll
+and store the answers). Failed calls and refused inputs are not charged; a
+not-found (a move U-Haul will not quote, an unknown place, id, category or
+product) is charged.
+
 ### [Indeed](https://scavio.dev/docs/indeed-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 | Tool | Description |
@@ -5012,6 +5171,38 @@ returned; book authors are. Not available: user shelves and profiles, reading
 challenges, groups, ratings history (poll and store the answers). Failed calls
 and refused inputs are not charged; a not-found (an unknown book, ISBN, author,
 genre, or a review language with no reviews) is charged.
+
+### [ThriftBooks](https://scavio.dev/docs/thriftbooks-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+ThriftBooks API for ThriftBooks (thriftbooks.com, the US online used-book seller), prices in USD: keyword search or the whole catalog with the Bestsellers, Deals and New Releases presets, filters for format, condition, language, genre, price, collectible, signed, first edition and large print, and the site's 7 sorts; an ISBN lookup that returns the matched work and edition; a work's price for each format and condition (New, Like New, Very Good, Good, Acceptable) with quantity and copy details; one edition in full with its copies for sale; every edition of a work; customer reviews; and search suggestions. See the [ThriftBooks API page](https://scavio.dev/thriftbooks-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_thriftbooks` | Keyword search or the whole catalog, presets bestsellers, deals and new_releases, 7 sorts, filters, up to 50 works a page with total, facets and each work's price range |
+| `get_thriftbooks_isbn` | Look up an ISBN-10 or ISBN-13: work_id, edition_id and the work's format x condition price table, the matched edition's rows marked |
+| `get_thriftbooks_work` | One work's format x condition table: price, list price, quantity and copy details per condition |
+| `get_thriftbooks_edition` | One edition: ISBN, publisher, pages, list price, lowest new and used price, a short overview excerpt and its copies |
+| `get_thriftbooks_copies` | Every copy for sale of one edition, one row per condition and copy type |
+| `get_thriftbooks_editions` | All editions of a work, 25 a page, filtered by format and condition, 5 sorts |
+| `get_thriftbooks_reviews` | Customer reviews of a work, 10 a page (no reviewer names) |
+| `get_thriftbooks_suggestions` | Search-box title and author completions |
+
+Platform key `thriftbooks`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged.
+
+US storefront, USD, as a visitor who is not signed in sees it (no member or cart
+prices). Prices are per condition: a work's table lists New, Like New, Very Good,
+Good and Acceptable for each format, and a row with no copy for sale has price
+null. A New quantity of 500 is the most ThriftBooks shows, so 500 means 500 or
+more. Search pages up to 10000 results (page x page_size) and does not match
+ISBNs: use `get_thriftbooks_isbn`. An edition's description is the short excerpt
+the page gives (about 300 characters). Captured 2026-11-27: project hail mary gave
+3 works, the first with 27 editions from 17.25 to 29.99 USD; ISBN 9780593135204
+matched work 26830049 with 4 formats, the hardcover New at 23.92 USD (list 32)
+with quantity 500; The Hunger Games (work 246187) had 33 editions in stock and 4
+formats from 7.19 to 34.59 USD. Not available: price history (poll and store the
+answers), seller accounts, checkout. Failed calls and refused inputs are not
+charged; a not-found (an unknown ISBN, work or edition) is charged.
 
 ### [Google Ads Transparency](https://scavio.dev/docs/google-ads-advertisers?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 

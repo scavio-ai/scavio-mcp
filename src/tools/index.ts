@@ -27,6 +27,7 @@ import { registerIkeaTools } from "./ikea.js";
 import { registerWayfairTools } from "./wayfair.js";
 import { registerAshleyTools } from "./ashley.js";
 import { registerMaisonsdumondeTools } from "./maisonsdumonde.js";
+import { registerWilliamssonomaTools } from "./williamssonoma.js";
 import { registerDecathlonTools } from "./decathlon.js";
 import { registerSpecsTools } from "./specs.js";
 import { registerLowesTools } from "./lowes.js";
@@ -111,6 +112,9 @@ import { registerFootlockerTools } from "./footlocker.js";
 import { registerFanaticsTools } from "./fanatics.js";
 import { registerAcademyTools } from "./academy.js";
 import { registerReiTools } from "./rei.js";
+import { registerQvcTools } from "./qvc.js";
+import { registerBarnesandnobleTools } from "./barnesandnoble.js";
+import { registerThriftbooksTools } from "./thriftbooks.js";
 import { registerArgosTools } from "./argos.js";
 import { registerMediaExpertTools } from "./mediaexpert.js";
 import { registerActionTools } from "./action.js";
@@ -145,6 +149,7 @@ import { registerAffordablehousingTools } from "./affordablehousing.js";
 import { registerLennarTools } from "./lennar.js";
 import { registerExtraspaceTools } from "./extraspace.js";
 import { registerPublicstorageTools } from "./publicstorage.js";
+import { registerUhaulTools } from "./uhaul.js";
 import { registerIndeedTools } from "./indeed.js";
 import { registerGlassdoorTools } from "./glassdoor.js";
 import { registerAppStoreTools } from "./appstore.js";
@@ -208,6 +213,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   wayfair: registerWayfairTools,
   ashley: registerAshleyTools,
   maisonsdumonde: registerMaisonsdumondeTools,
+  williamssonoma: registerWilliamssonomaTools,
   decathlon: registerDecathlonTools,
   specs: registerSpecsTools,
   lowes: registerLowesTools,
@@ -292,6 +298,9 @@ const PLATFORMS: Record<string, RegisterFn> = {
   fanatics: registerFanaticsTools,
   academy: registerAcademyTools,
   rei: registerReiTools,
+  qvc: registerQvcTools,
+  barnesandnoble: registerBarnesandnobleTools,
+  thriftbooks: registerThriftbooksTools,
   argos: registerArgosTools,
   mediaexpert: registerMediaExpertTools,
   action: registerActionTools,
@@ -328,6 +337,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   lennar: registerLennarTools,
   extraspace: registerExtraspaceTools,
   publicstorage: registerPublicstorageTools,
+  uhaul: registerUhaulTools,
   // Jobs and employer data
   indeed: registerIndeedTools,
   glassdoor: registerGlassdoorTools,
@@ -355,7 +365,7 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 2597KB of tools/list (measured with
+ * tools, which serialises to 2703KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 143
@@ -417,7 +427,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (1211 tools)
+ *   all      — every platform (1259 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -500,6 +510,11 @@ const TITLE_WORDS: Record<string, string> = {
   bathandbodyworks: "Bath & Body Works",
   bjs: "BJ's",
   rei: "REI",
+  qvc: "QVC",
+  barnesandnoble: "Barnes & Noble",
+  thriftbooks: "ThriftBooks",
+  uhaul: "U-Haul",
+  williamssonoma: "Williams-Sonoma",
 };
 
 /** `get_tiktok_user_posts` -> `Get TikTok User Posts`. */
