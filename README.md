@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1464 tools across 180 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1497 tools across 184 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1464 tools puts ~3182KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1497 tools puts ~3252KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1464 tools. Loading all of them costs ~3182KB of `tools/list` —
+Scavio exposes 1497 tools. Loading all of them costs ~3252KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1464 tools, ~3182KB** |
+| `all` | every platform — **1497 tools, ~3252KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -5178,6 +5178,132 @@ had 1258 sebos and booksellers. Not available: search suggestions, questions, st
 was-price, Pix prices, price history (poll and store the answers). Failed calls and refused
 inputs are not charged; a not-found (an unknown book, copy, seller, category or list, or an
 ISBN with no copy on sale) is charged.
+
+### [C&A Brasil](https://scavio.dev/docs/cea-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+C&A Brasil API for C&A Brasil (cea.com.br, the Brazilian arm of the C&A fashion chain), Brazil only, Portuguese text, prices in BRL: keyword search, category, brand and promotion-collection listings, up to 24 a page in the site's 8 sorts, with the price, list price, Pix price (Pix is Brazil's instant payment), the best installment plan and every size's own price and capped online quantity; the filter values with their counts; search suggestions and the top searches; the department tree; one product with every size, each payment method's longest plan and specifications; the delivery quote for one size to a CEP, with the stores near it that can hand the size over; and the pickup points near a CEP, C&A stores and third-party pickup lockers. See the [C&A Brasil API page](https://scavio.dev/cea-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_cea` | Keyword search: up to 24 a page, pages 1 to 50, 8 sorts (price, best sellers, newest, discount, name) |
+| `get_cea_category` | One department, category or subcategory by path, sorted like search |
+| `get_cea_brand` | One brand's products by its Marcas filter value (C&A labels and partner brands) |
+| `get_cea_deals` | One promotion collection by id, with list price, sale price and discount |
+| `get_cea_facets` | The filter values with product counts for a query, category, brand or collection |
+| `get_cea_suggestions` | Search-box completions with search counts, and the site's top searches |
+| `get_cea_categories` | The department tree over three levels |
+| `get_cea_product` | One product by id, size sku, slug or link: every size's price, Pix price and capped quantity, payment plans, specifications |
+| `get_cea_shipping` | The delivery quote for one size to a CEP, with the nearby stores that can hand it over |
+| `get_cea_stores` | The pickup points near a CEP: C&A stores and third-party pickup lockers, with hours |
+
+Platform key `cea`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Listings usually take 5 to 100 seconds (allow a client timeout of at least
+240 s); the others 2 to 15 seconds (at least 120 s).
+
+Prices are as cea.com.br shows them to a visitor who is not signed in. `available_quantity`
+is the site's capped online figure (a round 100, 10000 or 99999 means plenty, 0 none), not a
+store's units. Collections are returned as ids only. The pickup points include third-party
+lockers and counters (Clique Retire) next to the C&A stores. Captured 2026-11-27: vestido
+matched 13549 products; an oversized cotton t-shirt was 99.99 BRL in 5 sizes, payable in 3
+interest-free C&A Pay installments of 33.33; one size had free delivery to CEP 01310-100 in
+6 business days and 5 nearby stores could hand it over; the CEP listed 18 pickup points, 17
+C&A stores and 1 Clique Retire point. Not available: reviews (no texts, no aggregate), EAN
+(the site leaves it empty), store unit counts, price history (poll and store the answers).
+Failed calls and refused inputs are not charged; a not-found (an unknown product or sku) is
+charged.
+
+### [Lojas Renner](https://scavio.dev/docs/renner-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Lojas Renner API for Lojas Renner (lojasrenner.com.br, the Brazilian fashion retailer), Brazil only, Portuguese text, prices in BRL: keyword search, category listings and product lists (the list of every discounted product by default), 48 a page in the site's 8 sorts, filtered by category, seller, brand, size, colour, gender and the states with stock, with the price, list price, installments, the stock level the site lists and units sold in the last 15 days; one product with every colour and size and the site's per-size availability flags; the price and stock flags for one size; and the stores for a CEP's city or region. See the [Lojas Renner API page](https://scavio.dev/renner-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_renner` | Keyword search: 48 a page, pages 1 to 200, 8 sorts, refinement filters |
+| `get_renner_category` | One category by navigation id or link, sorted and filtered like search |
+| `get_renner_deals` | A product list: every discounted product by default, or another list by id or link |
+| `get_renner_product` | One product: price, Cartao Renner and other-card installments, rating aggregate, colours and per-size availability flags |
+| `get_renner_sku_price` | Price, installments and stock flags for one size |
+| `get_renner_stores` | The stores for a CEP's city or region, with hours |
+
+Platform key `renner`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Listings are slow at the source, usually 30 to 200 seconds (allow a client
+timeout of at least 300 s); product, sku price and stores 5 to 30 seconds (at least 180 s).
+
+Prices are as lojasrenner.com.br shows them to a visitor who is not signed in.
+`installments` gives the Cartao Renner (store card) plan and the plan for other cards apart.
+Listings carry the stock level the site lists per product; the product and sku price tools
+give availability flags per size, not unit counts. Stores outside the CEP's state that the
+site returns are left out with a note. Captured 2026-11-27: camiseta matched 9468 products;
+the discounted-products list held 106896; a pair of trousers was 199.90 BRL (list 219.90), 6
+interest-free Cartao Renner installments of 33.32, rated 4.4 from 21 reviews; CEP 01310-100
+listed 5 stores. Not available: review texts (the rating is the aggregate only), shipping
+quotes by CEP, search suggestions, deal start and end dates, store coordinates, price history
+(poll and store the answers). Failed calls and refused inputs are not charged; a not-found
+(an unknown product, sku, category or list) is charged.
+
+### [Pichau](https://scavio.dev/docs/pichau-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Pichau API for Pichau (pichau.com.br, Brazil's PC-parts store), Brazil only, Portuguese text, prices in BRL: keyword search (a keyword the site sends to a category is followed and reported), category and brand listings and the deal listings (Black Friday, open box, any campaign), 36 a page in the site's order, by price or by name, filtered by the listing's own facets, with the card price, the Pix price (Pix is Brazil's instant payment), the list price, installments and a running promotion's units left and sold; one product with specs, EAN and warranty; the same page as a browser shows it after loading, with live promotion units, the FPS benchmarks shown on PCs and a prebuilt PC's or kit's component list; reviews by page; every card plan of a product; the coupons; the category menu; and search-box suggestions. See the [Pichau API page](https://scavio.dev/pichau-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_pichau` | Keyword search: 36 a page, 5 sorts, facet filters; `redirected_to` when the site sends the keyword to a category |
+| `get_pichau_category` | One category by path, with its product count and breadcrumbs |
+| `get_pichau_brand` | One brand's products by brand slug |
+| `get_pichau_deals` | The Black Friday and open-box listings or another campaign, with each product's countdown |
+| `get_pichau_product` | One product by url_key or link: card, Pix and list price, running offer with units left, specs, EAN, warranty |
+| `get_pichau_product_live` | The product page after loading: live promotion units, FPS benchmarks, component lists of prebuilt PCs and kits |
+| `get_pichau_reviews` | A product's reviews, 10 a page, by stars or with media (no reviewer names) |
+| `get_pichau_installments` | Every card plan of a product, including the discounts on short plans |
+| `get_pichau_coupons` | The coupons page: active and upcoming coupons |
+| `get_pichau_categories` | The category menu, or every node with `all` |
+| `get_pichau_suggestions` | What the search box suggests: terms with match counts, categories and up to 10 products |
+
+Platform key `pichau`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Listings took 5 to 170 seconds in Black Friday week, product, coupons and
+categories 5 to 60 seconds, product live and suggestions 30 to 160 seconds (the page is
+loaded as a browser does): allow a client timeout of at least 240 s. Reviews and
+installments by product id take 2 to 8 seconds (at least 60 s).
+
+Prices are as pichau.com.br shows them to a visitor who is not signed in. `price` is the
+card price, `pix_price` the Pix price. Stock is a status, plus a running promotion's units
+left and sold. Captured 2026-11-27: rtx 5060 matched 1385 products; the Black Friday listing
+held 1467; an INNO3D RTX 5060 card was 3159.99 BRL by Pix and 3717.64 by card (list
+3835.28), in a Black Friday offer ending 2026-11-30 with 2 units left; a Pichau prebuilt PC
+listed 22 component groups and FPS for 14 games; 18 coupons were active. Not available:
+shipping by CEP (Pichau quotes it in the cart), stores, stock unit counts, the PC builder,
+price history (poll and store the answers). Failed calls and refused inputs are not charged;
+a not-found (an unknown product, category, brand or campaign) is charged.
+
+### [Dafiti](https://scavio.dev/docs/dafiti-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Dafiti API for Dafiti (dafiti.com.br, the Brazilian fashion marketplace), Brazil only, Portuguese text, prices in BRL: keyword search, department, category and brand listings and the outlet, 48 a page plus the sponsored slots, in the site's 5 sorts, with the price, list price, Pix price (Pix is Brazil's instant payment), card price and whether a partner store sells the product; one product with every size, its stock, delivery type and the store that sells it, the other colours, specs and the rating aggregate; and every size of a product with its stock, faster. See the [Dafiti API page](https://scavio.dev/dafiti-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_dafiti` | Keyword search: 48 a page plus sponsored slots, 5 sorts |
+| `get_dafiti_category` | One department or category by path or link, sorted like search |
+| `get_dafiti_brand` | One brand's listing by the brand as the site writes it |
+| `get_dafiti_deals` | The outlet: the site's own selection of discounted products |
+| `get_dafiti_product` | One product by id, sku or link: prices, seller, every size with stock and delivery type, colours, specs |
+| `get_dafiti_sizes` | Every size of one product with its stock, by sku (faster, for a stock check) |
+
+Platform key `dafiti`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Listings are slow at the source, usually 15 to 160 seconds, and product 6
+to 35 seconds (allow a client timeout of at least 240 s); sizes 2 to 15 seconds (at least
+120 s).
+
+Prices are as dafiti.com.br shows them to a visitor who is not signed in. Stock per size is
+exact from 0 to 10 units; above that the site gives "more than 10" (`more_than_10`), not a
+count. `delivery_type` is Dafiti's own stock, fulfillment (a partner store's stock delivered
+by Dafiti) or drop shipping (sent by the partner store); marketplace sellers appear by store
+name only. The site matches searches loosely, so a search with no close match can still list
+related products. Captured 2026-11-27: vestido matched 19233 products; the outlet held 199;
+an Asics Gel 1130 sneaker was 389.99 BRL by Pix (410.52 by card, list 699.99), 4 of 11 sizes
+in stock, 5 units each of sizes 41 and 42. Not available: review texts, shipping quotes,
+search suggestions, Dafiti Colombia, price history (poll and store the answers). Failed calls
+and refused inputs are not charged; a not-found (an unknown product, sku, category or brand)
+is charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
