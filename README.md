@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1305 tools across 163 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1368 tools across 170 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1305 tools puts ~2819KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1368 tools puts ~2967KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1305 tools. Loading all of them costs ~2819KB of `tools/list` —
+Scavio exposes 1368 tools. Loading all of them costs ~2967KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1305 tools, ~2819KB** |
+| `all` | every platform — **1368 tools, ~2967KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -4604,6 +4604,246 @@ reviews and questions take no `country`: the id prefix (MLM, MLB, MLA, MCO) or U
 it. Chile is not supported. A zero-result search is an empty, billed page; an unknown
 product, item or seller nickname, or a listing with no questions, is a billed 404 that
 says so.
+
+### [KaBuM!](https://scavio.dev/docs/kabum-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+KaBuM! API for KaBuM! (kabum.com.br, the Brazilian computer and electronics retailer, part of Magalu), Brazil only, Portuguese text, prices in BRL: keyword search and category listings, up to 100 a page, sorted by KaBuM!'s order, price, most reviewed or newest and filtered by any facet, running offers, KaBuM!-sold or a price range; the departments and each department's category tree; one product in full with the card price, the Pix price, every payment plan, the running offer with its end time and units left, stock, specs and the seller (marketplace sellers with their business name, CNPJ and seller score); delivery options to a CEP; customer reviews with KaBuM!'s own summary; and the products of an offer campaign such as Black Friday. See the [KaBuM! API page](https://scavio.dev/kabum-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_kabum` | Keyword search: up to 100 a page (pages 1 to 500), 5 sorts, facet, price and offer filters |
+| `get_kabum_category` | One category's products by path, sorted and filtered like search, with its breadcrumb |
+| `get_kabum_categories` | The departments, or one department's category tree with the path each takes |
+| `get_kabum_product` | One product by code or link: card and Pix prices, payment plans, offer, stock, specs and seller with score |
+| `get_kabum_shipping` | Delivery options for one unit to a Brazilian CEP, with price and arrival date |
+| `get_kabum_reviews` | Reviews newest or oldest first, up to 50 a page, by stars, with KaBuM!'s own summary (no reviewer names) |
+| `get_kabum_offers` | The products of an offer campaign (blackfriday, ofertaskabum) with units left and sold |
+
+Platform key `kabum`. Credits: 1 per call; `credits_used` in the response is what was
+charged. Most calls take 2 to 15 seconds: allow a client timeout of at least 90 s.
+
+Brazil only, prices in BRL as KaBuM! shows them to a visitor who is not signed in, never
+a Prime-member price: `price` is the card price, `cash_price` the Pix (Brazil's instant
+payment) / boleto price. A running offer carries its start, end and units left. Marketplace
+sellers come with their business name, CNPJ, state and KaBuM!'s seller score. Captured
+2026-11-27: cadeira gamer gave 648 results, the first the Cadeira Gamer Husky Storm 100 at
+433.32 BRL card / 389.99 BRL Pix (list 588.78) with 35 offer units left and 1981 in stock,
+rated 4.8; hardware/placa-de-video-vga held 459 products; delivery to CEP 01310-100 had 4
+options from 34.59 BRL; the blackfriday campaign (2026-11-25 to 2026-11-30) held 620
+products. Not available: Prime-member prices, store pickup, price history (poll and store
+the answers). Failed calls and refused inputs are not charged; a not-found (an unknown
+product, category, department or a campaign that is not running) is charged.
+
+### [Magazine Luiza (Magalu)](https://scavio.dev/docs/magalu-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Magazine Luiza API for Magazine Luiza (magazineluiza.com.br, Magalu, the Brazilian retailer and marketplace), Brazil only, Portuguese text, prices in BRL: keyword search, category listings and deal selections (the daily deals and the Black Friday campaign selections), 40 items a page in the site's 8 sorts, filtered by brand, seller (Magalu or a marketplace seller), price range, minimum rating, Black Friday promotion and attribute facets, with the card price, the Pix price, coupons and each deal's timer; one product in full with every payment plan, coupons, the seller's business details and score, variants, specs and answered questions; a product's reviews with the star distribution, aspect ratings and Magalu's own summary; search suggestions; the physical stores in a state or city and one store's address, CEP and phone. Prices are as magazineluiza.com.br shows them to a visitor who is not signed in. See the [Magazine Luiza API page](https://scavio.dev/magalu-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_magalu` | Keyword search: 40 items a page (pages 1 to 25), 8 sorts, brand, seller, price range, minimum rating, Black Friday, promotion and attribute filters, sponsored cards flagged |
+| `get_magalu_category` | One department or subcategory by path or link, sorted and filtered like search |
+| `get_magalu_deals` | A deal selection (the daily deals or a campaign selection) with each card's deal timer and coupon |
+| `get_magalu_product` | One product by id or link: card and Pix prices, every payment plan, coupons, deal timer, seller details and score, variants, specs and answered questions |
+| `get_magalu_reviews` | A product's reviews in 4 sorts, up to 50 a page, with the star distribution, aspect ratings and Magalu's own summary (no reviewer names) |
+| `get_magalu_suggestions` | Search suggestions for the start of a search, up to 10 |
+| `get_magalu_stores` | The physical stores in one Brazilian state, optionally one city |
+| `get_magalu_store` | One store by number or link: street address, city, state, CEP and phone |
+
+Platform key `magalu`. Credits: 2 per call on every tool; `credits_used` in the response
+is what was charged. Search, category, deal and product calls usually take 10 to 60
+seconds (deal pages took up to 161 s on Black Friday 2026): allow a client timeout of
+at least 180 s; reviews, suggestions and stores take 3 to 15 s.
+
+Brazil only, prices in BRL: `price` is the card price, `pix_price` the price paid by
+Pix (Brazil's instant payment), `list_price` the regular price when a lower one
+applies. Coupons and deal timers (`deal_starts_at`, `deal_ends_at`) are returned as the
+site gives them. Availability is the site's flag, never a unit count. Reviews have no
+reviewer names and no star filter. Captured 2026-11-27: geladeira frost free counted
+1000 results over 25 pages, the first the LG Frost Free Smart Inverse 462L at 3893.68
+BRL by card or 3699 BRL by Pix, sold by Magalu and rated 4.8 from 1240 ratings; the
+Geladeira Refrigerador subcategory held 616 products; the daily deals held 353 items,
+one running to 2026-11-30 09:59 Brasilia time with a 30 BRL coupon; the state of Sao
+Paulo listed 513 stores, 235 of them in the city. Not available: shipping by CEP,
+store pickup, store stock, store hours and coordinates, the Full (fulfillment) filter,
+GTINs, price history (poll and store the answers). Failed calls and refused inputs are
+not charged; a not-found (an unknown product, category, selection or store) is charged.
+
+### [Casas Bahia (with Extra and Ponto)](https://scavio.dev/docs/casasbahia-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Casas Bahia API for Casas Bahia (casasbahia.com.br, the Brazilian retailer of Grupo Casas Bahia) and its Extra (extra.com.br) and Ponto (pontofrio.com.br) storefronts, chosen with `site`, Brazil only, Portuguese text, prices in BRL: keyword search, category listings, deal collections and seller lists, 20 items a page in the storefront's 5 sorts, filtered by any facet value (brand, price band, discount band, rating, seller, features), own store only and a price range, with sponsored placements kept apart; one product in full with every seller, the price, the Pix price and discount, every installment plan, the store card plan, availability flags, specs, variants, the rating summary with the storefront's own review summary and the questions with their answers; and each storefront's category menu. See the [Casas Bahia API page](https://scavio.dev/casasbahia-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_casasbahia` | Keyword search on Casas Bahia, Extra or Ponto: 20 items a page (pages 1 to 500), 5 sorts, facet, own-store and price filters, sponsored placements apart |
+| `get_casasbahia_category` | One category, deal collection or seller list by path or link, sorted and filtered like search |
+| `get_casasbahia_product` | One product by SKU or link: price, list price, Pix price, installment plans, every seller, availability flags, specs, variants, rating summary and questions |
+| `get_casasbahia_categories` | One storefront's category menu: groups, categories with the path each takes, featured departments and the top bar links |
+
+Platform key `casasbahia`. Credits: 2 per call; `credits_used` in the response is what
+was charged. Most calls take 10 to 60 seconds: allow a client timeout of at least 120 s.
+
+Casas Bahia, Extra and Ponto share one catalog; each storefront's own-store price and
+review counts can differ, so `site` decides them. Search, category and collection lists
+carry no prices: read `get_casasbahia_product` with an item's `sku` for its price, Pix
+price (Pix is Brazil's instant payment), installments and sellers. Listings count up to
+10,000 results (`total_is_capped`); collections carry no start or end dates. Availability
+is flags only, no unit counts; an out-of-stock product answers no price or sellers. Reviews
+are the 3 on the product page plus the rating summary, no reviewer names. Captured
+2026-11-27: geladeira frost free gave 1170 results over 59 pages plus 8 sponsored
+placements, the first the Geladeira Frost Free Duplex Branca Consul - CRM40MB rated 4.83
+from 105 reviews; Eletroportáteis sorted best selling counted 10,000+ products; the Smart
+TV 55" TCL 55P755 rated 4.9 from 759 reviews with 99% recommending it and 135 questions;
+the Casas Bahia menu listed 8 groups and 39 categories. Not available: prices on list
+items, reviews past the page's 3, freight by CEP, store lists, unit counts, price history
+(poll and store the answers). Failed calls and refused inputs are not charged; a not-found
+(an unknown category, or a SKU the storefront answers with its not-found page) is charged.
+
+### [Buscape + Zoom](https://scavio.dev/docs/buscape-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Buscape + Zoom API for Buscape and Zoom (buscape.com.br and zoom.com.br, Brazil's price comparison sites, one catalog with the same ids), chosen with `site`, Portuguese text, prices in BRL: keyword search, category and deal listings, up to 100 a page, sorted by relevance, price, rating or price drop and filtered by any facet, price range, category, marketplace or best-selling store; the category tree; one product with its specs, the offers on the page, the site's price tip, the editors' pros and cons and store reviews; every store offer for a product; up to 12 months of the daily lowest price; the lowest current price; campaign landings such as Black Friday; a store's coupons; freight estimates to a CEP; and search suggestions. See the [Buscape + Zoom API page](https://scavio.dev/buscape-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_buscape` | Keyword search: up to 100 a page (pages 1 to 1000), 5 sorts, facet, price, category, marketplace and store filters |
+| `get_buscape_category` | One category's products by id or slug, sorted and filtered like search, with its breadcrumb |
+| `get_buscape_categories` | The top-level branches, or one branch's categories with their ids |
+| `get_buscape_product` | One product: specs, offers on the page, 40 days of prices, the site's price tip, editors' pros and cons, up to 10 store reviews |
+| `get_buscape_offers` | Every store offer for a product, 4 sorts, by variant, up to 50 a page |
+| `get_buscape_price_history` | The day's lowest price and its store for 40 days or 3 to 12 months |
+| `get_buscape_lowest_price` | The lowest current price of a product, with its store and stock |
+| `get_buscape_deals` | The deals list (competitiveness 0.8 and up), by category or keyword, sorted and filtered like search |
+| `get_buscape_deal_landing` | One campaign landing (black-friday, oferta-do-dia-buscape, black-friday-zoom) with its sections |
+| `get_buscape_store` | One store with its cashback and the coupons its page lists |
+| `get_buscape_suggestions` | Search-box suggestions for what has been typed |
+| `get_buscape_shipping` | Freight estimates per store offer to a Brazilian CEP, with the store's coupon promotions |
+
+Platform key `buscape`. Credits: 1 per call; `credits_used` in the response is what
+was charged. Most calls take 1 to 9 seconds; product, categories, deal landing and store
+take 5 to 30 s, up to about 80 s when busy: allow a client timeout of at least 180 s.
+
+Buscape and Zoom share one catalog and the same ids; `site` sets the site of the page
+links returned. Store links and coupon links are not returned. Totals are capped at 10,000
+(`total_capped`). The price tip, the editors' pros and cons and the store coupons are as
+the site gives them. Captured 2026-11-27: geladeira gave 4053 results, the first the
+Geladeira Brastemp BRM46MB from 2308 BRL across 5 stores, with 54 store offers; the iPhone
+16 128GB was rated 4.8 from 6077 reviews with 22 offers from 6 stores and a regular_price
+tip against a median of 4549 BRL, its 40-day lowest price running from 5057.99 down to
+4299 BRL; a deals list held 305 items; the Black Friday landing held 6 sections; store 21
+(KaBuM!) listed 100 coupons. Not available: store links, store ratings (the sites publish
+none), review paging. Failed calls and refused inputs are not charged; a not-found (an
+unknown product, category, store or landing, or a product with no offers) is charged.
+
+### [Drogasil + Droga Raia](https://scavio.dev/docs/rdsaude-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Drogasil + Droga Raia API for Drogasil and Droga Raia (drogasil.com.br and drogaraia.com.br, the pharmacy chains of RD Saude), chosen with `site`, Brazil only, Portuguese text, prices in BRL: search by keyword, product code or EAN and category listings, 24, 36 or 48 a page, sorted by relevance or price and filtered by brand, own or partner store, highlight, pickup store, price range and any facet; the menu tree; one product with its price ladder (offers, quantity discounts, lab programs and payment discounts as given), variants, kits, the seller and the regulatory flags exactly as the site gives them; prices of up to 48 products in one call; store pickup yes or no at chosen stores; the stores near a CEP and the store locator (about 4,000 stores); customer reviews with the site's own summary; the deals (Oferta do Dia, % Especial, Black Friday, coupons); and search suggestions. See the [Drogasil + Droga Raia API page](https://scavio.dev/rdsaude-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_rdsaude` | Search by keyword, product code or EAN: 24, 36 or 48 a page, 3 sorts, brand, seller, highlight, pickup store, price and facet filters |
+| `get_rdsaude_category` | One category's products by id or link, sorted and filtered like search |
+| `get_rdsaude_categories` | The menu tree, three levels, with the ids category takes |
+| `get_rdsaude_product` | One product by code or link: price, price ladder, variants, kit, seller and regulatory flags as given |
+| `get_rdsaude_prices` | Current prices of up to 48 products in one call |
+| `get_rdsaude_store_availability` | Store pickup yes or no for products at stores, up to 5 product x store checks |
+| `get_rdsaude_stores` | The nearest stores (up to 6) of one banner to a Brazilian CEP, with hours and services |
+| `search_rdsaude_stores` | The store locator by state, city, neighborhood or text, filtered by 24 hours, parking and Farmacia Popular |
+| `get_rdsaude_reviews` | Reviews up to 50 a page by stars, with the site's own summary and tags (no reviewer names) |
+| `get_rdsaude_deals` | Oferta do Dia, % Especial, Black Friday, the running coupons or one coupon's products |
+| `get_rdsaude_suggestions` | Search-box suggestions and quick filters for what has been typed |
+
+Platform key `rdsaude`. Credits: 1 per call; `credits_used` in the response is what
+was charged. Most calls take 2 to 15 seconds, the menu and the store locator up to 35 s:
+allow a client timeout of at least 120 s.
+
+Prices are the site's default online price, a reference price that is the same at every
+store; each banner has its own prices, category ids, stores and reviews. Store
+availability is the site's own pickup yes or no, never a unit count. Regulatory and
+prescription flags are returned exactly as the site gives them; no descriptions or
+package-insert text. The site gives no start or end dates for deals. Captured 2026-11-27:
+protetor solar on Drogasil gave 5583 results, the first the Protetor Solar Eucerin Oil
+Control Sérum FPS 75 30ml at 84.99 BRL (list 119.90); the Kit Nivea Sun Protect & Hidrata
+FPS 50 was 43.99 BRL (list 72.99); an Episol sunscreen powder on Droga Raia averaged 4.82
+from 164 reviews and was available for pickup at 2 stores; CEP 01310-100 listed 6 Drogasil
+stores; the coupon NIVEABRAND covered 195 products; the Droga Raia menu held 9 departments
+and 379 categories. Not available: unit counts, per-store prices, price history (poll and
+store the answers). Failed calls and refused inputs are not charged; a not-found (an
+unknown product or category) is charged.
+
+### [Reclame Aqui](https://scavio.dev/docs/reclameaqui-company-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Reclame Aqui API for Reclame Aqui (reclameaqui.com.br, Brazil's company complaint and reputation site), Portuguese text as published: the site's company search; one company's reputation for each of 5 periods (complaints, answered and solved percent, would do business again, consumer and final score, average answer time, the RA1000 to Not Recommended status), main problems, segment ranking and 6 months of reputation history; one company's complaints newest first with the site's tabs, category, product and problem filters, Black Friday purchases and a keyword, with the exact total; one complaint with its whole thread; complaints across every company that match some words; the 11 site-wide rankings; every ranked segment; and the best and worst companies of a segment. Consumer names and contact details are never returned. See the [Reclame Aqui API page](https://scavio.dev/reclameaqui-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_reclameaqui_companies` | The site's company search: id, shortname, reputation, final score, solved percent, 6-month complaints, CNPJ |
+| `get_reclameaqui_company` | One company's reputation for 5 periods, main problems, segment ranking, reputation history and notice |
+| `get_reclameaqui_complaints` | One company's complaints newest first: status tabs, category, product, problem, Black Friday and keyword filters, 5 or 10 a page |
+| `get_reclameaqui_complaint` | One complaint with its whole thread: company answers, consumer replies and the final evaluation |
+| `search_reclameaqui_complaints` | Complaints across every company that match some words, with the companies they are about |
+| `get_reclameaqui_rankings` | The 11 site-wide ranking lists of 20 companies, or one of them |
+| `get_reclameaqui_segments` | Every ranked segment under the 15 main segments |
+| `get_reclameaqui_segment_ranking` | The best and worst companies of one segment, 10 a page |
+
+Platform key `reclameaqui`. Credits: 1 per call; `get_reclameaqui_complaints` by
+`shortname` 2 (the company id is looked up first; 3 if the search misses it and the
+company page is read); `credits_used` in the response is what was charged. Allow a
+client timeout of at least 120 s.
+
+Brazil only, no prices. Consumer names, emails, IPs, user ids, phones and cities are never
+returned (the consumer's state is); a consumer's name in a company's greeting is replaced
+with [nome], and every answer carries a note that the text is as the consumer published it.
+Complaint lists are newest first only and reach offset 500 per filter combination (51
+pages of 10). Reclame Aqui's own API (RA API / Hugme) is paid and covers only a company's
+own complaints. Captured 2026-11-27: nubank matched 6 companies; Nubank over 6 months had
+56825 complaints, 100% answered, 93.2% solved, 81.5% would do business again, final score
+8.8, RA1000, and 164495 resolved complaints; iphone quebrado matched 3774 complaints about
+50 companies; Bancos Digitais ranked 40 companies best; the site ranked 165 segments under
+15 main segments. Not available: consumer identities, complaint lists past offset 500,
+other sort orders. Failed calls and refused inputs are not charged; a not-found (an unknown
+company, complaint or segment) is charged.
+
+### [Leroy Merlin](https://scavio.dev/docs/leroymerlin-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Leroy Merlin API for Leroy Merlin (the home improvement retailer of the ADEO group) in seven markets chosen with `country`: Brazil (leroymerlin.com.br, BRL, prices per price region) and Italy, Spain, Portugal, Poland, Romania and France (EUR, PLN, RON), in each market's language. Keyword search (not in France) and category listings, sorted, filtered and paged; Leroy Merlin Italia's offers page as a product list; one product in full with its price, discount, unit, specifications and marketplace offers, and in Brazil the region's store stock; exact units in store with the aisle and pickup for every store of a Brazil price region; stores near a place or point and one store's hours; product reviews with the rating summary; in Brazil a delivery quote to a CEP (postal code), the address for a CEP, the 28 price regions and the department tree; and search suggestions in Italy, Spain, Portugal and Poland. See the [Leroy Merlin API page](https://scavio.dev/leroymerlin-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_leroymerlin` | Keyword search in Brazil (by price region) and Italy, Spain, Portugal, Poland and Romania: sorted, filtered, paged, with promotion dates and Black Friday flags in Brazil |
+| `get_leroymerlin_category` | One category's products by slug, path or link in any of the seven markets, sorted and paged, or a landing page's subcategories |
+| `get_leroymerlin_offers` | Leroy Merlin Italia's offers page as a product list, with price validity dates as given |
+| `get_leroymerlin_product` | One product by reference number or link: price, original price, unit, discount, installments, specifications, marketplace offers; in Brazil the region's store stock |
+| `get_leroymerlin_store_stock` | Brazil: exact units, aisle and pickup for one product at every store of a price region (or one store) |
+| `get_leroymerlin_stores` | Brazil: the store list by state, region or distance from a point; Europe (not Spain): up to 10 stores nearest a city, postcode or point |
+| `get_leroymerlin_store` | One store: address, phone, coordinates, hours and special hours |
+| `get_leroymerlin_reviews` | One page of a product's reviews with the rating summary (Brazil, Italy, Portugal, Poland, Romania); no reviewer names |
+| `get_leroymerlin_shipping` | Brazil: standard, scheduled and express delivery cost and days to a CEP, and store pickup |
+| `get_leroymerlin_cep` | Brazil: the street, district, city and state of a CEP |
+| `get_leroymerlin_regions` | Brazil: the 28 price regions every priced Brazil call takes |
+| `get_leroymerlin_categories` | Brazil: the department tree, or one category's subtree, 1 to 4 levels |
+| `get_leroymerlin_suggestions` | Search-box suggestions in Italy, Spain, Portugal and Poland |
+
+Platform key `leroymerlin`. Credits: billed on what the request spent in its market,
+`credits_used` in the response is what was charged: Brazil 1 on every tool; Italy 1
+(product and category pages 2); Romania 1; Spain, Portugal and Poland 2; France 5. Allow
+a client timeout of at least 120 s, 240 s for Brazil search and category.
+
+`country` is `br`, `it`, `es`, `pt`, `pl`, `ro` or `fr`; Brazil needs `region` for
+every price (prices are set per price region, not per store). France has no keyword
+search. European listings show 48 products a page, but Leroy Merlin's page carries full
+details for the first products of each page only (18 of 48 in most markets, all 48 in
+Romania): the rest come as ids in `other_products` for `get_leroymerlin_product`. Store
+stock is Brazil only, as Leroy Merlin Brasil reports it. Captured 2026-11-27: furadeira in
+grande_sao_paulo gave 401 results, the first a Philco cordless drill at 199.90 BRL; the
+Wap WF 12K3.2 cordless drill was 129.90 BRL (original 149.90), in stock at 12 of the
+region's 16 stores; one product in rio_de_janeiro held 469 units across 4 stores, 218 at
+Rio Barra in the Eletricidade aisle; a delivery to CEP 01310-100 quoted 9.90 BRL standard
+in 1 day and free pickup in 2 hours; an Italian impact drivers category held 358
+products, full details for 10 of the first 48; the Italian offers page held 923
+products; Milano listed 10 stores, the nearest at 9.4 km; an Italian product averaged
+4.6 from 295 reviews. Not available: search in France, reviews in Spain and France,
+store search in Spain, store stock outside Brazil, Ukraine and Greece, price history
+(poll and store the answers). Failed calls and refused inputs are not charged; a
+not-found (an unknown product, category or store) is charged what it spent.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
