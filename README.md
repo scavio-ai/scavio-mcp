@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1421 tools across 176 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1464 tools across 180 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1421 tools puts ~3096KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1464 tools puts ~3182KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1421 tools. Loading all of them costs ~3096KB of `tools/list` —
+Scavio exposes 1464 tools. Loading all of them costs ~3182KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1421 tools, ~3096KB** |
+| `all` | every platform — **1464 tools, ~3182KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -5047,6 +5047,137 @@ available: reviews and questions (the site has none), flyers, a store locator wi
 (the delivery tool lists nearby pickup stores with theirs), unit counts, price history
 (poll and store the answers). Failed calls and refused inputs are not charged; a not-found
 (an unknown item, category or collection, or an item the region does not sell) is charged.
+
+### [Terabyteshop](https://scavio.dev/docs/terabyte-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Terabyteshop API for Terabyteshop (terabyteshop.com.br, Brazil's PC-parts store), Brazil only, Portuguese text, prices in BRL: keyword search, category and brand listings and the deal listings (Black Friday, open box, free shipping), 30 a page in the site's order or by price, filtered by sub-category and spec attributes, with the card price, the Pix price (Pix is Brazil's instant payment), the list price, installments, units sold and a running deal's end; one product with every card plan, warranty, the deal's units left, specs and the newest reviews; reviews by page; the active coupons with the products each covers; the site's top search terms; and the Full Custom PC builder's platforms, component groups and options. See the [Terabyteshop API page](https://scavio.dev/terabyte-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_terabyte` | Keyword search, up to 100 a page, sorted by Scavio on the returned page (the site's search ignores sorting) |
+| `get_terabyte_product` | One product by id or link: card and Pix price, list price, every card plan, warranty, deal end and units left, specs, 5 newest reviews |
+| `get_terabyte_reviews` | A product's reviews, newest first, 5 a page (no reviewer names) |
+| `get_terabyte_category` | One category by path: 30 a page, site order or price, sub-category and spec filters |
+| `get_terabyte_brand` | One brand's products in one category, by brand name or id |
+| `get_terabyte_deals` | The Black Friday, open-box and free-shipping listings |
+| `get_terabyte_coupons` | The active coupons, one coupon category's, or one code with the products it covers |
+| `get_terabyte_trending_searches` | The site's top search terms with search counts and each term's top product |
+| `get_terabyte_pc_builder` | The PC builder: platforms, component groups, and a group's options with availability per distribution center |
+
+Platform key `terabyte`. Credits: 1 per call on every tool; `credits_used` in the response
+is what was charged. Product, search and listings usually take 5 to 30 seconds, up to about
+90 (allow a client timeout of at least 180 s); reviews, coupons, trending searches and the PC
+builder 2 to 6 seconds (at least 60 s).
+
+Prices are as terabyteshop.com.br shows them to a visitor who is not signed in. The site's
+search ignores sorting, so `search_terabyte` sorts the returned page and a note says so.
+PC builder prices are the builder's own and can differ from the product page. Captured
+2026-11-27: rtx 5060 matched 162 products; the Gigabyte GS24F14 monitor was 549.99 BRL by
+Pix and 647.05 by card, in a Black Friday offer ending 2026-11-30 with 6 units left; the
+Black Friday listing held 6767 products; 11 coupons were active. Not available: shipping by
+CEP (Terabyteshop quotes it in the cart), stores (it has none), stock unit counts, price
+history (poll and store the answers). Failed calls and refused inputs are not charged; a
+not-found (an unknown product, category, brand, code or platform) is charged.
+
+### [Cobasi](https://scavio.dev/docs/cobasi-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Cobasi API for Cobasi (cobasi.com.br, the Brazilian pet store of Grupo Petz Cobasi), Brazil only, Portuguese text, prices in BRL: keyword search, category and brand listings and the deals page, 20 a page, sorted and filtered by any facet, with the price, the regular price and each size's SKU; one product with every size's price, price per kg and, when the product can be bought on subscription, the Compra Programada price; reviews and questions by page; pickup and delivery options for one SKU at a CEP; search suggestions; the store directory; and one store with its hours and services. See the [Cobasi API page](https://scavio.dev/cobasi-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_cobasi` | Keyword search: 20 a page, up to page 50, 4 sorts, facet filters |
+| `get_cobasi_category` | One category by path, with its subcategories and facet counts |
+| `get_cobasi_brand` | One brand's products by brand slug |
+| `get_cobasi_deals` | The deals page: deal price next to the regular price |
+| `get_cobasi_product` | One product by id or link: every size's price, EAN, price per measure, subscription price when offered, specs, rating |
+| `get_cobasi_reviews` | A product's reviews, 4 a page, with the star summary (no reviewer names) |
+| `get_cobasi_questions` | A product's questions with Cobasi's answers, 4 a page (no asker names) |
+| `get_cobasi_availability` | Pickup stores and delivery options for one SKU at a CEP |
+| `get_cobasi_suggestions` | Search suggestions, with the spelling Cobasi corrected |
+| `get_cobasi_stores` | The store directory by state and city, with coordinates and services |
+| `get_cobasi_store` | One store: address, phone, hours per weekday, grooming and vet hours, services |
+
+Platform key `cobasi`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Listings, product, stores and store take 10 to 90 seconds (allow a client
+timeout of at least 240 s); reviews, questions, availability and suggestions 2 to 6 seconds
+(at least 60 s).
+
+Prices are as cobasi.com.br shows them to a visitor who is not signed in. Availability is a
+pickup or delivery flag, never a unit count. Captured 2026-11-27: racao golden matched 237
+products; the Formula Natural Fresh Meat dog food was 59.99 BRL for 1 kg (list 74.99); its
+SKU could be picked up at 11 stores near CEP 01310-100, ready in 45 minutes, or delivered for
+7.90 BRL in 2 business days; the deals page held 1293 products; Cobasi listed 253 stores.
+Not available: Pix prices, per-store prices or stock, marketplace sellers, deal validity
+dates, price history (poll and store the answers). Failed calls and refused inputs are not
+charged; a not-found (an unknown product, category, brand or store) is charged.
+
+### [Netshoes](https://scavio.dev/docs/netshoes-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Netshoes API for Netshoes (netshoes.com.br, Brazil's sporting-goods store, part of Magalu), Brazil only, Portuguese text, prices in BRL: keyword search and list pages (such as the Black Friday sneakers), 100 or 45 a page in the site's 7 sorts, filtered by any facet; one product with every size, every seller's offer, the Pix price where a Pix promotion applies, specs and rating; every offer for one size; the online stock count for a size; delivery options to a CEP; reviews and questions by page; the daily deal; a marketplace seller's company data and rating; and the popular searches. See the [Netshoes API page](https://scavio.dev/netshoes-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_netshoes` | Keyword search: 100 a page, 7 sorts, brand, gender, size, seller, price and facet filters |
+| `get_netshoes_list` | A list page by slug (tenis-black-friday by default), 45 a page, sorted and filtered like search |
+| `get_netshoes_product` | One product by colour id, size sku or link: every size with EAN, price, Pix price and every seller's offer |
+| `get_netshoes_offers` | Every seller's offer for one size, with installment plans |
+| `get_netshoes_inventory` | The online stock count for one size and seller |
+| `get_netshoes_shipping` | Delivery options for one size to a CEP, with the free-shipping threshold |
+| `get_netshoes_reviews` | A product's reviews, 13 a page, by stars or with photos (no reviewer names) |
+| `get_netshoes_questions` | A product's questions and answers, 10 a page (no asker names) |
+| `get_netshoes_daily_deal` | The daily deal (Barato do Dia) with its start and end |
+| `get_netshoes_seller` | A marketplace seller: company name, CNPJ, business address, products sold, rating |
+| `get_netshoes_popular_searches` | The search box's popular searches |
+
+Platform key `netshoes`. Credits: 1 per call on every tool; `credits_used` in the response
+is what was charged. Search and list pages usually take 2 to 30 seconds (allow a client
+timeout of at least 180 s); the others 2 to 15 seconds (at least 120 s).
+
+Prices are as netshoes.com.br shows them to a visitor who is not signed in. `price` is the
+card price; `pix_price` the Pix price where a Pix promotion applies. Shipping and inventory
+use the size's buy-box offer, whose price can differ by a few reais from the price the
+product tool shows. The daily deal carries no prices: send its product ids to the product
+tool. Captured 2026-11-27: tenis corrida filtered to nike matched 214 products; the Adidas
+Racer TR23 was 249.99 BRL (list 499.99) in 8 sizes, with 549 units of size 38 online and free
+delivery to CEP 01310-100 in 3 days; tenis-black-friday held 736 products. Not available:
+store stock, contacts of marketplace sellers, price history (poll and store the answers).
+Failed calls and refused inputs are not charged; a not-found (an unknown product, sku, list
+or seller) is charged.
+
+### [Estante Virtual](https://scavio.dev/docs/estantevirtual-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Estante Virtual API for Estante Virtual (estantevirtual.com.br, Brazil's used and new book marketplace, part of Magalu), Brazil only, Portuguese text, prices in BRL: search by title, author or ISBN keywords, category and list pages (such as Black Friday), in the site's 6 sorts and filtered by used or new, author, publisher, year, seller city and price; the book for an ISBN; one book with its lowest used and new copy and its reviews; every copy of a book on sale, cheapest first, optionally with each copy's seller; one copy with the seller's condition notes; a delivery quote for a copy to a CEP; a sebo's (second-hand bookshop's) page, catalogue and buyer reviews; and the sebo directory by state and city. See the [Estante Virtual API page](https://scavio.dev/estantevirtual-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_estantevirtual` | Title, author or ISBN search: 44 a page, 6 sorts, used / new, author, publisher, year, city and price filters |
+| `get_estantevirtual_isbn` | The book for an ISBN-10 or ISBN-13 (check digit verified), with ungrouped listings |
+| `get_estantevirtual_book` | One book: lowest used and new price and copy, rating and reviews (no reviewer names) |
+| `get_estantevirtual_copies` | Every copy of a book on sale, up to 50 a page, by price, year, publisher, city or seller |
+| `get_estantevirtual_copy` | One copy: condition notes, invoice flag, price, seller, weight and size |
+| `get_estantevirtual_shipping` | The lowest-cost delivery option for one copy to a CEP |
+| `get_estantevirtual_seller` | A sebo or bookseller: shop name, private or business, city and state, rating, catalogue size and a page of books |
+| `get_estantevirtual_seller_books` | A sebo's catalogue, searchable, 40 a page |
+| `get_estantevirtual_seller_reviews` | A sebo's buyer reviews, 10 a page (no reviewer names) |
+| `get_estantevirtual_sellers` | The sebo directory: the country, a state or a city, 30 a page |
+| `get_estantevirtual_category` | One category by slug, sorted and filtered like search |
+| `get_estantevirtual_list` | A list page by slug (black-friday by default), 42 a page |
+
+Platform key `estantevirtual`. Credits: 1 per call, except `get_estantevirtual_copies` with
+`sellers: true`, which reads each copy's seller and is billed ceil((1 + copies) / 5) credits
+(10 copies = 3, 50 = 11); `credits_used` in the response is what was charged. Most calls take
+2 to 30 seconds, up to 70 when the site is busy: allow a client timeout of at least 180 s.
+
+Prices are as estantevirtual.com.br shows them to a visitor who is not signed in. A book is
+every copy of one ISBN; a copy without an ISBN group is a listing. Sellers appear by shop
+name with city and state only, and `seller_type` says private or business; reviewer names
+are never returned. Captured 2026-11-27: dom casmurro matched 3915 books; ISBN 9788535914849
+(1984, Companhia das Letras) had 198 used and 62 new copies, from 18 BRL used and 21.90 BRL
+new; a delivery quote for one copy to CEP 01310-100 was 19.34 BRL in 9 days; Sao Paulo city
+had 1258 sebos and booksellers. Not available: search suggestions, questions, stores, a
+was-price, Pix prices, price history (poll and store the answers). Failed calls and refused
+inputs are not charged; a not-found (an unknown book, copy, seller, category or list, or an
+ISBN with no copy on sale) is charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
