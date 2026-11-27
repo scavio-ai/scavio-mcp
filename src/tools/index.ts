@@ -28,6 +28,7 @@ import { registerWayfairTools } from "./wayfair.js";
 import { registerAshleyTools } from "./ashley.js";
 import { registerMaisonsdumondeTools } from "./maisonsdumonde.js";
 import { registerWilliamssonomaTools } from "./williamssonoma.js";
+import { registerBedbathbeyondTools } from "./bedbathbeyond.js";
 import { registerDecathlonTools } from "./decathlon.js";
 import { registerSpecsTools } from "./specs.js";
 import { registerLowesTools } from "./lowes.js";
@@ -115,6 +116,10 @@ import { registerReiTools } from "./rei.js";
 import { registerQvcTools } from "./qvc.js";
 import { registerBarnesandnobleTools } from "./barnesandnoble.js";
 import { registerThriftbooksTools } from "./thriftbooks.js";
+import { registerBelkTools } from "./belk.js";
+import { registerAbercrombieTools } from "./abercrombie.js";
+import { registerLlbeanTools } from "./llbean.js";
+import { registerSweetwaterTools } from "./sweetwater.js";
 import { registerArgosTools } from "./argos.js";
 import { registerMediaExpertTools } from "./mediaexpert.js";
 import { registerActionTools } from "./action.js";
@@ -214,6 +219,7 @@ const PLATFORMS: Record<string, RegisterFn> = {
   ashley: registerAshleyTools,
   maisonsdumonde: registerMaisonsdumondeTools,
   williamssonoma: registerWilliamssonomaTools,
+  bedbathbeyond: registerBedbathbeyondTools,
   decathlon: registerDecathlonTools,
   specs: registerSpecsTools,
   lowes: registerLowesTools,
@@ -301,6 +307,10 @@ const PLATFORMS: Record<string, RegisterFn> = {
   qvc: registerQvcTools,
   barnesandnoble: registerBarnesandnobleTools,
   thriftbooks: registerThriftbooksTools,
+  belk: registerBelkTools,
+  abercrombie: registerAbercrombieTools,
+  llbean: registerLlbeanTools,
+  sweetwater: registerSweetwaterTools,
   argos: registerArgosTools,
   mediaexpert: registerMediaExpertTools,
   action: registerActionTools,
@@ -365,7 +375,7 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 2703KB of tools/list (measured with
+ * tools, which serialises to 2819KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 143
@@ -427,7 +437,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (1259 tools)
+ *   all      — every platform (1305 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -515,6 +525,11 @@ const TITLE_WORDS: Record<string, string> = {
   thriftbooks: "ThriftBooks",
   uhaul: "U-Haul",
   williamssonoma: "Williams-Sonoma",
+  belk: "Belk",
+  abercrombie: "Abercrombie & Fitch",
+  llbean: "L.L.Bean",
+  sweetwater: "Sweetwater",
+  bedbathbeyond: "Bed Bath & Beyond",
 };
 
 /** `get_tiktok_user_posts` -> `Get TikTok User Posts`. */

@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1259 tools across 158 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1305 tools across 163 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1259 tools puts ~2703KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1305 tools puts ~2819KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1259 tools. Loading all of them costs ~2703KB of `tools/list` —
+Scavio exposes 1305 tools. Loading all of them costs ~2819KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1259 tools, ~2703KB** |
+| `all` | every platform — **1305 tools, ~2819KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -3750,6 +3750,165 @@ text, member prices, unit counts, deeper result pages, price history (poll and
 store the answers). Failed calls and refused inputs are not charged; a not-found
 (an unknown EAN, collection or store) is charged.
 
+### [Belk](https://scavio.dev/docs/belk-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Belk API for Belk (belk.com, the US Southern department store), US only, prices in USD: keyword search, category listings and deal listings (Doorbusters, Super Buys, Clearance, Sale Items, Today's Offers), 60 items a page in Belk's 7 sorts, filtered by brand, colour, size, sales promotion, coupon code, discount band, price range, free-pickup store and any facet; one product in full with every colour, size and variant and its online stock; one variant with its UPC, price type and Belk's sale end date, and optionally the price of every colour at that size; exact store stock for up to 5 variants at up to 10 stores; stores near a ZIP code and one store with this week's hours and pickup location; the department menu; and a product's 8 newest reviews. Prices are as belk.com shows them to visitors who are not signed in, Belk Rewards+ tier prices and coupons with Belk's own after-code price labeled as Belk gives them. See the [Belk API page](https://scavio.dev/belk-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_belk` | Keyword search: 60 items a page (pages 1 to 200), 7 sorts, brand, colour, size, sales promotion, coupon code, discount band, price range, pickup store and facet filters |
+| `get_belk_category` | One category's products by path or link, sorted and filtered like search |
+| `get_belk_deals` | Doorbusters, Super Buys, Clearance, Sale Items or Today's Offers, across Belk or inside one category |
+| `get_belk_categories` | The department menu: 15 departments with their category tree and the path each takes |
+| `get_belk_product` | One product by id or link: prices, price label, tier prices, coupons, promotions, rating, details, colours, sizes and every variant with its online units |
+| `get_belk_variant` | One variant: UPC, orin, price type, original and sale price, sale end date, pickup and ship flags, coupons; optionally every colour's price at that size |
+| `get_belk_store_availability` | Exact store units and status (in stock, limited, out of stock) for 1 to 5 variants at 1 to 10 stores |
+| `get_belk_stores` | Every Belk store within about 150 miles of a US ZIP code, with regular and this week's hours |
+| `get_belk_store` | One store by id: address, phone, coordinates, this week's hours and pickup location |
+| `get_belk_reviews` | A product's 8 newest reviews with the review count (no reviewer names) |
+
+Platform key `belk`. Credits: billed on actual cost, `credits_used` in the response is
+what was charged: 2 per call; `get_belk_product` 2 for Belk's canonical product link and
+4 when Belk redirects to it (an older link or a product id alone); `get_belk_variant` 4
+with `include_color_prices`; `get_belk_store_availability` 1 per call when every orin is
+given (from `get_belk_variant`), plus 2 per variant whose orin is looked up (3 for one
+variant, up to 11 for five). Most calls take 2 to 15 seconds: allow a client timeout of
+at least 90 s.
+
+US only, prices in USD and national: the same in every store. Search, category and deal
+listings show 60 items a page; Belk shows totals over 10,000 as "10,000+"
+(`total_is_lower_bound`). Coupons carry Belk's own price with the code and end date as
+Belk writes them, never computed. Store stock is Belk's exact unit count per store, with
+1 to 5 units as limited; a wrong orin answers 0 at every store, so it is never guessed.
+Reviews are the 8 newest only: no paging, sort or star filter. Captured 2026-11-27:
+sweater gave 7193 results, the first the Vince Camuto Women's Dolman Sleeve Crew Neck
+Sweater at 29.99 USD (original 69), a Doorbuster with 29 colours, 7 sizes and 147
+variants; its size M variant was on sale until 2026-11-28; Women's Sweaters held 2334
+items; Doorbusters across Belk showed 10,000+ items; ZIP 28202 listed 79 stores, the
+nearest at 5.2 miles; one variant showed 2, 3 and 4 units at 3 stores; the menu held 15
+departments and 728 nodes. Not available: review paging, Belk's weekly ad and coupon
+pages, search suggestions, price history (poll and store the answers). Failed calls and
+refused inputs are not charged; a not-found (an unknown product, variant, category or
+store) is charged what it spent.
+
+### [Abercrombie & Fitch](https://scavio.dev/docs/abercrombie-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Abercrombie & Fitch API for Abercrombie & Fitch Co. (abercrombie.com: Abercrombie & Fitch, abercrombie kids, YPB; hollisterco.com: Hollister, Gilly Hicks), chosen with `brand`, on 16 storefronts (US, Canada, UK, Europe in six languages, Hong Kong, Japan and worldwide): keyword search and category listings with the site's sorts and facet filters, the price and the member price the site shows to every visitor with its own label; one product with every color and every size SKU and the exact units shown online; exact store units per SKU at the stores near a US ZIP code or a point; stores near a place and one store's dated hours; each storefront's category tree; the banner offers with their terms; the 8 newest reviews of a product with the rating summary and fit; and search suggestions. See the [Abercrombie & Fitch API page](https://scavio.dev/abercrombie-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_abercrombie` | Keyword search, 48 a page, 6 sorts and facet filters, with total, total pages, sort options and facets |
+| `get_abercrombie_product` | One product by product id: every color with every size (and length) SKU, online units, price, member price, fabric, care, measurements and the rating summary with fit |
+| `get_abercrombie_store_stock` | Exact units per SKU (1 to 10 SKUs) at the stores near a US ZIP code or a point, with status available, backorderable or unavailable |
+| `get_abercrombie_stores` | Stores near a US ZIP code or a point (up to 25), with address, phone, distance and this week's hours |
+| `get_abercrombie_store` | One store by store number, with hours dated for the next 7 days |
+| `get_abercrombie_category` | One category's products, 1 to 90 a page, 6 sorts and facet filters, with the site's social proof message |
+| `get_abercrombie_categories` | One storefront's category tree: departments, categories (regular, clearance, featured) and sub-categories |
+| `get_abercrombie_promotions` | The banner offers one storefront shows now, with their terms and dates as given |
+| `get_abercrombie_reviews` | The 8 newest reviews of a product (us, ca, uk, eu, eu_de) with the rating summary, recommendations and fit; no reviewer names |
+| `get_abercrombie_suggestions` | Search-box suggestions for a few letters |
+
+Platform key `abercrombie`. Credits: 1 per call, `get_abercrombie_reviews` 2 when
+called without the product `url` (one extra lookup); `credits_used` in the response
+is what was charged. Most calls take 2 to 10 seconds; `get_abercrombie_reviews`
+takes 15 to 60 s: allow a client timeout of at least 120 s.
+
+`brand` is `anf` (default) or `hol`; `storefront` is `us` (default), `us_es`, `ca`,
+`ca_fr`, `uk`, `eu`, `eu_de`, `eu_fr`, `eu_es`, `eu_it`, `eu_nl`, `am` (Hong Kong),
+`am_zh`, `am_ja` (Japan), `wd` or `wd_es` (worldwide); `country` picks the ship-to
+country on the eu and wd storefronts. On wd and wd_es prices are the site's own
+conversion from USD into the ship-to country's currency, with `usd_price` alongside.
+Stores cover the US (by ZIP code or point) and CA, GB, the European countries, JP,
+HK, MO, CN and AE (by point). Prices are national, not per store. Mexico, Saudi
+Arabia, Qatar, Indonesia and Taiwan are served by franchise partners' own sites and
+are not offered; the eu storefronts price in EUR only. Captured 2026-11-27: baggy
+jeans on the US Abercrombie & Fitch storefront gave 1219 results, the first the Baggy
+Jean at 90 USD with a 67.50 USD member price labeled Black Friday Price, in 15 colors
+and 480 SKUs, rated 4.8 from 3822 reviews; two of its SKUs near ZIP 10001 were in
+stock at 10 stores, the nearest with 4 and 3 units; hoodie on Hollister worldwide
+shipped to Australia gave 559 results in AUD; ZIP 43215 had 3 Hollister stores within
+50 miles; the US storefront's Black Friday offer ran 2026-11-23 to 2026-11-30. Not
+available: UPCs, deeper review pages or review sorts, store prices, price history
+(poll and store the answers). Failed calls and refused inputs are not charged; a
+not-found (an unknown product, category or store) is charged.
+
+### [L.L.Bean](https://scavio.dev/docs/llbean-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+L.L.Bean API for L.L.Bean (llbean.com, the US outdoor apparel and gear retailer), on the US storefront (USD), the Canadian storefront llbean.ca (CAD) and the international storefront global.llbean.com for 12 countries in each country's own currency: keyword search, category and Sale lists, 48 a page, sorted and filtered by any facet; one product in full with every SKU's price, sale price and stock state (US) or the variant's price and offer text (Canada and international); exact store units per SKU at up to 20 US stores or every store; US stores near a ZIP code, a point or a city with 7 dated days of hours; written reviews with fit data, reviewer height and weight bands and rating statistics; L.L.Bean's own review summary; the standard delivery date to a US ZIP code; the department menu; and search suggestions. See the [L.L.Bean API page](https://scavio.dev/llbean-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_llbean` | Keyword search on us, ca or intl: 6 sorts, 48 a page, facet filters; a keyword the site sends to a category comes back with redirected_to and the sort, page and filters applied |
+| `get_llbean_category` | One category by id on us, ca or intl, sorted and filtered like search |
+| `get_llbean_categories` | The US department menu (11 departments, about 570 nodes), or one department with its children |
+| `get_llbean_product` | One product: on us items, colors and every SKU with price, full price, sale price, stock flag and status as given; on ca and intl the variant's price, was price, availability and offer text |
+| `get_llbean_store_stock` | Exact units per SKU at up to 20 US stores or every store, labeled with color, size and price when product_id is sent |
+| `get_llbean_stores` | US stores near a ZIP code, a point or a city and state, by id or all, with type, pickup services and 7 dated days of hours |
+| `get_llbean_reviews` | Written reviews in 4 sorts, up to 100 a page, filtered by stars, height or weight band or words, with fit data, rating statistics and UPCs per item; no reviewer names |
+| `get_llbean_review_summary` | L.L.Bean's own summary of a product's reviews, as given |
+| `get_llbean_delivery_estimate` | The standard delivery date of one item to a US ZIP code, as given |
+| `get_llbean_suggestions` | Search-box suggestions on us or ca |
+| `get_llbean_deals` | The Sale category on us, ca or intl, sorted and filtered like search; on us also by % Off (20 to 70 and up) |
+
+Platform key `llbean`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. Most calls take 2 to 15 seconds: allow a client
+timeout of at least 120 s.
+
+`market` is `us` (default), `ca` (CAD, English) or `intl` with a `country`: gb
+(GBP), de, fr, nl (EUR), au (AUD), mx (MXN), ch (CHF), se (SEK), cn (CNY), br
+(BRL), in (INR) or sg (SGD). Search, category, product and deals cover every
+market; suggestions us and ca; store stock, stores, reviews, review summary,
+delivery estimate and the department menu the US storefront. Prices are as
+L.L.Bean shows them to a visitor who is not signed in: member and card prices
+(L.L.Bean Rewards, L.L.Bean Mastercard) are never returned. Prices are national,
+the same in every store and online. Store stock is the site's exact available
+quantity per SKU per store. Reviews carry no reviewer names, nicknames or
+locations. Captured 2026-11-27: fleece jacket gave 24 results on us, the first
+Kids' Mountain Classic Fleece Anorak at 59.95 USD, and 73 on ca and intl gb, the
+first Men's Fleece-Lined Flannel Shirt at 159 CAD and 110 GBP; the Boat and Tote,
+Zip-Top was rated 4.8 from 9735 reviews with 97 SKUs from 34.99 to 69.95 USD; its
+Medium item held 506 units at store 0040; ZIP 04032 gave 5 stores, the nearest at
+0.13 miles; the Men's L.L.Bean Sweater Fleece Full-Zip Jacket had 1400 written
+reviews (4402 ratings, average 4.67) and was 145 EUR on the international
+storefront for Germany; Sale at 40% and up held 204 products. Not available: unit
+counts, store stock, reviews and delivery dates on the Canadian and international
+storefronts, end dates for sale items, price history (poll and store the answers).
+Failed calls and refused inputs are not charged; a not-found (an unknown product,
+item or category) is charged.
+
+### [Sweetwater](https://scavio.dev/docs/sweetwater-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Sweetwater API for Sweetwater (sweetwater.com, the US online music instrument and pro audio retailer), US only, prices in USD: keyword search with the price now, retail price, rebates, special offers and units on hand, available and on order; category listings, 42 a page with the site's 7 sorts and facet filters; one product in full with was price, price drop, stock text, backorder date, shipping weight, dimensions and specs; the serial-numbered units of a guitar or bass with each unit's serial number, shipping weight and photos; customer reviews filtered by stars, sorted and paged; and the Deal Zone with its sale window and deal pages. See the [Sweetwater API page](https://scavio.dev/sweetwater-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_sweetwater` | Keyword search: 42 results in Sweetwater's relevance order with price, rebates and units on hand / available / on order; a keyword that opens a category answers that category's listing with sort and page applied |
+| `get_sweetwater_category` | One category by id, path or link: 42 products a page, 7 sorts, facet filters and the facets to send back |
+| `get_sweetwater_product` | One product by item id or link: price, was price, price drop, availability and stock text, backorder date, warehouse flags, shipping weight, return days, rating, dimensions and specs (open-box units by their own id) |
+| `get_sweetwater_serial_units` | The serial-numbered units of one item: serial number, shipping weight, link and photos per unit, plus the Demo unit when there is one |
+| `get_sweetwater_reviews` | Customer reviews filtered by stars, sorted newest, oldest, highest or lowest, up to 100 a page, with the star breakdown; no reviewer names |
+| `get_sweetwater_deals` | The Deal Zone or one deal page, 42 a page with its 9 sorts: the sale window as given and the list of deal pages |
+
+Platform key `sweetwater`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. Most calls take 2 to 15 seconds: allow a client
+timeout of at least 120 s.
+
+US only, prices in USD. Free-text search shows 42 results in Sweetwater's
+relevance order on one page (the site does not page or sort them); when the
+keyword opens a category, sort and pages of 42 apply. Listings count at most
+5,000 products (120 pages). Serial units are the instruments Sweetwater lists one
+by one; an item sold without serial numbers has none. Captured 2026-11-27: boss
+delay pedal gave 20 results, the first the Boss DD-8 Digital Delay Pedal at 168.88
+USD (was 197.99) with 204 units available, rated 5 from 39 reviews; the Solidbody
+Guitars category counted 5,000 products, from 149 USD sorted by price; the Fender
+American Ultra II Stratocaster HSS in Ultraburst at 2359.99 USD listed 6 serial
+units and a Demo unit at 1919.99; the Shure SM58 averaged 4.7 from 372 reviews;
+the guitar deals page held 8,493 items under the Black Friday event to 2026-11-30.
+Not available: Gear Exchange (used gear listings), store or warehouse unit counts
+by location, price history (poll and store the answers). Failed calls and refused
+inputs are not charged; a not-found (an unknown item, category or deal page) is
+charged.
+
 ### [Argos](https://scavio.dev/docs/argos-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
 Argos API for Argos store stock, prices and reviews (argos.co.uk, UK, GBP): which Argos stores near a UK postcode can hand over one or more products (collect now, today, tomorrow, out of stock) and whether they can be delivered to a postcode, next to price, was price, offers and badges, plus search, categories, deal collections, product detail, reviews, Q&A and stores.
@@ -4379,6 +4538,45 @@ special order delivered 2027-02-26 to 2027-03-12 and on the floor at 9 stores; Z
 ran 524 to 1274 CAD. Not available: unit counts per store, deeper search pages,
 review sort or star filters, UPCs, price history (poll and store the answers).
 Failed calls and refused inputs are not charged; a not-found (an unknown product or
+category) is charged.
+
+### [Bed Bath & Beyond](https://scavio.dev/docs/bedbathbeyond-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Bed Bath & Beyond API for Bed Bath & Beyond (bedbathandbeyond.com, the US online home goods store), US only, prices in USD: keyword search and category lists in the site's sorts, with sale price, compare-at price (MSRP or was), discount, promo badge, rating and sponsored tiles kept apart; category filters by attribute, price range, rating, brand, promotion and delivery speed; the department menu; one product with every in-stock option's price, sale window and exact online stock; the delivery date and shipping charge of an option to a ZIP code; customer reviews with sorts, a star filter and text search; customer questions and answers; the 333 stores of the Bed Bath & Beyond family (Bed Bath & Beyond / The Container Store, Kirkland's, The Container Store) near a ZIP code, a point or in a state; and the deals page with its sale countdown and doorbusters, plus the Black Friday, On Sale, Doorbusters and Holiday Brand Deals lists. See the [Bed Bath & Beyond API page](https://scavio.dev/bedbathbeyond-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_bedbathbeyond` | Keyword search (or a facet link from an earlier answer), 7 sorts, out-of-stock toggle, up to 84 pages: organic and sponsored items, facets, matching categories, the category or product a keyword redirects to |
+| `get_bedbathbeyond_category` | One category by slug + category_id or link, 6 sorts, attribute, price range, rating, brand, promotion, fast delivery and expedited filters, with breadcrumbs and child categories |
+| `get_bedbathbeyond_categories` | The department menu: departments, groups and links with the slug and category_id each takes |
+| `get_bedbathbeyond_product` | One product by id or link: price, MSRP or was price, savings, rating histogram, specs, taxonomy and every in-stock option with price, sale window and exact online stock |
+| `get_bedbathbeyond_delivery_estimate` | Delivery date, shipping charge and shipping levels of one option, for a quantity, to a US ZIP code |
+| `get_bedbathbeyond_reviews` | Customer reviews, 4 sorts, star filter, text search, up to 50 a page, with the rating histogram; no reviewer names |
+| `get_bedbathbeyond_questions` | Customer questions and answers, 20 questions a page; no screen names |
+| `get_bedbathbeyond_stores` | Stores near a ZIP code or a point, in a state, or all of them, by banner, with hours, services and distance |
+| `get_bedbathbeyond_deals` | The deals page (sale countdown, doorbuster grid) or a deal list (Black Friday, On Sale, Doorbusters, Holiday Brand Deals) with sorts and pages |
+
+Platform key `bedbathbeyond`. Credits: 1 per call; 2 on `search_bedbathbeyond`,
+`get_bedbathbeyond_category` and the deal lists of `get_bedbathbeyond_deals` (the
+deals page is 1); a product is occasionally 2. `credits_used` in the response is
+what was charged. Most calls take 2 to 25 seconds: allow a client timeout of at
+least 90 s.
+
+US only, prices in USD. Bed Bath & Beyond publishes online stock only: no store
+stock and no store prices (stores answers locations, hours and services). The site
+leaves out-of-stock options out of a product (original_option_count counts them
+all); a product no longer sold answers in_stock false with no options. Lists serve
+at most 84 pages; the price filter is left out of keyword facets (use category with
+price_min and price_max). No UPC or GTIN is published; reviews and questions carry
+no reviewer or screen names. Captured 2026-11-27: bath towels gave 7835 results,
+the first the Superior Egyptian Cotton 6 Piece Towel Set from 63.98 USD against an
+MSRP of 157.50 (59% off), rated 4.5 from 5165 reviews, 26 of its 49 options listed,
+the Ash Grey set at 74.25 USD with 97 units in online stock; that option to ZIP
+10001 shipped free on 2026-11-30; bedding/bedding-sets counted 4548 products; ZIP
+75201 had 16 of the 333 stores within 50 miles; the deals page counted down to a
+Black Friday Sale ending 2026-11-30 and the Doorbusters list held 1133 products.
+Not available: store stock, store prices, UPCs, price history (poll and store the
+answers). Failed calls and refused inputs are not charged; a not-found (an unknown
 category) is charged.
 
 ### [Mercado Libre](https://scavio.dev/docs/mercadolibre-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
