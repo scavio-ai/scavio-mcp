@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1393 tools across 173 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1421 tools across 176 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1393 tools puts ~3032KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1421 tools puts ~3096KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1393 tools. Loading all of them costs ~3032KB of `tools/list` —
+Scavio exposes 1421 tools. Loading all of them costs ~3096KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1393 tools, ~3032KB** |
+| `all` | every platform — **1421 tools, ~3096KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -4943,6 +4943,110 @@ and 18 stores holding it; CEP 20040-002 in Rio de Janeiro listed 27 stores. Not 
 deal start and end dates (the site publishes none), the full review list, Q&A, unit counts,
 price history (poll and store the answers). Failed calls and refused inputs are not
 charged; a not-found (an unknown product, category, deal list or sku) is charged.
+
+### [Enjoei](https://scavio.dev/docs/enjoei-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Enjoei API for Enjoei (enjoei.com.br, Brazil's second-hand fashion marketplace), Brazil only, Portuguese text, prices in BRL: keyword search and department, category and subcategory listings, 30 a page by cursor, in 4 sorts, filtered by brand, clothing, waist and shoe size, price, condition (new or used), listing age, store kind and discount, with the price, the price before the seller's discount, size, condition and shipping type; the category tree; one listing with its make-an-offer range, installments, sizes, brand, condition and photos; a seller's shop with its counters, rating and on-time delivery history; the shop's listings on sale, its sold listings and its buyer reviews; and search suggestions. Sellers appear by @handle only. See the [Enjoei API page](https://scavio.dev/enjoei-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_enjoei` | Listing search: 30 a page by cursor, 4 sorts, brand, size, price, condition, listing age, store kind and discount filters |
+| `get_enjoei_category` | One department, category or subcategory by slug, optionally with keywords, sorted and filtered like search |
+| `get_enjoei_categories` | The category tree, three levels, with the slugs each category takes |
+| `get_enjoei_product` | One listing by id or link: price, list price, make-an-offer range, installments, sizes, brand, condition, photos and the seller's handle |
+| `get_enjoei_shop` | A shop by handle: joined date, counters, rating, review count, on-time delivery history and average shipping time |
+| `get_enjoei_shop_listings` | A shop's listings on sale, by cursor |
+| `get_enjoei_shop_sold` | A shop's sold listings with the listed price, 40 a page, up to 50 pages |
+| `get_enjoei_shop_reviews` | A shop's buyer reviews, all, positive or negative, with the star and feedback-tag summary (no reviewer names) |
+| `get_enjoei_suggestions` | Search suggestions, with the department each narrows to |
+
+Platform key `enjoei`. Credits: 1 per call on every tool; `credits_used` in the response
+is what was charged. Search, category, shop listings and suggestions usually take 10 to 40
+seconds, up to about two minutes (allow a client timeout of at least 180 s); the others 2
+to 10 seconds (at least 60 s).
+
+Prices are as enjoei.com.br shows them to a visitor who is not signed in: new-buyer coupons
+and make-an-offer prices are not applied. Listings are paged by cursor (`next_cursor`) and
+cover sellers who ship to all of Brazil; Enjoei's totals stop at 10000 (`total_capped`).
+Seller names, avatars and cities are never returned, nor reviewer names. Captured
+2026-11-27: vestido farm reached the 10000 cap, the first a used FARM linen midi dress at
+199 BRL; a used FARM dress listed at 75 BRL (list 90) accepted offers from 45 to 74 BRL; the
+shop utstore had 706 listings on sale and 1998 sold listings over 50 pages, rated 4.7 from
+809 reviews. Not available: shipping quotes by CEP (they need a signed-in buyer), a colour
+filter (put the colour in the query), product comments, a site-wide sold search, sold
+dates, sold listings past 50 pages a shop, coupons, price history (poll and store the
+answers). Failed calls and refused inputs are not charged; a not-found (an unknown product
+or handle) is charged.
+
+### [Atacadao](https://scavio.dev/docs/atacadao-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Atacadao API for Atacadao (atacadao.com.br, the Brazilian cash-and-carry wholesale chain of Grupo Carrefour Brasil), Brazil only, Portuguese text, prices in BRL: keyword search and category listings priced at the store you choose, up to 100 a page in the site's 8 sorts, filtered by category, brand, price range, collection and any facet, with the unit price, every quantity tier and the case size; one product by sku, EAN, product id or link with its tiers and whether the store sells it; the filter values with the store's own counts; the pickup stores near a CEP or a point; the store directory by state and city; one store in full with its services and payment methods; each store's current flyers as links; search suggestions with the top searches; and the department tree. See the [Atacadao API page](https://scavio.dev/atacadao-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_atacadao` | Keyword search at one store: up to 100 a page (pages 1 to 50), 8 sorts, category, brand, price, collection and facet filters |
+| `get_atacadao_category` | One category by path or id at one store, sorted and filtered like search |
+| `get_atacadao_product` | One product by sku, EAN, product id, slug or link at one store: price, quantity tiers, case size, EAN and whether the store sells it |
+| `get_atacadao_stores_near` | The pickup stores near a CEP or a point, nearest first, with hours, and the stores serving that CEP |
+| `get_atacadao_stores` | The store directory for a state, optionally a city: address, phone, hours and whether it sells online |
+| `get_atacadao_store` | One store in full: services, payment methods, meal vouchers and its flyers |
+| `get_atacadao_flyers` | One store's current flyers with validity dates and the PDF link |
+| `get_atacadao_facets` | The filter values for a query or category at one store, with the store's counts |
+| `get_atacadao_suggestions` | Search suggestions with search counts, and the site's top searches |
+| `get_atacadao_categories` | The department tree with the path and id each category takes |
+
+Platform key `atacadao`. Credits: 1 per call on every tool; `credits_used` in the response
+is what was charged. Most calls take 2 to 20 seconds: allow a client timeout of at least
+90 s.
+
+Prices are the online prices of the store you choose with `store_id` (from
+`get_atacadao_stores_near` or `get_atacadao_stores`); without one, the site's default
+store (atacadaobr60, Vila Maria, Sao Paulo). `price` is the unit price for 1 unit and
+`price_tiers` lists every quantity tier the store gives (the unit price drops at larger
+quantities); there is no was-price. Items the chosen store does not sell are left out of
+listings. Flyers are returned as links, not opened. Captured 2026-11-27: arroz at the
+Tatuape store (atacadaobr340) matched 52 items, the first the Arroz Branco Camil Tipo 1 5kg
+at 20.29 BRL; the Arroz Branco Namorado Tipo 1 5kg was 21.89 BRL for 1 unit and 21.39 BRL
+each from 6; CEP 01310-100 had 33 pickup stores, the nearest 4.9 km away; Sao Paulo city
+had 21 stores; the Tatuape store listed 6 Black Friday flyers. Not available: the business
+(CNPJ) channel, store stock and unit counts, reviews, Q&A, price history (poll and store
+the answers). Failed calls and refused inputs are not charged; a not-found (an unknown
+product, category id or store) is charged.
+
+### [Carrefour Brasil](https://scavio.dev/docs/carrefourbr-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Carrefour Brasil API for Carrefour Brasil (carrefour.com.br: the Mercado grocery site and the www marketplace), chosen with `site`, Brazil only, Portuguese text, prices in BRL, separate from Carrefour France (platform key `carrefour`): keyword or EAN search, category listings and collections (the themed and deal lists the site links to), 15 a page in the site's 8 sorts, filtered by any facet and a price range, with the price, list price, single-payment price, seller and stamps, sponsored placements kept apart; grocery prices for a region by CEP or pickup store; one product with every seller, payment-method prices and promotions as given; delivery and pickup options for one item to a CEP; the pickup stores; search suggestions with the top searches; the coupon page; and the department menu. See the [Carrefour Brasil API page](https://scavio.dev/carrefourbr-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_carrefourbr` | Keyword or EAN search: 15 a page (pages 1 to 50), 8 sorts, facet and price filters, regional prices by CEP or store on mercado |
+| `get_carrefourbr_category` | One category by path or link, sorted and filtered like search |
+| `get_carrefourbr_collection` | One collection (a themed or deal list) by id or link, sorted and filtered like search |
+| `get_carrefourbr_product` | One product by item id or link: price, list price, single-payment price, every seller, payment-method prices, promotions, specs and variants |
+| `get_carrefourbr_delivery` | Delivery and pickup options for one item from one seller to a CEP, with nearby pickup stores and their hours |
+| `get_carrefourbr_stores` | The pickup stores, by state and city, with the store id that sets regional prices |
+| `get_carrefourbr_suggestions` | Search suggestions: terms, suggested products and the site's top searches |
+| `get_carrefourbr_coupons` | The coupon page: codes, values, expiry and rules as published |
+| `get_carrefourbr_categories` | The department menu, 3 levels, with the path, filters or collection each entry takes |
+
+Platform key `carrefourbr`. Credits: 1 per call on every tool; `credits_used` in the
+response is what was charged. Calls usually take 2 to 25 seconds on mercado, up to about 50
+on www: allow a client timeout of at least 120 s.
+
+`site` is `mercado` (default, the grocery site) or `www` (non-food and the marketplace). On
+mercado, `cep` or `store` gives that region's prices and assortment (`price_scope`
+regional); without them, the site's default prices (`price_scope` national). www prices are
+national. `spot_price` is the single-payment price; `payment_offers` are the site's prices
+for one payment method, such as the Carrefour card or Pix (Brazil's instant payment).
+Availability is a flag, never a unit count. Captured 2026-11-27: arroz on mercado at CEP
+01310-100 matched 43 items; the rice category held 100 items, the first the Arroz Branco
+Camil Tipo 1 5kg at 23.99 BRL; the Arroz Branco Longo-fino Tipo 1 Tio Joao 1 Kg was 6.59
+BRL with a Carrefour card offer of 30% off; delivery to CEP 01310-100 cost 10.90 BRL in 2h,
+with free pickup at a store 1.15 km away; Sao Paulo state had 68 pickup stores. Not
+available: reviews and questions (the site has none), flyers, a store locator with hours
+(the delivery tool lists nearby pickup stores with theirs), unit counts, price history
+(poll and store the answers). Failed calls and refused inputs are not charged; a not-found
+(an unknown item, category or collection, or an item the region does not sell) is charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
