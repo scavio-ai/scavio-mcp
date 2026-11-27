@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1497 tools across 184 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1508 tools across 186 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1497 tools puts ~3252KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1508 tools puts ~3277KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1497 tools. Loading all of them costs ~3252KB of `tools/list` —
+Scavio exposes 1508 tools. Loading all of them costs ~3277KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1497 tools, ~3252KB** |
+| `all` | every platform — **1508 tools, ~3277KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -5304,6 +5304,61 @@ in stock, 5 units each of sizes 41 and 42. Not available: review texts, shipping
 search suggestions, Dafiti Colombia, price history (poll and store the answers). Failed calls
 and refused inputs are not charged; a not-found (an unknown product, sku, category or brand)
 is charged.
+
+### [Riachuelo](https://scavio.dev/docs/riachuelo-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Riachuelo API for Riachuelo (riachuelo.com.br, the Brazilian fashion retailer), Brazil only, Portuguese text, prices in BRL: keyword search across the whole site, category listings and campaign pages (by default the Black Friday page of a department, or any campaign the listings point to), 24 a page in the site's 6 sorts, filtered by size, colour, gender, subcategory, brand and category group, with the price, list price, discount, the coupon or campaign banner the listing shows and every colour and size with the site's sold-out flag and the units it lists; and one product with its attributes, composition, the rating summary and the reviews the product page shows. See the [Riachuelo API page](https://scavio.dev/riachuelo-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_riachuelo` | Keyword search across the whole site: 24 a page, pages 1 to 500, 6 sorts, the listing's own filters |
+| `get_riachuelo_category` | One category by path or link, sorted and filtered like search |
+| `get_riachuelo_deals` | A campaign page: a department's Black Friday page by default, or another campaign by path |
+| `get_riachuelo_product` | One product by link or sku: price, list price, attributes, rating summary and the reviews the page shows (no reviewer names) |
+
+Platform key `riachuelo`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Keyword searches are slow at the source, usually 5 to 90 seconds (allow a
+client timeout of at least 300 s); category, campaign and product pages 3 to 35 seconds (at
+least 180 s).
+
+Prices are as riachuelo.com.br shows them to a visitor who is not signed in. Listing cards
+carry each colour and size with the site's sold-out flag and the units it lists; the product
+page lists no stock per size. A listing's `total` includes sold-out products. Campaign pages
+are seasonal and carry no start or end dates (the default is the Black Friday page). Captured
+2026-11-27: vestido matched 1204 products; the feminino category held 9006; the masculino
+Black Friday page held 627; a pair of wide-leg trousers was 79.99 BRL (list 159.99), rated 5
+from 11 ratings. Not available: more review pages, shipping quotes by CEP, store stock,
+stores, search suggestions, price history (poll and store the answers). Failed calls and
+refused inputs are not charged; a not-found (an unknown product, category or campaign) is
+charged.
+
+### [Petz](https://scavio.dev/docs/petz-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Petz API for Petz (petz.com.br, the Brazilian pet store of Grupo Petz Cobasi), Brazil only, Portuguese text, prices in BRL: keyword search, category and brand listings and the deals page or one of its collections, 20 a page, sorted by relevance, price or newest, with the price, list price, the Assinatura Petz (repeat delivery) price, the Clubz member price and the stock Petz shows; one product with every size or variant, its own prices and stock, specs, the rating with star counts and the 3 latest reviews; and the store directory, with hours and whether online orders can be picked up there, plus one store's page. See the [Petz API page](https://scavio.dev/petz-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_petz` | Keyword search: 20 a page, pages 1 to 50, by relevance, price or newest |
+| `get_petz_category` | One category by path (a pet, or a pet and a department) |
+| `get_petz_brand` | One brand's products by brand slug |
+| `get_petz_deals` | The deals page (Promocoes) or one of its collections, deal price next to the regular price |
+| `get_petz_product` | One product by id or link: prices, Assinatura Petz price, stock, variants, specs, rating, 3 latest reviews (no reviewer names) |
+| `get_petz_stores` | The store directory, narrowed by state and city: address, phone, hours, pickup flag |
+| `get_petz_store` | One store by slug or link: address, phone, hours |
+
+Platform key `petz`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Listings are slow at the source, usually 50 to 150 seconds; product, stores
+and store 30 to 95 seconds. Allow a client timeout of at least 300 s.
+
+Prices are as petz.com.br shows them to a visitor who is not signed in. `stock_units` is the
+count Petz shows, capped at 100 (`stock_capped` true means 100 or more). A search counts at
+most 1,000 products (`total_capped`). Petz publishes no validity dates for its deals.
+Captured 2026-11-27: ração golden matched 72 products; the cachorro/racao category held 978;
+a Selections For Pet dog food, 3 kg, was 46.39 BRL (list 57.99) in 3 sizes, rated 4.9 from
+32 reviews; the directory listed 269 stores, 128 in SP. Not available: per-store stock or
+prices, prices by CEP, more review pages, search suggestions, Pix prices, installments,
+shipping, price history (poll and store the answers). Failed calls and refused inputs are not
+charged; a not-found (an unknown product, category, brand, collection or store) is charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
