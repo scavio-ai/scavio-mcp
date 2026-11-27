@@ -5243,7 +5243,7 @@ quotes by CEP, search suggestions, deal start and end dates, store coordinates, 
 
 ### [Pichau](https://scavio.dev/docs/pichau-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-Pichau API for Pichau (pichau.com.br, Brazil's PC-parts store), Brazil only, Portuguese text, prices in BRL: keyword search (a keyword the site sends to a category is followed and reported), category and brand listings and the deal listings (Black Friday, open box, any campaign), 36 a page in the site's order, by price or by name, filtered by the listing's own facets, with the card price, the Pix price (Pix is Brazil's instant payment), the list price, installments and a running promotion's units left and sold; one product with specs, EAN and warranty; the same page as a browser shows it after loading, with live promotion units, the FPS benchmarks shown on PCs and a prebuilt PC's or kit's component list; reviews by page; every card plan of a product; the coupons; the category menu; and search-box suggestions. See the [Pichau API page](https://scavio.dev/pichau-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+Pichau API for Pichau (pichau.com.br, Brazil's PC-parts store), Brazil only, Portuguese text, prices in BRL: keyword search (a keyword the site sends to a category is followed and reported), category and brand listings and the deal listings (Black Friday, open box, any campaign), 36 a page in the site's order, by price or by name, filtered by the listing's own facets, with the card price, the Pix price (Pix is Brazil's instant payment), the list price, installments and a running promotion's units left and sold; one product with specs, EAN and warranty; the same page as a visitor sees it, with live promotion units, the FPS benchmarks shown on PCs and a prebuilt PC's or kit's component list; reviews by page; every card plan of a product; the coupons; the category menu; and search-box suggestions. See the [Pichau API page](https://scavio.dev/pichau-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 | Tool | Description |
 |------|-------------|
@@ -5261,8 +5261,7 @@ Pichau API for Pichau (pichau.com.br, Brazil's PC-parts store), Brazil only, Por
 
 Platform key `pichau`. Credits: 1 per call on every tool; `credits_used` in the response is
 what was charged. Listings took 5 to 170 seconds in Black Friday week, product, coupons and
-categories 5 to 60 seconds, product live and suggestions 30 to 160 seconds (the page is
-loaded as a browser does): allow a client timeout of at least 240 s. Reviews and
+categories 5 to 60 seconds, product live and suggestions 30 to 160 seconds: allow a client timeout of at least 240 s. Reviews and
 installments by product id take 2 to 8 seconds (at least 60 s).
 
 Prices are as pichau.com.br shows them to a visitor who is not signed in. `price` is the
