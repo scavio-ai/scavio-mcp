@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1368 tools across 170 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1393 tools across 173 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1368 tools puts ~2967KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1393 tools puts ~3032KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1368 tools. Loading all of them costs ~2967KB of `tools/list` —
+Scavio exposes 1393 tools. Loading all of them costs ~3032KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1368 tools, ~2967KB** |
+| `all` | every platform — **1393 tools, ~3032KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -4844,6 +4844,105 @@ products; Milano listed 10 stores, the nearest at 9.4 km; an Italian product ave
 store search in Spain, store stock outside Brazil, Ukraine and Greece, price history
 (poll and store the answers). Failed calls and refused inputs are not charged; a
 not-found (an unknown product, category or store) is charged what it spent.
+
+### [Natura](https://scavio.dev/docs/natura-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Natura API for Natura (the Brazilian beauty brand of Natura &Co) on its own storefronts in Brazil, Argentina, Chile, Colombia, Mexico and Peru, chosen with `country`, text in each market's language, prices in its currency (BRL, ARS, CLP, COP, MXN, PEN): keyword search, category listings and the Black Friday campaign listing, up to 100 a page, in each market's own sorts and filtered by the site's refinements (brand, product type, gender, fragrance family, skin type) and a price range; the category menu; one product with its price, struck-through price, discount, installments, low-stock badge, shades, kit contents, ingredients and the 3 latest reviews; search suggestions; and the physical stores in Brazil by state, city, CEP prefix and store type. See the [Natura API page](https://scavio.dev/natura-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_natura` | Keyword search in one of six markets: up to 100 a page, the market's own sorts, refinement and price filters |
+| `get_natura_category` | One category listing by id or /c/ link, sorted and filtered like search |
+| `get_natura_categories` | The market's category menu with the id each category takes |
+| `get_natura_product` | One product by id or link: price, list price, discount, installments, stock flag and low-stock badge, shades, kit contents, ingredients, rating and the 3 latest reviews (no names) |
+| `get_natura_suggestions` | Search suggestions: products, brands, popular searches and categories |
+| `get_natura_stores` | Brazil: the physical stores by state, city, CEP prefix and type (own, franchise, athena, kiosk) |
+| `get_natura_deals` | The market's Black Friday campaign listing (natura-friday or promociones), with the campaign's dates as the page states them |
+
+Platform key `natura`. Credits: 1 per call on every tool; `credits_used` in the response
+is what was charged. Most calls take 2 to 30 seconds, up to a minute for pages of 100:
+allow a client timeout of at least 120 s.
+
+`country` is `br` (default), `ar`, `cl`, `co`, `mx` or `pe`. Prices are as Natura shows
+them to a visitor who is not signed in: no consultant prices, no regional prices by CEP.
+Not every market offers every sort (Mexico has no discount sort). Stock is a flag, never a
+unit count. Captured 2026-11-27: perfume on br gave 522 results, the first the Deo Parfum
+Ilia Flor de Laranjeira 50 ml at 99.95 BRL (list 199.90, 50% off); maquiagem held 964
+products; the Deo Parfum Ilia Secreto 25 ml was 66.48 BRL (list 110.80) with the
+ultimas unidades badge, rated 4.7 from 109 reviews; natura-friday held 4248 products, the
+page stating the campaign runs 16 to 27 November 2026 with discounts extended to 30/11; the
+Brazil store list held 1,093 stores, 102 in the city of Sao Paulo. Not available: full
+review paging, store stock, regional prices, store coordinates and hours, Natura's US
+store, price history (poll and store the answers). Failed calls and refused inputs are not
+charged; a not-found (an unknown product or category) is charged.
+
+### [O Boticario + Eudora](https://scavio.dev/docs/boticario-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+O Boticario API for O Boticario and Eudora (boticario.com.br and eudora.com.br, the beauty brands of Grupo Boticario), chosen with `brand`, Brazil only, Portuguese text, prices in BRL: keyword search, category and product-brand listings and the deal listings (Beauty Week, the site's Black Friday event, and the promotions hub), 36 a page in 7 sorts, filtered by product brand, line, category, rating, price and any facet, with the card price, the Pix price, deal badges and each item's countdown; the category menu; the promotion conditions with each campaign's dates and coupon codes; one product with its online stock count, datasheet, every shade and the review summary; current prices for up to 10 SKUs; reviews; the stores that offer pickup near a CEP; delivery and pickup for one product at a CEP; and search suggestions. See the [O Boticario API page](https://scavio.dev/boticario-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_boticario` | Keyword search on O Boticario or Eudora: 36 a page (pages 1 to 100), 7 sorts, product brand, line, category, rating, price and facet filters |
+| `get_boticario_category` | One department, category or product-brand listing by path or link, sorted and filtered like search |
+| `get_boticario_categories` | The category menu: departments, groups and links with the path each takes |
+| `get_boticario_deals` | Beauty Week or the promotions hub, optionally one section, with each item's countdown end and deal badges |
+| `get_boticario_promotions` | The promotion conditions page: each campaign's validity dates and coupon codes as written |
+| `get_boticario_product` | One product by slug, link or SKU: card and Pix prices, online stock count, seller, datasheet, every shade / size, kit components and the review summary |
+| `get_boticario_prices` | Current prices of up to 10 SKUs in one call |
+| `get_boticario_reviews` | Reviews by SKU or for every shade together, up to 50 a page, 3 sorts, by stars (no reviewer names) |
+| `get_boticario_stores` | The stores that offer pickup of online orders near a CEP, nearest first, with hours and pickup time |
+| `get_boticario_pickup` | Delivery options and whether store pickup is offered for one product at a CEP |
+| `get_boticario_suggestions` | Search suggestions: terms with their departments and up to 5 products |
+
+Platform key `boticario`. Credits: 1 per call; search, category, categories, deals,
+promotions and product cost 2 when the page needs a second route; prices cost 1 per 5
+SKUs (ceil(skus / 5)). `credits_used` in the response is what was charged. Page tools
+usually take 10 to 130 seconds (allow a client timeout of at least 240 s); the others 2 to
+25 seconds (at least 90 s).
+
+`brand` is `boticario` (default) or `eudora`. Prices are as the site shows them to a
+visitor who is not signed in: `price` is the card price, `pix_price` the price paid by Pix
+(Brazil's instant payment); page prices come from the site's own cache and can be up to
+about 15 minutes old. Captured 2026-11-27: perfume on O Boticario gave 1823 results, the
+first the Combo Lily Le Parfum at 434.80 BRL by card or 391.32 BRL by Pix; /perfumaria/
+held 911 products; Beauty Week held 1216 items, one at 7.50 BRL (was 37.90) with a
+countdown to 2026-11-28; the Base Liquida Cor 330 Make B. Mate Salicylic 30g was 59.90 BRL
+(was 99.90) with 440 units in online stock, rated 4.88 from 3860 reviews; CEP 01310-100 had
+348 pickup stores, the nearest 55 m away. Not available: per-store stock, which store
+holds an order, loyalty prices, reviewer names, price history (poll and store the
+answers). Failed calls and refused inputs are not charged; a not-found (an unknown
+product, path or SKU) is charged what it spent.
+
+### [Centauro](https://scavio.dev/docs/centauro-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Centauro API for Centauro (centauro.com.br, the sporting-goods retailer of Grupo SBF), Brazil only, Portuguese text, prices in BRL: keyword search, category listings and deal lists (the Black Friday hotsite, the outlet, Mega Oferta), 36 a page in the site's 4 sorts, filtered by brand, size, gender, sport, colour, discount band, promotion, a physical store's range and the seller (Centauro or a marketplace seller), with the price, the Pix price, badges and every colour; one product with every size's sku, price, seller and stock flag; delivery options and store pickup for one size to a CEP, store by store; the stores near a CEP; and search suggestions with the site's top searches. See the [Centauro API page](https://scavio.dev/centauro-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_centauro` | Keyword search: 36 a page (pages 1 to 278), 4 sorts, facet, brand, store and seller filters |
+| `get_centauro_category` | One category by /nav/ path, link or facet value, sorted and filtered like search |
+| `get_centauro_deals` | The Black Friday hotsite, the outlet, Mega Oferta or another hotsite slug, sorted and filtered like search |
+| `get_centauro_product` | One product by product id (model + colour), model and colour, or link: every size with sku, price, Pix price, seller and stock flag, colours, specs and up to 3 reviews (no names) |
+| `get_centauro_freight` | Delivery options and store pickup for one size to a CEP: cost, dates and which stores hold the size |
+| `get_centauro_stores` | The physical stores near a CEP, by distance, with the store filter for search |
+| `get_centauro_suggestions` | Search suggestions and the site's top searches |
+
+Platform key `centauro`. Credits: 1 per call on every tool; `credits_used` in the response
+is what was charged. Listings usually take 10 to 45 seconds (allow a client timeout of at
+least 150 s); product, freight, stores and suggestions 2 to 20 seconds (at least 120 s).
+
+Prices are as centauro.com.br shows them to a visitor who is not signed in; `pix_price` is
+the price paid by Pix (Brazil's instant payment) where the site shows one. Sizes can differ
+in price and seller (a Centauro offer and a brand seller can split them). Listing totals are
+capped by the site at 10000 (`total_capped`). Stock is a flag per size and per store,
+never a unit count. Captured 2026-11-27: tenis corrida reached the 10000 cap, the first the
+Tenis Masculino adidas Super U at 389.99 BRL (list 599.99, 35% off); the Black Friday
+hotsite held 9257 products; the Super U in BRANCO/PRETO ran from 389.99 to 599.99 BRL by
+size, 11 of 12 sizes in stock; one size to CEP 01310-100 had free same-day store pickup
+and 18 stores holding it; CEP 20040-002 in Rio de Janeiro listed 27 stores. Not available:
+deal start and end dates (the site publishes none), the full review list, Q&A, unit counts,
+price history (poll and store the answers). Failed calls and refused inputs are not
+charged; a not-found (an unknown product, category, deal list or sku) is charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
