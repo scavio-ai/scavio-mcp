@@ -5,7 +5,7 @@ import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
 // Shapes mirror backend/src/routes/liquidation.ts (Liquidation.com, the US online liquidation auction site of Liquidity
-// Services; categories and filter names in scrapedo-liquidation.ts LIQUIDATION_*). Rules the backend enforces and zod
+// Services; categories and filter names in the backend's LIQUIDATION_* constants). Rules the backend enforces and zod
 // here does not: search needs q, category, seller or a filter; order needs a sort other than relevance; relevance needs
 // q; lot and manifest take id or url; closed takes seller, category, page and per_page only. No zod `.default()`: the
 // MCP SDK would post a defaulted field on every call.

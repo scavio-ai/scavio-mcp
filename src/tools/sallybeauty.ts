@@ -6,7 +6,7 @@ import { trimResponse } from "../lib/trim-response.js";
 
 // Shapes mirror backend/src/routes/sallybeauty.ts (Sally Beauty, sallybeauty.com and sallybeauty.ca, and its
 // licensed-professional arm CosmoProf, cosmoprofbeauty.com and cosmoprofbeauty.ca, chosen by site; limits in
-// scrapedo-sallybeauty.ts SALLY_*). Rules the backend enforces and zod here does not: product, store stock and reviews
+// the backend provider's SALLY_* constants). Rules the backend enforces and zod here does not: product, store stock and reviews
 // take product_id or url; stores and store stock take postal_code or latitude + longitude; store stock and reviews
 // refuse CosmoProf sites. No zod `.default()`: the MCP SDK would post a defaulted field on every call.
 

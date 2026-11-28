@@ -5,7 +5,7 @@ import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
 // Shapes mirror backend/src/routes/bstock.ts (B-Stock, bstock.com, the liquidation marketplace where retailers sell
-// returns and overstock; limits in scrapedo-bstock.ts BSTOCK_*). Rules the backend enforces and zod here does not: lot
+// returns and overstock; limits in the backend's BSTOCK_* constants). Rules the backend enforces and zod here does not: lot
 // takes id or url; sort relevance needs q. No zod `.default()`: the MCP SDK would post a defaulted field on every call.
 
 const SITE =
