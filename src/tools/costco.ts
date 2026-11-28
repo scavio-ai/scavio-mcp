@@ -116,12 +116,16 @@ export function registerCostcoTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_costco_product",
-    `Get full Costco product detail for up to 20 items: description, features, specs, variants, member-only flag, purchase limits, delivery fee, promotions with dates. Online price only; use get_costco_prices for warehouse prices. 1 credit.`,
+    `Get full Costco product detail for up to 20 items: description, features, specs, variants, member-only flag, purchase limits, delivery fee, promotions with dates. Online price only; use get_costco_prices for warehouse prices. With include_online_stock, each item adds online_stock: live ship-to-home status (in_stock, low_stock, out_of_stock, back_order, presell, ship_restricted, or no_record) and estimated_delivery_date for a ZIP - the only way to read online stock, and it works for items search does not return. buyable is a catalog flag, not stock. 1 credit; with online stock 1 per 5 lookups counting the product call (1-4 ids = 1, 20 = 5).`,
     {
       item_id: itemId().optional(),
       item_ids: z.array(itemId()).min(1).max(20).optional()
         .describe("Up to 20 ids in one call (us/ca only). Pass item_id or item_ids."),
       country: anyCountry(),
+      include_online_stock: z.boolean().optional()
+        .describe("Add each item's live ship-to-home stock and estimated delivery date (us/ca only). Default false."),
+      zip: z.string().min(3).max(10).optional()
+        .describe("Delivery destination for include_online_stock: 5-digit US ZIP, or a Canadian postal code with country ca. Default 98101 (us) / M5V 2T6 (ca). Only with include_online_stock."),
     },
     post("product"),
   );

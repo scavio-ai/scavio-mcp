@@ -734,7 +734,7 @@ Not available for Canada: UPC or barcodes (Home Depot Canada shows none), struct
 | `search_costco` | Search by keyword or item number: online and original price, rating, member-only and stock flags, promotions, facets |
 | `get_costco_category` | Products in a category, same filters and shape as search |
 | `get_costco_categories` | Department list, or the full subcategory tree under one department |
-| `get_costco_product` | Full detail for up to 20 items: description, features, specs, variants, purchase limits, delivery fee, promotion dates |
+| `get_costco_product` | Full detail for up to 20 items: description, features, specs, variants, purchase limits, delivery fee, promotion dates; optional live online (ship-to-home) stock and delivery date |
 | `get_costco_prices` | Online vs in-warehouse price at up to 10 warehouses: discount, final price, promotion dates, per-member limits, price code |
 | `get_costco_availability` | In-warehouse stock status for one item at up to 10 warehouses, plus pickup and same-day delivery |
 | `get_costco_reviews` | Reviews with rating distribution and recommend count; sort, star filter, up to 100 per page |
