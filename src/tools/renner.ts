@@ -5,7 +5,8 @@ import { handleApiError } from "../lib/tool-error.js";
 import { trimResponse } from "../lib/trim-response.js";
 
 // Shapes mirror backend/src/routes/renner.ts (Lojas Renner, lojasrenner.com.br, the Brazilian fashion retailer; Brazil,
-// BRL). Rules the backend enforces and zod here does not: product and sku-price take product_id or url. No zod
+// BRL). Rules the backend enforces and zod here does not: product, sku-price and reviews take product_id or url; reviews
+// takes rating or filter, not both. No zod
 // `.default()`: the MCP SDK would post a defaulted field on every call.
 
 const SITE =
@@ -78,7 +79,7 @@ export function registerRennerTools(server: McpServer, getClient: () => ScavioCl
 
   server.tool(
     "get_renner_product",
-    `One product of ${SITE} by product_id or link, optionally a sku to pick the colour and size: product_id, requested_sku, sku, sku_matched, name, brand, url, color {id, name, hex}, size, currency, price (the price now), list_price, on_sale, discount_percent, ${INSTALLMENTS}, rating, review_count, ${FLAGS}, marketplace, seller, gender, categories, breadcrumbs, composition, details, images, colors [{id, name, hex, sku, sizes [{size, sku}]}], size_count, sizes_available and sizes [{size, sku, available, purchasable, out_of_stock, omni_stock, pre_order, discontinued}] (the sizes of the colour shown, with the site's availability flags: flags, not unit counts). rating is the aggregate (average and count) only. Not available: review texts, shipping quotes by CEP, the marketing description. An unknown product is a charged not-found. Captured 2026-11-27: 931758127, a pair of trousers, was 199.90 BRL (list 219.90), 6 interest-free Cartao Renner installments of 33.32 or 4 of 49.98 on other cards, rated 4.4 from 21 reviews, all 6 sizes available. ${COST} ${FAST_TIME}`,
+    `One product of ${SITE} by product_id or link, optionally a sku to pick the colour and size: product_id, requested_sku, sku, sku_matched, name, brand, url, color {id, name, hex}, size, currency, price (the price now), list_price, on_sale, discount_percent, ${INSTALLMENTS}, rating, review_count, ${FLAGS}, marketplace, seller, gender, categories, breadcrumbs, composition, details, images, colors [{id, name, hex, sku, sizes [{size, sku}]}], size_count, sizes_available and sizes [{size, sku, available, purchasable, out_of_stock, omni_stock, pre_order, discontinued}] (the sizes of the colour shown, with the site's availability flags: flags, not unit counts). rating is the aggregate (average and count); the reviews themselves come from get_renner_reviews. Not available: shipping quotes by CEP, the marketing description. An unknown product is a charged not-found. Captured 2026-11-27: 931758127, a pair of trousers, was 199.90 BRL (list 219.90), 6 interest-free Cartao Renner installments of 33.32 or 4 of 49.98 on other cards, rated 4.4 from 21 reviews, all 6 sizes available. ${COST} ${FAST_TIME}`,
     {
       ...productRef,
       sku: z.string().min(6).max(20).optional()
@@ -104,5 +105,20 @@ export function registerRennerTools(server: McpServer, getClient: () => ScavioCl
       cep: z.string().min(8).max(12).describe("A Brazilian CEP (postal code, 8 digits), e.g. '01310-100'."),
     },
     post("stores"),
+  );
+
+  server.tool(
+    "get_renner_reviews",
+    `The customer reviews of one product of ${SITE}, by product_id or link, as the product page shows them: product_id, page, per_page, sort, filter, rating_filter, total (the product's review count; null with a filter or rating, which the store gives no count for), has_more, count, product_name, rating {average, count} (the store shows no star histogram), reviews [{id, rating, title, text (null when the review has stars but no text), date, purchase_date (the date of the order the review is linked to), recommends, helpful_votes, unhelpful_votes, photos [{image, thumbnail}], attributes [{name, answer}] (the store's follow-up questions, such as size and fit), store_reply, imported, influencer}] and notes. Sorted newest (default) or most_helpful; filtered positive (ratings 3-5), negative (ratings 1-2) or with_photos, or rating for one star rating (rating or filter, not both); up to 100 per page, pages 1 to 200. Reviews can lag the product page by up to 4 hours. Review text is the customer's own; reviewer names are never returned. No questions and answers. A product id the reviews do not know is a charged not-found, or an empty answer (count 0, charged). Captured 2026-11-28: 846044605, a satin shirt, was rated 4.6 from 742 reviews, 20 per page newest first. ${COST} Usually 2 to 20 s; allow a client timeout of at least 180 s.`,
+    {
+      ...productRef,
+      page: z.number().int().min(1).max(200).optional().describe("Reviews page, 1 to 200 (default 1)."),
+      per_page: z.number().int().min(1).max(100).optional().describe("Reviews per page, 1 to 100 (default 20)."),
+      sort: z.enum(["newest", "most_helpful"]).optional().describe("newest (default) or most_helpful (the most helpful votes at the top)."),
+      filter: z.enum(["all", "positive", "negative", "with_photos"]).optional()
+        .describe("all (default), positive (ratings 3-5), negative (ratings 1-2) or with_photos. Not combined with rating."),
+      rating: z.number().int().min(1).max(5).optional().describe("Only the reviews with this star rating, 1 to 5. Not combined with filter."),
+    },
+    post("reviews"),
   );
 }

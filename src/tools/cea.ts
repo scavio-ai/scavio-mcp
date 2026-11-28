@@ -6,8 +6,8 @@ import { trimResponse } from "../lib/trim-response.js";
 
 // Shapes mirror backend/src/routes/cea.ts (C&A Brasil, cea.com.br, the Brazilian arm of the C&A fashion chain; Brazil,
 // BRL). Rules the backend enforces and zod here does not: product takes exactly one of product_id, sku, slug or url;
-// facets takes query and/or one of category, brand or collection_id. No zod `.default()`: the MCP SDK would post a
-// defaulted field on every call.
+// facets takes query and/or one of category, brand or collection_id; reviews takes rating or filter, not both. No zod
+// `.default()`: the MCP SDK would post a defaulted field on every call.
 
 const SITE =
   "C&A Brasil (cea.com.br, the Brazilian arm of the C&A fashion chain), Brazil only, Portuguese text, prices in BRL as shown to a visitor who is not signed in";
@@ -109,7 +109,7 @@ export function registerCeaTools(server: McpServer, getClient: () => ScavioClien
 
   server.tool(
     "get_cea_product",
-    `One product of ${SITE} by product_id, size sku, slug or link (exactly one): requested, product_id, sku (when asked by sku), name, brand, labels, reference, model_id, url, images, available, price (the lowest price among the sizes in stock), list_price, discount_percent, pix_price, best_installment (the longest interest-free plan), installments [{payment_system, count, value, total, interest_rate}] (each payment method's longest plan, e.g. C&A Pay), colors, sizes [{sku, size, color, available, available_quantity, price, list_price, discount_percent, pix_price, seller {id, name}}] (every size), categories, specifications [{name, value}] (material, fit, sleeve, made in...), collection_ids and release_date. available_quantity is the site's capped online figure, not a store's units: get_cea_shipping tells which stores near a CEP can hand a size over. Not available: marketing description, EAN (the site leaves it empty), reviews (no texts and no aggregate), Q&A, store units, price history. An unknown product is a charged not-found. Captured 2026-11-27: 4536055, an oversized cotton t-shirt, was 99.99 BRL in 5 sizes, payable in 3 interest-free C&A Pay installments of 33.33, in 69 promotion collections. ${COST} ${FAST_TIME}`,
+    `One product of ${SITE} by product_id, size sku, slug or link (exactly one): requested, product_id, sku (when asked by sku), name, brand, labels, reference, model_id, url, images, available, price (the lowest price among the sizes in stock), list_price, discount_percent, pix_price, best_installment (the longest interest-free plan), installments [{payment_system, count, value, total, interest_rate}] (each payment method's longest plan, e.g. C&A Pay), colors, sizes [{sku, size, color, available, available_quantity, price, list_price, discount_percent, pix_price, seller {id, name}}] (every size), categories, specifications [{name, value}] (material, fit, sleeve, made in...), collection_ids and release_date. available_quantity is the site's capped online figure, not a store's units: get_cea_shipping tells which stores near a CEP can hand a size over. The reviews and the rating summary come from get_cea_reviews. Not available: marketing description, EAN (the site leaves it empty), Q&A, store units, price history. An unknown product is a charged not-found. Captured 2026-11-27: 4536055, an oversized cotton t-shirt, was 99.99 BRL in 5 sizes, payable in 3 interest-free C&A Pay installments of 33.33, in 69 promotion collections. ${COST} ${FAST_TIME}`,
     {
       product_id: digits("The product id (items[].product_id), e.g. '4536055'. Send one of product_id, sku, slug or url.").optional(),
       sku: digits("The id of one size (sizes[].sku): returns its product.").optional(),
@@ -134,5 +134,20 @@ export function registerCeaTools(server: McpServer, getClient: () => ScavioClien
     `The pickup points near a CEP on ${SITE}, nearest first: cep, total (the site's count of pickup entries near the CEP, of which the nearest are listed), count and stores [{store_code, pickup_point_ids, name, type (cea_store or partner_point), partner, active, distance_km, address {street, number, complement, neighborhood, city, state, cep}, latitude, longitude, phone, hours [{day, opens, closes}]}]. The list includes third-party pickup lockers and counters (Clique Retire, type partner_point) next to the C&A stores. Which of them can hand a given size over: get_cea_shipping. Captured 2026-11-27: CEP 01310-100 listed 18 pickup points (17 C&A stores and 1 Clique Retire point) of 121. ${COST} ${FAST_TIME}`,
     { cep },
     post("stores"),
+  );
+
+  server.tool(
+    "get_cea_reviews",
+    `The customer reviews of one product of ${SITE}, by product_id, as the product page shows them: product_id, page, per_page, sort, filter, rating_filter, total (the reviews matching the request, from the rating summary), has_more, count, product_name, rating {average, count, histogram {1-5}}, review_counts {total, positive (ratings 3-5), negative (ratings 1-2), with_photos}, reviews [{id, rating, title, text (null when the review has stars but no text), date, purchase_date (the date of the order the review is linked to), recommends, helpful_votes, unhelpful_votes, photos [{image, thumbnail}], attributes [{name, answer}] (the store's follow-up questions, such as size, fit and height), store_reply, imported, influencer, purchased {sku, size, color} (the size bought, where the review carries it)}] and notes. Sorted newest (default) or most_helpful; filtered positive (ratings 3-5), negative (ratings 1-2) or with_photos, or rating for one star rating (rating or filter, not both); up to 100 per page, pages 1 to 200. Reviews can lag the product page by up to 4 hours. Review text is the customer's own; reviewer names are never returned. No questions and answers. A product id the reviews do not know answers with no reviews (count 0, charged), or a charged not-found. Captured 2026-11-28: 3700395, a white low-top sneaker, was rated 4.5 from 1189 reviews (854 five-star, 93 negative, 27 with photos). ${COST} Usually 2 to 20 s; allow a client timeout of at least 180 s.`,
+    {
+      product_id: digits("The product id (items[].product_id or product_id of get_cea_product), not a size sku or the reference, e.g. '3700395'."),
+      page: z.number().int().min(1).max(200).optional().describe("Reviews page, 1 to 200 (default 1)."),
+      per_page: z.number().int().min(1).max(100).optional().describe("Reviews per page, 1 to 100 (default 20)."),
+      sort: z.enum(["newest", "most_helpful"]).optional().describe("newest (default) or most_helpful (the most helpful votes at the top)."),
+      filter: z.enum(["all", "positive", "negative", "with_photos"]).optional()
+        .describe("all (default), positive (ratings 3-5), negative (ratings 1-2) or with_photos. Not combined with rating."),
+      rating: z.number().int().min(1).max(5).optional().describe("Only the reviews with this star rating, 1 to 5. Not combined with filter."),
+    },
+    post("reviews"),
   );
 }

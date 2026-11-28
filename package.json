@@ -1,8 +1,8 @@
 {
   "name": "@scavio/mcp-server",
-  "version": "0.105.0",
+  "version": "0.106.0",
   "mcpName": "io.github.scavio-ai/scavio-mcp",
-  "description": "MCP server connecting AI agents to Scavio: web search, page extraction, and structured e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing data. 1508 tools across 186 platforms plus Extract, Company Enrich, site map, crawl and batch extraction, one API key.",
+  "description": "MCP server connecting AI agents to Scavio: web search, page extraction, and structured e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing data. 1511 tools across 186 platforms plus Extract, Company Enrich, site map, crawl and batch extraction, one API key.",
   "type": "module",
   "license": "MIT",
   "author": "Scavio",
@@ -399,6 +399,7 @@
     "dafiti-api",
     "dafiti-com-br",
     "brazil-shoe-prices",
+    "brazil-product-reviews",
     "riachuelo",
     "riachuelo-api",
     "riachuelo-com-br",

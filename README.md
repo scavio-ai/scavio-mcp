@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1508 tools across 186 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1511 tools across 186 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1508 tools puts ~3277KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1511 tools puts ~3286KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1508 tools. Loading all of them costs ~3277KB of `tools/list` —
+Scavio exposes 1511 tools. Loading all of them costs ~3286KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1508 tools, ~3277KB** |
+| `all` | every platform — **1511 tools, ~3286KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -5181,7 +5181,7 @@ ISBN with no copy on sale) is charged.
 
 ### [C&A Brasil](https://scavio.dev/docs/cea-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-C&A Brasil API for C&A Brasil (cea.com.br, the Brazilian arm of the C&A fashion chain), Brazil only, Portuguese text, prices in BRL: keyword search, category, brand and promotion-collection listings, up to 24 a page in the site's 8 sorts, with the price, list price, Pix price (Pix is Brazil's instant payment), the best installment plan and every size's own price and capped online quantity; the filter values with their counts; search suggestions and the top searches; the department tree; one product with every size, each payment method's longest plan and specifications; the delivery quote for one size to a CEP, with the stores near it that can hand the size over; and the pickup points near a CEP, C&A stores and third-party pickup lockers. See the [C&A Brasil API page](https://scavio.dev/cea-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+C&A Brasil API for C&A Brasil (cea.com.br, the Brazilian arm of the C&A fashion chain), Brazil only, Portuguese text, prices in BRL: keyword search, category, brand and promotion-collection listings, up to 24 a page in the site's 8 sorts, with the price, list price, Pix price (Pix is Brazil's instant payment), the best installment plan and every size's own price and capped online quantity; the filter values with their counts; search suggestions and the top searches; the department tree; one product with every size, each payment method's longest plan and specifications; the delivery quote for one size to a CEP, with the stores near it that can hand the size over; the pickup points near a CEP, C&A stores and third-party pickup lockers; and a product's customer reviews as the product page shows them, with the star histogram, fit answers, photos, the store's reply and the size and colour bought. See the [C&A Brasil API page](https://scavio.dev/cea-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 | Tool | Description |
 |------|-------------|
@@ -5195,10 +5195,11 @@ C&A Brasil API for C&A Brasil (cea.com.br, the Brazilian arm of the C&A fashion 
 | `get_cea_product` | One product by id, size sku, slug or link: every size's price, Pix price and capped quantity, payment plans, specifications |
 | `get_cea_shipping` | The delivery quote for one size to a CEP, with the nearby stores that can hand it over |
 | `get_cea_stores` | The pickup points near a CEP: C&A stores and third-party pickup lockers, with hours |
+| `get_cea_reviews` | A product's reviews by product id: up to 100 a page, newest or most helpful, positive, negative, with photos or one star rating; histogram and counts (no reviewer names) |
 
 Platform key `cea`. Credits: 1 per call on every tool; `credits_used` in the response is
 what was charged. Listings usually take 5 to 100 seconds (allow a client timeout of at least
-240 s); the others 2 to 15 seconds (at least 120 s).
+240 s); reviews 2 to 20 seconds (at least 180 s); the others 2 to 15 seconds (at least 120 s).
 
 Prices are as cea.com.br shows them to a visitor who is not signed in. `available_quantity`
 is the site's capped online figure (a round 100, 10000 or 99999 means plenty, 0 none), not a
@@ -5207,14 +5208,17 @@ lockers and counters (Clique Retire) next to the C&A stores. Captured 2026-11-27
 matched 13549 products; an oversized cotton t-shirt was 99.99 BRL in 5 sizes, payable in 3
 interest-free C&A Pay installments of 33.33; one size had free delivery to CEP 01310-100 in
 6 business days and 5 nearby stores could hand it over; the CEP listed 18 pickup points, 17
-C&A stores and 1 Clique Retire point. Not available: reviews (no texts, no aggregate), EAN
-(the site leaves it empty), store unit counts, price history (poll and store the answers).
+C&A stores and 1 Clique Retire point. Reviews can lag the product page by up to 4 hours; the
+review text is the customer's own and reviewer names are never returned. Captured 2026-11-28:
+a white low-top sneaker was rated 4.5 from 1189 reviews, 854 of them five-star. Not available:
+Q&A, EAN (the site leaves it empty), store unit counts, price history (poll and store the
+answers).
 Failed calls and refused inputs are not charged; a not-found (an unknown product or sku) is
 charged.
 
 ### [Lojas Renner](https://scavio.dev/docs/renner-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-Lojas Renner API for Lojas Renner (lojasrenner.com.br, the Brazilian fashion retailer), Brazil only, Portuguese text, prices in BRL: keyword search, category listings and product lists (the list of every discounted product by default), 48 a page in the site's 8 sorts, filtered by category, seller, brand, size, colour, gender and the states with stock, with the price, list price, installments, the stock level the site lists and units sold in the last 15 days; one product with every colour and size and the site's per-size availability flags; the price and stock flags for one size; and the stores for a CEP's city or region. See the [Lojas Renner API page](https://scavio.dev/renner-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+Lojas Renner API for Lojas Renner (lojasrenner.com.br, the Brazilian fashion retailer), Brazil only, Portuguese text, prices in BRL: keyword search, category listings and product lists (the list of every discounted product by default), 48 a page in the site's 8 sorts, filtered by category, seller, brand, size, colour, gender and the states with stock, with the price, list price, installments, the stock level the site lists and units sold in the last 15 days; one product with every colour and size and the site's per-size availability flags; the price and stock flags for one size; the stores for a CEP's city or region; and a product's customer reviews as the product page shows them, with size and fit answers, photos and the store's reply. See the [Lojas Renner API page](https://scavio.dev/renner-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 | Tool | Description |
 |------|-------------|
@@ -5224,10 +5228,12 @@ Lojas Renner API for Lojas Renner (lojasrenner.com.br, the Brazilian fashion ret
 | `get_renner_product` | One product: price, Cartao Renner and other-card installments, rating aggregate, colours and per-size availability flags |
 | `get_renner_sku_price` | Price, installments and stock flags for one size |
 | `get_renner_stores` | The stores for a CEP's city or region, with hours |
+| `get_renner_reviews` | A product's reviews by id or link: up to 100 a page, newest or most helpful, positive, negative, with photos or one star rating (no reviewer names) |
 
 Platform key `renner`. Credits: 1 per call on every tool; `credits_used` in the response is
 what was charged. Listings are slow at the source, usually 30 to 200 seconds (allow a client
-timeout of at least 300 s); product, sku price and stores 5 to 30 seconds (at least 180 s).
+timeout of at least 300 s); product, sku price and stores 5 to 30 seconds, reviews 2 to 20
+seconds (at least 180 s).
 
 Prices are as lojasrenner.com.br shows them to a visitor who is not signed in.
 `installments` gives the Cartao Renner (store card) plan and the plan for other cards apart.
@@ -5236,7 +5242,9 @@ give availability flags per size, not unit counts. Stores outside the CEP's stat
 site returns are left out with a note. Captured 2026-11-27: camiseta matched 9468 products;
 the discounted-products list held 106896; a pair of trousers was 199.90 BRL (list 219.90), 6
 interest-free Cartao Renner installments of 33.32, rated 4.4 from 21 reviews; CEP 01310-100
-listed 5 stores. Not available: review texts (the rating is the aggregate only), shipping
+listed 5 stores. Reviews come with the store's average and count (the store shows no star
+histogram) and can lag the product page by up to 4 hours; reviewer names are never returned.
+Captured 2026-11-28: a satin shirt was rated 4.6 from 742 reviews. Not available: Q&A, shipping
 quotes by CEP, search suggestions, deal start and end dates, store coordinates, price history
 (poll and store the answers). Failed calls and refused inputs are not charged; a not-found
 (an unknown product, sku, category or list) is charged.
@@ -5276,7 +5284,7 @@ a not-found (an unknown product, category, brand or campaign) is charged.
 
 ### [Dafiti](https://scavio.dev/docs/dafiti-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-Dafiti API for Dafiti (dafiti.com.br, the Brazilian fashion marketplace), Brazil only, Portuguese text, prices in BRL: keyword search, department, category and brand listings and the outlet, 48 a page plus the sponsored slots, in the site's 5 sorts, with the price, list price, Pix price (Pix is Brazil's instant payment), card price and whether a partner store sells the product; one product with every size, its stock, delivery type and the store that sells it, the other colours, specs and the rating aggregate; and every size of a product with its stock, faster. See the [Dafiti API page](https://scavio.dev/dafiti-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+Dafiti API for Dafiti (dafiti.com.br, the Brazilian fashion marketplace), Brazil only, Portuguese text, prices in BRL: keyword search, department, category and brand listings and the outlet, 48 a page plus the sponsored slots, in the site's 5 sorts, with the price, list price, Pix price (Pix is Brazil's instant payment), card price and whether a partner store sells the product; one product with every size, its stock, delivery type and the store that sells it, the other colours, specs and the rating aggregate; every size of a product with its stock, faster; and a product's customer reviews as the product page shows them, with the star histogram, size and comfort answers, photos and the store's reply. See the [Dafiti API page](https://scavio.dev/dafiti-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
 
 | Tool | Description |
 |------|-------------|
@@ -5286,11 +5294,12 @@ Dafiti API for Dafiti (dafiti.com.br, the Brazilian fashion marketplace), Brazil
 | `get_dafiti_deals` | The outlet: the site's own selection of discounted products |
 | `get_dafiti_product` | One product by id, sku or link: prices, seller, every size with stock and delivery type, colours, specs |
 | `get_dafiti_sizes` | Every size of one product with its stock, by sku (faster, for a stock check) |
+| `get_dafiti_reviews` | A product's reviews by sku (or id or link): up to 100 a page, newest or most helpful, positive, negative, with photos or one star rating; histogram and counts (no reviewer names) |
 
 Platform key `dafiti`. Credits: 1 per call on every tool; `credits_used` in the response is
 what was charged. Listings are slow at the source, usually 15 to 160 seconds, and product 6
-to 35 seconds (allow a client timeout of at least 240 s); sizes 2 to 15 seconds (at least
-120 s).
+to 35 seconds (allow a client timeout of at least 240 s); reviews by sku 2 to 20 seconds, by
+product id or link 10 to 70 seconds (at least 240 s); sizes 2 to 15 seconds (at least 120 s).
 
 Prices are as dafiti.com.br shows them to a visitor who is not signed in. Stock per size is
 exact from 0 to 10 units; above that the site gives "more than 10" (`more_than_10`), not a
@@ -5299,7 +5308,9 @@ by Dafiti) or drop shipping (sent by the partner store); marketplace sellers app
 name only. The site matches searches loosely, so a search with no close match can still list
 related products. Captured 2026-11-27: vestido matched 19233 products; the outlet held 199;
 an Asics Gel 1130 sneaker was 389.99 BRL by Pix (410.52 by card, list 699.99), 4 of 11 sizes
-in stock, 5 units each of sizes 41 and 42. Not available: review texts, shipping quotes,
+in stock, 5 units each of sizes 41 and 42. Reviews can lag the product page by up to 4 hours;
+reviewer names are never returned. Captured 2026-11-28: a Santa Lolla sneaker was rated 4.7
+from 477 reviews, 397 of them five-star. Not available: Q&A, shipping quotes,
 search suggestions, Dafiti Colombia, price history (poll and store the answers). Failed calls
 and refused inputs are not charged; a not-found (an unknown product, sku, category or brand)
 is charged.
