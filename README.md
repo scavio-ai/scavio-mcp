@@ -5,7 +5,7 @@
 
 [Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1568 tools across 198 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1568 tools puts ~3424KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1568 tools puts ~3426KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1568 tools. Loading all of them costs ~3424KB of `tools/list` —
+Scavio exposes 1568 tools. Loading all of them costs ~3426KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1568 tools, ~3424KB** |
+| `all` | every platform — **1568 tools, ~3426KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -4288,7 +4288,7 @@ not charged; a not-found is charged.
 
 ### [Kroger](https://scavio.dev/docs/kroger-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
-Kroger, QFC and Fred Meyer grocery data: product search, product detail, store-level prices, stores, category listings, weekly digital deals, digital coupons and search suggestions.
+Kroger, QFC, Fred Meyer and Jay C Food Stores grocery data: product search, product detail, store-level prices, stores, category listings, weekly digital deals, digital coupons and search suggestions.
 
 | Tool | Description |
 |------|-------------|
@@ -4303,15 +4303,18 @@ Kroger, QFC and Fred Meyer grocery data: product search, product detail, store-l
 
 Platform key `kroger`. 2 credits for `search_kroger` and `get_kroger_product`, 3
 for `get_kroger_prices`, 1 for the rest. Banners (`banner`): `kroger` (kroger.com,
-default), `qfc` (QFC, qfc.com: Washington and Oregon) and `fred_meyer` (Fred
+default), `qfc` (QFC, qfc.com: Washington and Oregon), `fred_meyer` (Fred
 Meyer, fredmeyer.com: the Pacific Northwest and Alaska, grocery plus general
-merchandise, apparel and home). Other Kroger banners (Ralphs, King Soopers,
+merchandise, apparel and home) and `jaycfoods` (Jay C Food Stores,
+jaycfoods.com: southern Indiana). Other Kroger banners (Ralphs, King Soopers,
 Fry's, Harris Teeter, Smith's...) are not supported yet. Prices are integer cents
 (`price` 399 = $3.99) and differ by banner and by store. Search, product,
 category and deals return the prices of a store the site chooses for the
 request (shown in `store`, it can change between calls); for a specific store,
 get a `location_id` from `find_kroger_stores` and pass it as `store_id` to
-`get_kroger_prices`. QFC store ids start with 705, Fred Meyer ids with 701.
+`get_kroger_prices`. QFC store ids start with 705, Fred Meyer ids with 701;
+024 ids are Jay C Food Stores or Kroger stores, told apart by the store's own
+record, so a Jay C `store_id` works without `banner`.
 Search, category and deals serve the first page only (up to 24 products) with
 no sort; `page` above 1 is a 400 and is not charged. Ratings are average, count
 and star distribution; review text is not available. Fuel center locations are

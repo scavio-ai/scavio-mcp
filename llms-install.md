@@ -11,7 +11,7 @@ Ask the user for their API key before configuring. Never invent or reuse a place
 
 ## Important: only a subset of tools loads by default
 
-The server exposes 1568 tools. Registering all of them writes 3424KB into `tools/list`, which is roughly 90k tokens of context in every session and more tools than some clients accept. So the server registers a default set (143 tools, 114KB) and gates the rest behind `SCAVIO_PLATFORMS`.
+The server exposes 1568 tools. Registering all of them writes 3426KB into `tools/list`, which is roughly 90k tokens of context in every session and more tools than some clients accept. So the server registers a default set (143 tools, 114KB) and gates the rest behind `SCAVIO_PLATFORMS`.
 
 **Default (env var unset):** `extract`, `company`, `google`, `youtube`, `amazon`, `walmart`, `reddit`, `tiktok`, `tiktok-shop`, `instagram`, `x`, `linkedin` - 143 tools including `get_usage`. This is the platform set 0.12.x shipped plus Extract and Company Enrich, so upgrading never removes a tool.
 
