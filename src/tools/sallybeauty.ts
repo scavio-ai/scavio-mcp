@@ -23,7 +23,7 @@ const GRID = `Returns page, page_size, sort, total, total_pages, has_more, count
 const site = z.enum(["sally-us", "sally-ca", "cosmoprof-us", "cosmoprof-ca"]).optional()
   .describe("sally-us (sallybeauty.com, USD, the default), sally-ca (sallybeauty.ca, CAD), cosmoprof-us (cosmoprofbeauty.com) or cosmoprof-ca (cosmoprofbeauty.ca). CosmoProf sells to licensed professionals: no prices or stock.");
 const sallySite = z.enum(["sally-us", "sally-ca"]).optional()
-  .describe("sally-us (default) or sally-ca. CosmoProf sites are refused here: their store stock and reviews are for signed-in professionals.");
+  .describe("sally-us (default) or sally-ca. CosmoProf sites are refused here (not charged): CosmoProf shows store stock to signed-in professionals, and its product pages do not load reviews in time.");
 const grid = {
   sort: z.enum(["best_match", "price_asc", "price_desc", "top_rated", "brand", "newest"]).optional()
     .describe("best_match (the default, the site's Top Sellers), price_asc, price_desc; top_rated on Sally Beauty; brand and newest on CosmoProf."),
