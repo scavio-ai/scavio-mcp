@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1547 tools across 193 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1557 tools across 195 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1547 tools puts ~3375KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1557 tools puts ~3398KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1547 tools. Loading all of them costs ~3375KB of `tools/list` —
+Scavio exposes 1557 tools. Loading all of them costs ~3398KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1547 tools, ~3375KB** |
+| `all` | every platform — **1557 tools, ~3398KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `globalindustrial`, `msc`, `zoro`, `bstock`, `mcmaster`, `sallybeauty`, `liquidation`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `globalindustrial`, `msc`, `zoro`, `bstock`, `mcmaster`, `sallybeauty`, `liquidation`, `ferguson`, `supplyhouse`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -5533,6 +5533,50 @@ so closed takes a seller. Bidder identities are never returned. Captured 2026-11
 matched 73 open auctions; Titan Electronics had 2,373 closed lots. Failed calls and refused
 inputs are not charged; a not-found (an unknown or closed lot, a lot without a manifest) is
 charged.
+
+### [Ferguson](https://scavio.dev/docs/ferguson-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Ferguson API for Ferguson (ferguson.com, the US plumbing, HVAC and waterworks distributor), US only, prices in USD as shown to a visitor who is not signed in: keyword search and category listings with item numbers, Ferguson and manufacturer part numbers, brands, ratings and shipping flags, and one product with the price, list price, price per unit, package quantities, variants, specs, certifications and documents. See the [Ferguson API page](https://scavio.dev/ferguson-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_ferguson` | Search by keyword: 24 a page, best match or best selling, with the matching categories |
+| `get_ferguson_category` | One category by path, paged and sorted like search, with breadcrumbs and subcategories |
+| `get_ferguson_product` | One product by item number or link: price, list price, package quantities, variants, specs, documents |
+
+Platform key `ferguson`. Credits: search and category 2, product 4 (2 when the page names no
+price); a keyword Ferguson sends to a category, asked for a later page or best_selling, can cost
+4. `credits_used` in the response is what was charged. Search and category usually take 30 to 60
+seconds (allow at least 240 s); product 10 to 25 (allow at least 180 s).
+
+Search and category results carry no prices: the product tool has them. Items Ferguson prices
+for signed-in customers only answer price null with a note. Ferguson prices by region, so the
+same item can read a different price on another read. No store stock, reviews or questions.
+Captured 2026-11-28: pex tubing matched 253 products; item 4606091, a brass ball valve, was 33.24
+USD each. Failed calls and refused inputs are not charged; a not-found is charged (2 credits).
+
+### [SupplyHouse.com](https://scavio.dev/docs/supplyhouse-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+SupplyHouse.com API for SupplyHouse.com (supplyhouse.com, the US online plumbing, HVAC and electrical supply store), United States, prices in USD: keyword, part number or SKU search, category pages and brand listings with the unit price and box price labelled, quantity-break prices and SupplyHouse's Total Available; one product with lead times per warehouse, specs, documents, alternatives and accessories; customer reviews and questions without names; and the top-level departments. See the [SupplyHouse.com API page](https://scavio.dev/supplyhouse-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_supplyhouse` | Search by keyword, part number or SKU: 48 a page, with facets |
+| `get_supplyhouse_category` | One category page: subcategories, sub-type groups or products |
+| `get_supplyhouse_brand` | One brand's products, 48 a page |
+| `get_supplyhouse_product` | One product by SKU or link: unit and box price, quantity breaks, Total Available, lead times |
+| `get_supplyhouse_reviews` | Customer reviews, 10 a page, newest first (no reviewer names) |
+| `get_supplyhouse_questions` | Customer questions and answers, 10 a page, staff answers flagged (no names) |
+| `get_supplyhouse_categories` | The top-level departments, with the paths category takes |
+
+Platform key `supplyhouse`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. SupplyHouse pages are slow: usually 20 to 120 seconds, up to about 240 (allow
+at least 250 s); categories 5 to 30 seconds.
+
+Prices SupplyHouse does not show on the page answer null with price_hidden. Delivery dates for a
+ZIP code are not returned. Captured 2026-11-28: hot surface igniter matched 551 products;
+PXLE038, a PEX crimp elbow, was 0.62 USD each or 27.50 USD a box of 50 with 1,919 available.
+Failed calls and refused inputs are not charged; a not-found is charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
