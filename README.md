@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1568 tools across 198 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1578 tools across 199 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1568 tools puts ~3426KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1578 tools puts ~3448KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1568 tools. Loading all of them costs ~3426KB of `tools/list` —
+Scavio exposes 1578 tools. Loading all of them costs ~3448KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1568 tools, ~3426KB** |
+| `all` | every platform — **1578 tools, ~3448KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `globalindustrial`, `msc`, `zoro`, `bstock`, `mcmaster`, `sallybeauty`, `liquidation`, `ferguson`, `supplyhouse`, `digikey`, `mouser`, `rscomponents`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `globalindustrial`, `msc`, `zoro`, `bstock`, `mcmaster`, `sallybeauty`, `liquidation`, `ferguson`, `supplyhouse`, `digikey`, `mouser`, `rscomponents`, `meijer`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -5642,6 +5642,33 @@ listed with counts only (RS applies them in the browser); no sort, no alternativ
 Captured 2026-11-28 on uk.rs-online.com: BC547 matched 10 products; 221-5535 (Texas Instruments
 NE555P) was 0.304 GBP a unit (0.365 with VAT) in packs of 50. Failed calls and refused inputs
 are not charged; a not-found is charged.
+
+### [Meijer](https://scavio.dev/docs/meijer-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Meijer API for Meijer (meijer.com, the Midwest grocery and general-merchandise chain: Michigan, Ohio, Indiana, Illinois, Kentucky, Wisconsin; US only, USD): product search, item lookup by Meijer id or UPC / EAN, department listings and deals collections, all priced at the store you choose with stock and aisle; the departments and collections; stores near a ZIP and one store's hours and services; a store's current weekly ad page by page; its mPerks coupons; and an item's first page of reviews with the rating summary. See the [Meijer API page](https://scavio.dev/meijer-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_meijer` | Search by keywords or a Meijer item id at one store: 52 items on page 1, the next 48 on page 2 |
+| `get_meijer_product` | One item by Meijer id or UPC / EAN: store price, stock, aisle, mPerks, SNAP and WIC flags, sizes |
+| `get_meijer_category` | One department's first 52 items at one store, with subcategories and filter counts |
+| `get_meijer_categories` | The departments and collections, or one department's subcategories |
+| `get_meijer_deals` | One deals collection's first 52 items at one store (default the grocery sale) |
+| `find_meijer_stores` | Stores within 50 miles of a US ZIP, with the `store_id` every other tool takes |
+| `get_meijer_store` | One store: address, phone and the store, pharmacy, pickup, delivery, deli, bakery and gas station hours |
+| `get_meijer_weekly_ad` | A store's current weekly ad: every page with each offer's text and price as printed |
+| `get_meijer_coupons` | A store's mPerks coupons: the first 48 with department counts, or the full list (listed, never clipped) |
+| `get_meijer_reviews` | An item's first page of reviews (8) with the rating summary; no reviewer names |
+
+Platform key `meijer`. Credits: 1 per call on every tool; `credits_used` in the response is what
+was charged. Search, category, deals, coupons and reviews can be slow (allow at least 180 s).
+
+Prices, stock and aisles are those of the `store_id` you send and differ by store: Meijer Whole
+Milk, Gallon was 2.88 USD at Franklin IN (#295) and 2.99 USD at Jeffersonville IN (#167) and
+Cincinnati OH (#224) on 2026-11-28. Without `store_id` Meijer picks a store by location and
+`store_used` names it. Nutrition and allergens are not on the page (null). Not covered: search
+suggestions, gas prices, prescription prices and Meijer Express stations. Failed calls and
+refused inputs are not charged; a not-found is charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
