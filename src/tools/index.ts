@@ -152,6 +152,9 @@ import { registerSallyBeautyTools } from "./sallybeauty.js";
 import { registerLiquidationTools } from "./liquidation.js";
 import { registerFergusonTools } from "./ferguson.js";
 import { registerSupplyHouseTools } from "./supplyhouse.js";
+import { registerDigikeyTools } from "./digikey.js";
+import { registerMouserTools } from "./mouser.js";
+import { registerRsComponentsTools } from "./rscomponents.js";
 import { registerArgosTools } from "./argos.js";
 import { registerMediaExpertTools } from "./mediaexpert.js";
 import { registerActionTools } from "./action.js";
@@ -375,6 +378,9 @@ const PLATFORMS: Record<string, RegisterFn> = {
   liquidation: registerLiquidationTools,
   ferguson: registerFergusonTools,
   supplyhouse: registerSupplyHouseTools,
+  digikey: registerDigikeyTools,
+  mouser: registerMouserTools,
+  rscomponents: registerRsComponentsTools,
   argos: registerArgosTools,
   mediaexpert: registerMediaExpertTools,
   action: registerActionTools,
@@ -439,7 +445,7 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 3398KB of tools/list (measured with
+ * tools, which serialises to 3424KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 143
@@ -501,7 +507,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (1557 tools)
+ *   all      — every platform (1568 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -625,6 +631,9 @@ const TITLE_WORDS: Record<string, string> = {
   liquidation: "Liquidation.com",
   ferguson: "Ferguson",
   supplyhouse: "SupplyHouse",
+  digikey: "DigiKey",
+  mouser: "Mouser",
+  rscomponents: "RS Components",
 };
 
 /** `get_tiktok_user_posts` -> `Get TikTok User Posts`. */

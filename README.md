@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1557 tools across 195 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1568 tools across 198 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1557 tools puts ~3398KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1568 tools puts ~3424KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1557 tools. Loading all of them costs ~3398KB of `tools/list` —
+Scavio exposes 1568 tools. Loading all of them costs ~3424KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1557 tools, ~3398KB** |
+| `all` | every platform — **1568 tools, ~3424KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `globalindustrial`, `msc`, `zoro`, `bstock`, `mcmaster`, `sallybeauty`, `liquidation`, `ferguson`, `supplyhouse`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `globalindustrial`, `msc`, `zoro`, `bstock`, `mcmaster`, `sallybeauty`, `liquidation`, `ferguson`, `supplyhouse`, `digikey`, `mouser`, `rscomponents`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -5577,6 +5577,68 @@ Prices SupplyHouse does not show on the page answer null with price_hidden. Deli
 ZIP code are not returned. Captured 2026-11-28: hot surface igniter matched 551 products;
 PXLE038, a PEX crimp elbow, was 0.62 USD each or 27.50 USD a box of 50 with 1,919 available.
 Failed calls and refused inputs are not charged; a not-found is charged.
+
+### [DigiKey](https://scavio.dev/docs/digikey-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+DigiKey API for DigiKey (digikey.com, the electronic component distributor) in the US (USD), Canada (CAD) and Germany (EUR, German labels, prices without VAT): keyword and part number search with exact part matches and the categories holding them, a leaf category's first 25 rows with price breaks per packaging, stock and specs narrowed by DigiKey's own filters, one product with lifecycle status, standard lead time, environmental and trade classifications, documents, related parts and DigiKey's listed substitutes, and the category tree. See the [DigiKey API page](https://scavio.dev/digikey-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_digikey` | Search by keyword or part number; with a leaf category id, page 1 of its rows (25) with filters |
+| `get_digikey_product` | One product by link or DigiKey part number: price breaks, stock, lead time, part status, substitutes |
+| `get_digikey_categories` | The top-level categories, or one category with its subcategories and counts |
+
+Platform key `digikey`. Credits: 2 per call; a product looked up by DigiKey part number is held
+at 4 (2 when it lands straight on a digikey.com product page). `credits_used` in the response is
+what was charged. Usually 10 to 40 seconds, up to about 200 (allow at least 300 s).
+
+Stock is one number for every market, as the page shows it when fetched. Search serves us and de
+(digikey.ca through product and categories); later pages of a category are not offered, so
+narrow with keywords and filters (filter_check says per filter whether the page shows it
+applied). Captured 2026-11-28: LM317 in category 699 with Manufacturer Texas Instruments and In
+Stock matched 62 parts; 497-1575-5-ND (STMicroelectronics LM317T) was 1.19 USD at 1 piece with a
+30-week standard lead time. Failed calls and refused inputs are not charged; a not-found is
+charged what it spent.
+
+### [Mouser Electronics](https://scavio.dev/docs/mouser-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Mouser Electronics API for Mouser Electronics (mouser.com, the electronic component distributor) in the US (USD) and the UK (mouser.co.uk, GBP): keyword and part number search across the catalog or within a category, 25 parts a page with price breaks per packaging, stock, on-order quantities and dates, factory lead time and lifecycle; one part with the full price table, specifications, documents, trade codes and country of origin; the category tree; and manufacturer profiles. See the [Mouser Electronics API page](https://scavio.dev/mouser-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_mouser` | Search by keyword or part number, in a category or across the catalog, 25 a page |
+| `get_mouser_product` | One part by Mouser part number or a search row's url: price table, stock, on-order, lead time |
+| `get_mouser_categories` | The category tree with part counts and the paths search takes (us) |
+| `get_mouser_manufacturer` | One manufacturer's profile with the categories Mouser links for it |
+
+Platform key `mouser`. Credits: 2 per call on every tool; `credits_used` in the response is what
+was charged. Mouser pages are slow: usually 30 to 160 seconds, up to about 240 (allow at least
+300 s).
+
+No sort and no similar parts. A Mouser part number with a "/" needs the search row's url.
+Captured 2026-11-28: LM7805 matched 33 parts on 2 pages; 595-NE555P (Texas Instruments NE555P)
+was 0.59 USD at 1 piece with a 26-week factory lead time. Failed calls and refused inputs are
+not charged; a not-found is charged.
+
+### [RS Components](https://scavio.dev/docs/rscomponents-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+RS Components API for RS Components (rs-online.com, RS Group's electronic and industrial component distributor) in the UK (GBP), Germany (EUR, German text) and Australia (AUD): keyword, MPN or stock number search, category and brand listings (20 a page) with the unit price and pack price labelled, stock status and the site's filters with counts, and one product with price breaks, the VAT-inclusive unit price, the market's own stock with its ship-date schedule, RoHS, country of origin, datasheets and specs. RS Americas (us.rs-online.com) is a different site and is not covered. See the [RS Components API page](https://scavio.dev/rscomponents-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_rscomponents` | Search by keyword, MPN or stock number, 20 a page |
+| `get_rscomponents_product` | One product by stock number or link: price breaks, VAT-inclusive price, stock and ship dates |
+| `get_rscomponents_category` | One category: breadcrumbs, child categories and its products |
+| `get_rscomponents_brand` | One brand's products, 20 a page |
+
+Platform key `rscomponents`. Credits: 2 per call on every tool; `credits_used` in the response is
+what was charged. Usually 15 to 120 seconds (allow at least 240 s).
+
+Prices exclude VAT; stock differs per market, as the page shows it when fetched. Facets are
+listed with counts only (RS applies them in the browser); no sort, no alternative products.
+Captured 2026-11-28 on uk.rs-online.com: BC547 matched 10 products; 221-5535 (Texas Instruments
+NE555P) was 0.304 GBP a unit (0.365 with VAT) in packs of 50. Failed calls and refused inputs
+are not charged; a not-found is charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
