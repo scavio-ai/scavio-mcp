@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1527 tools across 189 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1547 tools across 193 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1527 tools puts ~3325KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1547 tools puts ~3375KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1527 tools. Loading all of them costs ~3325KB of `tools/list` —
+Scavio exposes 1547 tools. Loading all of them costs ~3375KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1527 tools, ~3325KB** |
+| `all` | every platform — **1547 tools, ~3375KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `globalindustrial`, `msc`, `zoro`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `globalindustrial`, `msc`, `zoro`, `bstock`, `mcmaster`, `sallybeauty`, `liquidation`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -5444,6 +5444,95 @@ products; MCR Safety BearKat safety glasses were 1.39 USD each, sold in multiple
 4.86 from 50 ratings. Not available: search suggestions, filters, more review pages, price
 history (poll and store the answers). Failed calls and refused inputs are not charged; a
 not-found (an unknown Zoro number, category or brand) is charged.
+
+### [B-Stock](https://scavio.dev/docs/bstock-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+B-Stock API for B-Stock (bstock.com, the liquidation marketplace where retailers sell returns and overstock): search the open lots by keyword, storefront, category, condition, inventory type, buying format, region, shipment type and manufacturer; one lot with its auction state, current bid, next minimum bid, the seller's stated retail value, units, pallets, shipping and the public manifest preview; the storefronts with open listings; and the search filters with their counts. See the [B-Stock API page](https://scavio.dev/bstock-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_bstock` | Search open lots: up to 200 a call, paged with offset, sorted recommended, end_time or relevance |
+| `get_bstock_lot` | One lot by listing id or link: auction state, bids, retail value, shipping, manifest preview |
+| `get_bstock_storefronts` | The retailer and brand storefronts with open listings |
+| `get_bstock_filters` | The search filters with B-Stock's counts of open listings |
+
+Platform key `bstock`. Credits: 1 per call on every tool; `credits_used` in the response is what
+was charged. Usually 1 to 45 seconds; allow a client timeout of at least 180 s.
+
+Open listings only, as a visitor who is not signed in sees them: closed and sold lots and their
+final prices are not available, and the full manifest needs a signed-in buyer account (the lot
+returns the first 10 rows and the total). Amounts are in each listing's currency (USD, EUR or
+GBP). No bidder identities are returned. Captured 2026-11-28: 37 storefronts held 735 open
+listings; laptop matched 20 lots. Failed calls and refused inputs are not charged; a not-found
+(an unknown or make-an-offer lot) is charged.
+
+### [McMaster-Carr](https://scavio.dev/docs/mcmaster-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+McMaster-Carr API for McMaster-Carr (mcmaster.com, the US industrial-supply catalog), United States, prices in USD: one part by part number with the pack price and the per-piece price labelled, quantity breaks, the delivery promise, specifications and compliance; keyword and category pages with the part-number rows, product families and facets; and the top-level categories. See the [McMaster-Carr API page](https://scavio.dev/mcmaster-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `get_mcmaster_product` | One part by part number or link: pack and per-piece price, quantity breaks, specs, compliance |
+| `search_mcmaster` | A keyword or category page: part rows with price basis, product families with slugs, facets |
+| `get_mcmaster_categories` | The top level of the catalogue, with the slugs search takes |
+
+Platform key `mcmaster`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Product usually takes 8 to 30 seconds (allow at least 180 s); a part number
+the site does not know is not answered and ends in an unbilled error after about 2 minutes.
+Search pages are large and slow, 10 to 80 seconds and up to about 240 (allow at least 300 s):
+narrow the largest families with a category slug.
+
+McMaster-Carr sells under its own part numbers: no manufacturer part numbers, UPCs, reviews,
+stores or deals. Captured 2026-11-28: 91251A540, a socket head screw, was 12.42 USD per pack of
+50 (0.25 USD per piece); hose clamps counted 6,125 products in 39 families. Failed calls and
+refused inputs are not charged; a not-found is charged.
+
+### [Sally Beauty](https://scavio.dev/docs/sallybeauty-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Sally Beauty API for Sally Beauty (sallybeauty.com, the US and Canadian beauty supply chain) and CosmoProf (its professional beauty distributor), chosen by `site` (`sally-us`, `sally-ca`, `cosmoprof-us`, `cosmoprof-ca`): search, category and clearance listings, one product with sizes, promotions and the exact online units, the exact units per Sally Beauty store near a ZIP or postal code, store locations, search suggestions, the brand directory and reviews. See the [Sally Beauty API page](https://scavio.dev/sallybeauty-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_sallybeauty` | Search by keyword: 24 a page, sorted and filtered by facet or price |
+| `get_sallybeauty_category` | One category by id, sorted and filtered like search |
+| `get_sallybeauty_clearance` | Clearance products, by department on Sally Beauty |
+| `get_sallybeauty_product` | One product: price, regular price, promotions, sizes, online units, specs |
+| `get_sallybeauty_stores` | Stores near a ZIP / postal code or a point, with hours and phone |
+| `get_sallybeauty_store_stock` | Exact units of one product at each Sally Beauty store nearby |
+| `get_sallybeauty_suggestions` | The search box suggestions |
+| `get_sallybeauty_brands` | The brand directory |
+| `get_sallybeauty_reviews` | The rating summary, the first 8 reviews and the questions (no reviewer names) |
+
+Platform key `sallybeauty`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Usually 3 to 20 seconds (allow at least 180 s); reviews 30 to 120 seconds
+(allow at least 240 s).
+
+CosmoProf prices, availability and store stock are for licensed professionals, so they are null,
+and store stock and reviews are refused on CosmoProf sites. Sally Beauty UK and Ireland are not
+covered. Captured 2026-11-28: purple shampoo matched 107 products; SBS-302313 was 9.59 USD with
+77,098 units online and in stock at 29 of 30 stores near 90012. Failed calls and refused inputs
+are not charged; a not-found is charged.
+
+### [Liquidation.com](https://scavio.dev/docs/liquidation-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Liquidation.com API for Liquidation.com (liquidation.com, the US online liquidation auction site of Liquidity Services): search the open auctions by keyword, category, lot size, condition, US region, auction type and seller; one open auction with the current and minimum bid, buyer's premium, quantity, condition, shipping terms and the seller's statistics; the item manifest as the seller lists it; and a seller's closed auctions with their final bids. See the [Liquidation.com API page](https://scavio.dev/liquidation-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_liquidation` | Search open auctions: 27 a page (up to 100), sorted by close time, bid, items or title |
+| `get_liquidation_lot` | One open auction by id or link: bids, buyer's premium, quantity, shipping, seller statistics |
+| `get_liquidation_manifest` | The item manifest of one auction, columns as the seller lists them |
+| `get_liquidation_closed` | One seller's closed auctions with their final bids |
+
+Platform key `liquidation`. Credits: 1 per call on every tool; `credits_used` in the response is
+what was charged. Usually 3 to 60 seconds; allow a client timeout of at least 180 s.
+
+Amounts in USD, or CAD for lots in the Brampton, ON warehouse. Price columns of a manifest keep
+the seller's label. The site shows no close date for closed lots and ignores keywords on them,
+so closed takes a seller. Bidder identities are never returned. Captured 2026-11-28: laptop
+matched 73 open auctions; Titan Electronics had 2,373 closed lots. Failed calls and refused
+inputs are not charged; a not-found (an unknown or closed lot, a lot without a manifest) is
+charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 
