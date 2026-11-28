@@ -3,9 +3,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/scavio-ai/scavio-mcp?style=social)
 ![License](https://img.shields.io/github/license/scavio-ai/scavio-mcp)
 
-[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1511 tools across 186 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
+[Scavio](https://scavio.dev?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) is a unified [Web Search API](https://scavio.dev/docs/search-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme) and MCP server that gives AI agents web search, page extraction, and structured data from e-commerce, social, travel, jobs, real-estate, app-store, ad-library and company-filing sources. 1527 tools across 189 platforms plus Extract, Company Enrich, map, crawl and batch, one API key.
 
-**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1511 tools puts ~3286KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
+**The 22 platforms added in 0.13.0 are opt-in.** Registering all 1527 tools puts ~3325KB of tool definitions — roughly 90k tokens — into every session before you type anything. So the default is the platform set 0.12.x already had, plus Extract and Company Enrich: 143 tools, 114KB. Upgrading never removes a tool you were using. Everything else is one env var away: see [Choosing which tools load](#choosing-which-tools-load).
 
 ## Remote MCP Server
 
@@ -207,7 +207,7 @@ Add to settings (`Cmd+,`):
 
 ## Choosing which tools load
 
-Scavio exposes 1511 tools. Loading all of them costs ~3286KB of `tools/list` —
+Scavio exposes 1527 tools. Loading all of them costs ~3325KB of `tools/list` —
 roughly 90k tokens of context in every session before the user has said anything,
 and more tools than some clients will accept at all. So the server registers a
 curated subset by default and lets you pick the rest. The sizes below are
@@ -218,7 +218,7 @@ measured, not estimated: `npm run toolslist` reproduces them.
 | Value | Registers |
 |-------|-----------|
 | *(unset)* or `default` | Every platform 0.12.x had, plus `extract` and `company` — **143 tools, 114KB** |
-| `all` | every platform — **1511 tools, ~3286KB** |
+| `all` | every platform — **1527 tools, ~3325KB** |
 | `extract,sec,g2` | just those platforms — 18 tools, 21KB |
 | `default,zillow,metaads` | the default set plus two more — 149 tools, 122KB |
 | `default,chatgpt,gemini` | the default set plus ChatGPT and Gemini — 145 tools, 117KB |
@@ -233,7 +233,7 @@ tells you to call to check the server works.
 
 **Platform keys:** `extract`, `company`, `google`, `chatgpt`, `gemini`, `youtube`, `tiktok`, `instagram`,
 `reddit`, `x`, `linkedin`, `threads`, `kuaishou`, `amazon`, `walmart`, `ebay`,
-`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
+`target`, `homedepot`, `costco`, `heb`, `kroger`, `publix`, `ikea`, `wayfair`, `ashley`, `maisonsdumonde`, `williamssonoma`, `bedbathbeyond`, `decathlon`, `specs`, `lowes`, `acehardware`, `tractorsupply`, `michaels`, `nike`, `staples`, `samsclub`, `bjs`, `canadiantire`, `sportchek`, `marks`, `rona`, `dollargeneral`, `dollartree`, `discounttire`, `vevor`, `nellis`, `estatesales`, `bringatrailer`, `sephora`, `ulta`, `dermstore`, `bathandbodyworks`, `spacenk`, `lookfantastic`, `cultbeauty`, `yesstyle`, `notino`, `douglas`, `boots`, `aldi`, `instacart`, `pcexpress`, `microcenter`, `walgreens`, `cvs`, `wholefoods`, `harborfreight`, `autozone`, `oreilly`, `rockauto`, `carscom`, `autotrader`, `cargurus`, `carmax`, `carvana`, `truecar`, `edmunds`, `kbb`, `petsmart`, `petco`, `iherb`, `chewy`, `menards`, `nordstrom`, `nordstromrack`, `bestbuy`, `newegg`, `tcgplayer`, `nintendo`, `hm`, `zara`, `uniqlo`, `asos`, `fashionnova`, `gap`, `zappos`, `vinted`, `mercari`, `depop`, `poshmark`, `offerup`, `thredup`, `macys`, `saks`, `kohls`, `jcpenney`, `dicks`, `footlocker`, `fanatics`, `academy`, `rei`, `qvc`, `barnesandnoble`, `thriftbooks`, `belk`, `abercrombie`, `llbean`, `sweetwater`, `argos`, `mediaexpert`, `action`, `hema`, `carrefour`, `allegro`, `bolcom`, `olx`, `trendyol`, `mercadolibre`, `kabum`, `magalu`, `casasbahia`, `buscape`, `rdsaude`, `reclameaqui`, `leroymerlin`, `natura`, `boticario`, `centauro`, `enjoei`, `atacadao`, `carrefourbr`, `terabyte`, `cobasi`, `netshoes`, `estantevirtual`, `cea`, `renner`, `pichau`, `dafiti`, `riachuelo`, `petz`, `globalindustrial`, `msc`, `zoro`, `rakuten`, `tiktok-shop`, `booking`, `airbnb`, `vrbo`, `expedia`,
 `tripadvisor`, `yelp`, `zillow`, `redfin`, `realtor`, `rightmove`, `rentcom`, `trulia`, `streeteasy`, `rentcafe`, `movoto`, `hotpads`, `apartmentlist`, `compass`, `affordablehousing`, `lennar`, `extraspace`, `publicstorage`, `uhaul`, `indeed`, `glassdoor`,
 `appstore`, `googleplay`, `g2`, `capterra`, `trustpilot`, `goodreads`, `googleads`, `metaads`, `sec`, `companieshouse`
 
@@ -5369,6 +5369,81 @@ a Selections For Pet dog food, 3 kg, was 46.39 BRL (list 57.99) in 3 sizes, rate
 prices, prices by CEP, more review pages, search suggestions, Pix prices, installments,
 shipping, price history (poll and store the answers). Failed calls and refused inputs are not
 charged; a not-found (an unknown product, category, brand, collection or store) is charged.
+
+### [Global Industrial](https://scavio.dev/docs/globalindustrial-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Global Industrial API for Global Industrial (globalindustrial.com, the US industrial-equipment and MRO supplier; Canada at globalindustrial.ca, prices in CAD): keyword, item number and part number search, category and product group listings, a brand's products and the clearance section, up to 42 products a listing with the full total; and one product with the pack price, the per-piece unit price, quantity breaks, availability, specs and documents. See the [Global Industrial API page](https://scavio.dev/globalindustrial-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_globalindustrial` | Search by keyword, item number or part number, optionally one brand; follows the site to a category or product page |
+| `get_globalindustrial_category` | One category or department by path, optionally one brand or one product group |
+| `get_globalindustrial_brand` | One brand's products, with the brand's product count per top-level category |
+| `get_globalindustrial_product` | One product by link, slug, item number or part number: pack and unit price, quantity breaks, availability, specs, documents |
+| `get_globalindustrial_clearance` | The clearance section, by clearance category and brand |
+
+Platform key `globalindustrial`. Credits: 1 per call on every tool; `credits_used` in the response
+is what was charged. Usually 5 to 60 seconds; allow a client timeout of at least 180 s. `market`
+`us` (default, USD) or `ca` (Global Industrial Canada, CAD).
+
+Prices are as Global Industrial shows them to a visitor who is not signed in. `price` is one
+selling unit (a pack or case where `package_quantity` is above 1) and `unit_price` the price per
+piece. A MAP-priced item shows "See price in cart" on the site, so its price fields are null and
+`map_pricing` is true. `msrp` is a list price the site does not show on the page and can sit below
+the price. Captured 2026-11-28: nitrile gloves 6 mil matched 13 products; Wesco listed 438
+products; item 652508, a Wesco drum dispenser truck, was 399.95 USD. Not available: sorting,
+reviews, questions, price history (poll and store the answers). Failed calls and refused inputs
+are not charged; a not-found (an unknown product, category or brand) is charged.
+
+### [MSC Industrial Supply](https://scavio.dev/docs/msc-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+MSC Industrial Supply API for MSC Industrial Supply (mscdirect.com, the US metalworking and MRO distributor), United States, prices in USD: keyword, part number and MSC# search and category listings, 24 a page in MSC's 6 sorts, with the Web Price as shown, the per-quantity price (for example per 100), a computed unit price, the minimum order and order multiple, availability and rating aggregates; one product with specs, documents, country of origin and alternates; the Clearance Specials and Web Specials lists; and MSC's distribution and inventory locations. See the [MSC Industrial Supply API page](https://scavio.dev/msc-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_msc` | Search by keyword, part number or MSC#: 24 a page, pages 1 to 400, 6 sorts |
+| `get_msc_category` | One category by navid or link, sorted like search |
+| `get_msc_product` | One product by MSC# or link: price, unit price, minimum and multiple, specs, documents, alternates |
+| `get_msc_clearance` | The Clearance Specials or Web Specials list |
+| `get_msc_locations` | MSC's distribution, inventory and office locations, by type, state and country (not pickup stores) |
+
+Platform key `msc`. Credits: 1 per call on every tool; `credits_used` in the response is what
+was charged. MSC pages are slow: search, category and product usually take 30 to 120 seconds
+(allow a client timeout of at least 300 s); clearance and locations 5 to 40 seconds (at least
+180 s).
+
+Prices are the Web Price MSC shows to a visitor who is not signed in; account pricing may differ.
+`unit_price` is computed by Scavio from the price and the quantity it is for. Captured
+2026-11-28: drill bit matched 132,055 products; a Hertel 1/8 inch jobber drill bit was 1.53 USD
+each, minimum and multiple of 12; MSC listed 63 locations. Not available: review text, account
+pricing, delivery estimates, per-branch stock (MSC does not publish it). Failed calls and refused
+inputs are not charged; a not-found (an unknown MSC# or category) is charged.
+
+### [Zoro](https://scavio.dev/docs/zoro-search?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
+
+Zoro API for Zoro (zoro.com, the US online industrial and business supply store, part of Grainger), United States, prices in USD: keyword, part number and Zoro number search, category and brand listings, 36 a page in Zoro's order, with the unit price, the selling unit and pack size and the order-multiple price labelled; one product with UPC, specs, documents, variants and shipping restrictions; its availability and delivery estimate; and the rating summary with the first reviews the page shows. See the [Zoro API page](https://scavio.dev/zoro-api?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme).
+
+| Tool | Description |
+|------|-------------|
+| `search_zoro` | Search by keyword, part number or Zoro number: 36 a page, pages 1 to 100 |
+| `get_zoro_category` | One category by link, path or slug + code |
+| `get_zoro_brand` | One brand's products by name or link |
+| `get_zoro_product` | One product by Zoro number or link: unit and order-multiple price, specs, documents, variants |
+| `get_zoro_availability` | One product's stock status and delivery estimate |
+| `get_zoro_reviews` | One product's rating summary and the first 5 reviews (no reviewer names) |
+
+Platform key `zoro`. Credits: 1 per call on every tool; `credits_used` in the response is what
+was charged. Search, category, brand and product usually take 5 to 60 seconds (allow a client
+timeout of at least 180 s); availability and reviews 60 to 230 seconds (at least 240 s), and a
+failed call is not charged and can be retried.
+
+Prices are as zoro.com lists them to a visitor who is not signed in. `unit_price` is one selling
+unit and `order_multiple_price` the price of the multiple Zoro sells the item in. Zoro shows no
+unit counts, so `inventory_units` is null. Captured 2026-11-28: 3m n95 respirator matched 145
+products; MCR Safety BearKat safety glasses were 1.39 USD each, sold in multiples of 12, rated
+4.86 from 50 ratings. Not available: search suggestions, filters, more review pages, price
+history (poll and store the answers). Failed calls and refused inputs are not charged; a
+not-found (an unknown Zoro number, category or brand) is charged.
 
 ### [Rakuten](https://scavio.dev/docs/rakuten-stores?utm_source=npm-mcp&utm_medium=package&utm_campaign=readme)
 

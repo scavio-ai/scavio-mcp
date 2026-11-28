@@ -143,6 +143,9 @@ import { registerPichauTools } from "./pichau.js";
 import { registerDafitiTools } from "./dafiti.js";
 import { registerRiachueloTools } from "./riachuelo.js";
 import { registerPetzTools } from "./petz.js";
+import { registerGlobalIndustrialTools } from "./globalindustrial.js";
+import { registerMscTools } from "./msc.js";
+import { registerZoroTools } from "./zoro.js";
 import { registerArgosTools } from "./argos.js";
 import { registerMediaExpertTools } from "./mediaexpert.js";
 import { registerActionTools } from "./action.js";
@@ -357,6 +360,9 @@ const PLATFORMS: Record<string, RegisterFn> = {
   dafiti: registerDafitiTools,
   riachuelo: registerRiachueloTools,
   petz: registerPetzTools,
+  globalindustrial: registerGlobalIndustrialTools,
+  msc: registerMscTools,
+  zoro: registerZoroTools,
   argos: registerArgosTools,
   mediaexpert: registerMediaExpertTools,
   action: registerActionTools,
@@ -421,7 +427,7 @@ export const PLATFORM_KEYS = Object.keys(PLATFORMS);
  * What registers when SCAVIO_PLATFORMS is unset.
  *
  * Registering everything is not an option any more. The full surface is 408
- * tools, which serialises to 3286KB of tools/list (measured with
+ * tools, which serialises to 3325KB of tools/list (measured with
  * `npm run toolslist`, not estimated) — roughly 90k tokens pushed into the
  * context of EVERY session before the user has typed anything, and past the
  * hard tool-count ceiling some clients enforce. The default set below is 143
@@ -483,7 +489,7 @@ function warnOnce(message: string): void {
  * Turn a SCAVIO_PLATFORMS value into the canonical platform keys to register.
  *
  * Accepts a comma-separated list of platform keys, plus three keywords:
- *   all      — every platform (1511 tools)
+ *   all      — every platform (1527 tools)
  *   default  — expands to DEFAULT_PLATFORMS, so `default,sec,g2` is additive
  *   none     — no platform tools at all, leaving only get_usage
  *
@@ -599,6 +605,8 @@ const TITLE_WORDS: Record<string, string> = {
   dafiti: "Dafiti",
   riachuelo: "Riachuelo",
   petz: "Petz",
+  globalindustrial: "Global Industrial",
+  msc: "MSC",
 };
 
 /** `get_tiktok_user_posts` -> `Get TikTok User Posts`. */
